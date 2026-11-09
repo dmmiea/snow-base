@@ -335,6 +335,25 @@ async function run() {
 
   console.log(`\n全スポット集計完了: ${processedSpots.length} 件`);
 
+  // 1. オーバーナイトスノーランキング (直近18:00〜翌朝06:00の降雪量)
+  const rankingNight = [...processedSpots].map(s => {
+    const nightKeys = Object.keys(s.nightSnowByDate || {});
+    const nightSnow = nightKeys.length > 0 ? (s.nightSnowByDate[nightKeys[0]] || 0) : 0;
+    return {
+      id: s.id,
+      name: s.name,
+      category: s.category,
+      regionName: s.regionName,
+      areaName: s.areaName,
+      snow: nightSnow,
+      depth: s.current.topSnowDepth,
+      score: s.current.score,
+      tag: nightSnow >= 20 ? 'リセット確定❄️' : (nightSnow >= 10 ? '新雪パウダー' : (nightSnow >= 3 ? 'うっすら積雪' : '新雪少なめ')),
+      isReset: nightSnow >= 15
+    };
+  }).sort((a, b) => b.snow - a.snow).slice(0, 25);
+
+  // 2. 6時間速報ランキング
   const ranking6h = [...processedSpots].sort((a, b) => {
     const aSnow = (a.topHourly.snowfall.slice(20, 26).reduce((acc, v) => acc + (v || 0), 0));
     const bSnow = (b.topHourly.snowfall.slice(20, 26).reduce((acc, v) => acc + (v || 0), 0));
@@ -351,6 +370,7 @@ async function run() {
     tag: s.current.tag
   }));
 
+  // 3. 24時間累積ランキング
   const ranking24h = [...processedSpots].sort((a, b) => {
     const aSnow = (a.topHourly.snowfall.slice(8, 32).reduce((acc, v) => acc + (v || 0), 0));
     const bSnow = (b.topHourly.snowfall.slice(8, 32).reduce((acc, v) => acc + (v || 0), 0));
@@ -370,6 +390,7 @@ async function run() {
   const outputData = {
     updatedAt: new Date().toISOString(),
     spotsCount: processedSpots.length,
+    rankingNight,
     ranking6h,
     ranking24h,
     spots: processedSpots

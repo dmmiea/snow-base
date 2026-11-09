@@ -323,12 +323,15 @@
 
   <!-- TAB 3: エリア一覧 & パウダーランキング -->
   <main id="tabRanking" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3 hidden">
-    <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-bold">
-      <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900">
-        ⚡ 6時間速報ランキング
+    <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-bold gap-1">
+      <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 shadow">
+        🌙 オーバーナイト (18-06時)
+      </button>
+      <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
+        ⚡ 6時間速報
       </button>
       <button id="btnRank24h" onclick="setRankPeriod('24h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
-        ❄️ 24時間累積ランキング
+        ❄️ 24時間累積
       </button>
     </div>
     <div id="rankingListContainer" class="space-y-2">
@@ -485,7 +488,7 @@
     let currentArea = '';
     let currentSpotId = '';
     let currentElevLevel = 'top'; // 'top' or 'base'
-    let currentRankPeriod = '6h'; // '6h' or '24h'
+    let currentRankPeriod = 'night'; // 'night', '6h', '24h'
     let trendChartInstance = null;
     let leafletMap = null;
     let mapMarkers = [];
@@ -952,8 +955,9 @@
     // ランキングタブ
     function setRankPeriod(period) {
       currentRankPeriod = period;
-      document.getElementById('btnRank6h').className = period === '6h' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
-      document.getElementById('btnRank24h').className = period === '24h' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
+      document.getElementById('btnRankNight').className = period === 'night' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold shadow" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
+      document.getElementById('btnRank6h').className = period === '6h' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold shadow" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
+      document.getElementById('btnRank24h').className = period === '24h' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold shadow" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
       renderRankingTab();
     }
 
@@ -961,7 +965,19 @@
       const container = document.getElementById('rankingListContainer');
       container.innerHTML = '';
 
-      const list = currentRankPeriod === '6h' ? appData.ranking6h : appData.ranking24h;
+      let list = [];
+      let labelText = '降雪量';
+      if (currentRankPeriod === 'night') {
+        list = appData.rankingNight || [];
+        labelText = '🌙夜間新雪';
+      } else if (currentRankPeriod === '6h') {
+        list = appData.ranking6h || [];
+        labelText = '⚡6h降雪';
+      } else {
+        list = appData.ranking24h || [];
+        labelText = '❄️24h降雪';
+      }
+
       if (!list || list.length === 0) {
         container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">現在ランキングデータを集計中です</div>';
         return;
@@ -972,17 +988,25 @@
         card.className = "snow-card rounded-xl p-3 flex items-center justify-between border border-slate-700/60 active:scale-98 transition cursor-pointer";
         card.onclick = () => selectSpotFromMap(item.id);
 
+        let badgeHtml = '';
+        if (currentRankPeriod === 'night' && item.isReset) {
+          badgeHtml = '<span class="text-[9.5px] px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-black ml-1.5">リセット❄️</span>';
+        }
+
         card.innerHTML = `
           <div class="flex items-center gap-3">
             <span class="font-teko text-2xl font-black w-6 text-center ${idx === 0 ? 'text-amber-400' : (idx === 1 ? 'text-slate-300' : (idx === 2 ? 'text-amber-600' : 'text-slate-500'))}">${idx + 1}</span>
             <div>
-              <div class="text-[10px] text-slate-400 font-bold">${item.areaName || item.regionName}</div>
+              <div class="text-[10px] text-slate-400 font-bold flex items-center">
+                <span>${item.areaName || item.regionName}</span>
+                ${badgeHtml}
+              </div>
               <div class="text-sm font-bold text-white">${item.name}</div>
               <div class="text-[10px] text-sky-400 mt-0.5">${item.tag}</div>
             </div>
           </div>
           <div class="text-right">
-            <div class="text-[10px] text-slate-400">降雪量</div>
+            <div class="text-[10px] text-slate-400">${labelText}</div>
             <div class="font-teko text-2xl font-black text-cyan-300 leading-none">+${item.snow} <span class="text-xs">cm</span></div>
             <div class="text-[10px] text-slate-400">積雪: ${item.depth}cm</div>
           </div>
