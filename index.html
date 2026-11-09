@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SNOW BASE JAPAN ｜ 全国スキー場・雪山バックカントリー雪情報・予報・積雪実測</title>
+  <meta name="description" content="全国のスキー場（570+箇所）および主要バックカントリー山岳の積雪実測・7日間予報・夜間積雪(18-6時)・雪質レーティングを完全網羅した次世代スノーダッシュボード。">
+  <meta name="keywords" content="スキー場,雪予報,積雪情報,パウダーサーチ,バックカントリー,アメダス実測,白馬,ニセコ,湯沢,志賀高原,SNOW BASE">
+
+  <!-- Google Fonts: Teko & Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Firebase App & Firestore SDK (v10 compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+  <style>
+    body {
+      font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0f172a; /* Slate 900 ダーク基調スノーテーマ */
+      color: #f8fafc;
+      -webkit-tap-highlight-color: transparent;
+      font-feature-settings: "palt";
+    }
+    .font-teko {
+      font-family: 'Teko', sans-serif;
+      letter-spacing: 0.03em;
+    }
+    .snow-card {
+      background: rgba(30, 41, 59, 0.85); /* Slate 800 */
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3), 0 2px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+    .snow-gradient {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #075985 100%);
+    }
+    .powder-badge {
+      background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .tab-active {
+      background-color: #38bdf8 !important;
+      color: #0f172a !important;
+      font-weight: 700 !important;
+    }
+    #mapViewContainer {
+      height: calc(100vh - 120px);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-20 antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- ===============================
+       1. TOP APP BAR
+       =============================== -->
+  <header class="bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-2.5 shadow-md sticky top-0 z-50">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white font-bold text-sm">
+          ❄️
+        </div>
+        <h1 class="flex items-center space-x-1.5 m-0 p-0 font-normal">
+          <span class="font-teko text-2xl font-bold tracking-wider text-sky-400 leading-none uppercase">SNOW BASE</span>
+          <span class="text-[9.5px] px-1.5 py-0.2 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700">JAPAN</span>
+        </h1>
+      </div>
+      
+      <div class="flex items-center space-x-2">
+        <!-- 検索ボタン -->
+        <button id="btnOpenSearch" onclick="openSearchModal()" class="h-8 px-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-1.5 text-xs font-bold border border-slate-700 active:scale-95 shadow-sm">
+          <i class="fa-solid fa-magnifying-glass text-sky-400 text-xs"></i>
+          <span>検索</span>
+        </button>
+
+        <!-- LIVE インジケーター -->
+        <div class="text-right whitespace-nowrap pl-1 border-l border-slate-800">
+          <div class="flex items-center justify-end space-x-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[11px] font-bold text-emerald-400">LIVE</span>
+          </div>
+          <span id="lastUpdated" class="text-[9.5px] text-slate-400 font-medium whitespace-nowrap block">--:--</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===============================
+       2. MAIN CONTENT (SPA TAB CONTAINERS)
+       =============================== -->
+  
+  <!-- TAB 1: ホーム（ダッシュボード） -->
+  <main id="tabHome" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3.5">
+
+    <!-- カテゴリ切り替え（🏂 スキー場 vs ⛰️ バックカントリー） -->
+    <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700/80 shadow-sm text-xs font-bold">
+      <button id="btnCategorySki" onclick="setCategory('ski')" class="flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow">
+        <span>🏂</span>
+        <span>スキー場 (<span id="countSki">573</span>)</span>
+      </button>
+      <button id="btnCategoryBc" onclick="setCategory('bc')" class="flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white">
+        <span>⛰️</span>
+        <span>バックカントリー (<span id="countBc">779</span>)</span>
+      </button>
+    </div>
+
+    <!-- 地域・エリアセレクター（Sticky） -->
+    <div class="sticky top-[53px] z-40 bg-slate-900/95 backdrop-blur-md -mx-3.5 px-3.5 pt-1.5 pb-2 border-b border-slate-800/80 space-y-1.5">
+      <div class="grid grid-cols-2 gap-1.5 text-xs">
+        <div>
+          <label class="block text-[9.5px] font-bold text-slate-400 mb-0.5">① 地方を選択</label>
+          <select id="selectRegion" onchange="onRegionChange(this.value)" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:border-sky-500">
+            <option value="all">全国</option>
+            <option value="hokkaido">北海道</option>
+            <option value="tohoku">東北</option>
+            <option value="shinetsu" selected>信越 (長野・新潟)</option>
+            <option value="hokuriku">北陸 (富山・石川・福井)</option>
+            <option value="kanto">関東 (群馬・栃木他)</option>
+            <option value="tokai">東海 (岐阜・奥美濃)</option>
+            <option value="kansai">関西 (滋賀・兵庫)</option>
+            <option value="chugoku">中国 (鳥取・広島)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[9.5px] font-bold text-slate-400 mb-0.5">② エリアを選択</label>
+          <select id="selectArea" onchange="onAreaChange(this.value)" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:border-sky-500">
+            <!-- JSで動的生成 -->
+          </select>
+        </div>
+      </div>
+
+      <!-- スポット切替ピル（横スクロール） -->
+      <div id="spotPills" class="flex gap-1.5 overflow-x-auto hide-scrollbar py-1">
+        <!-- JSで動的生成 -->
+      </div>
+    </div>
+
+    <!-- ===============================
+         HERO CARD (現在のコンディション)
+         =============================== -->
+    <div class="snow-card rounded-2xl p-4 relative overflow-hidden">
+      <!-- 背景アクセント光彩 -->
+      <div class="absolute -right-12 -top-12 w-40 h-40 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- スポットヘッダー -->
+      <div class="flex items-start justify-between mb-3 relative z-10">
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span id="heroCategoryBadge" class="text-[10px] font-black px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">🏂 スキー場</span>
+            <span id="heroAreaName" class="text-xs font-bold text-slate-400">白馬・小谷</span>
+          </div>
+          <h2 id="heroSpotName" class="text-xl font-black text-white mt-0.5 flex items-center gap-2">
+            白馬八方尾根スキー場
+          </h2>
+        </div>
+        <button id="btnFav" onclick="toggleFavorite()" class="w-9 h-9 rounded-full bg-slate-800/90 border border-slate-700 text-slate-400 hover:text-amber-400 flex items-center justify-center transition active:scale-95 shadow">
+          <i id="favIcon" class="fa-regular fa-star text-base"></i>
+        </button>
+      </div>
+
+      <!-- メイン指標: スコア & 積雪深 & バーンタグ -->
+      <div class="grid grid-cols-12 gap-2 mb-3 relative z-10">
+        <!-- スコアサークル/バッジ -->
+        <div class="col-span-4 bg-slate-800/80 rounded-xl p-2.5 flex flex-col items-center justify-center border border-slate-700/60 text-center">
+          <span class="text-[10px] font-bold text-slate-400">雪質スコア</span>
+          <div class="flex items-baseline justify-center">
+            <span id="heroScore" class="font-teko text-5xl font-black text-sky-400 leading-none">--</span>
+            <span class="text-xs text-slate-400 font-bold ml-0.5">/100</span>
+          </div>
+          <span id="heroRank" class="text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-500 text-slate-900 mt-1">圧雪良好</span>
+        </div>
+
+        <!-- 積雪深（山頂 & 山麓） -->
+        <div class="col-span-8 bg-slate-800/80 rounded-xl p-2.5 flex flex-col justify-between border border-slate-700/60">
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-400 font-bold flex items-center gap-1">
+              <i class="fa-solid fa-mountain text-sky-400"></i>
+              <span>山頂 (<span id="heroTopElev">1831m</span>)</span>
+            </span>
+            <span class="font-teko text-2xl font-black text-white"><span id="heroTopSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
+          </div>
+          <div class="border-t border-slate-700/50 my-1"></div>
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-400 font-bold flex items-center gap-1">
+              <i class="fa-solid fa-house text-emerald-400"></i>
+              <span>山麓 (<span id="heroBaseElev">760m</span>)</span>
+            </span>
+            <span class="font-teko text-2xl font-black text-slate-200"><span id="heroBaseSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- バーン判定タグ & 夜間新雪ハイライト -->
+      <div class="space-y-1.5 relative z-10">
+        <!-- 朝イチ夜間新雪バッジ -->
+        <div class="powder-badge text-slate-900 rounded-xl px-3 py-2 flex items-center justify-between shadow-lg">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🌙</span>
+            <div>
+              <div class="text-[10px] font-black uppercase tracking-wider text-slate-900/80">OVERNIGHT SNOW (18時〜翌06時)</div>
+              <div class="text-xs font-black">夜間新雪予想: <span id="heroNightSnow" class="text-sm underline font-black">+-- cm</span></div>
+            </div>
+          </div>
+          <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-slate-950/20 text-slate-950 border border-slate-950/20">リセット待ち</span>
+        </div>
+
+        <!-- バーン状況タグ一覧 -->
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          <span id="heroMainTag" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-sky-950/80 text-sky-300 border border-sky-800 flex items-center gap-1">
+            <i class="fa-solid fa-snowflake text-[10px]"></i>
+            <span id="heroMainTagText">極上ドライパウダー</span>
+          </span>
+          <div id="heroSubTags" class="flex flex-wrap gap-1">
+            <!-- JSで動的挿入 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 気温 & 風速 & アメダス実況 -->
+      <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-700/60 text-center text-xs relative z-10">
+        <div>
+          <span class="text-[10px] text-slate-400 block">山頂気温</span>
+          <span id="heroTopTemp" class="font-teko text-xl font-bold text-sky-300">--℃</span>
+        </div>
+        <div>
+          <span class="text-[10px] text-slate-400 block">山頂風速</span>
+          <span id="heroWind" class="font-teko text-xl font-bold text-slate-200">-- m/s</span>
+        </div>
+        <div>
+          <span class="text-[10px] text-slate-400 block">最寄りアメダス実測</span>
+          <span id="heroAmedasDepth" class="font-teko text-xl font-bold text-emerald-400">-- cm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===============================
+         TREND CHART (実績＋予報シームレス連結)
+         =============================== -->
+    <div class="snow-card rounded-2xl p-4">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+          <i class="fa-solid fa-chart-line text-sky-400"></i>
+          <span>積雪トレンド（過去実績 ⇄ 未来予報 連結）</span>
+        </h3>
+        <span class="text-[10px] text-slate-400 font-medium">折れ線:積雪深 / 棒:降雪量</span>
+      </div>
+      <div class="w-full h-48 relative">
+        <canvas id="trendChartCanvas"></canvas>
+      </div>
+      <div class="flex items-center justify-center gap-4 text-[10px] text-slate-400 mt-2">
+        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-sky-400 inline-block"></span>積雪深(cm)</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 bg-cyan-400/70 inline-block rounded-sm"></span>時間降雪量(cm/h)</span>
+        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>現在時刻</span>
+      </div>
+    </div>
+
+    <!-- ===============================
+         TIMELINE (標高切替 & 夜間新雪バッジ)
+         =============================== -->
+    <div class="snow-card rounded-2xl p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+          <i class="fa-solid fa-clock text-sky-400"></i>
+          <span>時間別タイムライン（1時間刻み）</span>
+        </h3>
+        <!-- 標高切替ピル -->
+        <div class="flex rounded-lg bg-slate-800 p-0.5 border border-slate-700 text-[10px] font-bold">
+          <button id="btnElevTop" onclick="setElevLevel('top')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400">山頂 (Top)</button>
+          <button id="btnElevBase" onclick="setElevLevel('base')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">山麓 (Base)</button>
+        </div>
+      </div>
+
+      <!-- 横スクロールタイムラインリスト -->
+      <div id="timelineContainer" class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
+        <!-- JSで動的生成 -->
+      </div>
+    </div>
+
+    <!-- ===============================
+         7-DAY WEEKLY FORECAST (横向き週間予報)
+         =============================== -->
+    <div class="snow-card rounded-2xl p-4">
+      <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5 mb-2.5">
+        <i class="fa-solid fa-calendar-days text-sky-400"></i>
+        <span>7日間 週間雪予報</span>
+      </h3>
+      <div id="weeklyForecastContainer" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+        <!-- JSで動的生成 -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TAB 2: 全マップ画面 -->
+  <main id="tabMap" class="max-w-md mx-auto hidden pb-24">
+    <div class="p-3 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-xs">
+      <span class="font-bold text-slate-300">全国雪山マップ (<span id="mapCount">--</span>地点)</span>
+      <span class="text-[10px] text-slate-400">ピンをタップで詳細表示</span>
+    </div>
+    <div id="mapViewContainer" class="w-full"></div>
+  </main>
+
+  <!-- TAB 3: エリア一覧 & パウダーランキング -->
+  <main id="tabRanking" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3 hidden">
+    <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-bold">
+      <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900">
+        ⚡ 6時間速報ランキング
+      </button>
+      <button id="btnRank24h" onclick="setRankPeriod('24h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
+        ❄️ 24時間累積ランキング
+      </button>
+    </div>
+    <div id="rankingListContainer" class="space-y-2">
+      <!-- JSで動的生成 -->
+    </div>
+  </main>
+
+  <!-- TAB 4: 雪レポフィード -->
+  <main id="tabFeed" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3 hidden">
+    <div class="flex items-center justify-between">
+      <h2 class="text-sm font-bold text-white flex items-center gap-1.5">
+        <i class="fa-solid fa-comments text-sky-400"></i>
+        <span>全国みんなの雪レポ</span>
+      </h2>
+      <button onclick="openReportModal()" class="px-3 py-1.5 rounded-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs flex items-center gap-1 shadow-md shadow-sky-500/20 active:scale-95">
+        <i class="fa-solid fa-pen"></i>
+        <span>雪レポ投稿</span>
+      </button>
+    </div>
+    <div id="feedListContainer" class="space-y-2.5">
+      <!-- JSで動的生成 -->
+    </div>
+  </main>
+
+  <!-- TAB 5: MYスポット -->
+  <main id="tabMySpots" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3 hidden">
+    <h2 class="text-sm font-bold text-white flex items-center gap-1.5">
+      <i class="fa-solid fa-star text-amber-400"></i>
+      <span>登録中のMYスポット</span>
+    </h2>
+    <div id="mySpotsListContainer" class="space-y-2">
+      <!-- JSで動的生成 -->
+    </div>
+  </main>
+
+  <!-- ===============================
+       BOTTOM NAVIGATION BAR
+       =============================== -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 py-2">
+    <div class="max-w-md mx-auto flex items-center justify-around text-[10px] font-bold text-slate-400">
+      <button onclick="switchTab('home')" id="navHome" class="flex flex-col items-center gap-1 text-sky-400">
+        <i class="fa-solid fa-house text-base"></i>
+        <span>ホーム</span>
+      </button>
+      <button onclick="switchTab('map')" id="navMap" class="flex flex-col items-center gap-1 hover:text-white">
+        <i class="fa-solid fa-map-location-dot text-base"></i>
+        <span>マップ</span>
+      </button>
+      <button onclick="switchTab('ranking')" id="navRanking" class="flex flex-col items-center gap-1 hover:text-white">
+        <i class="fa-solid fa-trophy text-base"></i>
+        <span>ランキング</span>
+      </button>
+      <button onclick="switchTab('feed')" id="navFeed" class="flex flex-col items-center gap-1 hover:text-white">
+        <i class="fa-solid fa-comments text-base"></i>
+        <span>雪レポ</span>
+      </button>
+      <button onclick="switchTab('mySpots')" id="navMySpots" class="flex flex-col items-center gap-1 hover:text-white">
+        <i class="fa-solid fa-star text-base"></i>
+        <span>MYスポット</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===============================
+       MODAL: 高速スポット検索
+       =============================== -->
+  <div id="modalSearch" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-3 border-b border-slate-800 flex items-center gap-2">
+        <i class="fa-solid fa-magnifying-glass text-sky-400 text-sm ml-1"></i>
+        <input type="text" id="searchInput" oninput="onSearchInput(this.value)" placeholder="スキー場名、山名、エリアで検索..." class="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none">
+        <button onclick="closeSearchModal()" class="text-slate-400 hover:text-white p-1 text-base">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div id="searchResults" class="p-2 overflow-y-auto space-y-1 flex-1">
+        <!-- 検索結果がここに動的表示 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================
+       MODAL: 雪レポ投稿
+       =============================== -->
+  <div id="modalReport" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-3 border-b border-slate-800 flex items-center justify-between">
+        <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
+          <i class="fa-solid fa-pen-to-square text-sky-400"></i>
+          <span>雪レポを投稿</span>
+        </h3>
+        <button onclick="closeReportModal()" class="text-slate-400 hover:text-white p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-4 overflow-y-auto space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-400 font-bold mb-1">滑走スポット</label>
+          <div id="reportSpotLabel" class="font-bold text-white bg-slate-800 px-3 py-2 rounded-lg border border-slate-700">--</div>
+        </div>
+        <div>
+          <label class="block text-slate-400 font-bold mb-1">体感満足度</label>
+          <div class="flex gap-2" id="reportRatingStars">
+            <button type="button" onclick="setReportRating(1)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(2)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(3)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(4)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(5)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-400 font-bold mb-1">雪質・バーン状況</label>
+          <select id="reportSnowType" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-bold">
+            <option value="極上ドライパウダー">❄️ 極上ドライパウダー (浮遊感)</option>
+            <option value="底付き注意パウダー">⚠️ 底付きパウダー (下層硬め)</option>
+            <option value="上質圧雪">⛷️ 上質コーデュロイ圧雪 (カービング)</option>
+            <option value="硬め・アイスバーン">🧊 硬め・アイスバーン (エッジ注意)</option>
+            <option value="湿雪・重パウ">🌨️ 湿雪・重パウ</option>
+            <option value="春ザラメ・シャバ雪">☀️ 春ザラメ・シャバ雪</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-400 font-bold mb-1">新雪の深さ</label>
+          <select id="reportSnowDepth" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-bold">
+            <option value="なし">新雪なし (圧雪バーン)</option>
+            <option value="くるぶし (5〜10cm)">くるぶし (5〜10cm)</option>
+            <option value="すね (10〜20cm)">すね (10〜20cm)</option>
+            <option value="ひざ (20〜40cm)">ひざ (20〜40cm) ❄️</option>
+            <option value="もも・腰 (40〜70cm)">もも・腰 (40〜70cm) ❄️❄️</option>
+            <option value="オーバーヘッド (70cm+)">オーバーヘッド (70cm+) 🚀</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-400 font-bold mb-1">現地の様子・コメント</label>
+          <textarea id="reportComment" rows="3" placeholder="コース状況、おすすめワックス、混雑具合、視界など..." class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"></textarea>
+        </div>
+        <div>
+          <button type="button" onclick="submitReport()" class="w-full py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-sm shadow-lg shadow-sky-500/20 active:scale-95 transition">
+            雪レポを投稿する
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================
+       APPLICATION LOGIC SCRIPT
+       =============================== -->
+  <script>
+    // グローバル状態
+    let appData = null;
+    let currentCategory = 'ski'; // 'ski' or 'bc'
+    let currentRegion = 'shinetsu';
+    let currentArea = '';
+    let currentSpotId = '';
+    let currentElevLevel = 'top'; // 'top' or 'base'
+    let currentRankPeriod = '6h'; // '6h' or '24h'
+    let trendChartInstance = null;
+    let leafletMap = null;
+    let mapMarkers = [];
+    let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
+    let currentRating = 5;
+
+    // ローカル簡易雪レポストレージ（Firestoreバックアップ）
+    let localReports = JSON.parse(localStorage.getItem('snow_base_reports') || '[]');
+
+    // アプリ初期化
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadData();
+      initUI();
+    });
+
+    async function loadData() {
+      try {
+        const res = await fetch('data_japan.json');
+        if (!res.ok) throw new Error('data_japan.json load failed');
+        appData = await res.json();
+        
+        // 最終更新時刻表示
+        if (appData.updatedAt) {
+          const d = new Date(appData.updatedAt);
+          document.getElementById('lastUpdated').textContent = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')} 更新`;
+        }
+
+        // スキー場・BC山 カウント
+        const skis = appData.spots.filter(s => s.category === 'ski');
+        const bcs = appData.spots.filter(s => s.category === 'bc');
+        document.getElementById('countSki').textContent = skis.length;
+        document.getElementById('countBc').textContent = bcs.length;
+
+        // 初期スポット設定 (白馬八方尾根 または 最初のスポット)
+        const initialSpot = appData.spots.find(s => s.id === 'hakuba_happo') || appData.spots[0];
+        if (initialSpot) {
+          currentCategory = initialSpot.category || 'ski';
+          currentRegion = initialSpot.region || 'shinetsu';
+          currentSpotId = initialSpot.id;
+        }
+
+        updateCategoryUI();
+        populateRegionsAndAreas();
+        renderSpotPills();
+        renderCurrentSpotDetails();
+      } catch (e) {
+        console.error('Data load error:', e);
+      }
+    }
+
+    function initUI() {
+      // 検索モーダル外クリックで閉じる
+      const modal = document.getElementById('modalSearch');
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeSearchModal();
+      });
+    }
+
+    // カテゴリ切替 (スキー場 / BC)
+    function setCategory(cat) {
+      currentCategory = cat;
+      updateCategoryUI();
+      
+      // 切り替えたカテゴリの最初のスポットを選択
+      const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion));
+      if (filtered.length > 0) {
+        currentSpotId = filtered[0].id;
+      }
+      populateRegionsAndAreas();
+      renderSpotPills();
+      renderCurrentSpotDetails();
+    }
+
+    function updateCategoryUI() {
+      const btnSki = document.getElementById('btnCategorySki');
+      const btnBc = document.getElementById('btnCategoryBc');
+      if (currentCategory === 'ski') {
+        btnSki.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow font-bold";
+        btnBc.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white font-bold";
+      } else {
+        btnSki.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white font-bold";
+        btnBc.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow font-bold";
+      }
+    }
+
+    // 地域・エリア ドロップダウン更新
+    function populateRegionsAndAreas() {
+      const selRegion = document.getElementById('selectRegion');
+      selRegion.value = currentRegion;
+
+      const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion));
+      const areaSet = new Set();
+      filtered.forEach(s => { if (s.areaName) areaSet.add(s.areaName); });
+
+      const selArea = document.getElementById('selectArea');
+      selArea.innerHTML = '<option value="all">全エリア</option>';
+      areaSet.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a;
+        opt.textContent = a;
+        selArea.appendChild(opt);
+      });
+
+      if (!currentArea || !areaSet.has(currentArea)) {
+        currentArea = 'all';
+      }
+      selArea.value = currentArea;
+    }
+
+    function onRegionChange(reg) {
+      currentRegion = reg;
+      populateRegionsAndAreas();
+      const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion));
+      if (filtered.length > 0) {
+        currentSpotId = filtered[0].id;
+      }
+      renderSpotPills();
+      renderCurrentSpotDetails();
+    }
+
+    function onAreaChange(area) {
+      currentArea = area;
+      const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion) && (currentArea === 'all' || s.areaName === currentArea));
+      if (filtered.length > 0) {
+        currentSpotId = filtered[0].id;
+      }
+      renderSpotPills();
+      renderCurrentSpotDetails();
+    }
+
+    // スポット選択ピル描画
+    function renderSpotPills() {
+      const container = document.getElementById('spotPills');
+      container.innerHTML = '';
+
+      const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion) && (currentArea === 'all' || s.areaName === currentArea));
+
+      filtered.forEach(s => {
+        const btn = document.createElement('button');
+        const isSelected = s.id === currentSpotId;
+        btn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border ${isSelected ? 'bg-sky-400 text-slate-900 border-sky-400 shadow' : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600'}`;
+        btn.textContent = s.name;
+        btn.onclick = () => {
+          currentSpotId = s.id;
+          renderSpotPills();
+          renderCurrentSpotDetails();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    // スポット詳細描画
+    function renderCurrentSpotDetails() {
+      const spot = appData.spots.find(s => s.id === currentSpotId);
+      if (!spot) return;
+
+      // ヒーローカード基本情報
+      document.getElementById('heroSpotName').textContent = spot.name;
+      document.getElementById('heroAreaName').textContent = spot.areaName || spot.regionName;
+      document.getElementById('heroCategoryBadge').textContent = spot.category === 'bc' ? '⛰️ バックカントリー' : '🏂 スキー場';
+
+      // 標高
+      document.getElementById('heroTopElev').textContent = `${spot.top.elevation}m`;
+      document.getElementById('heroBaseElev').textContent = `${spot.base.elevation}m`;
+
+      // 積雪深
+      document.getElementById('heroTopSnow').textContent = spot.current.topSnowDepth;
+      document.getElementById('heroBaseSnow').textContent = spot.current.baseSnowDepth;
+
+      // スコア & ランク
+      document.getElementById('heroScore').textContent = spot.current.score;
+      document.getElementById('heroRank').textContent = spot.current.rank;
+
+      // 夜間新雪
+      const nightKeys = Object.keys(spot.nightSnowByDate || {});
+      const nextNightVal = nightKeys.length > 0 ? spot.nightSnowByDate[nightKeys[0]] : 0;
+      document.getElementById('heroNightSnow').textContent = `+${nextNightVal} cm`;
+      document.getElementById('heroResetTag').textContent = nextNightVal >= 15 ? 'リセット確定❄️' : (nextNightVal >= 5 ? 'うっすら積雪' : '新雪少なめ');
+
+      // タグ
+      document.getElementById('heroMainTagText').textContent = spot.current.tag;
+      const subContainer = document.getElementById('heroSubTags');
+      subContainer.innerHTML = '';
+      (spot.current.tags || []).forEach(t => {
+        const badge = document.createElement('span');
+        badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700";
+        badge.textContent = t;
+        subContainer.appendChild(badge);
+      });
+
+      // 気温・風・アメダス
+      document.getElementById('heroTopTemp').textContent = `${spot.current.topTemp}℃`;
+      document.getElementById('heroWind').textContent = `${spot.current.windSpeed} m/s`;
+      document.getElementById('heroAmedasDepth').textContent = (spot.current.liveAmedas && spot.current.liveAmedas.snowDepth !== null) ? `${spot.current.liveAmedas.snowDepth} cm` : '―';
+
+      // お気に入り状態
+      updateFavButtonUI();
+
+      // トレンドチャート描画
+      renderTrendChart(spot);
+
+      // タイムライン描画
+      renderTimeline(spot);
+
+      // 週間予報描画
+      renderWeeklyForecast(spot);
+    }
+
+    // トレンドグラフ（Chart.js 実績＋予報シームレス連結）
+    function renderTrendChart(spot) {
+      const ctx = document.getElementById('trendChartCanvas').getContext('2d');
+      if (trendChartInstance) {
+        trendChartInstance.destroy();
+      }
+
+      const hourly = currentElevLevel === 'top' ? spot.topHourly : spot.baseHourly;
+      if (!hourly || !hourly.time) return;
+
+      // 直近48時間（過去24h＋未来24h）を抜粋表示
+      const labels = [];
+      const depthData = [];
+      const snowData = [];
+      const nowIdx = 24;
+
+      for (let i = 0; i < Math.min(48, hourly.time.length); i++) {
+        const tStr = hourly.time[i]; // 2026-11-10T06:00
+        const hour = tStr.slice(11, 16);
+        labels.push(hour);
+        depthData.push(hourly.snowDepth[i]);
+        snowData.push(hourly.snowfall[i] || 0);
+      }
+
+      trendChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              type: 'line',
+              label: '積雪深(cm)',
+              data: depthData,
+              borderColor: '#38bdf8',
+              backgroundColor: 'rgba(56, 189, 248, 0.15)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.3,
+              yAxisID: 'yDepth',
+              pointRadius: (ctx) => ctx.dataIndex === nowIdx ? 5 : 0,
+              pointBackgroundColor: '#fbbf24'
+            },
+            {
+              type: 'bar',
+              label: '降雪量(cm/h)',
+              data: snowData,
+              backgroundColor: 'rgba(6, 182, 212, 0.75)',
+              borderRadius: 3,
+              yAxisID: 'ySnow'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.95)',
+              titleColor: '#38bdf8',
+              bodyColor: '#fff',
+              borderColor: '#334155',
+              borderWidth: 1
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(51, 65, 85, 0.3)' },
+              ticks: { color: '#94a3b8', font: { size: 9 }, maxTicksLimit: 12 }
+            },
+            yDepth: {
+              position: 'left',
+              grid: { color: 'rgba(51, 65, 85, 0.3)' },
+              ticks: { color: '#38bdf8', font: { size: 9 } }
+            },
+            ySnow: {
+              position: 'right',
+              grid: { drawOnChartArea: false },
+              ticks: { color: '#06b6d4', font: { size: 9 } },
+              max: 10
+            }
+          }
+        }
+      });
+    }
+
+    // タイムライン描画（標高切替 & 夜間新雪バッジ）
+    function setElevLevel(level) {
+      currentElevLevel = level;
+      document.getElementById('btnElevTop').className = level === 'top' ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold" : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
+      document.getElementById('btnElevBase').className = level === 'base' ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold" : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
+      
+      const spot = appData.spots.find(s => s.id === currentSpotId);
+      if (spot) {
+        renderTrendChart(spot);
+        renderTimeline(spot);
+      }
+    }
+
+    function renderTimeline(spot) {
+      const container = document.getElementById('timelineContainer');
+      container.innerHTML = '';
+
+      const hourly = currentElevLevel === 'top' ? spot.topHourly : spot.baseHourly;
+      if (!hourly || !hourly.time) return;
+
+      for (let i = 0; i < Math.min(72, hourly.time.length); i++) {
+        const timeStr = hourly.time[i]; // 2026-11-10T06:00
+        const datePart = timeStr.slice(5, 10);
+        const hourPart = timeStr.slice(11, 16);
+        const weather = getWeatherInfo(hourly.weatherCode[i]);
+        const temp = Math.round(hourly.temperature[i]);
+        const wind = Math.round(hourly.windSpeed[i]);
+        const snow = Math.round((hourly.snowfall[i] || 0) * 10) / 10;
+        const nightVal = spot.nightSnowByDate ? spot.nightSnowByDate[timeStr] : null;
+
+        const col = document.createElement('div');
+        col.className = "flex-shrink-0 w-16 bg-slate-800/90 rounded-xl p-2 flex flex-col items-center justify-between text-center border border-slate-700/60";
+
+        let nightBadgeHtml = '';
+        if (hourPart === '06:00' && nightVal !== undefined && nightVal !== null) {
+          nightBadgeHtml = `
+            <div class="w-full mt-1.5 py-1 px-1 bg-gradient-to-r from-sky-500 to-indigo-600 rounded text-[9.5px] font-black text-white leading-tight shadow">
+              🌙夜間<br>+${nightVal}cm
+            </div>
+          `;
+        }
+
+        col.innerHTML = `
+          <div>
+            <span class="text-[9px] text-slate-400 block">${datePart}</span>
+            <span class="font-bold text-xs text-white">${hourPart}</span>
+          </div>
+          <div class="my-1 text-xl">${weather.icon}</div>
+          <div class="font-teko text-lg font-bold ${temp <= 0 ? 'text-sky-300' : 'text-amber-300'} leading-none">${temp}℃</div>
+          <div class="text-[10px] text-slate-400 mt-1">${wind}m/s</div>
+          <div class="text-[10px] font-bold ${snow > 0 ? 'text-cyan-300' : 'text-slate-500'} mt-0.5">${snow > 0 ? snow + 'cm' : '―'}</div>
+          ${nightBadgeHtml}
+        `;
+
+        container.appendChild(col);
+      }
+    }
+
+    // 週間天気予報描画
+    function renderWeeklyForecast(spot) {
+      const container = document.getElementById('weeklyForecastContainer');
+      container.innerHTML = '';
+
+      if (!spot.dailySummary) return;
+
+      spot.dailySummary.forEach(day => {
+        const col = document.createElement('div');
+        col.className = "flex-shrink-0 w-20 bg-slate-800/80 rounded-xl p-2.5 flex flex-col items-center justify-between text-center border border-slate-700/60";
+        col.innerHTML = `
+          <span class="text-[10px] font-bold text-slate-400">${day.date.slice(5)}</span>
+          <span class="text-2xl my-1.5">${day.weatherIcon}</span>
+          <span class="text-[10.5px] font-bold text-slate-300">${day.weatherLabel}</span>
+          <div class="font-teko text-sm font-bold mt-1">
+            <span class="text-rose-400">${day.maxTemp}℃</span> / <span class="text-sky-400">${day.minTemp}℃</span>
+          </div>
+          <div class="mt-1 text-[10px] font-black px-1.5 py-0.5 rounded ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700 text-slate-300'}">
+            ❄️ +${day.totalSnowfall}cm
+          </div>
+        `;
+        container.appendChild(col);
+      });
+    }
+
+    // SPA タブ切り替え (ホーム, マップ, ランキング, 雪レポ, MYスポット)
+    function switchTab(tabId) {
+      const tabs = ['home', 'map', 'ranking', 'feed', 'mySpots'];
+      tabs.forEach(t => {
+        const el = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        const nav = document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (t === tabId) {
+          el.classList.remove('hidden');
+          nav.className = "flex flex-col items-center gap-1 text-sky-400";
+        } else {
+          el.classList.add('hidden');
+          nav.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-white";
+        }
+      });
+
+      if (tabId === 'map') {
+        setTimeout(initLeafletMap, 150);
+      } else if (tabId === 'ranking') {
+        renderRankingTab();
+      } else if (tabId === 'feed') {
+        renderFeedTab();
+      } else if (tabId === 'mySpots') {
+        renderMySpotsTab();
+      }
+    }
+
+    // Leaflet マップ初期化
+    function initLeafletMap() {
+      if (!leafletMap) {
+        leafletMap = L.map('mapViewContainer').setView([36.7, 137.9], 7);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+          maxZoom: 18
+        }).addTo(leafletMap);
+      }
+
+      // 既存マーカークリア
+      mapMarkers.forEach(m => leafletMap.removeLayer(m));
+      mapMarkers = [];
+
+      document.getElementById('mapCount').textContent = appData.spots.length;
+
+      appData.spots.forEach(s => {
+        const isBc = s.category === 'bc';
+        const color = s.current.score >= 80 ? '#38bdf8' : (s.current.score >= 60 ? '#34d399' : '#94a3b8');
+        
+        const marker = L.circleMarker([s.top.lat, s.top.lon], {
+          radius: isBc ? 6 : 7,
+          fillColor: color,
+          color: '#fff',
+          weight: 1.5,
+          opacity: 1,
+          fillOpacity: 0.85
+        });
+
+        marker.bindPopup(`
+          <div class="p-1 text-slate-900 font-sans">
+            <div class="text-[10px] font-bold text-sky-600">${s.areaName || s.regionName}</div>
+            <div class="font-bold text-sm text-slate-900">${s.name}</div>
+            <div class="text-xs mt-1">積雪: <b>${s.current.topSnowDepth}cm</b> (山頂)</div>
+            <div class="text-xs">スコア: <b class="text-sky-600">${s.current.score}点</b> (${s.current.rank})</div>
+            <div class="text-xs text-slate-600">${s.current.tag}</div>
+            <button onclick="selectSpotFromMap('${s.id}')" class="mt-2 w-full py-1 bg-sky-500 text-slate-950 font-bold text-xs rounded">このスポットを見る</button>
+          </div>
+        `);
+
+        marker.addTo(leafletMap);
+        mapMarkers.push(marker);
+      });
+    }
+
+    function selectSpotFromMap(id) {
+      currentSpotId = id;
+      const spot = appData.spots.find(s => s.id === id);
+      if (spot) {
+        currentCategory = spot.category;
+        currentRegion = spot.region;
+        updateCategoryUI();
+        populateRegionsAndAreas();
+        renderSpotPills();
+        renderCurrentSpotDetails();
+      }
+      switchTab('home');
+    }
+
+    // ランキングタブ
+    function setRankPeriod(period) {
+      currentRankPeriod = period;
+      document.getElementById('btnRank6h').className = period === '6h' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
+      document.getElementById('btnRank24h').className = period === '24h' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
+      renderRankingTab();
+    }
+
+    function renderRankingTab() {
+      const container = document.getElementById('rankingListContainer');
+      container.innerHTML = '';
+
+      const list = currentRankPeriod === '6h' ? appData.ranking6h : appData.ranking24h;
+      if (!list || list.length === 0) {
+        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">現在ランキングデータを集計中です</div>';
+        return;
+      }
+
+      list.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = "snow-card rounded-xl p-3 flex items-center justify-between border border-slate-700/60 active:scale-98 transition cursor-pointer";
+        card.onclick = () => selectSpotFromMap(item.id);
+
+        card.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="font-teko text-2xl font-black w-6 text-center ${idx === 0 ? 'text-amber-400' : (idx === 1 ? 'text-slate-300' : (idx === 2 ? 'text-amber-600' : 'text-slate-500'))}">${idx + 1}</span>
+            <div>
+              <div class="text-[10px] text-slate-400 font-bold">${item.areaName || item.regionName}</div>
+              <div class="text-sm font-bold text-white">${item.name}</div>
+              <div class="text-[10px] text-sky-400 mt-0.5">${item.tag}</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-[10px] text-slate-400">降雪量</div>
+            <div class="font-teko text-2xl font-black text-cyan-300 leading-none">+${item.snow} <span class="text-xs">cm</span></div>
+            <div class="text-[10px] text-slate-400">積雪: ${item.depth}cm</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // 雪レポフィード描画
+    function renderFeedTab() {
+      const container = document.getElementById('feedListContainer');
+      container.innerHTML = '';
+
+      if (localReports.length === 0) {
+        // 初期サンプルレポ
+        localReports = [
+          {
+            spotName: "白馬八方尾根スキー場",
+            rating: 5,
+            snowType: "❄️ 極上ドライパウダー",
+            snowDepth: "すね (10〜20cm)",
+            comment: "朝イチ黒菱ゲレンデ最高でした！気温-8度で完全リセット。面ツル浮遊感抜群。",
+            time: "本日 08:45"
+          },
+          {
+            spotName: "ニセコ東急 グラン・ヒラフ",
+            rating: 5,
+            snowType: "❄️ 極上ドライパウダー",
+            snowDepth: "もも・腰 (40〜70cm)",
+            comment: "花園ツリーラン深すぎ注意！底付き一切なしの神パウです。",
+            time: "本日 09:15"
+          }
+        ];
+      }
+
+      localReports.forEach(r => {
+        const item = document.createElement('div');
+        item.className = "snow-card rounded-xl p-3 border border-slate-700/60 space-y-1.5";
+        
+        let starsHtml = '';
+        for (let i = 0; i < 5; i++) {
+          starsHtml += `<i class="fa-solid fa-star ${i < r.rating ? 'text-amber-400' : 'text-slate-600'} text-xs"></i>`;
+        }
+
+        item.innerHTML = `
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="font-bold text-sm text-white">${r.spotName}</div>
+              <div class="flex items-center gap-2 mt-0.5">
+                <div class="flex">${starsHtml}</div>
+                <span class="text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800">${r.snowType}</span>
+              </div>
+            </div>
+            <span class="text-[10px] text-slate-400">${r.time || '本日'}</span>
+          </div>
+          <div class="text-xs text-slate-300 pt-1">${r.comment}</div>
+          <div class="text-[10px] text-slate-400 flex items-center gap-1 pt-0.5">
+            <i class="fa-solid fa-ruler-vertical text-sky-400"></i>
+            <span>体感新雪: <b>${r.snowDepth}</b></span>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    // 雪レポ投稿モーダル
+    function openReportModal() {
+      const spot = appData.spots.find(s => s.id === currentSpotId);
+      document.getElementById('reportSpotLabel').textContent = spot ? spot.name : '選択中のスポット';
+      document.getElementById('modalReport').classList.remove('hidden');
+      document.getElementById('modalReport').classList.add('flex');
+    }
+
+    function closeReportModal() {
+      document.getElementById('modalReport').classList.add('hidden');
+      document.getElementById('modalReport').classList.remove('flex');
+    }
+
+    function setReportRating(stars) {
+      currentRating = stars;
+      const btns = document.querySelectorAll('#reportRatingStars button i');
+      btns.forEach((btn, idx) => {
+        if (idx < stars) {
+          btn.className = "fa-solid fa-star text-amber-400";
+        } else {
+          btn.className = "fa-regular fa-star text-slate-600";
+        }
+      });
+    }
+
+    function submitReport() {
+      const spot = appData.spots.find(s => s.id === currentSpotId);
+      const snowType = document.getElementById('reportSnowType').value;
+      const snowDepth = document.getElementById('reportSnowDepth').value;
+      const comment = document.getElementById('reportComment').value.trim();
+
+      if (!comment) {
+        alert('現地の様子やコメントを入力してください');
+        return;
+      }
+
+      const newReport = {
+        spotName: spot ? spot.name : '雪山スポット',
+        rating: currentRating,
+        snowType,
+        snowDepth,
+        comment,
+        time: 'たった今'
+      };
+
+      localReports.unshift(newReport);
+      localStorage.setItem('snow_base_reports', JSON.stringify(localReports));
+
+      closeReportModal();
+      document.getElementById('reportComment').value = '';
+      alert('雪レポを投稿しました！ありがとうございます！');
+      renderFeedTab();
+    }
+
+    // MYスポット
+    function toggleFavorite() {
+      const idx = favorites.indexOf(currentSpotId);
+      if (idx > -1) {
+        favorites.splice(idx, 1);
+      } else {
+        favorites.push(currentSpotId);
+      }
+      localStorage.setItem('snow_base_favs', JSON.stringify(favorites));
+      updateFavButtonUI();
+    }
+
+    function updateFavButtonUI() {
+      const isFav = favorites.includes(currentSpotId);
+      const icon = document.getElementById('favIcon');
+      if (isFav) {
+        icon.className = "fa-solid fa-star text-amber-400 text-base";
+      } else {
+        icon.className = "fa-regular fa-star text-slate-400 text-base";
+      }
+    }
+
+    function renderMySpotsTab() {
+      const container = document.getElementById('mySpotsListContainer');
+      container.innerHTML = '';
+
+      if (favorites.length === 0) {
+        container.innerHTML = '<div class="text-center py-10 text-slate-400 text-xs">まだお気に入りスポットがありません。<br>ヒーローカード右上の★ボタンから登録できます。</div>';
+        return;
+      }
+
+      const favSpots = appData.spots.filter(s => favorites.includes(s.id));
+      favSpots.forEach(s => {
+        const card = document.createElement('div');
+        card.className = "snow-card rounded-xl p-3 flex items-center justify-between border border-slate-700/60 active:scale-98 transition cursor-pointer";
+        card.onclick = () => selectSpotFromMap(s.id);
+
+        card.innerHTML = `
+          <div>
+            <div class="text-[10px] text-slate-400 font-bold">${s.areaName || s.regionName}</div>
+            <div class="text-sm font-bold text-white">${s.name}</div>
+            <div class="text-[10px] text-sky-400 mt-0.5">${s.current.tag}</div>
+          </div>
+          <div class="text-right">
+            <div class="font-teko text-2xl font-black text-sky-400 leading-none">${s.current.score}<span class="text-xs">点</span></div>
+            <div class="text-[10px] text-slate-300 mt-0.5">山頂: ${s.current.topSnowDepth}cm</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // 高速検索モーダル
+    function openSearchModal() {
+      document.getElementById('modalSearch').classList.remove('hidden');
+      document.getElementById('modalSearch').classList.add('flex');
+      document.getElementById('searchInput').focus();
+      onSearchInput('');
+    }
+
+    function closeSearchModal() {
+      document.getElementById('modalSearch').classList.add('hidden');
+      document.getElementById('modalSearch').classList.remove('flex');
+    }
+
+    function onSearchInput(query) {
+      const container = document.getElementById('searchResults');
+      container.innerHTML = '';
+      const q = query.trim().toLowerCase();
+
+      const matched = appData.spots.filter(s => {
+        if (!q) return true;
+        return s.name.toLowerCase().includes(q) || (s.areaName && s.areaName.toLowerCase().includes(q)) || (s.regionName && s.regionName.toLowerCase().includes(q));
+      }).slice(0, 30);
+
+      matched.forEach(s => {
+        const row = document.createElement('div');
+        row.className = "p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 flex items-center justify-between cursor-pointer border border-slate-700/50 transition";
+        row.onclick = () => {
+          closeSearchModal();
+          selectSpotFromMap(s.id);
+        };
+        row.innerHTML = `
+          <div>
+            <span class="text-[10px] text-slate-400 font-bold">${s.areaName || s.regionName} (${s.category === 'bc' ? '⛰️山' : '🏂ゲレンデ'})</span>
+            <div class="text-xs font-bold text-white">${s.name}</div>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-bold text-sky-400">${s.current.score}点</span>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>

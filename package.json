@@ -1,0 +1,20 @@
+{
+  "name": "snow-base",
+  "version": "1.0.0",
+  "description": "SNOW BASE - Ski & Mountain Snow Forecast & Observation Dashboard",
+  "main": "scripts/fetch_snow_data.js",
+  "scripts": {
+    "fetch": "node scripts/fetch_snow_data.js"
+  },
+  "keywords": [
+    "ski",
+    "snowboard",
+    "snow",
+    "powder",
+    "forecast",
+    "open-meteo",
+    "jma"
+  ],
+  "author": "",
+  "license": "MIT"
+}

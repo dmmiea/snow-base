@@ -1,0 +1,40 @@
+name: "Auto Fetch Snow Data & Deploy"
+
+on:
+  schedule:
+    # 毎時15分に自動実行（気象庁アメダスの毎時集計確定後に巡回）
+    - cron: '15 * * * *'
+  workflow_dispatch: # GitHub上の手動実行ボタン
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: "snow-data-update"
+      cancel-in-progress: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Fetch Snow Data Script
+        run: |
+          node scripts/fetch_snow_data.js
+
+      - name: Commit and push if data changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data_japan.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: ❄️ 自動データ巡回更新 [skip ci]" && git push)
