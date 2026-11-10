@@ -892,7 +892,7 @@
     "name": "グランスノー奥伊吹",
     "category": "ski",
     "region": "kansai",
-    "regionName": "関西・西日本",
+    "regionName": "関西",
     "prefecture": "滋賀県",
     "areaName": "米原・伊吹",
     "base": {
@@ -916,7 +916,7 @@
     "name": "ハチ・ハチ北高原スキー場",
     "category": "ski",
     "region": "kansai",
-    "regionName": "関西・西日本",
+    "regionName": "関西",
     "prefecture": "兵庫県",
     "areaName": "但馬・ハチ北",
     "base": {
@@ -939,8 +939,8 @@
     "id": "daisen_white",
     "name": "だいせんホワイトリゾート",
     "category": "ski",
-    "region": "kansai",
-    "regionName": "関西・西日本",
+    "region": "chugoku",
+    "regionName": "中国",
     "prefecture": "鳥取県",
     "areaName": "大山・山陰",
     "base": {
@@ -31462,7 +31462,7 @@
     "name": "馬見山 (978m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "四国山地・石鎚・剣山",
     "base": {
       "lat": 33.4864,
@@ -31485,7 +31485,7 @@
     "name": "浮嶽 (805m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "四国山地・石鎚・剣山",
     "base": {
       "lat": 33.47,
@@ -31508,7 +31508,7 @@
     "name": "三郡山 (936m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "四国山地・石鎚・剣山",
     "base": {
       "lat": 33.5556,
@@ -31531,7 +31531,7 @@
     "name": "犬鳴山（熊ケ城） (584m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "四国山地・石鎚・剣山",
     "base": {
       "lat": 33.6872,
@@ -31554,7 +31554,7 @@
     "name": "基山 (404m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "四国山地・石鎚・剣山",
     "base": {
       "lat": 33.4428,
@@ -31623,7 +31623,7 @@
     "name": "福智山 (901m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "四国山地・石鎚・剣山",
     "base": {
       "lat": 33.7422,
@@ -31646,7 +31646,7 @@
     "name": "湧蓋山 (1500m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "阿蘇・くじゅう連山",
     "base": {
       "lat": 33.14,
@@ -31669,7 +31669,7 @@
     "name": "万年山 (1140m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "阿蘇・くじゅう連山",
     "base": {
       "lat": 33.2314,
@@ -31692,7 +31692,7 @@
     "name": "脊振山 (1055m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "四国山地・石鎚・剣山",
     "base": {
       "lat": 33.4364,
@@ -31715,7 +31715,7 @@
     "name": "天山 (1046m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "四国山地・石鎚・剣山",
     "base": {
       "lat": 33.3389,
@@ -31738,7 +31738,7 @@
     "name": "酒呑童子山 (1181m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "阿蘇・くじゅう連山",
     "base": {
       "lat": 33.0969,
@@ -31761,7 +31761,7 @@
     "name": "釈迦岳 (1231m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "阿蘇・くじゅう連山",
     "base": {
       "lat": 33.1875,
@@ -31784,7 +31784,7 @@
     "name": "傾山 (1602m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "九州山地・霧島",
     "base": {
       "lat": 32.8389,
@@ -31807,7 +31807,7 @@
     "name": "祖母山 (1756m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "九州山地・霧島",
     "base": {
       "lat": 32.8281,
@@ -31830,7 +31830,7 @@
     "name": "大崩山 (1643m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "九州山地・霧島",
     "base": {
       "lat": 32.7378,
@@ -31853,7 +31853,7 @@
     "name": "古祖母山 (1633m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "九州山地・霧島",
     "base": {
       "lat": 32.8028,
@@ -31876,7 +31876,7 @@
     "name": "向坂山 (1684m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "九州山地・霧島",
     "base": {
       "lat": 32.5797,
@@ -31899,7 +31899,7 @@
     "name": "鷹取山 (802m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "阿蘇・くじゅう連山",
     "base": {
       "lat": 33.3031,
@@ -31922,7 +31922,7 @@
     "name": "金峰山 (665m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "阿蘇・くじゅう連山",
     "base": {
       "lat": 32.8139,
@@ -31945,7 +31945,7 @@
     "name": "国見岳 (1739m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "九州山地・霧島",
     "base": {
       "lat": 32.5472,
@@ -31968,7 +31968,7 @@
     "name": "筒ケ岳 (501m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "阿蘇・くじゅう連山",
     "base": {
       "lat": 32.9847,
@@ -31991,7 +31991,7 @@
     "name": "国見山 (1018m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "阿蘇・くじゅう連山",
     "base": {
       "lat": 33.1056,
@@ -32014,7 +32014,7 @@
     "name": "諸塚山 (1342m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "九州山地・霧島",
     "base": {
       "lat": 32.6347,
@@ -32037,7 +32037,7 @@
     "name": "上福根山 (1645m)",
     "category": "bc",
     "region": "chugoku",
-    "regionName": "中国・四国・九州",
+    "regionName": "中国",
     "areaName": "九州山地・霧島",
     "base": {
       "lat": 32.4733,

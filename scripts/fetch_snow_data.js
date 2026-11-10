@@ -261,11 +261,13 @@ async function run() {
           }
         }
 
-        // 7日間のデイリーサマリー
+        // 7日間のデイリーサマリー（今日から7日間）
         const dailySummary = [];
         const seenDates = new Set();
+        const todayDateStr = jstNow.toISOString().slice(0, 10);
         for (let dIdx = 0; dIdx < times.length; dIdx++) {
           const dateStr = times[dIdx].slice(0, 10);
+          if (dateStr < todayDateStr) continue; // 過去日は除外して今日から7日間
           if (seenDates.has(dateStr)) continue;
           seenDates.add(dateStr);
 
@@ -368,14 +370,16 @@ async function run() {
   console.log(`\n全スポット集計完了: ${processedSpots.length} 件`);
 
   const jstNow = new Date(Date.now() + 9 * 3600000);
-  const today06Str = `${jstNow.toISOString().slice(0, 10)}T06:00`;
+  const jstHour = jstNow.getUTCHours();
+  const targetMorning = new Date(jstNow.getTime() + (jstHour >= 12 ? 24 * 3600000 : 0));
+  const target06Str = `${targetMorning.toISOString().slice(0, 10)}T06:00`;
 
   function getLatestNightSnow(nightSnowByDate) {
     if (!nightSnowByDate) return 0;
-    if (nightSnowByDate[today06Str] !== undefined) return nightSnowByDate[today06Str];
+    if (nightSnowByDate[target06Str] !== undefined) return nightSnowByDate[target06Str];
     const keys = Object.keys(nightSnowByDate);
     if (keys.length === 0) return 0;
-    const upcoming = keys.filter(k => k >= today06Str);
+    const upcoming = keys.filter(k => k >= target06Str);
     if (upcoming.length > 0) return nightSnowByDate[upcoming[0]];
     return nightSnowByDate[keys[keys.length - 1]] || 0;
   }

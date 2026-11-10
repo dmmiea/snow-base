@@ -72,9 +72,9 @@ async function mapAllMountains() {
     'mt_chugoku-center.html': { region: 'chugoku', regionName: '中国', areaName: '大山・蒜山・伯耆' },
     'mt_kibi-west.html': { region: 'chugoku', regionName: '中国', areaName: '吉備西部・備後' },
     'mt_chugoku-west.html': { region: 'chugoku', regionName: '中国', areaName: '西中国山地(恐羅漢・冠山)' },
-    'mt_tsukushi.html': { region: 'chugoku', regionName: '中国・四国・九州', areaName: '四国山地・石鎚・剣山' },
-    'mt_aso.html': { region: 'chugoku', regionName: '中国・四国・九州', areaName: '阿蘇・くじゅう連山' },
-    'mt_kyushu.html': { region: 'chugoku', regionName: '中国・四国・九州', areaName: '九州山地・霧島' }
+    'mt_tsukushi.html': { region: 'chugoku', regionName: '中国', areaName: '四国山地・石鎚・剣山' },
+    'mt_aso.html': { region: 'chugoku', regionName: '中国', areaName: '阿蘇・くじゅう連山' },
+    'mt_kyushu.html': { region: 'chugoku', regionName: '中国', areaName: '九州山地・霧島' }
   };
 
   const mtToSubpage = {};

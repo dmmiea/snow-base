@@ -148,8 +148,8 @@
             <option value="hokuriku">北陸 (富山・石川・福井)</option>
             <option value="kanto">関東 (群馬・栃木他)</option>
             <option value="tokai">東海 (岐阜・奥美濃)</option>
-            <option value="kansai">関西 (滋賀・兵庫)</option>
-            <option value="chugoku">中国 (鳥取・広島)</option>
+            <option value="kansai">関西 (滋賀・兵庫・京都)</option>
+            <option value="chugoku">中国・西日本 (鳥取・広島・四国他)</option>
           </select>
         </div>
         <div>
@@ -631,9 +631,13 @@
       currentCategory = cat;
       updateCategoryUI();
       
-      // 切り替えたカテゴリの最初のスポットを選択
-      const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion));
-      if (filtered.length > 0) {
+      // 切り替えたカテゴリのスポットを選択
+      let filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion));
+      if (filtered.length === 0) {
+        currentRegion = 'all';
+        filtered = appData.spots.filter(s => s.category === currentCategory);
+      }
+      if (filtered.length > 0 && !filtered.some(s => s.id === currentSpotId)) {
         currentSpotId = filtered[0].id;
       }
       populateRegionsAndAreas();
@@ -681,7 +685,7 @@
       currentRegion = reg;
       populateRegionsAndAreas();
       const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion));
-      if (filtered.length > 0) {
+      if (filtered.length > 0 && !filtered.some(s => s.id === currentSpotId)) {
         currentSpotId = filtered[0].id;
       }
       renderSpotPills();
@@ -691,7 +695,7 @@
     function onAreaChange(area) {
       currentArea = area;
       const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion) && (currentArea === 'all' || s.areaName === currentArea));
-      if (filtered.length > 0) {
+      if (filtered.length > 0 && !filtered.some(s => s.id === currentSpotId)) {
         currentSpotId = filtered[0].id;
       }
       renderSpotPills();
@@ -738,11 +742,12 @@
         'S': '🧭 南斜面 (S)',
         'SW': '🧭 南西斜面 (SW)',
         'W': '🧭 西斜面 (W)',
-        'NW': '🧭 北西斜面 (NW)'
+        'NW': '🧭 北西斜面 (NW)',
+        'ALL': '🧭 全方位 (360°)'
       };
       const slopeEl = document.getElementById('heroSlopeBadge');
       if (slopeEl) {
-        slopeEl.textContent = slopeMap[spot.slopeOrientation] || (spot.slopeOrientation ? `🧭 ${spot.slopeOrientation}斜面` : '🧭 斜面一般');
+        slopeEl.textContent = slopeMap[spot.slopeOrientation] || (spot.slopeOrientation ? `🧭 ${spot.slopeOrientation}斜面` : '🧭 北斜面 (N)');
       }
 
       // 標高差
@@ -770,16 +775,18 @@
       document.getElementById('heroScore').textContent = spot.current.score;
       document.getElementById('heroRank').textContent = spot.current.rank;
 
-      // 夜間新雪（当日06:00最新値を参照）
+      // 夜間新雪（今夜〜翌朝06:00の直近ターゲット値を参照）
       const jstNow = new Date(Date.now() + 9 * 3600000);
-      const today06Str = `${jstNow.toISOString().slice(0, 10)}T06:00`;
+      const jstHour = jstNow.getUTCHours();
+      const targetMorning = new Date(jstNow.getTime() + (jstHour >= 12 ? 24 * 3600000 : 0));
+      const target06Str = `${targetMorning.toISOString().slice(0, 10)}T06:00`;
       const nightKeys = Object.keys(spot.nightSnowByDate || {});
       let nextNightVal = 0;
       if (spot.nightSnowByDate) {
-        if (spot.nightSnowByDate[today06Str] !== undefined) {
-          nextNightVal = spot.nightSnowByDate[today06Str];
+        if (spot.nightSnowByDate[target06Str] !== undefined) {
+          nextNightVal = spot.nightSnowByDate[target06Str];
         } else {
-          const upcoming = nightKeys.filter(k => k >= today06Str);
+          const upcoming = nightKeys.filter(k => k >= target06Str);
           if (upcoming.length > 0) nextNightVal = spot.nightSnowByDate[upcoming[0]];
           else if (nightKeys.length > 0) nextNightVal = spot.nightSnowByDate[nightKeys[nightKeys.length - 1]];
         }
@@ -839,18 +846,25 @@
       }
 
       const hourly = currentElevLevel === 'top' ? spot.topHourly : spot.baseHourly;
-      if (!hourly || !hourly.time) return;
+      const jstNow = new Date(Date.now() + 9 * 3600000);
+      const currentHourStr = jstNow.toISOString().slice(0, 13);
+      let currentIdx = hourly.time.findIndex(t => t.startsWith(currentHourStr));
+      if (currentIdx === -1) currentIdx = 24;
 
-      // 直近48時間（過去24h＋未来24h）を抜粋表示
+      // 直近48時間（過去24h＋未来24h）を現在時刻中心で抜粋表示
+      const startIdx = Math.max(0, currentIdx - 24);
+      const endIdx = Math.min(hourly.time.length, currentIdx + 25);
+      const nowHighlightIdx = currentIdx - startIdx;
+
       const labels = [];
       const depthData = [];
       const snowData = [];
-      const nowIdx = 24;
 
-      for (let i = 0; i < Math.min(48, hourly.time.length); i++) {
+      for (let i = startIdx; i < endIdx; i++) {
         const tStr = hourly.time[i]; // 2026-11-10T06:00
         const hour = tStr.slice(11, 16);
-        labels.push(hour);
+        const label = (hour === '00:00' || i === startIdx) ? `${tStr.slice(5, 10)} ${hour}` : hour;
+        labels.push(label);
         depthData.push(hourly.snowDepth[i]);
         snowData.push(hourly.snowfall[i] || 0);
       }
@@ -870,7 +884,7 @@
               fill: true,
               tension: 0.3,
               yAxisID: 'yDepth',
-              pointRadius: (ctx) => ctx.dataIndex === nowIdx ? 5 : 0,
+              pointRadius: (ctx) => ctx.dataIndex === nowHighlightIdx ? 5 : 0,
               pointBackgroundColor: '#fbbf24'
             },
             {
@@ -942,7 +956,7 @@
       const currentHourStr = jstNow.toISOString().slice(0, 13);
       let targetNowCol = null;
 
-      for (let i = 0; i < Math.min(72, hourly.time.length); i++) {
+      for (let i = 0; i < hourly.time.length; i++) {
         const timeStr = hourly.time[i]; // 2026-11-10T06:00
         const datePart = timeStr.slice(5, 10);
         const hourPart = timeStr.slice(11, 16);
@@ -963,11 +977,19 @@
 
         let bottomBadgeHtml = '<div class="h-7 w-full"></div>';
         if (hourPart === '06:00' && nightVal !== undefined && nightVal !== null) {
-          bottomBadgeHtml = `
-            <div class="w-full py-0.5 px-0.5 bg-gradient-to-r from-sky-500 to-indigo-600 rounded text-[9px] font-black text-white leading-tight shadow">
-              🌙夜間<br>+${nightVal}cm
-            </div>
-          `;
+          if (nightVal > 0) {
+            bottomBadgeHtml = `
+              <div class="w-full py-0.5 px-0.5 bg-gradient-to-r from-sky-500 to-indigo-600 rounded text-[9px] font-black text-white leading-tight shadow">
+                🌙夜間<br>+${nightVal}cm
+              </div>
+            `;
+          } else {
+            bottomBadgeHtml = `
+              <div class="w-full py-0.5 px-0.5 bg-slate-800/80 text-slate-500 border border-slate-700/40 rounded text-[8.5px] font-bold leading-tight">
+                🌙夜間<br>0cm
+              </div>
+            `;
+          }
         } else if (hourPart === '18:00') {
           let daySnow = 0;
           const startDay = Math.max(0, i - 12);
@@ -1015,11 +1037,16 @@
 
       if (!spot.dailySummary) return;
 
-      spot.dailySummary.forEach(day => {
+      const jstNow = new Date(Date.now() + 9 * 3600000);
+      const todayStr = jstNow.toISOString().slice(0, 10);
+      const daysList = spot.dailySummary.filter(d => d.date >= todayStr).slice(0, 7);
+
+      daysList.forEach(day => {
+        const isToday = day.date === todayStr;
         const col = document.createElement('div');
-        col.className = "flex-shrink-0 w-20 bg-slate-800/80 rounded-xl p-2.5 flex flex-col items-center justify-between text-center border border-slate-700/60";
+        col.className = `flex-shrink-0 w-20 ${isToday ? 'bg-slate-800 border-sky-500/50 ring-1 ring-sky-500/30' : 'bg-slate-800/80 border-slate-700/60'} rounded-xl p-2.5 flex flex-col items-center justify-between text-center border`;
         col.innerHTML = `
-          <span class="text-[10px] font-bold text-slate-400">${day.date.slice(5)}</span>
+          <span class="text-[10px] font-bold ${isToday ? 'text-amber-400 font-black' : 'text-slate-400'}">${isToday ? '今日' : day.date.slice(5)}</span>
           <span class="text-2xl my-1.5">${day.weatherIcon}</span>
           <span class="text-[10.5px] font-bold text-slate-300">${day.weatherLabel}</span>
           <div class="font-teko text-sm font-bold mt-1">
@@ -1363,7 +1390,7 @@
         snowType,
         snowDepth,
         comment,
-        createdAt: firebase.firestore.FieldValue ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
+        createdAt: (typeof firebase !== 'undefined' && firebase.firestore && firebase.firestore.FieldValue) ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
       };
 
       try {
