@@ -505,6 +505,29 @@
     let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
     let currentRating = 5;
 
+    // Firebase 設定 & Firestore 初期化 (共通プロジェクト surf-base-133da / 雪専用コレクション snow_reports)
+    const firebaseConfig = {
+      apiKey: "AIzaSyAS_2ZPOeeudPnEjacxecGIzEA4WUUwDig",
+      authDomain: "surf-base-133da.firebaseapp.com",
+      projectId: "surf-base-133da",
+      storageBucket: "surf-base-133da.firebasestorage.app",
+      messagingSenderId: "663038512582",
+      appId: "1:663038512582:web:1050287f8316079dc136c7",
+      measurementId: "G-9W0XF0ZBBC"
+    };
+
+    let db = null;
+    let snowReports = [];
+    try {
+      if (typeof firebase !== 'undefined') {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        console.log('✅ [Firebase] Firestore initialized successfully for SNOW BASE.');
+      }
+    } catch (e) {
+      console.warn('⚠️ [Firebase] Initialization error:', e);
+    }
+
     // ローカル簡易雪レポストレージ（Firestoreバックアップ）
     let localReports = JSON.parse(localStorage.getItem('snow_base_reports') || '[]');
 
@@ -512,6 +535,7 @@
     document.addEventListener('DOMContentLoaded', async () => {
       await loadData();
       initUI();
+      initReportsListener();
     });
 
     async function loadData() {
@@ -1025,36 +1049,96 @@
       });
     }
 
-    // 雪レポフィード描画
+    // 雪レポフィード描画 (Firestore リアルタイム ＋ LocalStorage ハイブリッド)
+    function initReportsListener() {
+      if (!db) {
+        console.log('[Firebase] DB not ready, using localReports.');
+        renderFeedTab();
+        return;
+      }
+      try {
+        db.collection('snow_reports')
+          .orderBy('createdAt', 'desc')
+          .limit(50)
+          .onSnapshot((snapshot) => {
+            const list = [];
+            snapshot.forEach(doc => {
+              const data = doc.data();
+              list.push({
+                id: doc.id,
+                spotId: data.spotId || '',
+                spotName: data.spotName || '雪山スポット',
+                rating: Number(data.rating) || 5,
+                snowType: data.snowType || '❄️ パウダー',
+                snowDepth: data.snowDepth || 'すね',
+                comment: data.comment || '',
+                time: formatRelativeTime(data.createdAt)
+              });
+            });
+            snowReports = list;
+            renderFeedTab();
+          }, (err) => {
+            console.warn('⚠️ Firestore onSnapshot listener error:', err);
+            renderFeedTab();
+          });
+      } catch (err) {
+        console.warn('⚠️ Error attaching reports listener:', err);
+        renderFeedTab();
+      }
+    }
+
+    function formatRelativeTime(ts) {
+      if (!ts) return '本日';
+      let d = null;
+      if (typeof ts.toDate === 'function') {
+        d = ts.toDate();
+      } else if (ts instanceof Date) {
+        d = ts;
+      } else if (typeof ts === 'string' || typeof ts === 'number') {
+        d = new Date(ts);
+      } else {
+        return '本日';
+      }
+
+      const now = new Date();
+      const diffMs = now - d;
+      const diffMin = Math.floor(diffMs / (1000 * 60));
+      const diffHour = Math.floor(diffMs / (1000 * 60 * 60));
+      const diffDay = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+      if (diffMin < 1) return 'たった今';
+      if (diffMin < 60) return `${diffMin}分前`;
+      if (diffHour < 24) return `${diffHour}時間前`;
+      if (diffDay < 7) return `${diffDay}日前`;
+      return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+    }
+
     function renderFeedTab() {
       const container = document.getElementById('feedListContainer');
       container.innerHTML = '';
 
-      if (localReports.length === 0) {
-        // 初期サンプルレポ
-        localReports = [
-          {
-            spotName: "白馬八方尾根スキー場",
-            rating: 5,
-            snowType: "❄️ 極上ドライパウダー",
-            snowDepth: "すね (10〜20cm)",
-            comment: "朝イチ黒菱ゲレンデ最高でした！気温-8度で完全リセット。面ツル浮遊感抜群。",
-            time: "本日 08:45"
-          },
-          {
-            spotName: "ニセコ東急 グラン・ヒラフ",
-            rating: 5,
-            snowType: "❄️ 極上ドライパウダー",
-            snowDepth: "もも・腰 (40〜70cm)",
-            comment: "花園ツリーラン深すぎ注意！底付き一切なしの神パウです。",
-            time: "本日 09:15"
-          }
-        ];
-      }
+      const displayList = snowReports.length > 0 ? snowReports : (localReports.length > 0 ? localReports : [
+        {
+          spotName: "白馬八方尾根スキー場",
+          rating: 5,
+          snowType: "❄️ 極上ドライパウダー",
+          snowDepth: "すね (10〜20cm)",
+          comment: "朝イチ黒菱ゲレンデ最高でした！気温-8度で完全リセット。面ツル浮遊感抜群。",
+          time: "本日 08:45"
+        },
+        {
+          spotName: "ニセコ東急 グラン・ヒラフ",
+          rating: 5,
+          snowType: "❄️ 極上ドライパウダー",
+          snowDepth: "もも・腰 (40〜70cm)",
+          comment: "花園ツリーラン深すぎ注意！底付き一切なしの神パウです。",
+          time: "本日 09:15"
+        }
+      ]);
 
-      localReports.forEach(r => {
+      displayList.forEach(r => {
         const item = document.createElement('div');
-        item.className = "snow-card rounded-xl p-3 border border-slate-700/60 space-y-1.5";
+        item.className = "snow-card rounded-xl p-3 border border-slate-700/60 space-y-1.5 transition hover:border-slate-600";
         
         let starsHtml = '';
         for (let i = 0; i < 5; i++) {
@@ -1064,7 +1148,10 @@
         item.innerHTML = `
           <div class="flex items-start justify-between">
             <div>
-              <div class="font-bold text-sm text-white">${r.spotName}</div>
+              <div class="font-bold text-sm text-white flex items-center gap-1.5">
+                <span>${r.spotName}</span>
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              </div>
               <div class="flex items-center gap-2 mt-0.5">
                 <div class="flex">${starsHtml}</div>
                 <span class="text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800">${r.snowType}</span>
@@ -1072,10 +1159,10 @@
             </div>
             <span class="text-[10px] text-slate-400">${r.time || '本日'}</span>
           </div>
-          <div class="text-xs text-slate-300 pt-1">${r.comment}</div>
+          <div class="text-xs text-slate-300 pt-1 leading-relaxed">${r.comment}</div>
           <div class="text-[10px] text-slate-400 flex items-center gap-1 pt-0.5">
             <i class="fa-solid fa-ruler-vertical text-sky-400"></i>
-            <span>体感新雪: <b>${r.snowDepth}</b></span>
+            <span>体感新雪: <b class="text-slate-200">${r.snowDepth}</b></span>
           </div>
         `;
         container.appendChild(item);
@@ -1107,7 +1194,7 @@
       });
     }
 
-    function submitReport() {
+    async function submitReport() {
       const spot = appData.spots.find(s => s.id === currentSpotId);
       const snowType = document.getElementById('reportSnowType').value;
       const snowDepth = document.getElementById('reportSnowDepth').value;
@@ -1118,22 +1205,54 @@
         return;
       }
 
-      const newReport = {
+      const submitBtn = document.querySelector('#modalReport button[onclick="submitReport()"]');
+      const origText = submitBtn ? submitBtn.innerText : '雪レポを投稿する';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = '送信中...';
+      }
+
+      const newReportData = {
+        spotId: spot ? spot.id : currentSpotId,
         spotName: spot ? spot.name : '雪山スポット',
+        category: spot ? spot.category : 'ski',
+        region: spot ? spot.region : '',
         rating: currentRating,
         snowType,
         snowDepth,
         comment,
-        time: 'たった今'
+        createdAt: firebase.firestore.FieldValue ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
       };
 
-      localReports.unshift(newReport);
-      localStorage.setItem('snow_base_reports', JSON.stringify(localReports));
+      try {
+        if (db) {
+          await db.collection('snow_reports').add(newReportData);
+          console.log('✅ [Firebase] Report successfully added to snow_reports collection');
+        } else {
+          const fallbackItem = { ...newReportData, time: 'たった今' };
+          localReports.unshift(fallbackItem);
+          localStorage.setItem('snow_base_reports', JSON.stringify(localReports));
+          renderFeedTab();
+        }
 
-      closeReportModal();
-      document.getElementById('reportComment').value = '';
-      alert('雪レポを投稿しました！ありがとうございます！');
-      renderFeedTab();
+        closeReportModal();
+        document.getElementById('reportComment').value = '';
+        alert('雪レポを投稿しました！ありがとうございます！全国にリアルタイム共有されました。');
+      } catch (err) {
+        console.warn('⚠️ Firestore send failed, falling back to local storage:', err);
+        const fallbackItem = { ...newReportData, time: 'たった今' };
+        localReports.unshift(fallbackItem);
+        localStorage.setItem('snow_base_reports', JSON.stringify(localReports));
+        closeReportModal();
+        document.getElementById('reportComment').value = '';
+        alert('雪レポを投稿しました！（オフライン保持）');
+        renderFeedTab();
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = origText;
+        }
+      }
     }
 
     // MYスポット
