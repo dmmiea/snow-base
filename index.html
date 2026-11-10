@@ -710,11 +710,13 @@
 
       const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion) && (currentArea === 'all' || s.areaName === currentArea));
 
+      let activeBtn = null;
       filtered.forEach(s => {
         const btn = document.createElement('button');
         const isSelected = s.id === currentSpotId;
         btn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border ${isSelected ? 'bg-sky-400 text-slate-900 border-sky-400 shadow' : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600'}`;
         btn.textContent = s.name;
+        if (isSelected) activeBtn = btn;
         btn.onclick = () => {
           currentSpotId = s.id;
           renderSpotPills();
@@ -722,6 +724,14 @@
         };
         container.appendChild(btn);
       });
+
+      if (activeBtn) {
+        setTimeout(() => {
+          if (typeof activeBtn.scrollIntoView === 'function') {
+            activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          }
+        }, 50);
+      }
     }
 
     // スポット詳細描画
@@ -1042,12 +1052,16 @@
       const todayStr = jstNow.toISOString().slice(0, 10);
       const daysList = spot.dailySummary.filter(d => d.date >= todayStr).slice(0, 7);
 
+      const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
       daysList.forEach(day => {
         const isToday = day.date === todayStr;
+        const dObj = new Date(day.date + 'T00:00:00+09:00');
+        const dayOfWeek = weekdays[dObj.getDay()] || '';
+        const dateLabel = isToday ? '今日' : `${day.date.slice(5).replace('-', '/')}(${dayOfWeek})`;
         const col = document.createElement('div');
         col.className = `flex-shrink-0 w-20 ${isToday ? 'bg-slate-800 border-sky-500/50 ring-1 ring-sky-500/30' : 'bg-slate-800/80 border-slate-700/60'} rounded-xl p-2.5 flex flex-col items-center justify-between text-center border`;
         col.innerHTML = `
-          <span class="text-[10px] font-bold ${isToday ? 'text-amber-400 font-black' : 'text-slate-400'}">${isToday ? '今日' : day.date.slice(5)}</span>
+          <span class="text-[10px] font-bold ${isToday ? 'text-amber-400 font-black' : (dayOfWeek === '日' ? 'text-rose-400' : (dayOfWeek === '土' ? 'text-sky-400' : 'text-slate-400'))}">${dateLabel}</span>
           <span class="text-2xl my-1.5">${day.weatherIcon}</span>
           <span class="text-[10.5px] font-bold text-slate-300">${day.weatherLabel}</span>
           <div class="font-teko text-sm font-bold mt-1">
@@ -1500,7 +1514,8 @@
         return (s.name && s.name.toLowerCase().includes(q)) ||
                (s.id && s.id.toLowerCase().includes(q)) ||
                (s.areaName && s.areaName.toLowerCase().includes(q)) ||
-               (s.regionName && s.regionName.toLowerCase().includes(q));
+               (s.regionName && s.regionName.toLowerCase().includes(q)) ||
+               (s.prefecture && s.prefecture.toLowerCase().includes(q));
       }).slice(0, 30);
 
       matched.forEach(s => {
