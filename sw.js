@@ -1,10 +1,10 @@
-// SNOW BASE JAPAN Service Worker (Cache & Offline Support)
-const CACHE_NAME = 'snow-base-v1';
+// SNOW BASE JAPAN Service Worker (Cache & Offline Support v2)
+const CACHE_NAME = 'snow-base-v2';
 
 const STATIC_ASSETS = [
   './',
-  './index.html',
   './manifest.json',
+  './icons/apple-touch-icon-180.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon.svg'
@@ -65,7 +65,25 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 2. 静的アセット・外部ライブラリ (CDN/CSS/JS/Icons): Stale-While-Revalidate
+  // 2. ルートナビゲーション (HTML / App Shell): Network-First with Cache Fallback
+  if (request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('index.html')) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put('./', responseClone);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match('./'))
+    );
+    return;
+  }
+
+  // 3. 静的アセット・外部ライブラリ (CDN/CSS/JS/Icons): Stale-While-Revalidate
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       const fetchPromise = fetch(request)

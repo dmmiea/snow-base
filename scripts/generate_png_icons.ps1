@@ -65,7 +65,7 @@ function Generate-SnowIcon([int]$size, [string]$outputPath) {
     $g.FillEllipse($dotBrush, [float]($cx - $dotR), [float]($cy - $dotR), [float]($dotR * 2), [float]($dotR * 2))
 
     # Text "SNOW BASE" at bottom
-    if ($size -ge 192) {
+    if ($size -ge 180) {
         $fontSize = [float]($size * 0.065)
         $font = [System.Drawing.Font]::new("Arial", $fontSize, [System.Drawing.FontStyle]::Bold, [System.Drawing.GraphicsUnit]::Pixel)
         $textBrush = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::White)
@@ -82,5 +82,6 @@ function Generate-SnowIcon([int]$size, [string]$outputPath) {
 }
 
 $iconDir = Join-Path $PSScriptRoot "..\icons"
+Generate-SnowIcon 180 (Join-Path $iconDir "apple-touch-icon-180.png")
 Generate-SnowIcon 192 (Join-Path $iconDir "icon-192.png")
 Generate-SnowIcon 512 (Join-Path $iconDir "icon-512.png")
