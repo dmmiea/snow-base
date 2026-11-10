@@ -76,7 +76,7 @@
       font-weight: 700 !important;
     }
     #mapViewContainer {
-      height: calc(100vh - 120px);
+      height: calc(100dvh - 120px);
     }
   </style>
 </head>
@@ -176,15 +176,17 @@
       <!-- スポットヘッダー -->
       <div class="flex items-start justify-between mb-3 relative z-10">
         <div>
-          <div class="flex items-center gap-1.5">
+          <div class="flex items-center gap-1.5 flex-wrap">
             <span id="heroCategoryBadge" class="text-[10px] font-black px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">🏂 スキー場</span>
             <span id="heroAreaName" class="text-xs font-bold text-slate-400">白馬・小谷</span>
+            <span id="heroSlopeBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">🧭 北斜面 (N)</span>
+            <span id="heroElevDiffBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">↕ 標高差 --m</span>
           </div>
-          <h2 id="heroSpotName" class="text-xl font-black text-white mt-0.5 flex items-center gap-2">
+          <h2 id="heroSpotName" class="text-xl font-black text-white mt-1 flex items-center gap-2">
             白馬八方尾根スキー場
           </h2>
         </div>
-        <button id="btnFav" onclick="toggleFavorite()" class="w-9 h-9 rounded-full bg-slate-800/90 border border-slate-700 text-slate-400 hover:text-amber-400 flex items-center justify-center transition active:scale-95 shadow">
+        <button id="btnFav" onclick="toggleFavorite()" class="w-9 h-9 rounded-full bg-slate-800/90 border border-slate-700 text-slate-400 hover:text-amber-400 flex items-center justify-center transition active:scale-95 shadow shrink-0 ml-2">
           <i id="favIcon" class="fa-regular fa-star text-base"></i>
         </button>
       </div>
@@ -204,19 +206,25 @@
         <!-- 積雪深（山頂 & 山麓） -->
         <div class="col-span-8 bg-slate-800/80 rounded-xl p-2.5 flex flex-col justify-between border border-slate-700/60">
           <div class="flex justify-between items-center text-xs">
-            <span class="text-slate-400 font-bold flex items-center gap-1">
-              <i class="fa-solid fa-mountain text-sky-400"></i>
-              <span>山頂 (<span id="heroTopElev">1831m</span>)</span>
-            </span>
-            <span class="font-teko text-2xl font-black text-white"><span id="heroTopSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
+            <div class="min-w-0 pr-1">
+              <span class="text-slate-400 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-mountain text-sky-400 text-[11px]"></i>
+                <span>山頂 (<span id="heroTopElev">1831m</span>)</span>
+              </span>
+              <span id="heroTopLabel" class="text-[9.5px] text-slate-400 truncate block max-w-[140px]">八方池山荘</span>
+            </div>
+            <span class="font-teko text-2xl font-black text-white whitespace-nowrap"><span id="heroTopSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
           </div>
           <div class="border-t border-slate-700/50 my-1"></div>
           <div class="flex justify-between items-center text-xs">
-            <span class="text-slate-400 font-bold flex items-center gap-1">
-              <i class="fa-solid fa-house text-emerald-400"></i>
-              <span>山麓 (<span id="heroBaseElev">760m</span>)</span>
-            </span>
-            <span class="font-teko text-2xl font-black text-slate-200"><span id="heroBaseSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
+            <div class="min-w-0 pr-1">
+              <span class="text-slate-400 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-house text-emerald-400 text-[11px]"></i>
+                <span>山麓 (<span id="heroBaseElev">760m</span>)</span>
+              </span>
+              <span id="heroBaseLabel" class="text-[9.5px] text-slate-400 truncate block max-w-[140px]">八方ゴンドラ山麓駅</span>
+            </div>
+            <span class="font-teko text-2xl font-black text-slate-200 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
           </div>
         </div>
       </div>
@@ -247,19 +255,30 @@
         </div>
       </div>
 
-      <!-- 気温 & 風速 & アメダス実況 -->
-      <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-700/60 text-center text-xs relative z-10">
+      <!-- 気温 & 風速 & 現在天気 & アメダス実況 -->
+      <div class="grid grid-cols-4 gap-1.5 mt-3 pt-3 border-t border-slate-700/60 text-center text-xs relative z-10">
         <div>
-          <span class="text-[10px] text-slate-400 block">山頂気温</span>
-          <span id="heroTopTemp" class="font-teko text-xl font-bold text-sky-300">--℃</span>
+          <span class="text-[9.5px] text-slate-400 block">現在天気</span>
+          <div class="mt-0.5 flex items-center justify-center gap-1">
+            <span id="heroWeatherIcon" class="text-base">❄️</span>
+            <span id="heroWeatherLabel" class="text-xs font-bold text-white">雪</span>
+          </div>
         </div>
         <div>
-          <span class="text-[10px] text-slate-400 block">山頂風速</span>
-          <span id="heroWind" class="font-teko text-xl font-bold text-slate-200">-- m/s</span>
+          <span class="text-[9.5px] text-slate-400 block">気温 (山頂/山麓)</span>
+          <div class="font-teko text-lg font-bold mt-0.5">
+            <span id="heroTopTemp" class="text-sky-300">--℃</span>
+            <span class="text-slate-500 text-xs"> / </span>
+            <span id="heroBaseTemp" class="text-slate-300">--℃</span>
+          </div>
         </div>
         <div>
-          <span class="text-[10px] text-slate-400 block">最寄りアメダス実測</span>
-          <span id="heroAmedasDepth" class="font-teko text-xl font-bold text-emerald-400">-- cm</span>
+          <span class="text-[9.5px] text-slate-400 block">山頂風速</span>
+          <span id="heroWind" class="font-teko text-lg font-bold text-slate-200 block mt-0.5">-- m/s</span>
+        </div>
+        <div>
+          <span id="heroAmedasTitle" class="text-[9.5px] text-slate-400 block truncate">アメダス実測</span>
+          <span id="heroAmedasDepth" class="font-teko text-lg font-bold text-emerald-400 block mt-0.5">-- cm</span>
         </div>
       </div>
     </div>
@@ -505,6 +524,22 @@
     let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
     let currentRating = 5;
 
+    // WMO気象コード（0〜99）変換関数
+    function getWeatherInfo(code) {
+      if (code === 0) return { label: '快晴', icon: '☀️' };
+      if (code === 1 || code === 2) return { label: '晴れ/薄曇', icon: '🌤️' };
+      if (code === 3) return { label: '曇り', icon: '☁️' };
+      if (code === 45 || code === 48) return { label: '霧/濃霧', icon: '🌫️' };
+      if (code >= 51 && code <= 55) return { label: '霧雨', icon: '🌦️' };
+      if (code >= 61 && code <= 65) return { label: '雨', icon: '🌧️' };
+      if (code >= 71 && code <= 75) return { label: '雪', icon: '❄️' };
+      if (code === 77) return { label: '雪粒', icon: '🌨️' };
+      if (code >= 80 && code <= 82) return { label: 'にわか雨', icon: '🌦️' };
+      if (code === 85 || code === 86) return { label: 'にわか雪', icon: '🌨️' };
+      if (code >= 95) return { label: '雷雨/吹雪', icon: '⛈️' };
+      return { label: '雪', icon: '❄️' };
+    }
+
     // Firebase 設定 & Firestore 初期化 (共通プロジェクト surf-base-133da / 雪専用コレクション snow_reports)
     const firebaseConfig = {
       apiKey: "AIzaSyAS_2ZPOeeudPnEjacxecGIzEA4WUUwDig",
@@ -575,10 +610,20 @@
 
     function initUI() {
       // 検索モーダル外クリックで閉じる
-      const modal = document.getElementById('modalSearch');
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeSearchModal();
-      });
+      const modalSearch = document.getElementById('modalSearch');
+      if (modalSearch) {
+        modalSearch.addEventListener('click', (e) => {
+          if (e.target === modalSearch) closeSearchModal();
+        });
+      }
+
+      // 雪レポ投稿モーダル外クリックで閉じる
+      const modalReport = document.getElementById('modalReport');
+      if (modalReport) {
+        modalReport.addEventListener('click', (e) => {
+          if (e.target === modalReport) closeReportModal();
+        });
+      }
     }
 
     // カテゴリ切替 (スキー場 / BC)
@@ -684,9 +729,38 @@
       document.getElementById('heroAreaName').textContent = spot.areaName || spot.regionName;
       document.getElementById('heroCategoryBadge').textContent = spot.category === 'bc' ? '⛰️ バックカントリー' : '🏂 スキー場';
 
-      // 標高
+      // 斜面方位
+      const slopeMap = {
+        'N': '🧭 北斜面 (N)',
+        'NE': '🧭 北東斜面 (NE)',
+        'E': '🧭 東斜面 (E)',
+        'SE': '🧭 南東斜面 (SE)',
+        'S': '🧭 南斜面 (S)',
+        'SW': '🧭 南西斜面 (SW)',
+        'W': '🧭 西斜面 (W)',
+        'NW': '🧭 北西斜面 (NW)'
+      };
+      const slopeEl = document.getElementById('heroSlopeBadge');
+      if (slopeEl) {
+        slopeEl.textContent = slopeMap[spot.slopeOrientation] || (spot.slopeOrientation ? `🧭 ${spot.slopeOrientation}斜面` : '🧭 斜面一般');
+      }
+
+      // 標高差
+      const elevDiffEl = document.getElementById('heroElevDiffBadge');
+      if (elevDiffEl) {
+        const topEl = (spot.top && spot.top.elevation) || 0;
+        const baseEl = (spot.base && spot.base.elevation) || 0;
+        const diff = Math.max(0, topEl - baseEl);
+        elevDiffEl.textContent = `↕ 標高差 ${diff}m`;
+      }
+
+      // 標高 & リフト・施設名
       document.getElementById('heroTopElev').textContent = `${spot.top.elevation}m`;
       document.getElementById('heroBaseElev').textContent = `${spot.base.elevation}m`;
+      const topLabelEl = document.getElementById('heroTopLabel');
+      if (topLabelEl) topLabelEl.textContent = spot.top.label || (spot.category === 'bc' ? '山頂ピーク' : 'ゲレンデトップ');
+      const baseLabelEl = document.getElementById('heroBaseLabel');
+      if (baseLabelEl) baseLabelEl.textContent = spot.base.label || (spot.category === 'bc' ? '登山口・ベース' : 'ゲレンデベース');
 
       // 積雪深
       document.getElementById('heroTopSnow').textContent = spot.current.topSnowDepth;
@@ -696,9 +770,20 @@
       document.getElementById('heroScore').textContent = spot.current.score;
       document.getElementById('heroRank').textContent = spot.current.rank;
 
-      // 夜間新雪
+      // 夜間新雪（当日06:00最新値を参照）
+      const jstNow = new Date(Date.now() + 9 * 3600000);
+      const today06Str = `${jstNow.toISOString().slice(0, 10)}T06:00`;
       const nightKeys = Object.keys(spot.nightSnowByDate || {});
-      const nextNightVal = nightKeys.length > 0 ? spot.nightSnowByDate[nightKeys[0]] : 0;
+      let nextNightVal = 0;
+      if (spot.nightSnowByDate) {
+        if (spot.nightSnowByDate[today06Str] !== undefined) {
+          nextNightVal = spot.nightSnowByDate[today06Str];
+        } else {
+          const upcoming = nightKeys.filter(k => k >= today06Str);
+          if (upcoming.length > 0) nextNightVal = spot.nightSnowByDate[upcoming[0]];
+          else if (nightKeys.length > 0) nextNightVal = spot.nightSnowByDate[nightKeys[nightKeys.length - 1]];
+        }
+      }
       document.getElementById('heroNightSnow').textContent = `+${nextNightVal} cm`;
       document.getElementById('heroResetTag').textContent = nextNightVal >= 15 ? 'リセット確定❄️' : (nextNightVal >= 5 ? 'うっすら積雪' : '新雪少なめ');
 
@@ -713,9 +798,24 @@
         subContainer.appendChild(badge);
       });
 
+      // 現在天気 (アイコン & ラベル)
+      const wInfo = spot.current.weatherInfo || getWeatherInfo(spot.current.weatherCode || 0);
+      const heroWeatherIcon = document.getElementById('heroWeatherIcon');
+      if (heroWeatherIcon) heroWeatherIcon.textContent = wInfo.icon;
+      const heroWeatherLabel = document.getElementById('heroWeatherLabel');
+      if (heroWeatherLabel) heroWeatherLabel.textContent = wInfo.label;
+
       // 気温・風・アメダス
       document.getElementById('heroTopTemp').textContent = `${spot.current.topTemp}℃`;
+      const heroBaseTempEl = document.getElementById('heroBaseTemp');
+      if (heroBaseTempEl) heroBaseTempEl.textContent = `${spot.current.baseTemp}℃`;
       document.getElementById('heroWind').textContent = `${spot.current.windSpeed} m/s`;
+
+      const amedasTitleEl = document.getElementById('heroAmedasTitle');
+      const stationName = (spot.current.liveAmedas && spot.current.liveAmedas.stationName) || spot.amedasName;
+      if (amedasTitleEl) {
+        amedasTitleEl.textContent = stationName ? `${stationName}実測` : 'アメダス実測';
+      }
       document.getElementById('heroAmedasDepth').textContent = (spot.current.liveAmedas && spot.current.liveAmedas.snowDepth !== null) ? `${spot.current.liveAmedas.snowDepth} cm` : '―';
 
       // お気に入り状態
@@ -838,6 +938,10 @@
       const hourly = currentElevLevel === 'top' ? spot.topHourly : spot.baseHourly;
       if (!hourly || !hourly.time) return;
 
+      const jstNow = new Date(Date.now() + 9 * 3600000);
+      const currentHourStr = jstNow.toISOString().slice(0, 13);
+      let targetNowCol = null;
+
       for (let i = 0; i < Math.min(72, hourly.time.length); i++) {
         const timeStr = hourly.time[i]; // 2026-11-10T06:00
         const datePart = timeStr.slice(5, 10);
@@ -848,31 +952,59 @@
         const snow = Math.round((hourly.snowfall[i] || 0) * 10) / 10;
         const nightVal = spot.nightSnowByDate ? spot.nightSnowByDate[timeStr] : null;
 
+        const isNow = timeStr.startsWith(currentHourStr);
         const col = document.createElement('div');
-        col.className = "flex-shrink-0 w-16 bg-slate-800/90 rounded-xl p-2 flex flex-col items-center justify-between text-center border border-slate-700/60";
+        if (isNow) {
+          col.className = "flex-shrink-0 w-16 bg-slate-800 rounded-xl p-2 flex flex-col items-center justify-between text-center border-2 border-amber-400 ring-2 ring-amber-400/30 h-[180px] relative";
+          targetNowCol = col;
+        } else {
+          col.className = "flex-shrink-0 w-16 bg-slate-800/90 rounded-xl p-2 flex flex-col items-center justify-between text-center border border-slate-700/60 h-[180px]";
+        }
 
-        let nightBadgeHtml = '';
+        let bottomBadgeHtml = '<div class="h-7 w-full"></div>';
         if (hourPart === '06:00' && nightVal !== undefined && nightVal !== null) {
-          nightBadgeHtml = `
-            <div class="w-full mt-1.5 py-1 px-1 bg-gradient-to-r from-sky-500 to-indigo-600 rounded text-[9.5px] font-black text-white leading-tight shadow">
+          bottomBadgeHtml = `
+            <div class="w-full py-0.5 px-0.5 bg-gradient-to-r from-sky-500 to-indigo-600 rounded text-[9px] font-black text-white leading-tight shadow">
               🌙夜間<br>+${nightVal}cm
             </div>
           `;
+        } else if (hourPart === '18:00') {
+          let daySnow = 0;
+          const startDay = Math.max(0, i - 12);
+          for (let k = startDay; k < i; k++) {
+            daySnow += (hourly.snowfall[k] || 0);
+          }
+          daySnow = Math.round(daySnow * 10) / 10;
+          if (daySnow > 0) {
+            bottomBadgeHtml = `
+              <div class="w-full py-0.5 px-0.5 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded text-[9px] font-black leading-tight">
+                ☀️日中<br>+${daySnow}cm
+              </div>
+            `;
+          }
         }
 
         col.innerHTML = `
           <div>
+            ${isNow ? '<span class="text-[8px] font-black px-1 py-0.2 rounded bg-amber-400 text-slate-950 block mx-auto mb-0.5 w-fit leading-none">NOW</span>' : ''}
             <span class="text-[9px] text-slate-400 block">${datePart}</span>
-            <span class="font-bold text-xs text-white">${hourPart}</span>
+            <span class="font-bold text-xs ${isNow ? 'text-amber-300' : 'text-white'}">${hourPart}</span>
           </div>
-          <div class="my-1 text-xl">${weather.icon}</div>
+          <div class="my-0.5 text-xl">${weather.icon}</div>
           <div class="font-teko text-lg font-bold ${temp <= 0 ? 'text-sky-300' : 'text-amber-300'} leading-none">${temp}℃</div>
-          <div class="text-[10px] text-slate-400 mt-1">${wind}m/s</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">${wind}m/s</div>
           <div class="text-[10px] font-bold ${snow > 0 ? 'text-cyan-300' : 'text-slate-500'} mt-0.5">${snow > 0 ? snow + 'cm' : '―'}</div>
-          ${nightBadgeHtml}
+          ${bottomBadgeHtml}
         `;
 
         container.appendChild(col);
+      }
+
+      if (targetNowCol) {
+        setTimeout(() => {
+          const scrollPos = targetNowCol.offsetLeft - container.offsetLeft - (container.clientWidth / 2) + (targetNowCol.clientWidth / 2);
+          container.scrollTo({ left: Math.max(0, scrollPos), behavior: 'smooth' });
+        }, 80);
       }
     }
 
@@ -917,7 +1049,10 @@
       });
 
       if (tabId === 'map') {
-        setTimeout(initLeafletMap, 150);
+        setTimeout(() => {
+          initLeafletMap();
+          if (leafletMap) leafletMap.invalidateSize();
+        }, 150);
       } else if (tabId === 'ranking') {
         renderRankingTab();
       } else if (tabId === 'feed') {
@@ -935,6 +1070,8 @@
           attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
           maxZoom: 18
         }).addTo(leafletMap);
+      } else {
+        leafletMap.invalidateSize();
       }
 
       // 既存マーカークリア
@@ -1027,12 +1164,17 @@
           badgeHtml = '<span class="text-[9.5px] px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-black ml-1.5">リセット❄️</span>';
         }
 
+        const catBadge = item.category === 'bc'
+          ? '<span class="text-[9px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold ml-1.5">⛰️BC山</span>'
+          : '<span class="text-[9px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold ml-1.5">🏂スキー場</span>';
+
         card.innerHTML = `
           <div class="flex items-center gap-3">
             <span class="font-teko text-2xl font-black w-6 text-center ${idx === 0 ? 'text-amber-400' : (idx === 1 ? 'text-slate-300' : (idx === 2 ? 'text-amber-600' : 'text-slate-500'))}">${idx + 1}</span>
             <div>
-              <div class="text-[10px] text-slate-400 font-bold flex items-center">
+              <div class="text-[10px] text-slate-400 font-bold flex items-center flex-wrap gap-0.5">
                 <span>${item.areaName || item.regionName}</span>
+                ${catBadge}
                 ${badgeHtml}
               </div>
               <div class="text-sm font-bold text-white">${item.name}</div>
@@ -1327,7 +1469,10 @@
 
       const matched = appData.spots.filter(s => {
         if (!q) return true;
-        return s.name.toLowerCase().includes(q) || (s.areaName && s.areaName.toLowerCase().includes(q)) || (s.regionName && s.regionName.toLowerCase().includes(q));
+        return (s.name && s.name.toLowerCase().includes(q)) ||
+               (s.id && s.id.toLowerCase().includes(q)) ||
+               (s.areaName && s.areaName.toLowerCase().includes(q)) ||
+               (s.regionName && s.regionName.toLowerCase().includes(q));
       }).slice(0, 30);
 
       matched.forEach(s => {

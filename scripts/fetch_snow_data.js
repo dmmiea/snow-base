@@ -143,6 +143,30 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
   return { score, rank, rankEn, tag: mainTag, tags };
 }
 
+async function fetchWithRetry(url, maxRetries = 6) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (res.status === 429) {
+        console.warn(`\n[Open-Meteo 429 Rate Limit] 15秒待機後に再試行 (${attempt}/${maxRetries})...`);
+        await sleep(15000);
+        continue;
+      }
+      const data = await res.json();
+      if (data && data.error && (data.reason || '').includes('limit exceeded')) {
+        console.warn(`\n[Open-Meteo Limit Exceeded] 15秒待機後に再試行 (${attempt}/${maxRetries})...`);
+        await sleep(15000);
+        continue;
+      }
+      return data;
+    } catch (e) {
+      if (attempt === maxRetries) throw e;
+      await sleep(3000);
+    }
+  }
+  throw new Error(`Failed to fetch after ${maxRetries} retries: ${url}`);
+}
+
 async function run() {
   console.log('=== SNOW BASE 2地点独立座標バッチ開始 ===');
   const startTime = Date.now();
@@ -196,8 +220,8 @@ async function run() {
 
     try {
       const [resTop, resBase] = await Promise.all([
-        fetch(urlTop).then(r => r.json()),
-        fetch(urlBase).then(r => r.json())
+        fetchWithRetry(urlTop),
+        fetchWithRetry(urlBase)
       ]);
 
       const topList = Array.isArray(resTop) ? resTop : [resTop];
@@ -210,8 +234,8 @@ async function run() {
 
         if (!topData || !topData.hourly) continue;
 
-        const now = new Date();
-        const currentHourStr = now.toISOString().slice(0, 13);
+        const jstNow = new Date(Date.now() + 9 * 3600000);
+        const currentHourStr = jstNow.toISOString().slice(0, 13);
         let currentIdx = 24;
         for (let idx = 0; idx < topData.hourly.time.length; idx++) {
           if (topData.hourly.time[idx].startsWith(currentHourStr)) {
@@ -287,6 +311,12 @@ async function run() {
           };
         }
 
+        const start6h = Math.max(0, currentIdx - 5);
+        const snow6h = Math.round(topData.hourly.snowfall.slice(start6h, currentIdx + 1).reduce((acc, v) => acc + (v || 0), 0) * 10) / 10;
+
+        const start24h = Math.max(0, currentIdx - 23);
+        const snow24h = Math.round(topData.hourly.snowfall.slice(start24h, currentIdx + 1).reduce((acc, v) => acc + (v || 0), 0) * 10) / 10;
+
         processedSpots.push({
           ...spot,
           current: {
@@ -297,6 +327,8 @@ async function run() {
             windSpeed: Math.round(topData.hourly.wind_speed_10m[currentIdx] * 10) / 10,
             weatherCode: topData.hourly.weather_code[currentIdx],
             weatherInfo: getWeatherInfo(topData.hourly.weather_code[currentIdx]),
+            snow6h,
+            snow24h,
             score: evaluation.score,
             rank: evaluation.rank,
             rankEn: evaluation.rankEn,
@@ -330,15 +362,27 @@ async function run() {
       console.error(`バッチエラー (Index ${i}):`, err.message);
     }
 
-    await sleep(150);
+    await sleep(600);
   }
 
   console.log(`\n全スポット集計完了: ${processedSpots.length} 件`);
 
+  const jstNow = new Date(Date.now() + 9 * 3600000);
+  const today06Str = `${jstNow.toISOString().slice(0, 10)}T06:00`;
+
+  function getLatestNightSnow(nightSnowByDate) {
+    if (!nightSnowByDate) return 0;
+    if (nightSnowByDate[today06Str] !== undefined) return nightSnowByDate[today06Str];
+    const keys = Object.keys(nightSnowByDate);
+    if (keys.length === 0) return 0;
+    const upcoming = keys.filter(k => k >= today06Str);
+    if (upcoming.length > 0) return nightSnowByDate[upcoming[0]];
+    return nightSnowByDate[keys[keys.length - 1]] || 0;
+  }
+
   // 1. オーバーナイトスノーランキング (直近18:00〜翌朝06:00の降雪量)
   const rankingNight = [...processedSpots].map(s => {
-    const nightKeys = Object.keys(s.nightSnowByDate || {});
-    const nightSnow = nightKeys.length > 0 ? (s.nightSnowByDate[nightKeys[0]] || 0) : 0;
+    const nightSnow = getLatestNightSnow(s.nightSnowByDate);
     return {
       id: s.id,
       name: s.name,
@@ -354,34 +398,26 @@ async function run() {
   }).sort((a, b) => b.snow - a.snow).slice(0, 25);
 
   // 2. 6時間速報ランキング
-  const ranking6h = [...processedSpots].sort((a, b) => {
-    const aSnow = (a.topHourly.snowfall.slice(20, 26).reduce((acc, v) => acc + (v || 0), 0));
-    const bSnow = (b.topHourly.snowfall.slice(20, 26).reduce((acc, v) => acc + (v || 0), 0));
-    return bSnow - aSnow;
-  }).slice(0, 25).map(s => ({
+  const ranking6h = [...processedSpots].sort((a, b) => (b.current.snow6h || 0) - (a.current.snow6h || 0)).slice(0, 25).map(s => ({
     id: s.id,
     name: s.name,
     category: s.category,
     regionName: s.regionName,
     areaName: s.areaName,
-    snow: Math.round(s.topHourly.snowfall.slice(20, 26).reduce((acc, v) => acc + (v || 0), 0) * 10) / 10,
+    snow: s.current.snow6h || 0,
     depth: s.current.topSnowDepth,
     score: s.current.score,
     tag: s.current.tag
   }));
 
   // 3. 24時間累積ランキング
-  const ranking24h = [...processedSpots].sort((a, b) => {
-    const aSnow = (a.topHourly.snowfall.slice(8, 32).reduce((acc, v) => acc + (v || 0), 0));
-    const bSnow = (b.topHourly.snowfall.slice(8, 32).reduce((acc, v) => acc + (v || 0), 0));
-    return bSnow - aSnow;
-  }).slice(0, 25).map(s => ({
+  const ranking24h = [...processedSpots].sort((a, b) => (b.current.snow24h || 0) - (a.current.snow24h || 0)).slice(0, 25).map(s => ({
     id: s.id,
     name: s.name,
     category: s.category,
     regionName: s.regionName,
     areaName: s.areaName,
-    snow: Math.round(s.topHourly.snowfall.slice(8, 32).reduce((acc, v) => acc + (v || 0), 0) * 10) / 10,
+    snow: s.current.snow24h || 0,
     depth: s.current.topSnowDepth,
     score: s.current.score,
     tag: s.current.tag

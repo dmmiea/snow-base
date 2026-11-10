@@ -583,17 +583,47 @@ async function run() {
     // トップ座標の計算（斜面向きと標高差から山頂ピーク座標を正確に導出）
     const topCoords = calculateTopCoords(baseLat, baseLon, slopeDir, altDiff);
 
-    // 地域判定
-    const area = item.areaName || '';
+    // mt_subpage_mapping.json から山岳の正確な地域・エリアを取得
     let region = 'shinetsu';
     let regionName = '信越';
-    if (area.includes('北海道') || area.includes('後志') || area.includes('上川')) { region = 'hokkaido'; regionName = '北海道'; }
-    else if (area.includes('青森') || area.includes('岩手') || area.includes('秋田') || area.includes('山形') || area.includes('宮城') || area.includes('福島')) { region = 'tohoku'; regionName = '東北'; }
-    else if (area.includes('富山') || area.includes('石川') || area.includes('福井')) { region = 'hokuriku'; regionName = '北陸'; }
-    else if (area.includes('群馬') || area.includes('栃木') || area.includes('長野') || area.includes('新潟')) { region = 'shinetsu'; regionName = '信越'; }
-    else if (area.includes('岐阜') || area.includes('愛知') || area.includes('静岡')) { region = 'tokai'; regionName = '東海'; }
-    else if (area.includes('滋賀') || area.includes('兵庫') || area.includes('京都')) { region = 'kansai'; regionName = '関西'; }
-    else if (area.includes('鳥取') || area.includes('広島') || area.includes('島根')) { region = 'chugoku'; regionName = '中国'; }
+    let areaName = item.areaName || '';
+
+    const mtMapPath = path.join(__dirname, 'mt_subpage_mapping.json');
+    const mtMapping = fs.existsSync(mtMapPath) ? JSON.parse(fs.readFileSync(mtMapPath, 'utf8')) : {};
+
+    if (isBc && item.sourcePage && mtMapping[item.sourcePage]) {
+      const info = mtMapping[item.sourcePage];
+      region = info.region;
+      regionName = info.regionName;
+      areaName = info.areaName;
+    } else {
+      const area = item.areaName || '';
+      if (area.includes('道北') || area.includes('道東') || area.includes('道央') || area.includes('道南') || area.includes('北海道') || area.includes('後志') || area.includes('上川') || area.includes('空知') || area.includes('石狩') || area.includes('宗谷') || area.includes('オホーツク') || area.includes('胆振') || area.includes('日高') || area.includes('十勝') || area.includes('釧路') || area.includes('根室')) {
+        region = 'hokkaido';
+        regionName = '北海道';
+      } else if (area.includes('青森') || area.includes('岩手') || area.includes('秋田') || area.includes('宮城') || area.includes('山形') || area.includes('福島')) {
+        region = 'tohoku';
+        regionName = '東北';
+      } else if (area.includes('新潟') || area.includes('長野')) {
+        region = 'shinetsu';
+        regionName = '信越';
+      } else if (area.includes('富山') || area.includes('石川') || area.includes('福井')) {
+        region = 'hokuriku';
+        regionName = '北陸';
+      } else if (area.includes('群馬') || area.includes('栃木') || area.includes('茨城') || area.includes('埼玉') || area.includes('東京') || area.includes('神奈川') || area.includes('千葉')) {
+        region = 'kanto';
+        regionName = '関東';
+      } else if (area.includes('岐阜') || area.includes('愛知') || area.includes('静岡') || area.includes('三重') || area.includes('山梨')) {
+        region = 'tokai';
+        regionName = '東海';
+      } else if (area.includes('滋賀') || area.includes('兵庫') || area.includes('京都') || area.includes('大阪') || area.includes('奈良') || area.includes('和歌山')) {
+        region = 'kansai';
+        regionName = '関西';
+      } else if (area.includes('鳥取') || area.includes('島根') || area.includes('岡山') || area.includes('広島') || area.includes('山口') || area.includes('愛媛') || area.includes('香川') || area.includes('徳島') || area.includes('高知') || area.includes('佐賀') || area.includes('宮崎') || area.includes('熊本') || area.includes('大分') || area.includes('福岡') || area.includes('長崎') || area.includes('鹿児島')) {
+        region = 'chugoku';
+        regionName = '中国';
+      }
+    }
 
     finalSpots.push({
       id: item.id,
@@ -601,7 +631,7 @@ async function run() {
       category: item.category,
       region,
       regionName,
-      areaName: area || regionName,
+      areaName: areaName || regionName,
       base: {
         lat: baseLat,
         lon: baseLon,
