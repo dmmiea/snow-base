@@ -4,7 +4,9 @@
   "description": "SNOW BASE - Ski & Mountain Snow Forecast & Observation Dashboard",
   "main": "scripts/fetch_snow_data.js",
   "scripts": {
-    "fetch": "node scripts/fetch_snow_data.js"
+    "fetch": "node scripts/fetch_snow_data.js",
+    "deploy": "wrangler deploy",
+    "preview": "wrangler dev"
   },
   "keywords": [
     "ski",
@@ -16,5 +18,8 @@
     "jma"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^4.159.0"
+  }
 }
