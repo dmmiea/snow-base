@@ -1,0 +1,65 @@
+const fs = require('fs');
+const path = require('path');
+
+const iconDir = path.join(__dirname, '..', 'icons');
+if (!fs.existsSync(iconDir)) fs.mkdirSync(iconDir, { recursive: true });
+
+// 美しいSVGアイコンを作成
+const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b132b" />
+      <stop offset="50%" stop-color="#1c2541" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="mtn1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="35%" stop-color="#e0f2fe" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="mtn2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded rectangle -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+
+  <!-- Background mountain -->
+  <polygon points="90,410 210,210 330,410" fill="url(#mtn2)" opacity="0.75" />
+  <polygon points="210,210 240,260 210,275 180,260" fill="#ffffff" opacity="0.9" />
+
+  <!-- Main front mountain -->
+  <polygon points="170,410 330,150 490,410" fill="url(#mtn1)" />
+  <!-- Snowcap -->
+  <polygon points="330,150 375,225 345,245 330,225 315,245 285,225" fill="#ffffff" />
+
+  <!-- Glowing Snowflake Icon -->
+  <g transform="translate(140, 140)" filter="url(#glow)">
+    <circle cx="0" cy="0" r="28" fill="#38bdf8" opacity="0.3" />
+    <path d="M0,-46 L0,46 M-46,0 L46,0 M-32,-32 L32,32 M-32,32 L32,-32" stroke="#ffffff" stroke-width="6" stroke-linecap="round" />
+    <!-- Branch details -->
+    <path d="M0,-28 L-10,-38 M0,-28 L10,-38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+    <path d="M0,28 L-10,38 M0,28 L10,38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+    <path d="M-28,0 L-38,-10 M-28,0 L-38,10" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+    <path d="M28,0 L38,-10 M28,0 L38,10" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+    <circle cx="0" cy="0" r="7" fill="#38bdf8" />
+  </g>
+
+  <!-- App Label Accent -->
+  <text x="256" y="462" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="900" fill="#ffffff" letter-spacing="6" text-anchor="middle" opacity="0.95">SNOW BASE</text>
+</svg>`;
+
+const svgPath = path.join(iconDir, 'icon.svg');
+fs.writeFileSync(svgPath, svgContent, 'utf8');
+
+// 192x192, 512x512用にも対応できるようにコピー・保存
+fs.writeFileSync(path.join(iconDir, 'icon-192.svg'), svgContent, 'utf8');
+fs.writeFileSync(path.join(iconDir, 'icon-512.svg'), svgContent, 'utf8');
+
+console.log('✅ SVG icons generated successfully in icons/');

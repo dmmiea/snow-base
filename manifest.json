@@ -1,0 +1,30 @@
+{
+  "name": "SNOW BASE JAPAN - 全国の雪予報＆ゲレンデ情報",
+  "short_name": "SNOW BASE",
+  "description": "全国1,392地点のスキー場・バックカントリー山岳の雪予報、実測積雪深、夜間新雪ランキング＆雪質ダッシュボード",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0f1d",
+  "theme_color": "#0a0f1d",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
