@@ -84,6 +84,37 @@
 <body class="min-h-screen pb-20 antialiased selection:bg-sky-500 selection:text-white">
 
   <!-- ===============================
+       0. SPLASH SCREEN (アプリ起動スプラッシュ画面)
+       =============================== -->
+  <div id="splashScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950 transition-opacity duration-500 ease-out select-none">
+    <div class="relative flex flex-col items-center text-center px-4">
+      <!-- アイコン背面アクセント光彩 -->
+      <div class="absolute -inset-6 bg-sky-500/25 rounded-full blur-2xl animate-pulse pointer-events-none"></div>
+
+      <!-- アプリアイコン -->
+      <div class="relative w-24 h-24 mb-4 rounded-3xl overflow-hidden shadow-2xl shadow-sky-500/30 border border-sky-400/40 bg-gradient-to-br from-slate-900 to-slate-950 flex items-center justify-center">
+        <img src="icons/apple-touch-icon-180.png" alt="SNOW BASE" class="w-full h-full object-cover">
+      </div>
+
+      <!-- ロゴタイトル -->
+      <div class="flex items-center space-x-2 mb-1">
+        <span class="font-teko text-3xl font-bold tracking-wider text-sky-400 leading-none uppercase">SNOW BASE</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700">JAPAN</span>
+      </div>
+      <p class="text-xs text-slate-400 font-medium tracking-wide mb-6">全国スキー場＆雪山バックカントリー</p>
+
+      <!-- ローディングスピナー＆ステータス -->
+      <div class="flex items-center space-x-2.5 text-xs font-bold text-sky-400 bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-slate-800">
+        <svg class="animate-spin h-3.5 w-3.5 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span id="splashStatusText">積雪データを読み込み中...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================
        1. TOP APP BAR
        =============================== -->
   <header class="bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-2.5 shadow-md sticky top-0 z-50">
@@ -569,10 +600,31 @@
 
     // アプリ初期化
     document.addEventListener('DOMContentLoaded', async () => {
-      await loadData();
-      initUI();
-      initReportsListener();
+      const startTime = Date.now();
+      try {
+        await loadData();
+        initUI();
+        initReportsListener();
+      } catch (err) {
+        console.error('Initialization error:', err);
+      } finally {
+        // スプラッシュスクリーンを自然にフェードアウト (最低400ms確保して心地よい演出に)
+        const elapsed = Date.now() - startTime;
+        const delay = Math.max(0, 400 - elapsed);
+        setTimeout(hideSplashScreen, delay);
+      }
     });
+
+    function hideSplashScreen() {
+      const splash = document.getElementById('splashScreen');
+      if (splash) {
+        splash.style.opacity = '0';
+        splash.style.pointerEvents = 'none';
+        setTimeout(() => {
+          if (splash.parentNode) splash.parentNode.removeChild(splash);
+        }, 500);
+      }
+    }
 
     async function loadData() {
       try {
