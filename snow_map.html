@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SNOW BASE - 全国雪山マップ</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+      background-color: #0f172a;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .leaflet-popup-content-wrapper {
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      padding: 0;
+      overflow: hidden;
+      min-width: 240px;
+      max-width: 290px;
+      background-color: #0f172a;
+      border: 1px solid #334155;
+    }
+    .leaflet-popup-content {
+      margin: 0 !important;
+      line-height: 1.4;
+    }
+    .leaflet-popup-tip {
+      background-color: #0f172a;
+    }
+    .leaflet-container a.leaflet-popup-close-button {
+      color: #94a3b8;
+      padding: 8px 8px 0 0;
+    }
+    .leaflet-container a.leaflet-popup-close-button:hover {
+      color: #f8fafc;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 flex flex-col h-full overflow-hidden select-none">
+
+  <!-- ===============================
+       1. マップヘッダー（省スペーススリム設計）
+       =============================== -->
+  <header class="bg-slate-950 text-white px-3 py-1.5 shadow-md z-20 border-b border-slate-800 flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <div class="w-6 h-6 rounded-lg bg-gradient-to-tr from-sky-400 to-blue-600 flex items-center justify-center font-black text-white shadow text-xs">
+        ❄️
+      </div>
+      <div>
+        <h1 class="text-xs font-bold tracking-tight flex items-center gap-1.5">
+          <span>全国雪山マップ</span>
+          <span id="mapCountBadge" class="text-[10px] bg-sky-950 text-sky-400 border border-sky-800/80 px-1.5 py-0.2 rounded-full font-mono">--地点</span>
+        </h1>
+      </div>
+    </div>
+
+    <!-- 種別フィルター（全て / スキー場 / BC） -->
+    <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-[10px] font-bold">
+      <button type="button" onclick="filterCategory('all')" id="btnCatAll" class="px-2 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition">
+        全て
+      </button>
+      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2 py-1 rounded text-slate-400 hover:text-white transition">
+        🏂 スキー場
+      </button>
+      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2 py-1 rounded text-slate-400 hover:text-white transition">
+        ⛰️ BC山
+      </button>
+    </div>
+  </header>
+
+  <!-- ===============================
+       2. 地域クイックジャンプバー（横スクロール）
+       =============================== -->
+  <nav class="bg-slate-950/90 backdrop-blur-md border-b border-slate-800 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto hide-scrollbar z-10 text-xs">
+    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap mr-0.5">地域:</span>
+    <button onclick="jumpToRegion('all')" class="region-pill active px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-sky-500 text-slate-950 shadow-sm transition text-[11px]" data-region="all">全国</button>
+    <button onclick="jumpToRegion('hokkaido')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="hokkaido">北海道</button>
+    <button onclick="jumpToRegion('tohoku')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="tohoku">東北</button>
+    <button onclick="jumpToRegion('shinetsu')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="shinetsu">信越・妙高</button>
+    <button onclick="jumpToRegion('hakuba')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="hakuba">❄️ 白馬エリア</button>
+    <button onclick="jumpToRegion('yuzawa')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="yuzawa">上越・湯沢</button>
+    <button onclick="jumpToRegion('gunma')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="gunma">群馬・尾瀬</button>
+    <button onclick="jumpToRegion('hokuriku')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="hokuriku">北陸</button>
+    <button onclick="jumpToRegion('west')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="west">西日本・中四国</button>
+  </nav>
+
+  <!-- ===============================
+       3. 地図メインコンテナ
+       =============================== -->
+  <div class="relative flex-1 bg-slate-900 overflow-hidden">
+    <div id="map"></div>
+
+    <!-- 左下：凡例カード（折りたたみ対応・サーフベース同一設計） -->
+    <div id="legendCard" class="absolute bottom-3 left-3 z-10 bg-slate-900/95 backdrop-blur-md rounded-xl p-2.5 shadow-xl border border-slate-800 text-xs pointer-events-auto max-w-[210px] transition-all duration-200">
+      <button type="button" onclick="toggleLegend()" class="w-full font-bold text-slate-200 flex items-center justify-between text-[11px] cursor-pointer hover:text-white transition gap-2 select-none">
+        <span class="flex items-center gap-1">📍 凡例 & スコア</span>
+        <i id="legendChevron" class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform duration-200"></i>
+      </button>
+      <div id="legendContent" class="space-y-1.5 pt-2 border-t border-slate-800 mt-1.5 text-[10.5px]">
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-sky-400 border border-white flex items-center justify-center text-[8px] text-slate-950 font-bold">80</span>
+          <span class="text-slate-200 font-semibold">パウダー極上 (80点以上)</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-emerald-400 border border-white flex items-center justify-center text-[8px] text-slate-950 font-bold">60</span>
+          <span class="text-slate-300">良好バーン (60〜79点)</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-slate-500 border border-slate-300 flex items-center justify-center text-[8px] text-white">40</span>
+          <span class="text-slate-400">標準・クラスト (59点以下)</span>
+        </div>
+        <div class="pt-1 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-400">
+          <span>🏂 スキー場: 丸ピン</span>
+          <span>⛰️ BC山: 三角ピン</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let map = null;
+    let allSpots = [];
+    let activeCategory = 'all';
+    let markersLayer = null;
+    let legendOpen = true;
+
+    // 地域ごとの座標・ズーム設定
+    const REGION_COORDS = {
+      all: { center: [37.5, 137.5], zoom: 6 },
+      hokkaido: { center: [43.2, 142.3], zoom: 7 },
+      tohoku: { center: [39.5, 140.5], zoom: 7 },
+      shinetsu: { center: [36.8, 138.2], zoom: 9 },
+      hakuba: { center: [36.7, 137.85], zoom: 11 },
+      yuzawa: { center: [36.95, 138.8], zoom: 10 },
+      gunma: { center: [36.75, 139.0], zoom: 9 },
+      hokuriku: { center: [36.3, 136.5], zoom: 8 },
+      west: { center: [35.3, 134.5], zoom: 8 }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initMap();
+      await loadSpotsData();
+      
+      // ハッシュまたはクエリパラメータ指定による初期地域ジャンプ
+      const hash = window.location.hash.replace('#', '');
+      const urlParams = new URLSearchParams(window.location.search);
+      const regParam = urlParams.get('region') || hash;
+      if (regParam && REGION_COORDS[regParam]) {
+        jumpToRegion(regParam);
+      }
+    });
+
+    function initMap() {
+      // 国土地理院 淡色地図タイル（絶対に落ちず、日本の山岳地形・等高線が超鮮明）
+      map = L.map('map', { zoomControl: false }).setView([37.5, 137.5], 6);
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+      L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>',
+        maxZoom: 18,
+        minZoom: 5
+      }).addTo(map);
+
+      markersLayer = L.layerGroup().addTo(map);
+
+      // 親ウィンドウからのメッセージ受信（タブ切り替え時の invalidateSize 実行）
+      window.addEventListener('message', (e) => {
+        if (e.data && e.data.action === 'INVALIDATE_MAP') {
+          setTimeout(() => { if (map) map.invalidateSize(); }, 50);
+        }
+      });
+    }
+
+    async function loadSpotsData() {
+      try {
+        const res = await fetch('data_japan.json');
+        if (!res.ok) throw new Error('data_japan.json load error');
+        const data = await res.json();
+        allSpots = data.spots || [];
+        renderMarkers();
+      } catch (err) {
+        console.error('Failed to load spots data:', err);
+      }
+    }
+
+    function renderMarkers() {
+      if (!markersLayer) return;
+      markersLayer.clearLayers();
+
+      const filtered = allSpots.filter(s => {
+        if (activeCategory === 'ski') return s.category === 'ski';
+        if (activeCategory === 'bc') return s.category === 'bc';
+        return true;
+      });
+
+      document.getElementById('mapCountBadge').textContent = `${filtered.length}地点`;
+
+      filtered.forEach(s => {
+        if (!s.top || typeof s.top.lat !== 'number' || typeof s.top.lon !== 'number') return;
+
+        const isBc = s.category === 'bc';
+        const score = (s.current && s.current.score) || 50;
+        const color = score >= 80 ? '#38bdf8' : (score >= 60 ? '#34d399' : '#94a3b8');
+        const borderColor = score >= 80 ? '#0284c7' : (score >= 60 ? '#059669' : '#475569');
+
+        let marker;
+        if (isBc) {
+          // バックカントリー：三角形アイコン風
+          const icon = L.divIcon({
+            className: 'custom-bc-icon',
+            html: `
+              <div style="width: 20px; height: 20px; display: flex; items-center; justify-content: center;">
+                <div style="width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 16px solid ${color}; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"></div>
+              </div>
+            `,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+          });
+          marker = L.marker([s.top.lat, s.top.lon], { icon });
+        } else {
+          // スキー場：丸形マーカー（高スコアは鮮やかな光彩）
+          marker = L.circleMarker([s.top.lat, s.top.lon], {
+            radius: score >= 80 ? 7 : 6,
+            fillColor: color,
+            color: '#ffffff',
+            weight: 1.5,
+            opacity: 1,
+            fillOpacity: 0.9
+          });
+        }
+
+        const topSnow = (s.current && s.current.topSnowDepth) || 0;
+        const rank = (s.current && s.current.rank) || 'B';
+        const tag = (s.current && s.current.tag) || '雪質安定';
+        const elev = (s.top && s.top.elevation) || 0;
+
+        const popupHtml = `
+          <div class="p-3 text-slate-100 font-sans text-xs">
+            <div class="flex items-center justify-between border-b border-slate-700/80 pb-1.5 mb-2">
+              <span class="text-[10px] font-bold text-sky-400 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-800/60">
+                ${isBc ? '⛰️ バックカントリー' : '🏂 スキー場'}
+              </span>
+              <span class="text-[10px] text-slate-400">${s.areaName || s.regionName}</span>
+            </div>
+            <div class="font-bold text-sm text-white leading-tight mb-2">${s.name}</div>
+            
+            <div class="grid grid-cols-2 gap-1.5 bg-slate-950 p-2 rounded-lg border border-slate-800 text-[11px] mb-2">
+              <div>
+                <span class="text-slate-400 text-[10px] block">山頂積雪</span>
+                <span class="font-bold text-white font-mono text-sm">${topSnow}</span> <span class="text-[10px] text-slate-400">cm</span>
+              </div>
+              <div>
+                <span class="text-slate-400 text-[10px] block">雪質スコア</span>
+                <span class="font-bold font-mono text-sm" style="color:${color};">${score}点</span>
+                <span class="text-[9px] bg-slate-800 px-1 py-0.2 rounded text-slate-300 ml-1 font-bold">${rank}</span>
+              </div>
+              <div class="col-span-2 pt-1 border-t border-slate-800/80 flex items-center justify-between text-[10px]">
+                <span class="text-slate-400">山頂標高: ${elev}m</span>
+                <span class="text-sky-300 font-semibold">${tag}</span>
+              </div>
+            </div>
+
+            <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
+              <span>このスポットの予報を見る</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+        `;
+
+        marker.bindPopup(popupHtml, { autoPanPadding: [20, 25] });
+        marker.addTo(markersLayer);
+      });
+    }
+
+    function filterCategory(cat) {
+      activeCategory = cat;
+      const bAll = document.getElementById('btnCatAll');
+      const bSki = document.getElementById('btnCatSki');
+      const bBc = document.getElementById('btnCatBc');
+
+      bAll.className = cat === 'all' ? "px-2 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2 py-1 rounded text-slate-400 hover:text-white transition";
+      bSki.className = cat === 'ski' ? "px-2 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2 py-1 rounded text-slate-400 hover:text-white transition";
+      bBc.className = cat === 'bc' ? "px-2 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2 py-1 rounded text-slate-400 hover:text-white transition";
+
+      renderMarkers();
+    }
+
+    function jumpToRegion(regKey) {
+      document.querySelectorAll('.region-pill').forEach(btn => {
+        if (btn.dataset.region === regKey) {
+          btn.className = "region-pill active px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-sky-500 text-slate-950 shadow-sm transition text-[11px]";
+        } else {
+          btn.className = "region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]";
+        }
+      });
+
+      const conf = REGION_COORDS[regKey] || REGION_COORDS.all;
+      if (map) {
+        map.flyTo(conf.center, conf.zoom, { duration: 1.2 });
+      }
+    }
+
+    function goToSpot(spotId) {
+      if (!spotId) return;
+      // 親ウィンドウが存在する場合（iframe経由）
+      if (window.parent && window.parent !== window && typeof window.parent.selectSpotFromMap === 'function') {
+        window.parent.selectSpotFromMap(spotId);
+      } else {
+        // 直接開かれた場合
+        window.location.href = 'index.html?spot=' + encodeURIComponent(spotId);
+      }
+    }
+
+    function toggleLegend() {
+      const content = document.getElementById('legendContent');
+      const chevron = document.getElementById('legendChevron');
+      legendOpen = !legendOpen;
+      if (legendOpen) {
+        content.classList.remove('hidden');
+        chevron.style.transform = 'rotate(0deg)';
+      } else {
+        content.classList.add('hidden');
+        chevron.style.transform = 'rotate(-90deg)';
+      }
+    }
+  </script>
+</body>
+</html>

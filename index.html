@@ -32,9 +32,6 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Leaflet CSS & JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- Firebase App & Firestore SDK (v10 compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
@@ -76,8 +73,8 @@
       color: #0f172a !important;
       font-weight: 700 !important;
     }
-    #mapViewContainer {
-      height: calc(100dvh - 54px - (48px + max(env(safe-area-inset-bottom, 0px), 20px)));
+    #tabMap {
+      height: calc(100dvh - (54px + env(safe-area-inset-top, 0px)) - (48px + max(env(safe-area-inset-bottom, 0px), 20px)));
       min-height: 360px;
     }
     @keyframes splashFadeIn {
@@ -372,13 +369,9 @@
 
   </main>
 
-  <!-- TAB 2: 全マップ画面 -->
-  <main id="tabMap" class="max-w-md mx-auto hidden pb-32">
-    <div class="p-3 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-xs">
-      <span class="font-bold text-slate-300">全国雪山マップ (<span id="mapCount">--</span>地点)</span>
-      <span class="text-[10px] text-slate-400">ピンをタップで詳細表示</span>
-    </div>
-    <div id="mapViewContainer" class="w-full"></div>
+  <!-- TAB 2: 全マップ画面 (サーフベース準拠 独立iframe設計) -->
+  <main id="tabMap" class="w-full hidden overflow-hidden">
+    <iframe id="inlineSnowMapFrame" data-src="snow_map.html" src="about:blank" title="全国雪山マップ" class="w-full h-full border-0 bg-slate-900 block"></iframe>
   </main>
 
   <!-- TAB 3: エリア一覧 & パウダーランキング -->
@@ -550,8 +543,6 @@
     let currentElevLevel = 'top'; // 'top' or 'base'
     let currentRankPeriod = 'night'; // 'night', '6h', '24h'
     let trendChartInstance = null;
-    let leafletMap = null;
-    let mapMarkers = [];
     let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
     let currentRating = 5;
 
@@ -646,8 +637,11 @@
         document.getElementById('countSki').textContent = skis.length;
         document.getElementById('countBc').textContent = bcs.length;
 
-        // 初期スポット設定 (白馬八方尾根 または 最初のスポット)
-        const initialSpot = appData.spots.find(s => s.id === 'hakuba_happo') || appData.spots[0];
+        // 初期スポット設定 (URLパラメータ ?spot=xxx 優先、なければ白馬八方尾根)
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetSpotId = urlParams.get('spot');
+        const targetSpot = targetSpotId ? appData.spots.find(s => s.id === targetSpotId) : null;
+        const initialSpot = targetSpot || appData.spots.find(s => s.id === 'hakuba_happo') || appData.spots[0];
         if (initialSpot) {
           currentCategory = initialSpot.category || 'ski';
           currentRegion = initialSpot.region || 'shinetsu';
@@ -678,6 +672,12 @@
         modalReport.addEventListener('click', (e) => {
           if (e.target === modalReport) closeReportModal();
         });
+      }
+
+      // 初期タブ判定 (#map, #ranking, #feed, #mySpots または ?tab=...)
+      const initTab = window.location.hash.replace('#', '') || (new URLSearchParams(window.location.search)).get('tab');
+      if (['map', 'ranking', 'feed', 'mySpots'].includes(initTab)) {
+        switchTab(initTab);
       }
     }
 
@@ -1145,10 +1145,21 @@
       });
 
       if (tabId === 'map') {
-        setTimeout(() => {
-          initLeafletMap();
-          if (leafletMap) leafletMap.invalidateSize();
-        }, 150);
+        const iframe = document.getElementById('inlineSnowMapFrame');
+        if (iframe) {
+          if (!iframe.getAttribute('src') || iframe.getAttribute('src') === 'about:blank') {
+            iframe.setAttribute('src', iframe.dataset.src || 'snow_map.html');
+          }
+          const notifyMap = () => {
+            try {
+              if (iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ action: 'INVALIDATE_MAP' }, '*');
+              }
+            } catch (_) {}
+          };
+          notifyMap();
+          setTimeout(notifyMap, 150);
+        }
       } else if (tabId === 'ranking') {
         renderRankingTab();
       } else if (tabId === 'feed') {
@@ -1158,54 +1169,9 @@
       }
     }
 
-    // Leaflet マップ初期化
-    function initLeafletMap() {
-      if (!leafletMap) {
-        leafletMap = L.map('mapViewContainer').setView([36.7, 137.9], 7);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-          maxZoom: 18
-        }).addTo(leafletMap);
-      } else {
-        leafletMap.invalidateSize();
-      }
-
-      // 既存マーカークリア
-      mapMarkers.forEach(m => leafletMap.removeLayer(m));
-      mapMarkers = [];
-
-      document.getElementById('mapCount').textContent = appData.spots.length;
-
-      appData.spots.forEach(s => {
-        const isBc = s.category === 'bc';
-        const color = s.current.score >= 80 ? '#38bdf8' : (s.current.score >= 60 ? '#34d399' : '#94a3b8');
-        
-        const marker = L.circleMarker([s.top.lat, s.top.lon], {
-          radius: isBc ? 6 : 7,
-          fillColor: color,
-          color: '#fff',
-          weight: 1.5,
-          opacity: 1,
-          fillOpacity: 0.85
-        });
-
-        marker.bindPopup(`
-          <div class="p-1 text-slate-900 font-sans">
-            <div class="text-[10px] font-bold text-sky-600">${s.areaName || s.regionName}</div>
-            <div class="font-bold text-sm text-slate-900">${s.name}</div>
-            <div class="text-xs mt-1">積雪: <b>${s.current.topSnowDepth}cm</b> (山頂)</div>
-            <div class="text-xs">スコア: <b class="text-sky-600">${s.current.score}点</b> (${s.current.rank})</div>
-            <div class="text-xs text-slate-600">${s.current.tag}</div>
-            <button onclick="selectSpotFromMap('${s.id}')" class="mt-2 w-full py-1 bg-sky-500 text-slate-950 font-bold text-xs rounded">このスポットを見る</button>
-          </div>
-        `);
-
-        marker.addTo(leafletMap);
-        mapMarkers.push(marker);
-      });
-    }
-
-    function selectSpotFromMap(id) {
+    // マップからスポットを選択してホーム詳細へジャンプ（iframeからの呼び出しにも対応）
+    window.selectSpotFromMap = function(id) {
+      if (!id || !appData || !appData.spots) return;
       currentSpotId = id;
       const spot = appData.spots.find(s => s.id === id);
       if (spot) {
@@ -1217,7 +1183,8 @@
         renderCurrentSpotDetails();
       }
       switchTab('home');
-    }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     // ランキングタブ
     function setRankPeriod(period) {

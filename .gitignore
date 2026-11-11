@@ -12,3 +12,4 @@ crawled_all_japan.json
 !.dev.vars.example
 .env*
 !.env.example
+scratch/
