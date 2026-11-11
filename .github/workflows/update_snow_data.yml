@@ -38,3 +38,10 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add data_japan.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: ❄️ 自動データ巡回更新 [skip ci]" && git push)
+
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
