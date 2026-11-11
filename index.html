@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0b132b">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="SNOW BASE">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -77,7 +77,8 @@
       font-weight: 700 !important;
     }
     #mapViewContainer {
-      height: calc(100dvh - 120px);
+      height: calc(100dvh - 54px - (48px + max(env(safe-area-inset-bottom, 0px), 20px)));
+      min-height: 360px;
     }
     @keyframes splashFadeIn {
       0% {
@@ -115,7 +116,7 @@
   <!-- ===============================
        1. TOP APP BAR
        =============================== -->
-  <header class="bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-2.5 shadow-md sticky top-0 z-50">
+  <header class="bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-2.5 shadow-md sticky top-0 z-50" style="padding-top: max(env(safe-area-inset-top, 0px), 10px);">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-2">
         <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white font-bold text-sm">
@@ -151,7 +152,7 @@
        =============================== -->
   
   <!-- TAB 1: ホーム（ダッシュボード） -->
-  <main id="tabHome" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3.5">
+  <main id="tabHome" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3.5">
 
     <!-- カテゴリ切り替え（🏂 スキー場 vs ⛰️ バックカントリー） -->
     <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700/80 shadow-sm text-xs font-bold">
@@ -166,7 +167,7 @@
     </div>
 
     <!-- 地域・エリアセレクター（Sticky） -->
-    <div class="sticky top-[53px] z-40 bg-slate-900/95 backdrop-blur-md -mx-3.5 px-3.5 pt-1.5 pb-2 border-b border-slate-800/80 space-y-1.5">
+    <div class="sticky z-40 bg-slate-900/95 backdrop-blur-md -mx-3.5 px-3.5 pt-1.5 pb-2 border-b border-slate-800/80 space-y-1.5" style="top: calc(max(env(safe-area-inset-top, 0px), 10px) + 42px);">
       <div class="grid grid-cols-2 gap-1.5 text-xs">
         <div>
           <label class="block text-[9.5px] font-bold text-slate-400 mb-0.5">① 地方を選択</label>
@@ -372,7 +373,7 @@
   </main>
 
   <!-- TAB 2: 全マップ画面 -->
-  <main id="tabMap" class="max-w-md mx-auto hidden pb-24">
+  <main id="tabMap" class="max-w-md mx-auto hidden pb-32">
     <div class="p-3 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-xs">
       <span class="font-bold text-slate-300">全国雪山マップ (<span id="mapCount">--</span>地点)</span>
       <span class="text-[10px] text-slate-400">ピンをタップで詳細表示</span>
@@ -381,7 +382,7 @@
   </main>
 
   <!-- TAB 3: エリア一覧 & パウダーランキング -->
-  <main id="tabRanking" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3 hidden">
+  <main id="tabRanking" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3 hidden">
     <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-bold gap-1">
       <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 shadow">
         🌙 オーバーナイト (18-06時)
@@ -399,7 +400,7 @@
   </main>
 
   <!-- TAB 4: 雪レポフィード -->
-  <main id="tabFeed" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3 hidden">
+  <main id="tabFeed" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3 hidden">
     <div class="flex items-center justify-between">
       <h2 class="text-sm font-bold text-white flex items-center gap-1.5">
         <i class="fa-solid fa-comments text-sky-400"></i>
@@ -416,7 +417,7 @@
   </main>
 
   <!-- TAB 5: MYスポット -->
-  <main id="tabMySpots" class="max-w-md mx-auto px-3.5 pt-2 pb-24 space-y-3 hidden">
+  <main id="tabMySpots" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3 hidden">
     <h2 class="text-sm font-bold text-white flex items-center gap-1.5">
       <i class="fa-solid fa-star text-amber-400"></i>
       <span>登録中のMYスポット</span>
@@ -429,7 +430,7 @@
   <!-- ===============================
        BOTTOM NAVIGATION BAR
        =============================== -->
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 py-2">
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 pt-2" style="padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px);">
     <div class="max-w-md mx-auto flex items-center justify-around text-[10px] font-bold text-slate-400">
       <button onclick="switchTab('home')" id="navHome" class="flex flex-col items-center gap-1 text-sky-400">
         <i class="fa-solid fa-house text-base"></i>
