@@ -1,0 +1,7 @@
+name = "snow-base-cron"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+[triggers]
+# 毎時15分に確実に自動起動（気象庁アメダスの毎時データ確定直後を狙う世界最高精度のCloudflare Cron）
+crons = ["15 * * * *"]
