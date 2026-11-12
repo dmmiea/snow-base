@@ -152,7 +152,7 @@
   <main id="tabHome" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3.5">
 
     <!-- カテゴリ切り替え（🏂 スキー場 vs ⛰️ バックカントリー） -->
-    <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700/80 shadow-sm text-xs font-bold">
+    <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700/80 shadow-sm text-xs font-bold -mb-1.5">
       <button id="btnCategorySki" onclick="setCategory('ski')" class="flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow">
         <span>🏂</span>
         <span>スキー場 (<span id="countSki">573</span>)</span>
@@ -164,7 +164,7 @@
     </div>
 
     <!-- 地域・エリアセレクター（Sticky） -->
-    <div class="sticky z-40 bg-slate-900 -mx-3.5 px-3.5 pt-1.5 pb-2 border-b border-slate-800 space-y-1.5" style="top: calc(env(safe-area-inset-top, 0px) + 52px);">
+    <div class="sticky z-40 bg-slate-900 -mx-3.5 px-3.5 pt-1 pb-2 border-b border-slate-800 space-y-1.5" style="top: calc(env(safe-area-inset-top, 0px) + 52px);">
       <div class="grid grid-cols-2 gap-1.5 text-xs">
         <div>
           <label class="block text-[9.5px] font-bold text-slate-400 mb-0.5">① 地方を選択</label>
@@ -544,6 +544,7 @@
     let currentRankPeriod = 'night'; // 'night', '6h', '24h'
     let trendChartInstance = null;
     let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
+    let isFavMode = false;
     let currentRating = 5;
 
     // WMO気象コード（0〜99）変換関数
@@ -683,6 +684,7 @@
 
     // カテゴリ切替 (スキー場 / BC)
     function setCategory(cat) {
+      isFavMode = false;
       currentCategory = cat;
       updateCategoryUI();
       
@@ -737,6 +739,7 @@
     }
 
     function onRegionChange(reg) {
+      isFavMode = false;
       currentRegion = reg;
       populateRegionsAndAreas();
       const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion));
@@ -748,6 +751,7 @@
     }
 
     function onAreaChange(area) {
+      isFavMode = false;
       currentArea = area;
       const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion) && (currentArea === 'all' || s.areaName === currentArea));
       if (filtered.length > 0 && !filtered.some(s => s.id === currentSpotId)) {
@@ -757,27 +761,94 @@
       renderCurrentSpotDetails();
     }
 
-    // スポット選択ピル描画
+    // スポット選択ピル描画（サーフベース完全準拠: MYスポットピル先頭配置）
     function renderSpotPills() {
       const container = document.getElementById('spotPills');
       container.innerHTML = '';
-
-      const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion) && (currentArea === 'all' || s.areaName === currentArea));
+      if (!appData || !appData.spots) return;
 
       let activeBtn = null;
-      filtered.forEach(s => {
-        const btn = document.createElement('button');
-        const isSelected = s.id === currentSpotId;
-        btn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border ${isSelected ? 'bg-sky-400 text-slate-900 border-sky-400 shadow' : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600'}`;
-        btn.textContent = s.name;
-        if (isSelected) activeBtn = btn;
-        btn.onclick = () => {
-          currentSpotId = s.id;
-          renderSpotPills();
-          renderCurrentSpotDetails();
-        };
-        container.appendChild(btn);
-      });
+
+      // ⭐ MYスポット ピル (常に一番左)
+      const validFavs = favorites.filter(favId => appData.spots.some(s => s.id === favId));
+      const favBtn = document.createElement("button");
+      favBtn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border flex items-center gap-1.5 shadow ${
+        isFavMode
+          ? "bg-amber-400 text-slate-950 border-amber-300 font-black ring-2 ring-amber-300/40"
+          : "bg-slate-800 text-amber-400 border-amber-500/40 hover:bg-slate-700"
+      }`;
+      favBtn.innerHTML = `<i class="fa-solid fa-star text-[10px]"></i><span>MYスポット</span><span class="text-[9px] px-1.5 py-0.2 rounded-full font-black ${isFavMode ? 'bg-amber-950 text-amber-300' : 'bg-amber-400/20 text-amber-300 border border-amber-400/30'}">${validFavs.length}</span>`;
+      
+      favBtn.onclick = () => {
+        isFavMode = !isFavMode;
+        if (isFavMode) {
+          if (!validFavs.includes(currentSpotId) && validFavs.length > 0) {
+            currentSpotId = validFavs[0];
+            const firstFav = appData.spots.find(s => s.id === currentSpotId);
+            if (firstFav) {
+              currentCategory = firstFav.category;
+              currentRegion = firstFav.region;
+              updateCategoryUI();
+              populateRegionsAndAreas();
+              renderCurrentSpotDetails();
+            }
+          }
+        }
+        renderSpotPills();
+      };
+      container.appendChild(favBtn);
+
+      if (isFavMode) {
+        // === MYスポット一覧表示モード ===
+        if (validFavs.length === 0) {
+          const emptyHint = document.createElement("div");
+          emptyHint.className = "text-[11px] text-amber-300 bg-amber-950/40 px-3 py-1 rounded-full border border-amber-500/30 font-medium flex items-center gap-1.5 whitespace-nowrap shrink-0";
+          emptyHint.innerHTML = `<i class="fa-regular fa-star text-amber-400"></i><span>右上の★を押してMYスポットを登録してください</span>`;
+          container.appendChild(emptyHint);
+        } else {
+          validFavs.forEach(favId => {
+            const spot = appData.spots.find(s => s.id === favId);
+            if (!spot) return;
+            const isSelected = spot.id === currentSpotId;
+            const btn = document.createElement("button");
+            if (isSelected) activeBtn = btn;
+            btn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border flex items-center gap-1 shrink-0 ${
+              isSelected
+                ? "bg-sky-400 text-slate-900 border-sky-400 shadow font-black"
+                : "bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600"
+            }`;
+            const subName = spot.areaName || spot.regionName || "";
+            btn.innerHTML = `<span>${spot.name}</span><span class="text-[9.5px] ${isSelected ? 'text-slate-900 font-semibold' : 'text-slate-400'}">(${spot.category === 'bc' ? '⛰️' : '🏂'}${subName})</span>`;
+            btn.onclick = () => {
+              currentSpotId = spot.id;
+              currentCategory = spot.category;
+              currentRegion = spot.region;
+              updateCategoryUI();
+              populateRegionsAndAreas();
+              renderSpotPills();
+              renderCurrentSpotDetails();
+            };
+            container.appendChild(btn);
+          });
+        }
+      } else {
+        // === 通常のエリア別スポット一覧モード ===
+        const filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion) && (currentArea === 'all' || s.areaName === currentArea));
+
+        filtered.forEach(s => {
+          const btn = document.createElement('button');
+          const isSelected = s.id === currentSpotId;
+          btn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border ${isSelected ? 'bg-sky-400 text-slate-900 border-sky-400 shadow' : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600'}`;
+          btn.textContent = s.name;
+          if (isSelected) activeBtn = btn;
+          btn.onclick = () => {
+            currentSpotId = s.id;
+            renderSpotPills();
+            renderCurrentSpotDetails();
+          };
+          container.appendChild(btn);
+        });
+      }
 
       if (activeBtn) {
         setTimeout(() => {
@@ -1614,6 +1685,7 @@
       }
       localStorage.setItem('snow_base_favs', JSON.stringify(favorites));
       updateFavButtonUI();
+      renderSpotPills();
     }
 
     function updateFavButtonUI() {
