@@ -115,7 +115,7 @@
        =============================== -->
   <header class="bg-slate-900 border-b border-slate-800 px-4 shadow-md sticky top-0 z-50" style="padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-bottom: 8px;">
     <div class="max-w-md mx-auto flex items-center justify-between">
-      <div class="flex items-center space-x-2">
+      <div onclick="resetToHomeTop()" class="flex items-center space-x-2 cursor-pointer active:scale-95 transition select-none" title="ホーム先頭へ戻る">
         <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white font-bold text-sm">
           ❄️
         </div>
@@ -1127,6 +1127,12 @@
         `;
         container.appendChild(col);
       });
+    }
+
+    // ホーム画面先頭へリセット（ロゴタップ時）
+    function resetToHomeTop() {
+      switchTab('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // SPA タブ切り替え (ホーム, マップ, ランキング, 雪レポ, MYスポット)
