@@ -214,9 +214,20 @@
             白馬八方尾根スキー場
           </h2>
         </div>
-        <button id="btnFav" onclick="toggleFavorite()" class="w-9 h-9 rounded-full bg-slate-800/90 border border-slate-700 text-slate-400 hover:text-amber-400 flex items-center justify-center transition active:scale-95 shadow shrink-0 ml-2">
-          <i id="favIcon" class="fa-regular fa-star text-base"></i>
-        </button>
+        <div class="flex items-center gap-1.5 shrink-0 ml-2">
+          <!-- Googleマップ位置確認ボタン -->
+          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="w-8 h-8 rounded-full bg-slate-800/90 border border-slate-700 text-slate-300 hover:text-rose-400 flex items-center justify-center transition active:scale-95 shadow" title="Googleマップで場所・アクセスを確認">
+            <i class="fa-solid fa-location-dot text-xs"></i>
+          </button>
+          <!-- シェア（共有）ボタン -->
+          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="w-8 h-8 rounded-full bg-slate-800/90 border border-slate-700 text-slate-300 hover:text-sky-400 flex items-center justify-center transition active:scale-95 shadow" title="このスポットをシェア">
+            <i class="fa-solid fa-arrow-up-from-bracket text-xs"></i>
+          </button>
+          <!-- お気に入り★ボタン -->
+          <button id="btnFav" onclick="toggleFavorite()" class="w-8 h-8 rounded-full bg-slate-800/90 border border-slate-700 text-slate-400 hover:text-amber-400 flex items-center justify-center transition active:scale-95 shadow" title="MYスポット登録">
+            <i id="favIcon" class="fa-regular fa-star text-sm"></i>
+          </button>
+        </div>
       </div>
 
       <!-- メイン指標: スコア & 積雪深 & バーンタグ -->
@@ -1692,10 +1703,79 @@
       const isFav = favorites.includes(currentSpotId);
       const icon = document.getElementById('favIcon');
       if (isFav) {
-        icon.className = "fa-solid fa-star text-amber-400 text-base";
+        icon.className = "fa-solid fa-star text-amber-400 text-sm";
       } else {
-        icon.className = "fa-regular fa-star text-slate-400 text-base";
+        icon.className = "fa-regular fa-star text-slate-400 text-sm";
       }
+    }
+
+    // Googleマップ位置確認（ベース・登山口ピン）
+    function handleSpotMapClick() {
+      if (!appData || !appData.spots) return;
+      const spot = appData.spots.find(s => s.id === currentSpotId);
+      if (!spot) return;
+      const lat = (spot.base && spot.base.lat) || (spot.top && spot.top.lat);
+      const lon = (spot.base && spot.base.lon) || (spot.top && spot.top.lon);
+      if (!lat || !lon) return;
+      const mapUrl = `https://www.google.com/maps?q=${lat},${lon}(${encodeURIComponent(spot.name)})`;
+      window.open(mapUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    // スポット雪予報シェア（Web Share API / クリップボード）
+    async function handleSpotShareClick() {
+      if (!appData || !appData.spots) return;
+      const spot = appData.spots.find(s => s.id === currentSpotId);
+      if (!spot) return;
+
+      const origin = window.location.origin;
+      const pathname = window.location.pathname;
+      const shareUrl = `${origin}${pathname}?spot=${encodeURIComponent(spot.id)}`;
+      const nightVal = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(spot) : 0;
+      const shareTitle = `【${spot.name}】積雪・パウダー雪質速報 ｜ SNOW BASE JAPAN`;
+      const shareText = `❄️【${spot.name}】雪山コンディション速報\n・雪質スコア: ${spot.current.score}点 (${spot.current.tag})\n・山頂積雪: ${spot.current.topSnowDepth}cm / 夜間新雪: +${nightVal}cm\n・山頂気温: ${spot.current.topTemp}℃ / 風速: ${spot.current.windSpeed}m/s\n#SNOWBASE #スキー #スノーボード`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: shareTitle,
+            text: shareText,
+            url: shareUrl
+          });
+          return;
+        } catch (e) {
+          if (e.name === 'AbortError') return;
+        }
+      }
+
+      // Web Share API 非対応環境・フォールバック
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+          showToast('📋 共有テキストとURLをコピーしました！');
+        } else {
+          showToast('🔗 URL: ' + shareUrl);
+        }
+      } catch (err) {
+        showToast('🔗 URL: ' + shareUrl);
+      }
+    }
+
+    // トースト通知
+    function showToast(msg) {
+      let toast = document.getElementById('appToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'appToast';
+        toast.className = 'fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 text-white px-4 py-2 rounded-full border border-sky-500/60 shadow-xl text-xs font-bold transition-all duration-300 opacity-0 pointer-events-none -translate-y-2';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+      }, 2500);
     }
 
     function renderMySpotsTab() {
