@@ -175,6 +175,20 @@ async function run() {
   const spots = JSON.parse(fs.readFileSync(spotsFile, 'utf8'));
   console.log(`対象スポット総数: ${spots.length}`);
 
+  const outputPath = path.join(__dirname, '..', 'data_japan.json');
+  const existingSpotsMap = {};
+  try {
+    if (fs.existsSync(outputPath)) {
+      const oldData = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+      if (Array.isArray(oldData.spots)) {
+        oldData.spots.forEach(s => { existingSpotsMap[s.id] = s; });
+        console.log(`既存キャッシュロード成功: ${oldData.spots.length}件`);
+      }
+    }
+  } catch (e) {
+    console.warn('既存キャッシュ読み込みスキップ:', e.message);
+  }
+
   // 1. 気象庁アメダス最新データ取得
   let amedasMap = {};
   let latestJmaTime = '';
@@ -362,12 +376,23 @@ async function run() {
       }
     } catch (err) {
       console.error(`バッチエラー (Index ${i}):`, err.message);
+      // API一時失敗時は既存キャッシュから復元してスポット欠落を防止
+      chunk.forEach(s => {
+        if (existingSpotsMap[s.id]) {
+          processedSpots.push(existingSpotsMap[s.id]);
+        }
+      });
     }
 
     await sleep(600);
   }
 
   console.log(`\n全スポット集計完了: ${processedSpots.length} 件`);
+
+  // 防御チェック: 1392件中極端に少ない場合はファイル破損を防ぐため上書きしない
+  if (processedSpots.length < spots.length * 0.8) {
+    throw new Error(`[ABORT] 集計スポット数が異常です (${processedSpots.length} / ${spots.length})。data_japan.json の上書きを中止しました。`);
+  }
 
   const jstNow = new Date(Date.now() + 9 * 3600000);
   const jstHour = jstNow.getUTCHours();
@@ -436,7 +461,6 @@ async function run() {
     spots: processedSpots
   };
 
-  const outputPath = path.join(__dirname, '..', 'data_japan.json');
   fs.writeFileSync(outputPath, JSON.stringify(outputData), 'utf8');
 
   const elapsedSec = ((Date.now() - startTime) / 1000).toFixed(1);
