@@ -242,13 +242,13 @@
           <span id="heroRank" class="text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-500 text-slate-900 mt-1">圧雪良好</span>
         </div>
 
-        <!-- 積雪深（山頂 & 山麓） -->
+        <!-- 積雪深（トップ & ベース） -->
         <div class="col-span-8 bg-slate-800/80 rounded-xl p-2.5 flex flex-col justify-between border border-slate-700/60">
           <div class="flex justify-between items-center text-xs">
             <div class="min-w-0 pr-1">
               <span class="text-slate-400 font-bold flex items-center gap-1">
                 <i class="fa-solid fa-mountain text-sky-400 text-[11px]"></i>
-                <span>山頂 (<span id="heroTopElev">1831m</span>)</span>
+                <span>トップ (<span id="heroTopElev">1831m</span>)</span>
               </span>
               <span id="heroTopLabel" class="text-[9.5px] text-slate-400 truncate block max-w-[140px]">八方池山荘</span>
             </div>
@@ -259,7 +259,7 @@
             <div class="min-w-0 pr-1">
               <span class="text-slate-400 font-bold flex items-center gap-1">
                 <i class="fa-solid fa-house text-emerald-400 text-[11px]"></i>
-                <span>山麓 (<span id="heroBaseElev">760m</span>)</span>
+                <span>ベース (<span id="heroBaseElev">760m</span>)</span>
               </span>
               <span id="heroBaseLabel" class="text-[9.5px] text-slate-400 truncate block max-w-[140px]">八方ゴンドラ山麓駅</span>
             </div>
@@ -282,7 +282,7 @@
             </div>
           </div>
           <div class="text-right shrink-0 pl-2">
-            <div class="text-[9.5px] font-bold text-slate-900/70 leading-none">山頂新雪</div>
+            <div class="text-[9.5px] font-bold text-slate-900/70 leading-none">トップ新雪</div>
             <div class="flex items-baseline justify-end gap-0.5 mt-0.5">
               <span id="heroNightSnow" class="font-teko text-3xl font-black leading-none text-slate-950">+--</span>
               <span class="text-xs font-bold text-slate-900/80">cm</span>
@@ -311,7 +311,7 @@
           </div>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[9.5px] text-slate-400 block whitespace-nowrap">気温 (山頂/麓)</span>
+          <span class="text-[9.5px] text-slate-400 block whitespace-nowrap">気温 (トップ/ベース)</span>
           <div class="font-teko text-base sm:text-lg font-bold mt-0.5 whitespace-nowrap">
             <span id="heroTopTemp" class="text-sky-300">--</span>
             <span class="text-slate-500 text-xs"> / </span>
@@ -319,7 +319,7 @@
           </div>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[9.5px] text-slate-400 block whitespace-nowrap">山頂風速</span>
+          <span class="text-[9.5px] text-slate-400 block whitespace-nowrap">トップ風速</span>
           <span id="heroWind" class="font-teko text-base sm:text-lg font-bold text-slate-200 block mt-0.5 whitespace-nowrap">-- m/s</span>
         </div>
         <div class="shrink-0 flex flex-col items-center">
@@ -364,24 +364,24 @@
         </h3>
         <!-- 標高切替ピル -->
         <div class="flex rounded-lg bg-slate-800 p-0.5 border border-slate-700 text-[10px] font-bold">
-          <button id="btnElevTop" onclick="setElevLevel('top')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400">山頂 (Top)</button>
-          <button id="btnElevBase" onclick="setElevLevel('base')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">山麓 (Base)</button>
+          <button id="btnElevTop" onclick="setElevLevel('top')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400">トップ</button>
+          <button id="btnElevBase" onclick="setElevLevel('base')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">ベース</button>
         </div>
       </div>
 
       <!-- 縦スクロールテーブルコンテナ -->
       <div class="rounded-xl border border-slate-700/80 overflow-hidden bg-slate-900/60 shadow-inner">
-        <!-- 固定ヘッダー（5列: 時刻 / 天気 / 気温・風 / 山頂雪 / 山麓雪） -->
+        <!-- 固定ヘッダー（5列: 時刻 / 天気 / 気温・風 / ベース雪 / トップ雪） -->
         <div class="grid grid-cols-[48px_36px_1.15fr_1fr_1fr] text-center text-[10px] font-bold text-slate-400 bg-slate-800/90 py-2 px-1.5 border-b border-slate-700/80 tracking-wide select-none">
           <div>時刻</div>
           <div>天気</div>
-          <div id="tlWeatherHeader" class="text-sky-300">気温・風(Top)</div>
-          <div class="text-emerald-400 bg-emerald-950/30 rounded py-0.5 border border-emerald-500/20">山頂 雪</div>
-          <div class="text-slate-300 bg-slate-800/50 rounded py-0.5 border border-slate-700/50">山麓 雪</div>
+          <div id="tlWeatherHeader" class="text-sky-300">気温・風(トップ)</div>
+          <div class="text-slate-300 bg-slate-800/50 rounded py-0.5 border border-slate-700/50">ベース 雪</div>
+          <div class="text-emerald-400 bg-emerald-950/30 rounded py-0.5 border border-emerald-500/20">トップ 雪</div>
         </div>
 
         <!-- 縦スクロール領域 -->
-        <div id="timelineContainer" class="divide-y divide-slate-800/70 max-h-[440px] overflow-y-auto hide-scrollbar text-xs">
+        <div id="timelineContainer" class="relative divide-y divide-slate-800/70 max-h-[440px] overflow-y-auto hide-scrollbar text-xs">
           <!-- JSで動的生成 -->
         </div>
       </div>
@@ -1220,6 +1220,8 @@
     }
 
     // タイムライン描画（標高切替 & Top/Base横並び比較）
+    let isTimelineScrollInitialized = false;
+
     function setElevLevel(level) {
       currentElevLevel = level;
       document.getElementById('btnElevTop').className = level === 'top' ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold" : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
@@ -1227,7 +1229,7 @@
       
       const headerEl = document.getElementById('tlWeatherHeader');
       if (headerEl) {
-        headerEl.textContent = level === 'top' ? '気温・風(Top)' : '気温・風(Base)';
+        headerEl.textContent = level === 'top' ? '気温・風(トップ)' : '気温・風(ベース)';
       }
 
       const spot = appData.spots.find(s => s.id === currentSpotId);
@@ -1239,6 +1241,7 @@
 
     function renderTimeline(spot) {
       const container = document.getElementById('timelineContainer');
+      const prevScrollTop = container ? container.scrollTop : 0;
       container.innerHTML = '';
 
       const topH = spot.topHourly;
@@ -1276,7 +1279,6 @@
               <span>${parseInt(mStr, 10)}月${parseInt(dStr, 10)}日</span>
               <span class="${dayColor}">(${dayName})</span>
             </div>
-            <span class="text-[9.5px] font-normal text-slate-400">降雪 / 積雪深</span>
           `;
           container.appendChild(dateDivider);
         }
@@ -1287,11 +1289,11 @@
         const windDir = weatherH.windDirection ? weatherH.windDirection[i] : null;
         const windStr = (windSpeed !== null && windSpeed !== undefined) ? `${getWindDirJa(windDir)} ${Math.round(windSpeed)}m` : '--';
 
-        // 山頂雪データ
+        // トップ雪データ
         const topSnow = (topH && topH.snowfall && topH.snowfall[i] !== undefined) ? Math.round(topH.snowfall[i] * 10) / 10 : 0;
         const topDepth = (topH && topH.snowDepth && topH.snowDepth[i] !== undefined) ? Math.round(topH.snowDepth[i]) : null;
 
-        // 山麓雪データ
+        // ベース雪データ
         const baseSnow = (baseH && baseH.snowfall && baseH.snowfall[i] !== undefined) ? Math.round(baseH.snowfall[i] * 10) / 10 : 0;
         const baseDepth = (baseH && baseH.snowDepth && baseH.snowDepth[i] !== undefined) ? Math.round(baseH.snowDepth[i]) : null;
 
@@ -1327,17 +1329,7 @@
             <span class="text-[9.5px] text-slate-400">${windStr}</span>
           </div>
 
-          <!-- 山頂 雪 (降雪 / 積雪) -->
-          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/30 rounded py-1">
-            <span class="font-bold text-xs ${topSnow > 0 ? 'text-emerald-400' : 'text-slate-500'}">
-              ${topSnow > 0 ? '+' + topSnow + 'cm' : '―'}
-            </span>
-            <span class="text-[9.5px] ${topDepth !== null ? 'text-sky-300/80 font-medium' : 'text-slate-600'}">
-              ${topDepth !== null ? topDepth + 'cm' : '--'}
-            </span>
-          </div>
-
-          <!-- 山麓 雪 (降雪 / 積雪) -->
+          <!-- ベース 雪 (降雪 / 積雪) -->
           <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/20 rounded py-1">
             <span class="font-bold text-xs ${baseSnow > 0 ? 'text-emerald-400' : 'text-slate-500'}">
               ${baseSnow > 0 ? '+' + baseSnow + 'cm' : '―'}
@@ -1346,11 +1338,21 @@
               ${baseDepth !== null ? baseDepth + 'cm' : '--'}
             </span>
           </div>
+
+          <!-- トップ 雪 (降雪 / 積雪) -->
+          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/30 rounded py-1">
+            <span class="font-bold text-xs ${topSnow > 0 ? 'text-emerald-400' : 'text-slate-500'}">
+              ${topSnow > 0 ? '+' + topSnow + 'cm' : '―'}
+            </span>
+            <span class="text-[9.5px] ${topDepth !== null ? 'text-sky-300/80 font-medium' : 'text-slate-600'}">
+              ${topDepth !== null ? topDepth + 'cm' : '--'}
+            </span>
+          </div>
         `;
 
         container.appendChild(row);
 
-        // 朝06:00の直下に「🌙 夜間新雪合計 (18-06時)」の独立サマリー行を追加
+        // 朝06:00の直下に「🌙 夜間新雪合計 (18-06時)」の独立サマリー行を追加（左=ベース, 右=トップ）
         if (hourPart === '06:00') {
           let nightTop = nightVal !== undefined && nightVal !== null ? nightVal : 0;
           if (nightTop === 0 && topH && topH.snowfall) {
@@ -1372,17 +1374,17 @@
               <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 inline-block"></span>
               <span>🌙 夜間新雪合計 (18-06時)</span>
             </div>
-            <div class="font-bold ${nightTop > 0 ? 'text-emerald-300 font-black text-xs' : 'text-indigo-300/60 text-[11px]'}">
-              ${nightTop > 0 ? '+' + nightTop + 'cm' : '0cm'}
-            </div>
             <div class="font-bold ${nightBase > 0 ? 'text-emerald-300 font-black text-xs' : 'text-indigo-300/60 text-[11px]'}">
               ${nightBase > 0 ? '+' + nightBase + 'cm' : '0cm'}
+            </div>
+            <div class="font-bold ${nightTop > 0 ? 'text-emerald-300 font-black text-xs' : 'text-indigo-300/60 text-[11px]'}">
+              ${nightTop > 0 ? '+' + nightTop + 'cm' : '0cm'}
             </div>
           `;
           container.appendChild(sumRow);
         }
 
-        // 夕18:00の直下に「☀️ 日中降雪合計 (06-18時)」の独立サマリー行を追加
+        // 夕18:00の直下に「☀️ 日中降雪合計 (06-18時)」の独立サマリー行を追加（左=ベース, 右=トップ）
         else if (hourPart === '18:00') {
           let dayTop = 0;
           const startDay = Math.max(0, i - 12);
@@ -1404,21 +1406,25 @@
               <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block"></span>
               <span>☀️ 日中降雪合計 (06-18時)</span>
             </div>
-            <div class="font-bold ${dayTop > 0 ? 'text-amber-300 font-black text-xs' : 'text-amber-300/60 text-[11px]'}">
-              ${dayTop > 0 ? '+' + dayTop + 'cm' : '0cm'}
-            </div>
             <div class="font-bold ${dayBase > 0 ? 'text-amber-300 font-black text-xs' : 'text-amber-300/60 text-[11px]'}">
               ${dayBase > 0 ? '+' + dayBase + 'cm' : '0cm'}
+            </div>
+            <div class="font-bold ${dayTop > 0 ? 'text-amber-300 font-black text-xs' : 'text-amber-300/60 text-[11px]'}">
+              ${dayTop > 0 ? '+' + dayTop + 'cm' : '0cm'}
             </div>
           `;
           container.appendChild(sumRow);
         }
       }
 
-      if (targetNowRow) {
+      // スクロール制御: 初回画面読み込み時のみNOW位置へ自動調整、ポイント切替や標高切替時は直前のスクロール位置を維持（画面全体のジャンプを完全防止）
+      if (!isTimelineScrollInitialized && targetNowRow) {
         setTimeout(() => {
-          targetNowRow.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        }, 100);
+          container.scrollTop = Math.max(0, targetNowRow.offsetTop - (container.clientHeight / 2) + (targetNowRow.clientHeight / 2));
+          isTimelineScrollInitialized = true;
+        }, 50);
+      } else {
+        container.scrollTop = prevScrollTop;
       }
     }
 
@@ -1732,11 +1738,11 @@
             <!-- コンディション3連グリッド -->
             <div class="grid grid-cols-3 gap-1.5 p-2 rounded-xl bg-slate-950/60 border border-slate-800/90 text-center">
               <div>
-                <span class="text-[9px] text-slate-400 block leading-tight">積雪 (山頂/麓)</span>
+                <span class="text-[9px] text-slate-400 block leading-tight">積雪 (トップ/ベース)</span>
                 <span class="font-bold text-white text-[11px]">${s.current.topSnowDepth} / ${s.current.baseSnowDepth}cm</span>
               </div>
               <div class="border-x border-slate-800">
-                <span class="text-[9px] text-slate-400 block leading-tight">山頂気温</span>
+                <span class="text-[9px] text-slate-400 block leading-tight">トップ気温</span>
                 <span class="font-bold text-white text-[11px]">${s.current.topTemp}℃</span>
               </div>
               <div>
@@ -1977,7 +1983,7 @@
       const shareUrl = `${origin}${pathname}?spot=${encodeURIComponent(spot.id)}`;
       const nightVal = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(spot) : 0;
       const shareTitle = `【${spot.name}】積雪・パウダー雪質速報 ｜ SNOW BASE JAPAN`;
-      const shareText = `❄️【${spot.name}】雪山コンディション速報\n・雪質スコア: ${spot.current.score}点 (${spot.current.tag})\n・山頂積雪: ${spot.current.topSnowDepth}cm / 夜間新雪: +${nightVal}cm\n・山頂気温: ${spot.current.topTemp}℃ / 風速: ${spot.current.windSpeed}m/s\n#SNOWBASE #スキー #スノーボード`;
+      const shareText = `❄️【${spot.name}】雪山コンディション速報\n・雪質スコア: ${spot.current.score}点 (${spot.current.tag})\n・トップ積雪: ${spot.current.topSnowDepth}cm / 夜間新雪: +${nightVal}cm\n・トップ気温: ${spot.current.topTemp}℃ / 風速: ${spot.current.windSpeed}m/s\n#SNOWBASE #スキー #スノーボード`;
 
       if (navigator.share) {
         try {
@@ -2046,7 +2052,7 @@
           </div>
           <div class="text-right">
             <div class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs">点</span>' : ''}</div>
-            <div class="text-[10px] text-slate-300 mt-0.5">山頂: ${s.current.topSnowDepth}cm</div>
+            <div class="text-[10px] text-slate-300 mt-0.5">トップ: ${s.current.topSnowDepth}cm</div>
           </div>
         `;
         container.appendChild(card);
