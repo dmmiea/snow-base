@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>SNOW BASE JAPAN ｜ 全国スキー場・雪山バックカントリー雪情報・予報・積雪実測</title>
-  <meta name="description" content="全国のスキー場（570+箇所）および主要バックカントリー山岳の積雪実測・7日間予報・夜間積雪(18-6時)・雪質レーティングを完全網羅した次世代スノーダッシュボード。">
-  <meta name="keywords" content="スキー場,雪予報,積雪情報,パウダーサーチ,バックカントリー,アメダス実測,白馬,ニセコ,湯沢,志賀高原,SNOW BASE">
+  <title>POWDER BASE JAPAN ｜ 全国スキー場・雪山バックカントリー雪情報・予報・積雪実測</title>
+  <meta name="description" content="全国のスキー場（570+箇所）および主要バックカントリー山岳の積雪実測・7日間予報・夜間積雪(18-6時)・雪質レーティングを完全網羅した次世代パウダー＆スノーダッシュボード。">
+  <meta name="keywords" content="スキー場,雪予報,積雪情報,パウダーサーチ,バックカントリー,アメダス実測,白馬,ニセコ,湯沢,志賀高原,POWDER BASE">
+  <link rel="canonical" href="https://powderbase-jp.com/">
+  <meta property="og:site_name" content="POWDER BASE JAPAN">
+  <meta property="og:title" content="POWDER BASE JAPAN ｜ 全国スキー場・雪山バックカントリー雪情報・予報・積雪実測">
+  <meta property="og:url" content="https://powderbase-jp.com/">
 
   <!-- PWA & Mobile Web App Meta -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="SNOW BASE">
+  <meta name="apple-mobile-web-app-title" content="POWDER BASE">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
@@ -101,11 +105,11 @@
     <div class="flex flex-col items-center justify-center animate-splash-logo select-none px-4">
       <!-- アイコン背面アクセント光彩 -->
       <div class="w-20 h-20 rounded-3xl shadow-2xl shadow-sky-500/25 mb-3 relative overflow-hidden border border-slate-700/80 bg-slate-900 flex items-center justify-center">
-        <img src="icons/apple-touch-icon-180.png" alt="SNOW BASE JAPAN" class="w-full h-full object-cover">
+        <img src="icons/apple-touch-icon-180.png" alt="POWDER BASE JAPAN" class="w-full h-full object-cover">
       </div>
       <div class="text-center">
-        <span class="font-teko text-4xl font-extrabold tracking-widest text-white leading-none uppercase block">SNOW BASE</span>
-        <span class="text-[10.5px] tracking-wider text-sky-400 font-bold uppercase mt-1.5 block">JAPAN - NATIONWIDE SNOW DASHBOARD</span>
+        <span class="font-teko text-4xl font-extrabold tracking-widest text-white leading-none uppercase block">POWDER BASE</span>
+        <span class="text-[10.5px] tracking-wider text-sky-400 font-bold uppercase mt-1.5 block">JAPAN - NATIONWIDE POWDER DASHBOARD</span>
       </div>
     </div>
   </div>
@@ -120,7 +124,7 @@
           ❄️
         </div>
         <h1 class="flex items-center space-x-1.5 m-0 p-0 font-normal">
-          <span class="font-teko text-2xl font-bold tracking-wider text-sky-400 leading-none uppercase">SNOW BASE</span>
+          <span class="font-teko text-2xl font-bold tracking-wider text-sky-400 leading-none uppercase">POWDER BASE</span>
           <span class="text-[9.5px] px-1.5 py-0.2 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700">JAPAN</span>
         </h1>
       </div>
@@ -621,7 +625,7 @@
       if (typeof firebase !== 'undefined') {
         firebase.initializeApp(firebaseConfig);
         db = firebase.firestore();
-        console.log('✅ [Firebase] Firestore initialized successfully for SNOW BASE.');
+        console.log('✅ [Firebase] Firestore initialized successfully for POWDER BASE.');
       }
     } catch (e) {
       console.warn('⚠️ [Firebase] Initialization error:', e);
@@ -2020,8 +2024,8 @@
       const pathname = window.location.pathname;
       const shareUrl = `${origin}${pathname}?spot=${encodeURIComponent(spot.id)}`;
       const nightVal = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(spot) : 0;
-      const shareTitle = `【${spot.name}】積雪・パウダー雪質速報 ｜ SNOW BASE JAPAN`;
-      const shareText = `❄️【${spot.name}】雪山コンディション速報\n・雪質スコア: ${spot.current.score}点 (${spot.current.tag})\n・トップ積雪: ${spot.current.topSnowDepth}cm / 夜間新雪: +${nightVal}cm\n・トップ気温: ${spot.current.topTemp}℃ / 風速: ${spot.current.windSpeed}m/s\n#SNOWBASE #スキー #スノーボード`;
+      const shareTitle = `【${spot.name}】積雪・パウダー雪質速報 ｜ POWDER BASE JAPAN`;
+      const shareText = `❄️【${spot.name}】雪山コンディション速報\n・雪質スコア: ${spot.current.score}点 (${spot.current.tag})\n・トップ積雪: ${spot.current.topSnowDepth}cm / 夜間新雪: +${nightVal}cm\n・トップ気温: ${spot.current.topTemp}℃ / 風速: ${spot.current.windSpeed}m/s\n#POWDERBASE #スキー #スノーボード`;
 
       if (navigator.share) {
         try {
@@ -2148,7 +2152,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('✅ SNOW BASE SW registered:', reg.scope))
+          .then(reg => console.log('✅ POWDER BASE SW registered:', reg.scope))
           .catch(err => console.warn('⚠️ SW registration failed:', err));
       });
     }

@@ -45,5 +45,5 @@
   </g>
 
   <!-- App Label Accent -->
-  <text x="256" y="462" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="900" fill="#ffffff" letter-spacing="6" text-anchor="middle" opacity="0.95">SNOW BASE</text>
+  <text x="256" y="462" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="31" font-weight="900" fill="#ffffff" letter-spacing="4" text-anchor="middle" opacity="0.95">POWDER BASE</text>
 </svg>

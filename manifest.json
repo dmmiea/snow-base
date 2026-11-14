@@ -1,6 +1,6 @@
 {
-  "name": "SNOW BASE JAPAN - 全国の雪予報＆ゲレンデ情報",
-  "short_name": "SNOW BASE",
+  "name": "POWDER BASE JAPAN - 全国の雪予報＆ゲレンデ情報",
+  "short_name": "POWDER BASE",
   "description": "全国1,392地点のスキー場・バックカントリー山岳の雪予報、実測積雪深、夜間新雪ランキング＆雪質ダッシュボード",
   "start_url": "./",
   "scope": "./",

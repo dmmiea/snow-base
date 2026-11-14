@@ -52,7 +52,7 @@ const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512
   </g>
 
   <!-- App Label Accent -->
-  <text x="256" y="462" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="900" fill="#ffffff" letter-spacing="6" text-anchor="middle" opacity="0.95">SNOW BASE</text>
+  <text x="256" y="462" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="31" font-weight="900" fill="#ffffff" letter-spacing="4" text-anchor="middle" opacity="0.95">POWDER BASE</text>
 </svg>`;
 
 const svgPath = path.join(iconDir, 'icon.svg');
@@ -62,4 +62,20 @@ fs.writeFileSync(svgPath, svgContent, 'utf8');
 fs.writeFileSync(path.join(iconDir, 'icon-192.svg'), svgContent, 'utf8');
 fs.writeFileSync(path.join(iconDir, 'icon-512.svg'), svgContent, 'utf8');
 
-console.log('✅ SVG icons generated successfully in icons/');
+// sharp で各サイズの PNG を自動生成
+try {
+  const sharp = require('sharp');
+  const svgBuffer = Buffer.from(svgContent);
+  
+  Promise.all([
+    sharp(svgBuffer).resize(180, 180).png().toFile(path.join(iconDir, 'apple-touch-icon-180.png')),
+    sharp(svgBuffer).resize(192, 192).png().toFile(path.join(iconDir, 'icon-192.png')),
+    sharp(svgBuffer).resize(512, 512).png().toFile(path.join(iconDir, 'icon-512.png'))
+  ]).then(() => {
+    console.log('✅ SVG and PNG icons (180, 192, 512) generated successfully with sharp!');
+  }).catch(err => {
+    console.error('❌ Error generating PNGs with sharp:', err);
+  });
+} catch (e) {
+  console.log('⚠️ sharp is not installed, only SVGs generated.');
+}
