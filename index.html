@@ -431,37 +431,50 @@
 
   <!-- TAB 3: エリア一覧 & パウダーランキング（サーフベース準拠統合ビュー） -->
   <main id="tabAreas" class="max-w-md mx-auto px-3.5 pt-2.5 pb-32 space-y-3 hidden">
-    <!-- 上部切り替えタブ（エリア別一覧 / パウダーランキング） -->
-    <div class="sticky z-30 bg-slate-950/95 backdrop-blur-md -mx-3.5 px-3.5 py-2 border-b border-slate-800/80 shadow-sm" style="top: calc(env(safe-area-inset-top, 0px) + 45px);">
+    <!-- 上部切り替えタブ（エリア別一覧 / パウダーランキング ＋ スキー場 / BC山 2択） -->
+    <div class="sticky z-30 bg-slate-950/95 backdrop-blur-md -mx-3.5 px-3.5 py-2 border-b border-slate-800/80 shadow-sm space-y-1.5" style="top: calc(env(safe-area-inset-top, 0px) + 45px);">
       <div class="grid grid-cols-2 gap-1.5 bg-slate-800/90 p-1 rounded-2xl border border-slate-700/80">
-        <button type="button" id="btnAreasModeList" onclick="switchAreasSubView('list')" class="py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap">
+        <button type="button" id="btnAreasModeList" onclick="switchAreasSubView('list')" class="py-1.5 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap">
           <i class="fa-solid fa-layer-group"></i>
           <span>エリア別一覧</span>
         </button>
-        <button type="button" id="btnAreasModeRanking" onclick="switchAreasSubView('ranking')" class="py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap">
+        <button type="button" id="btnAreasModeRanking" onclick="switchAreasSubView('ranking')" class="py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap">
           <i class="fa-solid fa-crown text-amber-400"></i>
           <span>パウダーランキング</span>
+        </button>
+      </div>
+      <!-- スキー場 / バックカントリー 完全分離2択トグル -->
+      <div class="grid grid-cols-2 gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
+        <button type="button" id="btnAreasCatSki" onclick="setAreasCategoryFilter('ski')" class="py-1.5 px-2.5 rounded-lg text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap">
+          <span>🏂 スキー場</span>
+        </button>
+        <button type="button" id="btnAreasCatBc" onclick="setAreasCategoryFilter('bc')" class="py-1.5 px-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap">
+          <span>⛰️ バックカントリー</span>
         </button>
       </div>
     </div>
 
     <!-- A. エリア別一覧パネル（アコーディオン形式） -->
     <div id="areasListPanel" class="space-y-2.5">
-      <div class="flex items-center justify-between px-0.5 gap-1.5">
-        <div class="text-xs font-bold text-slate-300 flex items-center gap-1.5 min-w-0">
-          <i class="fa-solid fa-map-location-dot text-sky-400 shrink-0"></i>
-          <span class="truncate">エリアをタップして各スポットを展開</span>
-        </div>
-        <button type="button" id="btnToggleAllAccordions" onclick="toggleAllAreaAccordions()" class="text-xs font-bold text-sky-300 bg-sky-950/60 hover:bg-sky-900/70 px-2.5 py-1 rounded-lg border border-sky-700/60 transition active:scale-95 shrink-0">
-          すべて展開
+      <!-- クイック検索バー -->
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+        <input type="text" id="areasSearchInput" oninput="setAreasSearchQuery(this.value)" placeholder="エリア名・スキー場・山名で絞り込み..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-8 pr-8 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-sky-500 transition">
+        <button type="button" id="btnAreasSearchClear" onclick="clearAreasSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1" aria-label="検索クリア">
+          <i class="fa-solid fa-circle-xmark text-xs"></i>
         </button>
       </div>
 
-      <!-- カテゴリフィルター（すべて / スキー場 / BC山） -->
-      <div class="flex items-center gap-1.5">
-        <button type="button" id="btnAreasCatAll" onclick="setAreasCategoryFilter('all')" class="px-2.5 py-1 rounded-lg text-xs font-black bg-sky-500 text-slate-900 transition">すべて</button>
-        <button type="button" id="btnAreasCatSki" onclick="setAreasCategoryFilter('ski')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition">🏂 スキー場</button>
-        <button type="button" id="btnAreasCatBc" onclick="setAreasCategoryFilter('bc')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition">⛰️ BC山</button>
+      <!-- コンディションフィルター ＋ すべて展開 -->
+      <div class="flex items-center justify-between gap-1.5">
+        <div class="flex items-center gap-1 overflow-x-auto hide-scrollbar">
+          <button type="button" id="btnAreasCondAll" onclick="setAreasConditionFilter('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-black bg-sky-500 text-slate-900 whitespace-nowrap transition">すべて</button>
+          <button type="button" id="btnAreasCondFresh" onclick="setAreasConditionFilter('fresh')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white whitespace-nowrap transition">❄️ 新雪あり</button>
+          <button type="button" id="btnAreasCondOpen" onclick="setAreasConditionFilter('open')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white whitespace-nowrap transition">⛷️ 滑走可能(30cm~)</button>
+        </div>
+        <button type="button" id="btnToggleAllAccordions" onclick="toggleAllAreaAccordions()" class="text-[11px] font-bold text-sky-300 bg-sky-950/60 hover:bg-sky-900/70 px-2.5 py-1 rounded-lg border border-sky-700/60 transition active:scale-95 shrink-0 whitespace-nowrap">
+          すべて展開
+        </button>
       </div>
 
       <!-- 地方フィルターピルバー -->
@@ -663,7 +676,9 @@
     let currentTab = 'home';
     let currentAreasSubView = 'list'; // 'list' | 'ranking'
     let areasRegionFilter = 'all';
-    let areasCategoryFilter = 'all'; // 'all' | 'ski' | 'bc'
+    let areasCategoryFilter = 'ski'; // 'ski' | 'bc'
+    let areasSearchQuery = '';
+    let areasConditionFilter = 'all'; // 'all' | 'fresh' | 'open'
     const expandedAreaKeys = new Set();
     const FEED_SEEN_KEY = 'snow_base_feed_last_seen_v1';
 
@@ -1825,14 +1840,14 @@
       const panelRank = document.getElementById('areasRankingPanel');
 
       if (currentAreasSubView === 'list') {
-        if (btnList) btnList.className = 'py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
-        if (btnRank) btnRank.className = 'py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
+        if (btnList) btnList.className = 'py-1.5 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
+        if (btnRank) btnRank.className = 'py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
         if (panelList) panelList.classList.remove('hidden');
         if (panelRank) panelRank.classList.add('hidden');
         renderAreasAccordionList();
       } else {
-        if (btnRank) btnRank.className = 'py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
-        if (btnList) btnList.className = 'py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
+        if (btnRank) btnRank.className = 'py-1.5 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
+        if (btnList) btnList.className = 'py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
         if (panelRank) panelRank.classList.remove('hidden');
         if (panelList) panelList.classList.add('hidden');
         renderRankingTab();
@@ -1849,15 +1864,45 @@
     }
 
     function setAreasCategoryFilter(cat) {
-      areasCategoryFilter = cat || 'all';
-      const btnAll = document.getElementById('btnAreasCatAll');
+      areasCategoryFilter = cat === 'bc' ? 'bc' : 'ski';
       const btnSki = document.getElementById('btnAreasCatSki');
       const btnBc = document.getElementById('btnAreasCatBc');
-      const activeCls = 'px-2.5 py-1 rounded-lg text-xs font-black bg-sky-500 text-slate-900 transition';
-      const inactiveCls = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition';
-      if (btnAll) btnAll.className = areasCategoryFilter === 'all' ? activeCls : inactiveCls;
+      const activeCls = 'py-1.5 px-2.5 rounded-lg text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
+      const inactiveCls = 'py-1.5 px-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
       if (btnSki) btnSki.className = areasCategoryFilter === 'ski' ? activeCls : inactiveCls;
       if (btnBc) btnBc.className = areasCategoryFilter === 'bc' ? activeCls : inactiveCls;
+      if (currentAreasSubView === 'ranking') {
+        renderRankingTab();
+      } else {
+        renderAreasAccordionList();
+      }
+    }
+
+    function setAreasSearchQuery(val) {
+      areasSearchQuery = (val || '').trim();
+      const clearBtn = document.getElementById('btnAreasSearchClear');
+      if (clearBtn) {
+        clearBtn.classList.toggle('hidden', areasSearchQuery.length === 0);
+      }
+      renderAreasAccordionList();
+    }
+
+    function clearAreasSearch() {
+      const input = document.getElementById('areasSearchInput');
+      if (input) input.value = '';
+      setAreasSearchQuery('');
+    }
+
+    function setAreasConditionFilter(cond) {
+      areasConditionFilter = ['fresh', 'open'].includes(cond) ? cond : 'all';
+      const activeCls = 'px-2.5 py-1 rounded-lg text-[11px] font-black bg-sky-500 text-slate-900 whitespace-nowrap transition';
+      const inactiveCls = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white whitespace-nowrap transition';
+      const btnAll = document.getElementById('btnAreasCondAll');
+      const btnFresh = document.getElementById('btnAreasCondFresh');
+      const btnOpen = document.getElementById('btnAreasCondOpen');
+      if (btnAll) btnAll.className = areasConditionFilter === 'all' ? activeCls : inactiveCls;
+      if (btnFresh) btnFresh.className = areasConditionFilter === 'fresh' ? activeCls : inactiveCls;
+      if (btnOpen) btnOpen.className = areasConditionFilter === 'open' ? activeCls : inactiveCls;
       renderAreasAccordionList();
     }
 
@@ -1874,10 +1919,22 @@
       if (!appData || !appData.spots) return [];
       const groupMap = new Map();
       const regionOrderMap = new Map(AREAS_REGION_ORDER.map((r, i) => [r.key, i]));
+      const q = areasSearchQuery.toLowerCase();
 
       appData.spots.forEach(s => {
+        if (s.category !== areasCategoryFilter) return;
         if (areasRegionFilter !== 'all' && s.region !== areasRegionFilter) return;
-        if (areasCategoryFilter !== 'all' && s.category !== areasCategoryFilter) return;
+        if (q) {
+          const hay = `${s.name || ''} ${s.areaName || ''} ${s.regionName || ''}`.toLowerCase();
+          if (!hay.includes(q)) return;
+        }
+        if (areasConditionFilter === 'fresh') {
+          if ((getSpotNightSnow(s) || 0) <= 0) return;
+        } else if (areasConditionFilter === 'open') {
+          const depth = (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : 0;
+          if (depth < 30) return;
+        }
+
         const areaName = s.areaName || s.regionName || 'その他エリア';
         const compKey = `${s.region || 'other'}__${areaName}`;
         if (!groupMap.has(compKey)) {
@@ -1946,16 +2003,32 @@
       }
 
       container.innerHTML = groups.map(group => {
-        const isOpen = expandedAreaKeys.has(group.compositeKey);
+        const isOpen = expandedAreaKeys.has(group.compositeKey) || Boolean(areasSearchQuery);
         const maxNight = Math.max(...group.spots.map(s => getSpotNightSnow(s) || 0));
+        const maxDepth = Math.max(...group.spots.map(s => (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : 0));
+
+        // エリア内ベストコンディションスポットを算出
+        const bestSpot = group.spots.slice().sort((a, b) => {
+          const sa = (a.current && typeof a.current.score === 'number') ? a.current.score : -1;
+          const sb = (b.current && typeof b.current.score === 'number') ? b.current.score : -1;
+          if (sb !== sa) return sb - sa;
+          const da = (a.current && typeof a.current.topSnowDepth === 'number') ? a.current.topSnowDepth : 0;
+          const db = (b.current && typeof b.current.topSnowDepth === 'number') ? b.current.topSnowDepth : 0;
+          return db - da;
+        })[0];
+
+        const bestScore = (bestSpot && bestSpot.current && typeof bestSpot.current.score === 'number') ? bestSpot.current.score : null;
+        const bestRank = (bestSpot && bestSpot.current && bestSpot.current.rank) ? bestSpot.current.rank : '積雪不足';
+        const scoreBadgeCls = bestScore !== null
+          ? (bestScore >= 80 ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' : (bestScore >= 60 ? 'bg-sky-500/20 text-sky-300 border-sky-500/40' : 'bg-slate-700/80 text-slate-200 border-slate-600'))
+          : 'bg-slate-800 text-slate-400 border-slate-700';
+
         const rowsHtml = isOpen ? group.spots.map(s => {
           const nightSnow = getSpotNightSnow(s);
-          const depth = (s.current && typeof s.current.snowDepth === 'number') ? s.current.snowDepth : '--';
-          const score = (s.current && typeof s.current.powderScore === 'number') ? s.current.powderScore : '--';
-          const isBC = s.category === 'bc';
-          const catBadge = isBC
-            ? '<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold shrink-0">⛰️BC</span>'
-            : '<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold shrink-0">🏂ゲレンデ</span>';
+          const depth = (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : '--';
+          const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
+          const weatherIcon = (s.current && s.current.weatherInfo && s.current.weatherInfo.icon) ? s.current.weatherInfo.icon : '❄️';
+          const tagStr = (s.current && s.current.tag) ? s.current.tag : '';
           const isFav = favorites.includes(s.id);
           const favStar = isFav ? '<i class="fa-solid fa-star text-amber-400 text-[11px] shrink-0"></i>' : '';
 
@@ -1963,13 +2036,14 @@
             <button type="button" onclick="selectSpotFromMap('${s.id}')" class="w-full text-left px-3 py-2.5 flex items-center justify-between gap-2 hover:bg-slate-800/70 active:bg-slate-800 transition border-t border-slate-800/80">
               <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-1.5">
-                  ${catBadge}
+                  <span class="text-xs shrink-0">${weatherIcon}</span>
                   ${favStar}
                   <span class="text-sm font-bold text-white truncate">${s.name}</span>
                 </div>
-                <div class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-2">
+                <div class="text-[11px] text-slate-400 mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5">
                   <span>積雪 <strong class="text-slate-200">${depth}cm</strong></span>
-                  <span>スコア <strong class="text-sky-300">${score}点</strong></span>
+                  <span>スコア <strong class="${score !== null ? 'text-sky-300' : 'text-slate-400'}">${score !== null ? score + '点' : '―'}</strong></span>
+                  ${tagStr ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700/80">${tagStr}</span>` : ''}
                 </div>
               </div>
               <div class="text-right shrink-0 flex items-center gap-2">
@@ -1985,16 +2059,25 @@
 
         return `
           <div class="snow-card rounded-xl border border-slate-700/70 overflow-hidden">
-            <button type="button" onclick="toggleAreaAccordion('${group.compositeKey.replace(/'/g, "\\'")}')" class="w-full px-3.5 py-2.5 flex items-center justify-between gap-2 text-left hover:bg-slate-800/50 transition">
-              <div class="min-w-0 flex items-center gap-2">
-                <i class="fa-solid fa-chevron-right text-xs text-sky-400 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}"></i>
-                <div class="min-w-0">
-                  <div class="text-sm font-black text-white truncate">${group.areaName}</div>
-                  <div class="text-[11px] text-slate-400">${group.regionName} ・ ${group.spots.length}地点</div>
+            <button type="button" onclick="toggleAreaAccordion('${group.compositeKey.replace(/'/g, "\\'")}')" class="w-full px-3.5 py-2.5 flex flex-col gap-1.5 text-left hover:bg-slate-800/50 transition">
+              <div class="w-full flex items-center justify-between gap-2">
+                <div class="min-w-0 flex-1 flex items-center gap-1.5">
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-black bg-sky-950 text-sky-300 border border-sky-800/80 shrink-0">${group.regionName}</span>
+                  <span class="text-sm font-black text-white truncate">${group.areaName}</span>
+                  <span class="text-[11px] text-slate-400 font-bold shrink-0">(${group.spots.length})</span>
                 </div>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180 text-sky-400' : ''}"></i>
               </div>
-              <div class="flex items-center gap-2 shrink-0">
-                ${maxNight > 0 ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-700/60 font-bold">最大 +${maxNight}cm</span>` : ''}
+              <div class="w-full flex items-center justify-between gap-2 pt-1.5 border-t border-slate-800/80 text-[11px]">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="text-slate-400">最大積雪 <strong class="text-slate-200">${maxDepth}cm</strong></span>
+                  ${maxNight > 0 ? `<span class="px-1.5 py-0.2 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-700/60 font-bold">🌙+${maxNight}cm</span>` : ''}
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <span class="text-slate-400">最高</span>
+                  <span class="px-1.5 py-0.5 rounded border font-black leading-none ${scoreBadgeCls}">${bestScore !== null ? bestScore + '点' : '―'}</span>
+                  <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold border ${bestScore !== null ? 'bg-sky-500/15 text-sky-300 border-sky-500/30' : 'bg-slate-800/90 text-slate-400 border-slate-700'} leading-none">${bestRank}</span>
+                </div>
               </div>
             </button>
             ${isOpen ? `<div class="bg-slate-900/50">${rowsHtml}</div>` : ''}
@@ -2036,21 +2119,51 @@
       const container = document.getElementById('rankingListContainer');
       container.innerHTML = '';
 
-      let list = [];
+      if (!appData || !appData.spots) {
+        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">現在ランキングデータを集計中です</div>';
+        return;
+      }
+
       let labelText = '降雪量';
       if (currentRankPeriod === 'night') {
-        list = appData.rankingNight || [];
         labelText = '🌙夜間新雪';
       } else if (currentRankPeriod === '6h') {
-        list = appData.ranking6h || [];
         labelText = '⚡6h降雪';
       } else {
-        list = appData.ranking24h || [];
         labelText = '❄️24h降雪';
       }
 
-      if (!list || list.length === 0) {
-        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">現在ランキングデータを集計中です</div>';
+      const list = appData.spots
+        .filter(s => s.category === areasCategoryFilter)
+        .map(s => {
+          const cur = s.current || {};
+          let snowVal = 0;
+          if (currentRankPeriod === 'night') snowVal = getSpotNightSnow(s) || 0;
+          else if (currentRankPeriod === '6h') snowVal = typeof cur.snow6h === 'number' ? cur.snow6h : 0;
+          else snowVal = typeof cur.snow24h === 'number' ? cur.snow24h : 0;
+
+          return {
+            id: s.id,
+            name: s.name,
+            category: s.category,
+            regionName: s.regionName || '',
+            areaName: s.areaName || s.regionName || '',
+            snow: Math.round(snowVal * 10) / 10,
+            depth: typeof cur.topSnowDepth === 'number' ? cur.topSnowDepth : '--',
+            tag: cur.tag || '滑走不可',
+            isReset: Boolean(cur.isReset)
+          };
+        })
+        .sort((a, b) => {
+          if (b.snow !== a.snow) return b.snow - a.snow;
+          const da = typeof a.depth === 'number' ? a.depth : -1;
+          const db = typeof b.depth === 'number' ? b.depth : -1;
+          return db - da;
+        })
+        .slice(0, 25);
+
+      if (list.length === 0) {
+        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">該当カテゴリのデータがありません</div>';
         return;
       }
 
