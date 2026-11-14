@@ -1482,7 +1482,7 @@
     // 週間予報から該当日のタイムラインへスクロール
     function scrollToTimelineDate(targetDateStr) {
       selectedWeeklyDate = targetDateStr;
-      const spot = currentSpot;
+      const spot = (appData && appData.spots) ? appData.spots.find(s => s.id === currentSpotId) : null;
       if (spot) renderWeeklyForecast(spot);
 
       const container = document.getElementById('timelineContainer');
@@ -1490,9 +1490,11 @@
 
       const targetEl = container.querySelector(`[data-date="${targetDateStr}"]`);
       if (targetEl) {
-        // コンテナ内部のスクロールのみ（ページ全体のジャンプは一切行わない）
+        // sticky要素でも安定して該当日の先頭が上部に来るよう計算
+        const firstRow = targetEl.nextElementSibling;
+        const targetTop = firstRow ? Math.max(0, firstRow.offsetTop - targetEl.offsetHeight) : targetEl.offsetTop;
         container.scrollTo({
-          top: targetEl.offsetTop,
+          top: targetTop,
           behavior: 'smooth'
         });
       }
