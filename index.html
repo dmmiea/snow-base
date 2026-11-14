@@ -203,28 +203,30 @@
 
       <!-- スポットヘッダー -->
       <div class="mb-3 relative z-10">
-        <!-- 1番上：スポット名（横幅いっぱい） -->
-        <h2 id="heroSpotName" class="w-full text-xl sm:text-2xl font-black text-white leading-tight mb-2 flex items-center gap-2">
-          白馬八方尾根スキー場
-        </h2>
-        <!-- 2段目：属性バッジ群 ＆ アクションボタン（同サイズ・フラット横並び） -->
-        <div class="flex items-center flex-wrap gap-1.5">
-          <span id="heroCategoryBadge" class="text-[10px] font-black px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30 h-[22px] inline-flex items-center">🏂 スキー場</span>
-          <span id="heroAreaName" class="text-xs font-bold text-slate-400">白馬・小谷</span>
-          <span id="heroSlopeBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 h-[22px] inline-flex items-center">🧭 北斜面</span>
-          <span id="heroElevDiffBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800 h-[22px] inline-flex items-center">↕ 標高差 --m</span>
-          <!-- Googleマップ位置確認ボタン（標高差バッジと同じサイズ・角丸四角） -->
-          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="h-[22px] px-2 rounded bg-slate-800 text-slate-300 hover:text-rose-400 border border-slate-700 inline-flex items-center justify-center transition active:scale-95" title="Googleマップで場所・アクセスを確認">
-            <i class="fa-solid fa-location-dot text-[11px]"></i>
+        <!-- 1段目：スポット名 ＆ 3点ボタン（サーフベース完全準拠・インライン配置） -->
+        <div class="flex items-center gap-2 flex-wrap mb-1.5">
+          <h2 id="heroSpotName" class="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+            白馬八方尾根スキー場
+          </h2>
+          <!-- お気に入り★ボタン -->
+          <button id="btnFav" onclick="toggleFavorite()" class="text-slate-400 hover:text-amber-400 text-base active:scale-95 transition ml-0.5" title="MYスポット登録">
+            <i id="favIcon" class="fa-regular fa-star"></i>
           </button>
           <!-- シェア（共有）ボタン -->
-          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="h-[22px] px-2 rounded bg-slate-800 text-slate-300 hover:text-sky-400 border border-slate-700 inline-flex items-center justify-center transition active:scale-95" title="このスポットをシェア">
-            <i class="fa-solid fa-arrow-up-from-bracket text-[11px]"></i>
+          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="text-slate-400 hover:text-sky-400 text-sm active:scale-95 transition" title="このスポットをシェア">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>
           </button>
-          <!-- お気に入り★ボタン -->
-          <button id="btnFav" onclick="toggleFavorite()" class="h-[22px] px-2 rounded bg-slate-800 text-slate-400 hover:text-amber-400 border border-slate-700 inline-flex items-center justify-center transition active:scale-95" title="MYスポット登録">
-            <i id="favIcon" class="fa-regular fa-star text-[11px]"></i>
+          <!-- Googleマップ位置確認ボタン -->
+          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="text-slate-400 hover:text-rose-400 text-sm active:scale-95 transition" title="Googleマップで場所・アクセスを確認">
+            <i class="fa-solid fa-location-dot"></i>
           </button>
+        </div>
+        <!-- 2段目：属性バッジ群（純粋にバッジのみで横並び） -->
+        <div class="flex items-center flex-wrap gap-1.5">
+          <span id="heroCategoryBadge" class="text-[10px] font-black px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">🏂 スキー場</span>
+          <span id="heroAreaName" class="text-xs font-bold text-slate-400">白馬・小谷</span>
+          <span id="heroSlopeBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">🧭 北斜面</span>
+          <span id="heroElevDiffBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">↕ 標高差 --m</span>
         </div>
       </div>
 
