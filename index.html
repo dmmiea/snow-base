@@ -334,18 +334,21 @@
          =============================== -->
     <div class="snow-card rounded-2xl p-4">
       <div class="flex items-center justify-between mb-2">
-        <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+        <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-chart-line text-sky-400"></i>
-          <span>積雪トレンド（過去実績 ⇄ 未来予報 連結）</span>
+          <span>積雪トレンド</span>
         </h3>
-        <span class="text-[10px] text-slate-400 font-medium">折れ線:積雪深 / 棒:降雪量</span>
+        <div class="flex bg-slate-900 rounded-lg p-0.5 border border-slate-700/70 text-[10px]">
+          <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold">7日間</button>
+          <button id="btnTrend48h" onclick="setTrendRange('48h')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold">48h</button>
+        </div>
       </div>
       <div class="w-full h-48 relative">
         <canvas id="trendChartCanvas"></canvas>
       </div>
       <div class="flex items-center justify-center gap-4 text-[10px] text-slate-400 mt-2">
         <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-sky-400 inline-block"></span>積雪深(cm)</span>
-        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 bg-cyan-400/70 inline-block rounded-sm"></span>時間降雪量(cm/h)</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-cyan-400 inline-block"></span>時間降雪量(cm/h)</span>
         <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>現在時刻</span>
       </div>
     </div>
@@ -560,6 +563,7 @@
     let currentSpotId = '';
     let currentElevLevel = 'top'; // 'top' or 'base'
     let currentRankPeriod = 'night'; // 'night', '6h', '24h'
+    let currentTrendRange = '7d'; // '7d' or '48h'
     let trendChartInstance = null;
     let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
     let isFavMode = false;
@@ -1028,6 +1032,26 @@
       renderWeeklyForecast(spot);
     }
 
+    // 風向角度(0〜360)を8方位日本語に変換
+    function getWindDirJa(deg) {
+      if (deg === undefined || deg === null || isNaN(deg)) return '--';
+      const dirs = ['北', '北東', '東', '南東', '南', '南西', '西', '北西'];
+      return dirs[Math.round(deg / 45) % 8];
+    }
+
+    // トレンドグラフ表示期間切替（7日間 ⇄ 48h）
+    function setTrendRange(range) {
+      currentTrendRange = range;
+      document.getElementById('btnTrend7d').className = range === '7d'
+        ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold"
+        : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
+      document.getElementById('btnTrend48h').className = range === '48h'
+        ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold"
+        : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
+      const spot = appData.spots.find(s => s.id === currentSpotId);
+      if (spot) renderTrendChart(spot);
+    }
+
     // トレンドグラフ（Chart.js 実績＋予報シームレス連結）
     function renderTrendChart(spot) {
       const ctx = document.getElementById('trendChartCanvas').getContext('2d');
@@ -1041,23 +1065,55 @@
       let currentIdx = hourly.time.findIndex(t => t.startsWith(currentHourStr));
       if (currentIdx === -1) currentIdx = 24;
 
-      // 直近48時間（過去24h＋未来24h）を現在時刻中心で抜粋表示
+      // 7日間(過去24h＋未来7日) または 48時間(前後24h)
       const startIdx = Math.max(0, currentIdx - 24);
-      const endIdx = Math.min(hourly.time.length, currentIdx + 25);
+      const endIdx = currentTrendRange === '7d'
+        ? hourly.time.length
+        : Math.min(hourly.time.length, currentIdx + 25);
       const nowHighlightIdx = currentIdx - startIdx;
 
       const labels = [];
       const depthData = [];
       const snowData = [];
+      const tempData = [];
+      const windSpeedData = [];
+      const windDirData = [];
 
       for (let i = startIdx; i < endIdx; i++) {
         const tStr = hourly.time[i]; // 2026-11-10T06:00
         const hour = tStr.slice(11, 16);
-        const label = (hour === '00:00' || i === startIdx) ? `${tStr.slice(5, 10)} ${hour}` : hour;
+        const datePart = tStr.slice(5, 10).replace('-', '/');
+        const label = currentTrendRange === '7d'
+          ? ((hour === '00:00' || i === startIdx) ? datePart : `${datePart} ${hour}`)
+          : ((hour === '00:00' || i === startIdx) ? `${datePart} ${hour}` : hour);
         labels.push(label);
         depthData.push(hourly.snowDepth[i]);
         snowData.push(hourly.snowfall[i] || 0);
+        tempData.push(hourly.temperature ? hourly.temperature[i] : null);
+        windSpeedData.push(hourly.windSpeed ? hourly.windSpeed[i] : null);
+        windDirData.push(hourly.windDirection ? hourly.windDirection[i] : null);
       }
+
+      // 現在時刻の縦破線プラグイン
+      const nowLinePlugin = {
+        id: 'nowLine',
+        afterDatasetsDraw(chart) {
+          const meta = chart.getDatasetMeta(0);
+          if (!meta || !meta.data || !meta.data[nowHighlightIdx]) return;
+          const x = meta.data[nowHighlightIdx].x;
+          const { top, bottom } = chart.chartArea;
+          const c = chart.ctx;
+          c.save();
+          c.beginPath();
+          c.setLineDash([4, 3]);
+          c.strokeStyle = 'rgba(251, 191, 36, 0.75)';
+          c.lineWidth = 1.5;
+          c.moveTo(x, top);
+          c.lineTo(x, bottom);
+          c.stroke();
+          c.restore();
+        }
+      };
 
       trendChartInstance = new Chart(ctx, {
         type: 'line',
@@ -1069,7 +1125,7 @@
               label: '積雪深(cm)',
               data: depthData,
               borderColor: '#38bdf8',
-              backgroundColor: 'rgba(56, 189, 248, 0.15)',
+              backgroundColor: 'rgba(56, 189, 248, 0.12)',
               borderWidth: 2,
               fill: true,
               tension: 0.3,
@@ -1078,15 +1134,21 @@
               pointBackgroundColor: '#fbbf24'
             },
             {
-              type: 'bar',
+              type: 'line',
               label: '降雪量(cm/h)',
               data: snowData,
-              backgroundColor: 'rgba(6, 182, 212, 0.75)',
-              borderRadius: 3,
-              yAxisID: 'ySnow'
+              borderColor: '#22d3ee',
+              backgroundColor: 'rgba(34, 211, 238, 0.18)',
+              borderWidth: 1.8,
+              fill: true,
+              tension: 0.25,
+              yAxisID: 'ySnow',
+              pointRadius: (ctx) => ctx.dataIndex === nowHighlightIdx ? 4 : 0,
+              pointBackgroundColor: '#fbbf24'
             }
           ]
         },
+        plugins: [nowLinePlugin],
         options: {
           responsive: true,
           maintainAspectRatio: false,
@@ -1098,24 +1160,43 @@
               titleColor: '#38bdf8',
               bodyColor: '#fff',
               borderColor: '#334155',
-              borderWidth: 1
+              borderWidth: 1,
+              callbacks: {
+                afterBody(items) {
+                  if (!items || !items.length) return '';
+                  const idx = items[0].dataIndex;
+                  const t = tempData[idx];
+                  const ws = windSpeedData[idx];
+                  const wd = windDirData[idx];
+                  const tempStr = (t !== null && t !== undefined) ? `${t.toFixed(1)}℃` : '--';
+                  const windStr = (ws !== null && ws !== undefined) ? `${getWindDirJa(wd)} ${ws.toFixed(1)}m/s` : '--';
+                  return [`気温: ${tempStr} / 風: ${windStr}`];
+                }
+              }
             }
           },
           scales: {
             x: {
               grid: { color: 'rgba(51, 65, 85, 0.3)' },
-              ticks: { color: '#94a3b8', font: { size: 9 }, maxTicksLimit: 12 }
+              ticks: {
+                color: '#94a3b8',
+                font: { size: 9 },
+                maxTicksLimit: currentTrendRange === '7d' ? 8 : 12
+              }
             },
             yDepth: {
               position: 'left',
+              beginAtZero: true,
+              suggestedMax: 10,
               grid: { color: 'rgba(51, 65, 85, 0.3)' },
-              ticks: { color: '#38bdf8', font: { size: 9 } }
+              ticks: { color: '#38bdf8', font: { size: 9 }, precision: 0 }
             },
             ySnow: {
               position: 'right',
+              beginAtZero: true,
+              suggestedMax: 5,
               grid: { drawOnChartArea: false },
-              ticks: { color: '#06b6d4', font: { size: 9 } },
-              max: 10
+              ticks: { color: '#06b6d4', font: { size: 9 } }
             }
           }
         }
