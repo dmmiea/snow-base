@@ -354,10 +354,10 @@
     </div>
 
     <!-- ===============================
-         TIMELINE (標高切替 & 夜間新雪バッジ)
+         TIMELINE (縦スクロール: 標高切替 & Top/Base横並び比較)
          =============================== -->
-    <div class="snow-card rounded-2xl p-4">
-      <div class="flex items-center justify-between mb-3">
+    <div class="snow-card rounded-2xl p-4 space-y-2.5">
+      <div class="flex items-center justify-between">
         <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
           <i class="fa-solid fa-clock text-sky-400"></i>
           <span>時間別タイムライン（1時間刻み）</span>
@@ -369,9 +369,25 @@
         </div>
       </div>
 
-      <!-- 横スクロールタイムラインリスト -->
-      <div id="timelineContainer" class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
-        <!-- JSで動的生成 -->
+      <!-- 縦スクロールテーブルコンテナ -->
+      <div class="rounded-xl border border-slate-700/80 overflow-hidden bg-slate-900/60 shadow-inner">
+        <!-- 固定ヘッダー（5列: 時刻 / 天気 / 気温・風 / 山頂雪 / 山麓雪） -->
+        <div class="grid grid-cols-[48px_36px_1.15fr_1fr_1fr] text-center text-[10px] font-bold text-slate-400 bg-slate-800/90 py-2 px-1.5 border-b border-slate-700/80 tracking-wide select-none">
+          <div>時刻</div>
+          <div>天気</div>
+          <div id="tlWeatherHeader" class="text-sky-300">気温・風(Top)</div>
+          <div class="text-emerald-400 bg-emerald-950/30 rounded py-0.5 border border-emerald-500/20">山頂 雪</div>
+          <div class="text-slate-300 bg-slate-800/50 rounded py-0.5 border border-slate-700/50">山麓 雪</div>
+        </div>
+
+        <!-- 縦スクロール領域 -->
+        <div id="timelineContainer" class="divide-y divide-slate-800/70 max-h-[440px] overflow-y-auto hide-scrollbar text-xs">
+          <!-- JSで動的生成 -->
+        </div>
+      </div>
+      <div class="flex items-center justify-between text-[10px] text-slate-400 px-1">
+        <span>※雪列: 上段=降雪(cm/h) / 下段=積雪深(cm)</span>
+        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>NOW</span>
       </div>
     </div>
 
@@ -1203,12 +1219,17 @@
       });
     }
 
-    // タイムライン描画（標高切替 & 夜間新雪バッジ）
+    // タイムライン描画（標高切替 & Top/Base横並び比較）
     function setElevLevel(level) {
       currentElevLevel = level;
       document.getElementById('btnElevTop').className = level === 'top' ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold" : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
       document.getElementById('btnElevBase').className = level === 'base' ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold" : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
       
+      const headerEl = document.getElementById('tlWeatherHeader');
+      if (headerEl) {
+        headerEl.textContent = level === 'top' ? '気温・風(Top)' : '気温・風(Base)';
+      }
+
       const spot = appData.spots.find(s => s.id === currentSpotId);
       if (spot) {
         renderTrendChart(spot);
@@ -1220,84 +1241,141 @@
       const container = document.getElementById('timelineContainer');
       container.innerHTML = '';
 
-      const hourly = currentElevLevel === 'top' ? spot.topHourly : spot.baseHourly;
-      if (!hourly || !hourly.time) return;
+      const topH = spot.topHourly;
+      const baseH = spot.baseHourly || spot.topHourly;
+      const weatherH = currentElevLevel === 'top' ? topH : baseH;
+      if (!weatherH || !weatherH.time) return;
 
       const jstNow = new Date(Date.now() + 9 * 3600000);
       const currentHourStr = jstNow.toISOString().slice(0, 13);
-      let targetNowCol = null;
+      let targetNowRow = null;
+      let lastDate = '';
 
-      for (let i = 0; i < hourly.time.length; i++) {
-        const timeStr = hourly.time[i]; // 2026-11-10T06:00
-        const datePart = timeStr.slice(5, 10);
-        const hourPart = timeStr.slice(11, 16);
-        const weather = getWeatherInfo(hourly.weatherCode[i]);
-        const temp = Math.round(hourly.temperature[i]);
-        const wind = Math.round(hourly.windSpeed[i]);
-        const snow = Math.round((hourly.snowfall[i] || 0) * 10) / 10;
+      const dayNames = ['日', '月', '火', '水', '木', '金', '土'];
+
+      for (let i = 0; i < weatherH.time.length; i++) {
+        const timeStr = weatherH.time[i]; // 2026-11-10T06:00
+        const datePart = timeStr.slice(5, 10); // 11-10
+        const hourPart = timeStr.slice(11, 16); // 06:00
+
+        // 日付区切りヘッダーの挿入
+        if (datePart !== lastDate) {
+          lastDate = datePart;
+          const [mStr, dStr] = datePart.split('-');
+          const year = parseInt(timeStr.slice(0, 4), 10);
+          const rowDateObj = new Date(year, parseInt(mStr, 10) - 1, parseInt(dStr, 10));
+          const dayIdx = rowDateObj.getDay();
+          const dayName = dayNames[dayIdx] || '';
+          const dayColor = dayIdx === 0 ? 'text-rose-400' : (dayIdx === 6 ? 'text-sky-400' : 'text-slate-300');
+
+          const dateDivider = document.createElement('div');
+          dateDivider.className = "sticky top-0 z-10 bg-slate-800/95 backdrop-blur-sm px-3 py-1 text-[11px] font-bold border-y border-slate-700/60 flex items-center justify-between text-slate-300";
+          dateDivider.innerHTML = `
+            <div class="flex items-center gap-1.5">
+              <i class="fa-solid fa-calendar text-[10px] text-sky-400"></i>
+              <span>${parseInt(mStr, 10)}月${parseInt(dStr, 10)}日</span>
+              <span class="${dayColor}">(${dayName})</span>
+            </div>
+            <span class="text-[9.5px] font-normal text-slate-400">降雪 / 積雪深</span>
+          `;
+          container.appendChild(dateDivider);
+        }
+
+        const weather = getWeatherInfo(weatherH.weatherCode ? weatherH.weatherCode[i] : null);
+        const temp = weatherH.temperature ? Math.round(weatherH.temperature[i]) : '--';
+        const windSpeed = weatherH.windSpeed ? weatherH.windSpeed[i] : null;
+        const windDir = weatherH.windDirection ? weatherH.windDirection[i] : null;
+        const windStr = (windSpeed !== null && windSpeed !== undefined) ? `${getWindDirJa(windDir)} ${Math.round(windSpeed)}m` : '--';
+
+        // 山頂雪データ
+        const topSnow = (topH && topH.snowfall && topH.snowfall[i] !== undefined) ? Math.round(topH.snowfall[i] * 10) / 10 : 0;
+        const topDepth = (topH && topH.snowDepth && topH.snowDepth[i] !== undefined) ? Math.round(topH.snowDepth[i]) : null;
+
+        // 山麓雪データ
+        const baseSnow = (baseH && baseH.snowfall && baseH.snowfall[i] !== undefined) ? Math.round(baseH.snowfall[i] * 10) / 10 : 0;
+        const baseDepth = (baseH && baseH.snowDepth && baseH.snowDepth[i] !== undefined) ? Math.round(baseH.snowDepth[i]) : null;
+
         const nightVal = spot.nightSnowByDate ? spot.nightSnowByDate[timeStr] : null;
 
         const isNow = timeStr.startsWith(currentHourStr);
-        const col = document.createElement('div');
-        if (isNow) {
-          col.className = "flex-shrink-0 w-16 bg-slate-800 rounded-xl p-2 flex flex-col items-center justify-between text-center border-2 border-amber-400 ring-2 ring-amber-400/30 h-[180px] relative";
-          targetNowCol = col;
-        } else {
-          col.className = "flex-shrink-0 w-16 bg-slate-800/90 rounded-xl p-2 flex flex-col items-center justify-between text-center border border-slate-700/60 h-[180px]";
-        }
+        const row = document.createElement('div');
 
-        let bottomBadgeHtml = '<div class="h-7 w-full"></div>';
+        // 朝6時と夕18時の特別バッジ
+        let timeSubBadge = '';
         if (hourPart === '06:00' && nightVal !== undefined && nightVal !== null) {
           if (nightVal > 0) {
-            bottomBadgeHtml = `
-              <div class="w-full py-0.5 px-0.5 bg-gradient-to-r from-sky-500 to-indigo-600 rounded text-[9px] font-black text-white leading-tight shadow">
-                🌙夜間<br>+${nightVal}cm
-              </div>
-            `;
+            timeSubBadge = `<span class="inline-block mt-0.5 px-1 py-0.2 rounded bg-indigo-500/80 text-white font-black text-[8px] leading-tight">🌙+${nightVal}</span>`;
           } else {
-            bottomBadgeHtml = `
-              <div class="w-full py-0.5 px-0.5 bg-slate-800/80 text-slate-500 border border-slate-700/40 rounded text-[8.5px] font-bold leading-tight">
-                🌙夜間<br>0cm
-              </div>
-            `;
+            timeSubBadge = `<span class="inline-block mt-0.5 px-1 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700/60 font-bold text-[7.5px] leading-tight">🌙0</span>`;
           }
         } else if (hourPart === '18:00') {
           let daySnow = 0;
           const startDay = Math.max(0, i - 12);
           for (let k = startDay; k < i; k++) {
-            daySnow += (hourly.snowfall[k] || 0);
+            daySnow += (topH && topH.snowfall ? (topH.snowfall[k] || 0) : 0);
           }
           daySnow = Math.round(daySnow * 10) / 10;
           if (daySnow > 0) {
-            bottomBadgeHtml = `
-              <div class="w-full py-0.5 px-0.5 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded text-[9px] font-black leading-tight">
-                ☀️日中<br>+${daySnow}cm
-              </div>
-            `;
+            timeSubBadge = `<span class="inline-block mt-0.5 px-1 py-0.2 rounded bg-amber-500/30 text-amber-300 border border-amber-500/40 font-black text-[8px] leading-tight">☀️+${daySnow}</span>`;
           }
         }
 
-        col.innerHTML = `
-          <div>
-            ${isNow ? '<span class="text-[8px] font-black px-1 py-0.2 rounded bg-amber-400 text-slate-950 block mx-auto mb-0.5 w-fit leading-none">NOW</span>' : ''}
-            <span class="text-[9px] text-slate-400 block">${datePart}</span>
-            <span class="font-bold text-xs ${isNow ? 'text-amber-300' : 'text-white'}">${hourPart}</span>
+        if (isNow) {
+          row.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center bg-amber-500/10 border-l-2 border-amber-400 relative transition-colors";
+          targetNowRow = row;
+        } else {
+          row.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center hover:bg-slate-800/40 transition-colors";
+        }
+
+        const tempColor = (temp !== '--' && temp <= 0) ? 'text-sky-300' : 'text-amber-300';
+
+        row.innerHTML = `
+          <!-- 時刻 -->
+          <div class="flex flex-col items-center justify-center">
+            ${isNow ? '<span class="text-[7.5px] font-black px-1 rounded bg-amber-400 text-slate-950 block leading-tight">NOW</span>' : ''}
+            <span class="font-bold text-xs ${isNow ? 'text-amber-300 font-black' : 'text-slate-200'}">${hourPart}</span>
+            ${timeSubBadge}
           </div>
-          <div class="my-0.5 text-xl">${weather.icon}</div>
-          <div class="font-teko text-lg font-bold ${temp <= 0 ? 'text-sky-300' : 'text-amber-300'} leading-none">${temp}℃</div>
-          <div class="text-[10px] text-slate-400 mt-0.5">${wind}m/s</div>
-          <div class="text-[10px] font-bold ${snow > 0 ? 'text-cyan-300' : 'text-slate-500'} mt-0.5">${snow > 0 ? snow + 'cm' : '―'}</div>
-          ${bottomBadgeHtml}
+
+          <!-- 天気 -->
+          <div class="text-base leading-none">
+            ${weather.icon}
+          </div>
+
+          <!-- 気温 & 風 (切替対象) -->
+          <div class="flex flex-col items-center justify-center leading-tight">
+            <span class="font-teko text-base font-bold ${tempColor} tracking-tight">${temp}℃</span>
+            <span class="text-[9.5px] text-slate-400">${windStr}</span>
+          </div>
+
+          <!-- 山頂 雪 (降雪 / 積雪) -->
+          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/30 rounded py-1">
+            <span class="font-bold text-xs ${topSnow > 0 ? 'text-emerald-400' : 'text-slate-500'}">
+              ${topSnow > 0 ? '+' + topSnow + 'cm' : '―'}
+            </span>
+            <span class="text-[9.5px] ${topDepth !== null ? 'text-sky-300/80 font-medium' : 'text-slate-600'}">
+              ${topDepth !== null ? topDepth + 'cm' : '--'}
+            </span>
+          </div>
+
+          <!-- 山麓 雪 (降雪 / 積雪) -->
+          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/20 rounded py-1">
+            <span class="font-bold text-xs ${baseSnow > 0 ? 'text-emerald-400' : 'text-slate-500'}">
+              ${baseSnow > 0 ? '+' + baseSnow + 'cm' : '―'}
+            </span>
+            <span class="text-[9.5px] ${baseDepth !== null ? 'text-slate-400' : 'text-slate-600'}">
+              ${baseDepth !== null ? baseDepth + 'cm' : '--'}
+            </span>
+          </div>
         `;
 
-        container.appendChild(col);
+        container.appendChild(row);
       }
 
-      if (targetNowCol) {
+      if (targetNowRow) {
         setTimeout(() => {
-          const scrollPos = targetNowCol.offsetLeft - container.offsetLeft - (container.clientWidth / 2) + (targetNowCol.clientWidth / 2);
-          container.scrollTo({ left: Math.max(0, scrollPos), behavior: 'smooth' });
-        }, 80);
+          targetNowRow.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }, 100);
       }
     }
 
