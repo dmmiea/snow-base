@@ -109,9 +109,9 @@
       </div>
       <div class="text-center">
         <span class="font-teko text-4xl font-extrabold tracking-widest text-white leading-none uppercase block">POWDER BASE</span>
-        <span class="text-[10.5px] tracking-wider text-sky-400 font-bold uppercase mt-1.5 block">JAPAN - NATIONWIDE POWDER DASHBOARD</span>
+        <span class="text-[11px] tracking-wider text-sky-400 font-bold uppercase mt-1.5 block">JAPAN - NATIONWIDE POWDER DASHBOARD</span>
         <div class="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
-          <i class="fa-solid fa-circle-notch fa-spin text-sky-400 text-[10px]"></i>
+          <i class="fa-solid fa-circle-notch fa-spin text-sky-400 text-[11px]"></i>
           <span>最新データを取得中...</span>
         </div>
       </div>
@@ -129,7 +129,7 @@
         </div>
         <h1 class="flex items-center space-x-1.5 m-0 p-0 font-normal min-w-0">
           <span class="font-teko text-xl sm:text-2xl font-bold tracking-wider text-sky-400 leading-none uppercase whitespace-nowrap">POWDER BASE</span>
-          <span class="text-[9px] sm:text-[9.5px] px-1.5 py-0.2 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700 shrink-0 whitespace-nowrap">JAPAN</span>
+          <span class="text-[11px] sm:text-[11px] px-1.5 py-0.2 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700 shrink-0 whitespace-nowrap">JAPAN</span>
         </h1>
       </div>
       
@@ -146,7 +146,7 @@
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span class="text-[11px] font-bold text-emerald-400">LIVE</span>
           </div>
-          <span id="lastUpdated" class="text-[9.5px] text-slate-400 font-medium whitespace-nowrap block">読込中...</span>
+          <span id="lastUpdated" class="text-[11px] text-slate-400 font-medium whitespace-nowrap block">読込中...</span>
         </div>
       </div>
     </div>
@@ -181,7 +181,7 @@
     <div class="sticky z-40 bg-slate-900 -mx-3.5 px-3.5 pt-1 pb-2 border-b border-slate-800 space-y-1.5" style="top: calc(env(safe-area-inset-top, 0px) + 52px);">
       <div class="grid grid-cols-2 gap-1.5 text-xs">
         <div>
-          <label class="block text-[9.5px] font-bold text-slate-400 mb-0.5">① 地方を選択</label>
+          <label class="block text-[11px] font-bold text-slate-400 mb-0.5">① 地方を選択</label>
           <select id="selectRegion" onchange="onRegionChange(this.value)" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:border-sky-500">
             <option value="all">全国</option>
             <option value="hokkaido">北海道</option>
@@ -195,7 +195,7 @@
           </select>
         </div>
         <div>
-          <label class="block text-[9.5px] font-bold text-slate-400 mb-0.5">② エリアを選択</label>
+          <label class="block text-[11px] font-bold text-slate-400 mb-0.5">② エリアを選択</label>
           <select id="selectArea" onchange="onAreaChange(this.value)" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:border-sky-500">
             <!-- JSで動的生成 -->
           </select>
@@ -237,10 +237,10 @@
         </div>
         <!-- 2段目：属性バッジ群（純粋にバッジのみで横並び） -->
         <div class="flex items-center flex-wrap gap-1.5">
-          <span id="heroCategoryBadge" class="text-[10px] font-black px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">🏂 スキー場</span>
+          <span id="heroCategoryBadge" class="text-[11px] font-black px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">🏂 スキー場</span>
           <span id="heroAreaName" class="text-xs font-bold text-slate-400">白馬・小谷</span>
-          <span id="heroSlopeBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">🧭 北斜面</span>
-          <span id="heroElevDiffBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">↕ 標高差 --m</span>
+          <span id="heroSlopeBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">🧭 北斜面</span>
+          <span id="heroElevDiffBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">↕ 標高差 --m</span>
         </div>
       </div>
 
@@ -248,7 +248,7 @@
       <div class="grid grid-cols-12 gap-2 mb-3 relative z-10">
         <!-- スコアサークル/バッジ -->
         <div class="col-span-4 bg-slate-800/80 rounded-xl p-2.5 flex flex-col items-center justify-center border border-slate-700/60 text-center">
-          <span class="text-[10px] font-bold text-slate-400">雪質スコア</span>
+          <span class="text-[11px] font-bold text-slate-400">雪質スコア</span>
           <div class="flex items-baseline justify-center">
             <span id="heroScore" class="font-teko text-5xl font-black text-sky-400 leading-none">--</span>
             <span class="text-xs text-slate-400 font-bold ml-0.5">/100</span>
@@ -264,7 +264,7 @@
                 <i class="fa-solid fa-mountain text-sky-400 text-[11px]"></i>
                 <span>トップ (<span id="heroTopElev">1831m</span>)</span>
               </span>
-              <span id="heroTopLabel" class="text-[9.5px] text-slate-400 truncate block max-w-[140px]">八方池山荘</span>
+              <span id="heroTopLabel" class="text-[11px] text-slate-400 truncate block max-w-[140px]">八方池山荘</span>
             </div>
             <span class="font-teko text-2xl font-black text-white whitespace-nowrap"><span id="heroTopSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
           </div>
@@ -275,7 +275,7 @@
                 <i class="fa-solid fa-house text-emerald-400 text-[11px]"></i>
                 <span>ベース (<span id="heroBaseElev">760m</span>)</span>
               </span>
-              <span id="heroBaseLabel" class="text-[9.5px] text-slate-400 truncate block max-w-[140px]">八方ゴンドラ山麓駅</span>
+              <span id="heroBaseLabel" class="text-[11px] text-slate-400 truncate block max-w-[140px]">八方ゴンドラ山麓駅</span>
             </div>
             <span class="font-teko text-2xl font-black text-slate-200 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
           </div>
@@ -289,14 +289,14 @@
           <div class="flex items-center gap-2 min-w-0">
             <span class="text-base shrink-0">🌙</span>
             <div class="min-w-0">
-              <div class="text-[10px] font-black uppercase tracking-wider text-slate-900/80 truncate">OVERNIGHT SNOW (18時〜翌06時)</div>
+              <div class="text-[11px] font-black uppercase tracking-wider text-slate-900/80 truncate">OVERNIGHT SNOW (18時〜翌06時)</div>
               <div class="mt-0.5">
                 <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-slate-950/20 text-slate-950 border border-slate-950/20">降雪なし</span>
               </div>
             </div>
           </div>
           <div class="text-right shrink-0 pl-2">
-            <div class="text-[9.5px] font-bold text-slate-900/70 leading-none">トップ新雪</div>
+            <div class="text-[11px] font-bold text-slate-900/70 leading-none">トップ新雪</div>
             <div class="flex items-baseline justify-end gap-0.5 mt-0.5">
               <span id="heroNightSnow" class="font-teko text-3xl font-black leading-none text-slate-950">+--</span>
               <span class="text-xs font-bold text-slate-900/80">cm</span>
@@ -315,17 +315,17 @@
         </div>
       </div>
 
-      <!-- 気温 & 風速 & 現在天気 & アメダス実況（文字幅に応じた自動バランス配分） -->
-      <div class="flex items-start justify-between gap-1.5 sm:gap-2 mt-3 pt-3 border-t border-slate-700/60 text-center text-xs relative z-10 px-0.5">
+      <!-- 気温 & 風速 & 現在天気 & アメダス実況（スマホ2列x2段 / PC4列） -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 pt-3 border-t border-slate-700/60 text-center text-xs relative z-10 px-0.5">
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[9.5px] text-slate-400 block whitespace-nowrap">現在天気</span>
+          <span class="text-[11px] text-slate-400 block whitespace-nowrap">現在天気</span>
           <div class="mt-0.5 flex items-center justify-center gap-1">
             <span id="heroWeatherIcon" class="text-base">❄️</span>
             <span id="heroWeatherLabel" class="text-xs font-bold text-white whitespace-nowrap">雪</span>
           </div>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[9.5px] text-slate-400 block whitespace-nowrap">気温 (トップ/ベース)</span>
+          <span class="text-[11px] text-slate-400 block whitespace-nowrap">気温 (トップ/ベース)</span>
           <div class="font-teko text-base sm:text-lg font-bold mt-0.5 whitespace-nowrap">
             <span id="heroTopTemp" class="text-sky-300">--</span>
             <span class="text-slate-500 text-xs"> / </span>
@@ -333,11 +333,11 @@
           </div>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[9.5px] text-slate-400 block whitespace-nowrap">トップ風速</span>
+          <span class="text-[11px] text-slate-400 block whitespace-nowrap">トップ風速</span>
           <span id="heroWind" class="font-teko text-base sm:text-lg font-bold text-slate-200 block mt-0.5 whitespace-nowrap">-- m/s</span>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span id="heroAmedasTitle" class="text-[9.5px] text-slate-400 block max-w-[78px] truncate whitespace-nowrap">アメダス実測</span>
+          <span id="heroAmedasTitle" class="text-[11px] text-slate-400 block truncate whitespace-nowrap">アメダス実測</span>
           <span id="heroAmedasDepth" class="font-teko text-base sm:text-lg font-bold text-emerald-400 block mt-0.5 whitespace-nowrap">-- cm</span>
         </div>
       </div>
@@ -348,11 +348,11 @@
          =============================== -->
     <div class="snow-card rounded-2xl p-4">
       <div class="flex items-center justify-between mb-2">
-        <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5 whitespace-nowrap">
+        <h3 class="text-sm font-bold text-slate-200 flex items-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-chart-line text-sky-400"></i>
           <span>SNOW TREND（実測・7日予報）</span>
         </h3>
-        <div class="flex bg-slate-900 rounded-lg p-0.5 border border-slate-700/70 text-[10px]">
+        <div class="flex bg-slate-900 rounded-lg p-0.5 border border-slate-700/70 text-[11px]">
           <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold">7日間</button>
           <button id="btnTrend48h" onclick="setTrendRange('48h')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold">48h</button>
         </div>
@@ -360,7 +360,7 @@
       <div class="w-full h-48 relative">
         <canvas id="trendChartCanvas"></canvas>
       </div>
-      <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 text-[10px] text-slate-400 mt-2">
+      <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 text-[11px] text-slate-400 mt-2">
         <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-sky-400 inline-block"></span>積雪深(cm)</span>
         <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span>降雪量(cm/h)</span>
         <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-blue-400/70 border border-blue-400 inline-block"></span>降雨量(mm/h)</span>
@@ -373,11 +373,11 @@
          =============================== -->
     <div class="snow-card rounded-2xl p-4">
       <div class="flex items-center justify-between mb-2.5">
-        <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+        <h3 class="text-sm font-bold text-slate-200 flex items-center gap-1.5">
           <i class="fa-solid fa-calendar-days text-sky-400"></i>
           <span>WEEKLY FORECAST（7日間）</span>
         </h3>
-        <span class="text-[10px] text-slate-400">※タップで該当日の詳細へ</span>
+        <span class="text-[11px] text-slate-400">※タップで該当日の詳細へ</span>
       </div>
       <div id="weeklyForecastContainer" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
         <!-- JSで動的生成 -->
@@ -389,12 +389,12 @@
          =============================== -->
     <div class="snow-card rounded-2xl p-4 space-y-2.5">
       <div class="flex items-center justify-between">
-        <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+        <h3 class="text-sm font-bold text-slate-200 flex items-center gap-1.5">
           <i class="fa-solid fa-clock text-sky-400"></i>
           <span>TIMELINE（1時間刻み）</span>
         </h3>
         <!-- 標高切替ピル -->
-        <div class="flex rounded-lg bg-slate-800 p-0.5 border border-slate-700 text-[10px] font-bold">
+        <div class="flex rounded-lg bg-slate-800 p-0.5 border border-slate-700 text-[11px] font-bold">
           <button id="btnElevTop" onclick="setElevLevel('top')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400">トップ</button>
           <button id="btnElevBase" onclick="setElevLevel('base')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">ベース</button>
         </div>
@@ -403,7 +403,7 @@
       <!-- 縦スクロールテーブルコンテナ -->
       <div class="rounded-xl border border-slate-700/80 overflow-hidden bg-slate-900/60 shadow-inner">
         <!-- 固定ヘッダー（5列: 時刻 / 天気 / 気温・風 / ベース雪/雨 / トップ雪/雨） -->
-        <div class="grid grid-cols-[48px_36px_1.15fr_1fr_1fr] text-center text-[10px] font-bold text-slate-400 bg-slate-800/90 py-2 px-1.5 border-b border-slate-700/80 tracking-wide select-none">
+        <div class="grid grid-cols-[52px_38px_1.15fr_1fr_1fr] text-center text-[11px] font-bold text-slate-400 bg-slate-800/90 py-2 px-1.5 border-b border-slate-700/80 tracking-wide select-none">
           <div>時刻</div>
           <div>天気</div>
           <div id="tlWeatherHeader" class="text-sky-300">気温・風(トップ)</div>
@@ -416,7 +416,7 @@
           <!-- JSで動的生成 -->
         </div>
       </div>
-      <div class="flex items-center justify-between text-[10px] text-slate-400 px-1">
+      <div class="flex items-center justify-between text-[11px] text-slate-400 px-1">
         <span>※雪/雨: 降雪(cm/h)・降雨(mm/h) / 下段=積雪深(cm)</span>
         <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>NOW</span>
       </div>
@@ -479,7 +479,7 @@
        BOTTOM NAVIGATION BAR
        =============================== -->
   <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 pt-2" style="padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px);">
-    <div class="max-w-md mx-auto flex items-center justify-around text-[10px] font-bold text-slate-400">
+    <div class="max-w-md mx-auto flex items-center justify-around text-[11px] font-bold text-slate-400 whitespace-nowrap">
       <button onclick="switchTab('home')" id="navHome" class="flex flex-col items-center gap-1 text-sky-400">
         <i class="fa-solid fa-house text-base"></i>
         <span>ホーム</span>
@@ -855,7 +855,7 @@
           ? "bg-amber-400 text-slate-950 border-amber-300 font-black ring-2 ring-amber-300/40"
           : "bg-slate-800 text-amber-400 border-amber-500/40 hover:bg-slate-700"
       }`;
-      favBtn.innerHTML = `<i class="fa-solid fa-star text-[10px]"></i><span>MYスポット</span><span class="text-[9px] px-1.5 py-0.2 rounded-full font-black ${isFavMode ? 'bg-amber-950 text-amber-300' : 'bg-amber-400/20 text-amber-300 border border-amber-400/30'}">${validFavs.length}</span>`;
+      favBtn.innerHTML = `<i class="fa-solid fa-star text-[11px]"></i><span>MYスポット</span><span class="text-[11px] px-1.5 py-0.2 rounded-full font-black ${isFavMode ? 'bg-amber-950 text-amber-300' : 'bg-amber-400/20 text-amber-300 border border-amber-400/30'}">${validFavs.length}</span>`;
       
       favBtn.onclick = () => {
         isFavMode = !isFavMode;
@@ -896,7 +896,7 @@
                 : "bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600"
             }`;
             const subName = spot.areaName || spot.regionName || "";
-            btn.innerHTML = `<span>${spot.name}</span><span class="text-[9.5px] ${isSelected ? 'text-slate-900 font-semibold' : 'text-slate-400'}">(${spot.category === 'bc' ? '⛰️' : '🏂'}${subName})</span>`;
+            btn.innerHTML = `<span>${spot.name}</span><span class="text-[11px] ${isSelected ? 'text-slate-900 font-semibold' : 'text-slate-400'}">(${spot.category === 'bc' ? '⛰️' : '🏂'}${subName})</span>`;
             btn.onclick = () => {
               currentSpotId = spot.id;
               currentCategory = spot.category;
@@ -1040,7 +1040,7 @@
       subContainer.innerHTML = '';
       (spot.current.tags || []).forEach(t => {
         const badge = document.createElement('span');
-        badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700";
+        badge.className = "text-[11px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700";
         badge.textContent = t.replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F000}-\u{1F02F}\s]+/u, '').trim();
         subContainer.appendChild(badge);
       });
@@ -1301,7 +1301,7 @@
         return `
           <div class="flex flex-col items-center leading-tight py-0.5">
             <span class="font-bold text-[11px] text-emerald-400">+${snowCm}cm</span>
-            <span class="font-bold text-[10px] text-sky-400">${rainMm}mm</span>
+            <span class="font-bold text-[11px] text-sky-400">${rainMm}mm</span>
           </div>
         `;
       } else if (hasSnow) {
@@ -1322,7 +1322,7 @@
         return `
           <div class="flex flex-col items-center leading-tight">
             <span class="font-bold text-[11px] ${defaultSnowColorClass}">+${snowSum}cm</span>
-            <span class="font-bold text-[10px] ${defaultRainColorClass}">${rainSum}mm</span>
+            <span class="font-bold text-[11px] ${defaultRainColorClass}">${rainSum}mm</span>
           </div>
         `;
       } else if (hasSnow) {
@@ -1371,7 +1371,7 @@
           dateDivider.className = "sticky top-0 z-10 bg-slate-800/95 backdrop-blur-sm px-3 py-1 text-[11px] font-bold border-y border-slate-700/60 flex items-center justify-between text-slate-300";
           dateDivider.innerHTML = `
             <div class="flex items-center gap-1.5">
-              <i class="fa-solid fa-calendar text-[10px] text-sky-400"></i>
+              <i class="fa-solid fa-calendar text-[11px] text-sky-400"></i>
               <span>${parseInt(mStr, 10)}月${parseInt(dStr, 10)}日</span>
               <span class="${dayColor}">(${dayName})</span>
             </div>
@@ -1401,10 +1401,10 @@
         const row = document.createElement('div');
 
         if (isNow) {
-          row.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center bg-amber-500/10 border-l-2 border-amber-400 relative transition-colors";
+          row.className = "grid grid-cols-[52px_38px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center bg-amber-500/10 border-l-2 border-amber-400 relative transition-colors";
           targetNowRow = row;
         } else {
-          row.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center hover:bg-slate-800/40 transition-colors";
+          row.className = "grid grid-cols-[52px_38px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center hover:bg-slate-800/40 transition-colors";
         }
 
         const tempColor = (temp !== '--' && temp <= 0) ? 'text-sky-300' : 'text-amber-300';
@@ -1412,7 +1412,7 @@
         row.innerHTML = `
           <!-- 時刻 -->
           <div class="flex flex-col items-center justify-center">
-            ${isNow ? '<span class="text-[7.5px] font-black px-1 rounded bg-amber-400 text-slate-950 block leading-tight">NOW</span>' : ''}
+            ${isNow ? '<span class="text-[11px] font-black px-1 rounded bg-amber-400 text-slate-950 block leading-tight">NOW</span>' : ''}
             <span class="font-bold text-xs ${isNow ? 'text-amber-300 font-black' : 'text-slate-200'}">${hourPart}</span>
           </div>
 
@@ -1424,13 +1424,13 @@
           <!-- 気温 & 風 (切替対象) -->
           <div class="flex flex-col items-center justify-center leading-tight">
             <span class="font-teko text-base font-bold ${tempColor} tracking-tight">${temp}℃</span>
-            <span class="text-[9.5px] text-slate-400">${windStr}</span>
+            <span class="text-[11px] text-slate-400">${windStr}</span>
           </div>
 
           <!-- ベース 雪/雨 (降雪・降雨 / 積雪) -->
           <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/20 rounded py-1 min-h-[36px]">
             ${formatPrecipHtml(baseSnow, baseRain)}
-            <span class="text-[9.5px] ${baseDepth !== null ? 'text-slate-400' : 'text-slate-600'}">
+            <span class="text-[11px] ${baseDepth !== null ? 'text-slate-400' : 'text-slate-600'}">
               ${baseDepth !== null ? baseDepth + 'cm' : '--'}
             </span>
           </div>
@@ -1438,7 +1438,7 @@
           <!-- トップ 雪/雨 (降雪・降雨 / 積雪) -->
           <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/30 rounded py-1 min-h-[36px]">
             ${formatPrecipHtml(topSnow, topRain)}
-            <span class="text-[9.5px] ${topDepth !== null ? 'text-sky-300/80 font-medium' : 'text-slate-600'}">
+            <span class="text-[11px] ${topDepth !== null ? 'text-sky-300/80 font-medium' : 'text-slate-600'}">
               ${topDepth !== null ? topDepth + 'cm' : '--'}
             </span>
           </div>
@@ -1579,15 +1579,15 @@
           borderAndBg = 'bg-slate-800 border-sky-500/50 ring-1 ring-sky-500/30 hover:border-sky-400';
         }
 
-        col.className = `flex-shrink-0 w-20 ${borderAndBg} rounded-xl p-2.5 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none`;
+        col.className = `flex-shrink-0 w-[88px] ${borderAndBg} rounded-xl p-2.5 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none`;
         col.innerHTML = `
-          <span class="text-[10px] font-bold ${isToday ? 'text-amber-400 font-black' : (dayOfWeek === '日' ? 'text-rose-400' : (dayOfWeek === '土' ? 'text-sky-400' : 'text-slate-400'))}">${dateLabel}</span>
+          <span class="text-[11px] font-bold ${isToday ? 'text-amber-400 font-black' : (dayOfWeek === '日' ? 'text-rose-400' : (dayOfWeek === '土' ? 'text-sky-400' : 'text-slate-400'))}">${dateLabel}</span>
           <span class="text-2xl my-1.5 pointer-events-none">${day.weatherIcon}</span>
-          <span class="text-[10.5px] font-bold text-slate-300 pointer-events-none">${day.weatherLabel}</span>
+          <span class="text-[11px] font-bold text-slate-300 pointer-events-none">${day.weatherLabel}</span>
           <div class="font-teko text-sm font-bold mt-1 pointer-events-none">
             <span class="text-rose-400">${day.maxTemp}℃</span> / <span class="text-sky-400">${day.minTemp}℃</span>
           </div>
-          <div class="mt-1 text-[10px] font-black px-1.5 py-0.5 rounded pointer-events-none ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700 text-slate-300'}">
+          <div class="mt-1 text-[11px] font-black px-1.5 py-0.5 rounded pointer-events-none ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700 text-slate-300'}">
             ❄️ +${day.totalSnowfall}cm
           </div>
         `;
@@ -1717,30 +1717,30 @@
 
         let badgeHtml = '';
         if (currentRankPeriod === 'night' && item.isReset) {
-          badgeHtml = '<span class="text-[9.5px] px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-black ml-1.5">リセット❄️</span>';
+          badgeHtml = '<span class="text-[11px] px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-black ml-1.5">リセット❄️</span>';
         }
 
         const catBadge = item.category === 'bc'
-          ? '<span class="text-[9px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold ml-1.5">⛰️BC山</span>'
-          : '<span class="text-[9px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold ml-1.5">🏂スキー場</span>';
+          ? '<span class="text-[11px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold ml-1.5">⛰️BC山</span>'
+          : '<span class="text-[11px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold ml-1.5">🏂スキー場</span>';
 
         card.innerHTML = `
           <div class="flex items-center gap-3">
             <span class="font-teko text-2xl font-black w-6 text-center ${idx === 0 ? 'text-amber-400' : (idx === 1 ? 'text-slate-300' : (idx === 2 ? 'text-amber-600' : 'text-slate-500'))}">${idx + 1}</span>
             <div>
-              <div class="text-[10px] text-slate-400 font-bold flex items-center flex-wrap gap-0.5">
+              <div class="text-[11px] text-slate-400 font-bold flex items-center flex-wrap gap-0.5">
                 <span>${item.areaName || item.regionName}</span>
                 ${catBadge}
                 ${badgeHtml}
               </div>
               <div class="text-sm font-bold text-white">${item.name}</div>
-              <div class="text-[10px] text-sky-400 mt-0.5">${item.tag}</div>
+              <div class="text-[11px] text-sky-400 mt-0.5">${item.tag}</div>
             </div>
           </div>
           <div class="text-right">
-            <div class="text-[10px] text-slate-400">${labelText}</div>
+            <div class="text-[11px] text-slate-400">${labelText}</div>
             <div class="font-teko text-2xl font-black text-cyan-300 leading-none">+${item.snow} <span class="text-xs">cm</span></div>
-            <div class="text-[10px] text-slate-400">積雪: ${item.depth}cm</div>
+            <div class="text-[11px] text-slate-400">積雪: ${item.depth}cm</div>
           </div>
         `;
         container.appendChild(card);
@@ -1844,7 +1844,7 @@
             <i class="fa-solid fa-bell text-amber-400"></i>
             <span>登録スポット最新速報</span>
           </div>
-          <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 font-bold">${favSpots.length}地点登録中</span>
+          <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 font-bold">${favSpots.length}地点登録中</span>
         `;
         container.appendChild(notifSectionHeader);
 
@@ -1860,13 +1860,13 @@
             <div class="flex items-start justify-between gap-2">
               <div class="min-w-0">
                 <div class="flex items-center gap-1.5 flex-wrap">
-                  <span class="text-[9.5px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold shrink-0">
-                    <i class="fa-solid fa-star text-[8px]"></i> MY
+                  <span class="text-[11px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold shrink-0">
+                    <i class="fa-solid fa-star text-[11px]"></i> MY
                   </span>
-                  <span class="text-[9.5px] px-1.5 py-0.2 rounded ${isBC ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-sky-950 text-sky-300 border border-sky-800'} font-bold shrink-0">
+                  <span class="text-[11px] px-1.5 py-0.2 rounded ${isBC ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-sky-950 text-sky-300 border border-sky-800'} font-bold shrink-0">
                     ${isBC ? '⛰️ BC山' : '🏂 スキー場'}
                   </span>
-                  <span class="text-[10px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
+                  <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
                 </div>
                 <h3 class="text-sm font-black text-white mt-1 truncate">${s.name}</h3>
               </div>
@@ -1875,7 +1875,7 @@
                   <span class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}</span>
                   ${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs font-bold text-sky-400">点</span>' : ''}
                 </div>
-                <span class="text-[9.5px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${s.current.rank || '積雪不足'}</span>
+                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${s.current.rank || '積雪不足'}</span>
               </div>
             </div>
 
@@ -1892,28 +1892,28 @@
             <!-- コンディション3連グリッド -->
             <div class="grid grid-cols-3 gap-1.5 p-2 rounded-xl bg-slate-950/60 border border-slate-800/90 text-center">
               <div>
-                <span class="text-[9px] text-slate-400 block leading-tight">積雪 (トップ/ベース)</span>
+                <span class="text-[11px] text-slate-400 block leading-tight">積雪 (トップ/ベース)</span>
                 <span class="font-bold text-white text-[11px]">${s.current.topSnowDepth} / ${s.current.baseSnowDepth}cm</span>
               </div>
               <div class="border-x border-slate-800">
-                <span class="text-[9px] text-slate-400 block leading-tight">トップ気温</span>
+                <span class="text-[11px] text-slate-400 block leading-tight">トップ気温</span>
                 <span class="font-bold text-white text-[11px]">${s.current.topTemp}℃</span>
               </div>
               <div>
-                <span class="text-[9px] text-slate-400 block leading-tight">風速</span>
+                <span class="text-[11px] text-slate-400 block leading-tight">風速</span>
                 <span class="font-bold text-white text-[11px]">${s.current.windSpeed}m/s</span>
               </div>
             </div>
 
             <!-- フッター情報 -->
-            <div class="flex items-center justify-between text-[10.5px] text-slate-400 pt-0.5 border-t border-slate-850">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5 border-t border-slate-850">
               <span class="flex items-center gap-1 truncate">
                 <span>${wInfo.icon}</span>
                 <span>${wInfo.label}</span>
-                <span class="text-[9.5px] text-slate-500 ml-1">アメダス実測連携</span>
+                <span class="text-[11px] text-slate-500 ml-1">アメダス実測連携</span>
               </span>
               <span class="text-sky-400 font-bold flex items-center gap-0.5 shrink-0 ml-2">
-                詳細予報を見る <i class="fa-solid fa-chevron-right text-[8.5px]"></i>
+                詳細予報を見る <i class="fa-solid fa-chevron-right text-[11px]"></i>
               </span>
             </div>
           `;
@@ -1932,7 +1932,7 @@
             よく行くスキー場や山を★お気に入り登録すると、ここに毎時の最新積雪・夜間新雪・雪質スコア速報が自動配信されます。
           </p>
           <button onclick="openSearchModal()" class="px-4 py-1.5 rounded-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs shadow-md active:scale-95 transition inline-flex items-center gap-1">
-            <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+            <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
             <span>スポットを探して登録する</span>
           </button>
         `;
@@ -1947,7 +1947,7 @@
           <i class="fa-solid fa-comments text-sky-400"></i>
           <span>全国みんなの雪レポ</span>
         </div>
-        <span class="text-[10px] text-slate-400 font-normal">リアルタイム</span>
+        <span class="text-[11px] text-slate-400 font-normal">リアルタイム</span>
       `;
       container.appendChild(reportSectionHeader);
 
@@ -1990,13 +1990,13 @@
               </div>
               <div class="flex items-center gap-2 mt-0.5">
                 <div class="flex">${starsHtml}</div>
-                <span class="text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800">${r.snowType}</span>
+                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800">${r.snowType}</span>
               </div>
             </div>
-            <span class="text-[10px] text-slate-400">${r.time || '本日'}</span>
+            <span class="text-[11px] text-slate-400">${r.time || '本日'}</span>
           </div>
           <div class="text-xs text-slate-300 pt-1 leading-relaxed">${r.comment}</div>
-          <div class="text-[10px] text-slate-400 flex items-center gap-1 pt-0.5">
+          <div class="text-[11px] text-slate-400 flex items-center gap-1 pt-0.5">
             <i class="fa-solid fa-ruler-vertical text-sky-400"></i>
             <span>体感新雪: <b class="text-slate-200">${r.snowDepth}</b></span>
           </div>
@@ -2200,13 +2200,13 @@
 
         card.innerHTML = `
           <div>
-            <div class="text-[10px] text-slate-400 font-bold">${s.areaName || s.regionName}</div>
+            <div class="text-[11px] text-slate-400 font-bold">${s.areaName || s.regionName}</div>
             <div class="text-sm font-bold text-white">${s.name}</div>
-            <div class="text-[10px] text-sky-400 mt-0.5">${s.current.tag}</div>
+            <div class="text-[11px] text-sky-400 mt-0.5">${s.current.tag}</div>
           </div>
           <div class="text-right">
             <div class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs">点</span>' : ''}</div>
-            <div class="text-[10px] text-slate-300 mt-0.5">トップ: ${s.current.topSnowDepth}cm</div>
+            <div class="text-[11px] text-slate-300 mt-0.5">トップ: ${s.current.topSnowDepth}cm</div>
           </div>
         `;
         container.appendChild(card);
@@ -2249,7 +2249,7 @@
         };
         row.innerHTML = `
           <div>
-            <span class="text-[10px] text-slate-400 font-bold">${s.areaName || s.regionName} (${s.category === 'bc' ? '⛰️山' : '🏂ゲレンデ'})</span>
+            <span class="text-[11px] text-slate-400 font-bold">${s.areaName || s.regionName} (${s.category === 'bc' ? '⛰️山' : '🏂ゲレンデ'})</span>
             <div class="text-xs font-bold text-white">${s.name}</div>
           </div>
           <div class="text-right">
