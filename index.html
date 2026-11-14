@@ -429,21 +429,68 @@
     <iframe id="inlineSnowMapFrame" data-src="snow_map.html" src="about:blank" title="全国雪山マップ" class="w-full h-full border-0 bg-slate-900 block"></iframe>
   </main>
 
-  <!-- TAB 3: エリア一覧 & パウダーランキング -->
-  <main id="tabRanking" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3 hidden">
-    <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-bold gap-1">
-      <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 shadow">
-        🌙 オーバーナイト (18-06時)
-      </button>
-      <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
-        ⚡ 6時間速報
-      </button>
-      <button id="btnRank24h" onclick="setRankPeriod('24h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
-        ❄️ 24時間累積
-      </button>
+  <!-- TAB 3: エリア一覧 & パウダーランキング（サーフベース準拠統合ビュー） -->
+  <main id="tabAreas" class="max-w-md mx-auto px-3.5 pt-2.5 pb-32 space-y-3 hidden">
+    <!-- 上部切り替えタブ（エリア別一覧 / パウダーランキング） -->
+    <div class="sticky top-[52px] z-30 bg-slate-950/95 backdrop-blur-md -mx-3.5 px-3.5 py-2 border-b border-slate-800/80 shadow-sm">
+      <div class="grid grid-cols-2 gap-1.5 bg-slate-800/90 p-1 rounded-2xl border border-slate-700/80">
+        <button type="button" id="btnAreasModeList" onclick="switchAreasSubView('list')" class="py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap">
+          <i class="fa-solid fa-layer-group"></i>
+          <span>エリア別一覧</span>
+        </button>
+        <button type="button" id="btnAreasModeRanking" onclick="switchAreasSubView('ranking')" class="py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap">
+          <i class="fa-solid fa-crown text-amber-400"></i>
+          <span>パウダーランキング</span>
+        </button>
+      </div>
     </div>
-    <div id="rankingListContainer" class="space-y-2">
-      <!-- JSで動的生成 -->
+
+    <!-- A. エリア別一覧パネル（アコーディオン形式） -->
+    <div id="areasListPanel" class="space-y-2.5">
+      <div class="flex items-center justify-between px-0.5 gap-1.5">
+        <div class="text-xs font-bold text-slate-300 flex items-center gap-1.5 min-w-0">
+          <i class="fa-solid fa-map-location-dot text-sky-400 shrink-0"></i>
+          <span class="truncate">エリアをタップして各スポットを展開</span>
+        </div>
+        <button type="button" id="btnToggleAllAccordions" onclick="toggleAllAreaAccordions()" class="text-xs font-bold text-sky-300 bg-sky-950/60 hover:bg-sky-900/70 px-2.5 py-1 rounded-lg border border-sky-700/60 transition active:scale-95 shrink-0">
+          すべて展開
+        </button>
+      </div>
+
+      <!-- カテゴリフィルター（すべて / スキー場 / BC山） -->
+      <div class="flex items-center gap-1.5">
+        <button type="button" id="btnAreasCatAll" onclick="setAreasCategoryFilter('all')" class="px-2.5 py-1 rounded-lg text-xs font-black bg-sky-500 text-slate-900 transition">すべて</button>
+        <button type="button" id="btnAreasCatSki" onclick="setAreasCategoryFilter('ski')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition">🏂 スキー場</button>
+        <button type="button" id="btnAreasCatBc" onclick="setAreasCategoryFilter('bc')" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition">⛰️ BC山</button>
+      </div>
+
+      <!-- 地方フィルターピルバー -->
+      <div id="areasRegionFilterBar" class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar pb-0.5">
+        <!-- JSで動的生成 -->
+      </div>
+
+      <!-- エリア別アコーディオン一覧 -->
+      <div id="areasAccordionContainer" class="space-y-2">
+        <!-- JSで動的生成 -->
+      </div>
+    </div>
+
+    <!-- B. パウダーランキングパネル -->
+    <div id="areasRankingPanel" class="space-y-3 hidden">
+      <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-bold gap-1">
+        <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 shadow">
+          🌙 オーバーナイト (18-06時)
+        </button>
+        <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
+          ⚡ 6時間速報
+        </button>
+        <button id="btnRank24h" onclick="setRankPeriod('24h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
+          ❄️ 24時間累積
+        </button>
+      </div>
+      <div id="rankingListContainer" class="space-y-2">
+        <!-- JSで動的生成 -->
+      </div>
     </div>
   </main>
 
@@ -476,29 +523,40 @@
   </main>
 
   <!-- ===============================
-       BOTTOM NAVIGATION BAR
+       BOTTOM NAVIGATION BAR (サーフベース準拠・5等分グリッド)
        =============================== -->
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 pt-2" style="padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px);">
-    <div class="max-w-md mx-auto flex items-center justify-around text-[11px] font-bold text-slate-400 whitespace-nowrap">
-      <button onclick="switchTab('home')" id="navHome" class="flex flex-col items-center gap-1 text-sky-400">
-        <i class="fa-solid fa-house text-base"></i>
-        <span>ホーム</span>
+  <nav id="bottomNavBar" aria-label="メインナビゲーション" class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 shadow-[0_-4px_20px_rgba(2,6,23,0.45)]" style="padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px);">
+    <div class="max-w-md mx-auto grid grid-cols-5 h-12 px-1 pt-1">
+      <button type="button" onclick="switchTab('home')" id="navHome" class="relative flex flex-col items-center justify-center gap-0.5 text-sky-400 font-black transition active:scale-95">
+        <span id="navIndicatorHome" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400"></span>
+        <i class="fa-solid fa-house text-sm"></i>
+        <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">ホーム</span>
       </button>
-      <button onclick="switchTab('map')" id="navMap" class="flex flex-col items-center gap-1 hover:text-white">
-        <i class="fa-solid fa-map-location-dot text-base"></i>
-        <span>マップ</span>
+      <button type="button" onclick="switchTab('areas')" id="navAreas" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95">
+        <span id="navIndicatorAreas" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400 hidden"></span>
+        <i class="fa-solid fa-table-list text-sm"></i>
+        <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">エリア一覧</span>
       </button>
-      <button onclick="switchTab('ranking')" id="navRanking" class="flex flex-col items-center gap-1 hover:text-white">
-        <i class="fa-solid fa-trophy text-base"></i>
-        <span>ランキング</span>
+      <button type="button" onclick="switchTab('feed')" id="navFeed" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95">
+        <span id="navIndicatorFeed" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400 hidden"></span>
+        <div class="relative">
+          <i class="fa-solid fa-bell text-sm"></i>
+          <span id="navFeedBadgeDot" class="absolute -top-0.5 -right-1 w-2 h-2 rounded-full bg-amber-500 ring-2 ring-slate-900 hidden"></span>
+        </div>
+        <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">フィード</span>
       </button>
-      <button onclick="switchTab('feed')" id="navFeed" class="flex flex-col items-center gap-1 hover:text-white relative">
-        <i class="fa-solid fa-bell text-base"></i>
-        <span>フィード</span>
+      <button type="button" onclick="switchTab('map')" id="navMap" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95">
+        <span id="navIndicatorMap" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400 hidden"></span>
+        <i class="fa-solid fa-map-location-dot text-sm"></i>
+        <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">マップ</span>
       </button>
-      <button onclick="switchTab('mySpots')" id="navMySpots" class="flex flex-col items-center gap-1 hover:text-white">
-        <i class="fa-solid fa-star text-base"></i>
-        <span>MYスポット</span>
+      <button type="button" onclick="switchTab('mySpots')" id="navMySpots" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95">
+        <span id="navIndicatorMySpots" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400 hidden"></span>
+        <div class="relative">
+          <i class="fa-solid fa-star text-sm"></i>
+          <span id="navMySpotsBadge" class="absolute -top-1.5 -right-3 px-1 min-w-[14px] h-[14px] rounded-full bg-amber-500 text-slate-950 text-[10.5px] font-black flex items-center justify-center leading-none shadow-sm hidden">0</span>
+        </div>
+        <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">MYスポット</span>
       </button>
     </div>
   </nav>
@@ -602,6 +660,12 @@
     let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
     let isFavMode = false;
     let currentRating = 5;
+    let currentTab = 'home';
+    let currentAreasSubView = 'list'; // 'list' | 'ranking'
+    let areasRegionFilter = 'all';
+    let areasCategoryFilter = 'all'; // 'all' | 'ski' | 'bc'
+    const expandedAreaKeys = new Set();
+    const FEED_SEEN_KEY = 'snow_base_feed_last_seen_v1';
 
     // WMO気象コード（0〜99）変換関数
     function getWeatherInfo(code) {
@@ -725,6 +789,8 @@
         populateRegionsAndAreas();
         renderSpotPills();
         renderCurrentSpotDetails();
+        updateBottomNavBadges();
+        if (currentTab === 'areas') renderAreasTab();
         if (loadingBanner) loadingBanner.classList.add('hidden');
       } catch (e) {
         console.error('Data load error:', e);
@@ -753,11 +819,15 @@
         });
       }
 
-      // 初期タブ判定 (#map, #ranking, #feed, #mySpots または ?tab=...)
+      // 初期タブ判定 (#areas, #map, #ranking, #feed, #mySpots または ?tab=...)
       const initTab = window.location.hash.replace('#', '') || (new URLSearchParams(window.location.search)).get('tab');
-      if (['map', 'ranking', 'feed', 'mySpots'].includes(initTab)) {
+      if (initTab === 'ranking') {
+        switchTab('areas');
+        switchAreasSubView('ranking');
+      } else if (['areas', 'map', 'feed', 'mySpots'].includes(initTab)) {
         switchTab(initTab);
       }
+      updateBottomNavBadges();
     }
 
     // カテゴリ切替 (スキー場 / BC)
@@ -1622,18 +1692,27 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // SPA タブ切り替え (ホーム, マップ, ランキング, 雪レポ, MYスポット)
+    // SPA タブ切り替え (ホーム, エリア一覧, フィード, マップ, MYスポット)
     function switchTab(tabId) {
-      const tabs = ['home', 'map', 'ranking', 'feed', 'mySpots'];
+      if (tabId === 'ranking') {
+        tabId = 'areas';
+        currentAreasSubView = 'ranking';
+      }
+      currentTab = tabId;
+      const tabs = ['home', 'areas', 'feed', 'map', 'mySpots'];
       tabs.forEach(t => {
-        const el = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
-        const nav = document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1));
+        const cap = t.charAt(0).toUpperCase() + t.slice(1);
+        const el = document.getElementById('tab' + cap);
+        const nav = document.getElementById('nav' + cap);
+        const ind = document.getElementById('navIndicator' + cap);
         if (t === tabId) {
-          el.classList.remove('hidden');
-          nav.className = "flex flex-col items-center gap-1 text-sky-400";
+          if (el) el.classList.remove('hidden');
+          if (nav) nav.className = "relative flex flex-col items-center justify-center gap-0.5 text-sky-400 font-black transition active:scale-95";
+          if (ind) ind.classList.remove('hidden');
         } else {
-          el.classList.add('hidden');
-          nav.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-white";
+          if (el) el.classList.add('hidden');
+          if (nav) nav.className = "relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95";
+          if (ind) ind.classList.add('hidden');
         }
       });
 
@@ -1653,13 +1732,275 @@
           notifyMap();
           setTimeout(notifyMap, 150);
         }
-      } else if (tabId === 'ranking') {
-        renderRankingTab();
+      } else if (tabId === 'areas') {
+        renderAreasTab();
       } else if (tabId === 'feed') {
         renderFeedTab();
+        markFeedAsSeen();
       } else if (tabId === 'mySpots') {
         renderMySpotsTab();
       }
+    }
+
+    // フィード既読・ボトムナビバッジ管理 (サーフベース準拠)
+    function getFeedLastSeen() {
+      try {
+        const val = Number(localStorage.getItem(FEED_SEEN_KEY));
+        return Number.isFinite(val) && val > 0 ? val : 0;
+      } catch (e) {
+        return 0;
+      }
+    }
+
+    function markFeedAsSeen() {
+      try {
+        localStorage.setItem(FEED_SEEN_KEY, Date.now().toString());
+      } catch (e) {}
+      updateBottomNavBadges();
+    }
+
+    function isFeedUnread() {
+      if (currentTab === 'feed') return false;
+      const lastSeen = getFeedLastSeen();
+      if (!lastSeen) return true;
+
+      const now = new Date();
+      const today6am = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6, 0, 0).getTime();
+      if (now.getTime() >= today6am && lastSeen < today6am) return true;
+
+      const today1930 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 19, 30, 0).getTime();
+      if (now.getTime() >= today1930 && lastSeen < today1930) return true;
+
+      // 新着の雪レポが前回閲覧より後に投稿されているか確認
+      if (typeof snowReports !== 'undefined' && Array.isArray(snowReports)) {
+        for (let i = 0; i < snowReports.length; i++) {
+          const r = snowReports[i];
+          if (r && r.createdAtMs && r.createdAtMs > lastSeen) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    function updateBottomNavBadges() {
+      const validFavs = appData && appData.spots
+        ? favorites.filter(favId => appData.spots.some(s => s.id === favId))
+        : favorites;
+      const myBadge = document.getElementById('navMySpotsBadge');
+      if (myBadge) {
+        if (validFavs.length > 0) {
+          myBadge.textContent = String(validFavs.length);
+          myBadge.classList.remove('hidden');
+        } else {
+          myBadge.classList.add('hidden');
+        }
+      }
+
+      const feedDot = document.getElementById('navFeedBadgeDot');
+      if (feedDot) {
+        if (isFeedUnread()) feedDot.classList.remove('hidden');
+        else feedDot.classList.add('hidden');
+      }
+    }
+
+    // エリア一覧＆パウダーランキング統合タブ制御
+    const AREAS_REGION_ORDER = [
+      { key: 'all', label: '全国' },
+      { key: 'hokkaido', label: '北海道' },
+      { key: 'tohoku', label: '東北' },
+      { key: 'shinetsu', label: '信越' },
+      { key: 'hokuriku', label: '北陸' },
+      { key: 'kanto', label: '関東' },
+      { key: 'tokai', label: '東海' },
+      { key: 'kansai', label: '関西' },
+      { key: 'chugoku', label: '西日本' }
+    ];
+
+    function switchAreasSubView(mode) {
+      currentAreasSubView = mode === 'ranking' ? 'ranking' : 'list';
+      const btnList = document.getElementById('btnAreasModeList');
+      const btnRank = document.getElementById('btnAreasModeRanking');
+      const panelList = document.getElementById('areasListPanel');
+      const panelRank = document.getElementById('areasRankingPanel');
+
+      if (currentAreasSubView === 'list') {
+        if (btnList) btnList.className = 'py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
+        if (btnRank) btnRank.className = 'py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
+        if (panelList) panelList.classList.remove('hidden');
+        if (panelRank) panelRank.classList.add('hidden');
+        renderAreasAccordionList();
+      } else {
+        if (btnRank) btnRank.className = 'py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
+        if (btnList) btnList.className = 'py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
+        if (panelRank) panelRank.classList.remove('hidden');
+        if (panelList) panelList.classList.add('hidden');
+        renderRankingTab();
+      }
+    }
+
+    function renderAreasTab() {
+      switchAreasSubView(currentAreasSubView);
+    }
+
+    function setAreasRegionFilter(regKey) {
+      areasRegionFilter = regKey || 'all';
+      renderAreasAccordionList();
+    }
+
+    function setAreasCategoryFilter(cat) {
+      areasCategoryFilter = cat || 'all';
+      const btnAll = document.getElementById('btnAreasCatAll');
+      const btnSki = document.getElementById('btnAreasCatSki');
+      const btnBc = document.getElementById('btnAreasCatBc');
+      const activeCls = 'px-2.5 py-1 rounded-lg text-xs font-black bg-sky-500 text-slate-900 transition';
+      const inactiveCls = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition';
+      if (btnAll) btnAll.className = areasCategoryFilter === 'all' ? activeCls : inactiveCls;
+      if (btnSki) btnSki.className = areasCategoryFilter === 'ski' ? activeCls : inactiveCls;
+      if (btnBc) btnBc.className = areasCategoryFilter === 'bc' ? activeCls : inactiveCls;
+      renderAreasAccordionList();
+    }
+
+    function toggleAreaAccordion(areaKey) {
+      if (expandedAreaKeys.has(areaKey)) {
+        expandedAreaKeys.delete(areaKey);
+      } else {
+        expandedAreaKeys.add(areaKey);
+      }
+      renderAreasAccordionList();
+    }
+
+    function getFilteredAreaGroups() {
+      if (!appData || !appData.spots) return [];
+      const groupMap = new Map();
+      const regionOrderMap = new Map(AREAS_REGION_ORDER.map((r, i) => [r.key, i]));
+
+      appData.spots.forEach(s => {
+        if (areasRegionFilter !== 'all' && s.region !== areasRegionFilter) return;
+        if (areasCategoryFilter !== 'all' && s.category !== areasCategoryFilter) return;
+        const areaName = s.areaName || s.regionName || 'その他エリア';
+        const compKey = `${s.region || 'other'}__${areaName}`;
+        if (!groupMap.has(compKey)) {
+          groupMap.set(compKey, {
+            compositeKey: compKey,
+            regionKey: s.region || 'other',
+            regionName: s.regionName || '',
+            areaName: areaName,
+            spots: []
+          });
+        }
+        groupMap.get(compKey).spots.push(s);
+      });
+
+      return Array.from(groupMap.values()).sort((a, b) => {
+        const ra = regionOrderMap.has(a.regionKey) ? regionOrderMap.get(a.regionKey) : 99;
+        const rb = regionOrderMap.has(b.regionKey) ? regionOrderMap.get(b.regionKey) : 99;
+        if (ra !== rb) return ra - rb;
+        return a.areaName.localeCompare(b.areaName, 'ja');
+      });
+    }
+
+    function toggleAllAreaAccordions() {
+      const groups = getFilteredAreaGroups();
+      const allKeys = groups.map(g => g.compositeKey);
+      const isAllExpanded = allKeys.length > 0 && allKeys.every(k => expandedAreaKeys.has(k));
+      if (isAllExpanded) {
+        allKeys.forEach(k => expandedAreaKeys.delete(k));
+      } else {
+        allKeys.forEach(k => expandedAreaKeys.add(k));
+      }
+      renderAreasAccordionList();
+    }
+
+    function renderAreasAccordionList() {
+      const filterBar = document.getElementById('areasRegionFilterBar');
+      const container = document.getElementById('areasAccordionContainer');
+      const toggleBtn = document.getElementById('btnToggleAllAccordions');
+      if (!container) return;
+
+      if (filterBar) {
+        filterBar.innerHTML = AREAS_REGION_ORDER.map(r => {
+          const active = areasRegionFilter === r.key;
+          return `<button type="button" onclick="setAreasRegionFilter('${r.key}')" class="px-2.5 py-1 rounded-full text-xs whitespace-nowrap border transition shrink-0 ${
+            active
+              ? 'bg-sky-500 text-slate-900 font-black border-sky-400 shadow-sm'
+              : 'bg-slate-800 text-slate-300 font-bold border-slate-700 hover:text-white'
+          }">${r.label}</button>`;
+        }).join('');
+      }
+
+      if (!appData || !appData.spots) {
+        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">データを読み込み中です...</div>';
+        return;
+      }
+
+      const groups = getFilteredAreaGroups();
+      if (toggleBtn) {
+        const allOpen = groups.length > 0 && groups.every(g => expandedAreaKeys.has(g.compositeKey));
+        toggleBtn.textContent = allOpen ? 'すべて閉じる' : 'すべて展開';
+      }
+
+      if (groups.length === 0) {
+        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">条件に一致するエリアがありません</div>';
+        return;
+      }
+
+      container.innerHTML = groups.map(group => {
+        const isOpen = expandedAreaKeys.has(group.compositeKey);
+        const maxNight = Math.max(...group.spots.map(s => getSpotNightSnow(s) || 0));
+        const rowsHtml = isOpen ? group.spots.map(s => {
+          const nightSnow = getSpotNightSnow(s);
+          const depth = (s.current && typeof s.current.snowDepth === 'number') ? s.current.snowDepth : '--';
+          const score = (s.current && typeof s.current.powderScore === 'number') ? s.current.powderScore : '--';
+          const isBC = s.category === 'bc';
+          const catBadge = isBC
+            ? '<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold shrink-0">⛰️BC</span>'
+            : '<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold shrink-0">🏂ゲレンデ</span>';
+          const isFav = favorites.includes(s.id);
+          const favStar = isFav ? '<i class="fa-solid fa-star text-amber-400 text-[11px] shrink-0"></i>' : '';
+
+          return `
+            <button type="button" onclick="selectSpotFromMap('${s.id}')" class="w-full text-left px-3 py-2.5 flex items-center justify-between gap-2 hover:bg-slate-800/70 active:bg-slate-800 transition border-t border-slate-800/80">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-1.5">
+                  ${catBadge}
+                  ${favStar}
+                  <span class="text-sm font-bold text-white truncate">${s.name}</span>
+                </div>
+                <div class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-2">
+                  <span>積雪 <strong class="text-slate-200">${depth}cm</strong></span>
+                  <span>スコア <strong class="text-sky-300">${score}点</strong></span>
+                </div>
+              </div>
+              <div class="text-right shrink-0 flex items-center gap-2">
+                <div>
+                  <div class="text-[10px] text-slate-400">夜間新雪</div>
+                  <div class="font-teko text-xl font-black ${nightSnow > 0 ? 'text-cyan-300' : 'text-slate-400'} leading-none">+${nightSnow}<span class="text-[11px] ml-0.5">cm</span></div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+              </div>
+            </button>
+          `;
+        }).join('') : '';
+
+        return `
+          <div class="snow-card rounded-xl border border-slate-700/70 overflow-hidden">
+            <button type="button" onclick="toggleAreaAccordion('${group.compositeKey.replace(/'/g, "\\'")}')" class="w-full px-3.5 py-2.5 flex items-center justify-between gap-2 text-left hover:bg-slate-800/50 transition">
+              <div class="min-w-0 flex items-center gap-2">
+                <i class="fa-solid fa-chevron-right text-xs text-sky-400 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}"></i>
+                <div class="min-w-0">
+                  <div class="text-sm font-black text-white truncate">${group.areaName}</div>
+                  <div class="text-[11px] text-slate-400">${group.regionName} ・ ${group.spots.length}地点</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                ${maxNight > 0 ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-700/60 font-bold">最大 +${maxNight}cm</span>` : ''}
+              </div>
+            </button>
+            ${isOpen ? `<div class="bg-slate-900/50">${rowsHtml}</div>` : ''}
+          </div>
+        `;
+      }).join('');
     }
 
     // マップからスポットを選択してホーム詳細へジャンプ（iframeからの呼び出しにも対応）
@@ -1762,6 +2103,15 @@
             const list = [];
             snapshot.forEach(doc => {
               const data = doc.data();
+              let createdAtMs = 0;
+              if (data.createdAt) {
+                if (typeof data.createdAt.toDate === 'function') createdAtMs = data.createdAt.toDate().getTime();
+                else if (data.createdAt instanceof Date) createdAtMs = data.createdAt.getTime();
+                else if (typeof data.createdAt === 'string' || typeof data.createdAt === 'number') {
+                  const parsed = new Date(data.createdAt).getTime();
+                  if (!isNaN(parsed)) createdAtMs = parsed;
+                }
+              }
               list.push({
                 id: doc.id,
                 spotId: data.spotId || '',
@@ -1770,11 +2120,13 @@
                 snowType: data.snowType || '❄️ パウダー',
                 snowDepth: data.snowDepth || 'すね',
                 comment: data.comment || '',
+                createdAtMs: createdAtMs,
                 time: formatRelativeTime(data.createdAt)
               });
             });
             snowReports = list;
             renderFeedTab();
+            updateBottomNavBadges();
           }, (err) => {
             console.warn('⚠️ Firestore onSnapshot listener error:', err);
             renderFeedTab();
@@ -2102,6 +2454,7 @@
       localStorage.setItem('snow_base_favs', JSON.stringify(favorites));
       updateFavButtonUI();
       renderSpotPills();
+      updateBottomNavBadges();
     }
 
     function updateFavButtonUI() {
