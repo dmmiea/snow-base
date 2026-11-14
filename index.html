@@ -110,6 +110,10 @@
       <div class="text-center">
         <span class="font-teko text-4xl font-extrabold tracking-widest text-white leading-none uppercase block">POWDER BASE</span>
         <span class="text-[10.5px] tracking-wider text-sky-400 font-bold uppercase mt-1.5 block">JAPAN - NATIONWIDE POWDER DASHBOARD</span>
+        <div class="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
+          <i class="fa-solid fa-circle-notch fa-spin text-sky-400 text-[10px]"></i>
+          <span>最新データを取得中...</span>
+        </div>
       </div>
     </div>
   </div>
@@ -117,32 +121,32 @@
   <!-- ===============================
        1. TOP APP BAR
        =============================== -->
-  <header class="bg-slate-900 border-b border-slate-800 px-4 shadow-md sticky top-0 z-50" style="padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-bottom: 8px;">
-    <div class="max-w-md mx-auto flex items-center justify-between">
-      <div onclick="resetToHomeTop()" class="flex items-center space-x-2 cursor-pointer active:scale-95 transition select-none" title="ホーム先頭へ戻る">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white font-bold text-sm">
+  <header class="bg-slate-900 border-b border-slate-800 px-3 sm:px-4 shadow-md sticky top-0 z-50" style="padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-bottom: 8px;">
+    <div class="max-w-md mx-auto flex items-center justify-between gap-2">
+      <div onclick="resetToHomeTop()" class="flex items-center space-x-1.5 sm:space-x-2 cursor-pointer active:scale-95 transition select-none min-w-0" title="ホーム先頭へ戻る">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white font-bold text-xs sm:text-sm">
           ❄️
         </div>
-        <h1 class="flex items-center space-x-1.5 m-0 p-0 font-normal">
-          <span class="font-teko text-2xl font-bold tracking-wider text-sky-400 leading-none uppercase">POWDER BASE</span>
-          <span class="text-[9.5px] px-1.5 py-0.2 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700">JAPAN</span>
+        <h1 class="flex items-center space-x-1.5 m-0 p-0 font-normal min-w-0">
+          <span class="font-teko text-xl sm:text-2xl font-bold tracking-wider text-sky-400 leading-none uppercase whitespace-nowrap">POWDER BASE</span>
+          <span class="text-[9px] sm:text-[9.5px] px-1.5 py-0.2 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700 shrink-0 whitespace-nowrap">JAPAN</span>
         </h1>
       </div>
       
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
         <!-- 検索ボタン -->
-        <button id="btnOpenSearch" onclick="openSearchModal()" class="h-8 px-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-1.5 text-xs font-bold border border-slate-700 active:scale-95 shadow-sm">
+        <button id="btnOpenSearch" onclick="openSearchModal()" class="h-8 px-2 sm:px-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-1 text-xs font-bold border border-slate-700 active:scale-95 shadow-sm whitespace-nowrap shrink-0">
           <i class="fa-solid fa-magnifying-glass text-sky-400 text-xs"></i>
           <span>検索</span>
         </button>
 
         <!-- LIVE インジケーター -->
-        <div class="text-right whitespace-nowrap pl-1 border-l border-slate-800">
+        <div class="text-right whitespace-nowrap pl-1.5 border-l border-slate-800 shrink-0">
           <div class="flex items-center justify-end space-x-1">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span class="text-[11px] font-bold text-emerald-400">LIVE</span>
           </div>
-          <span id="lastUpdated" class="text-[9.5px] text-slate-400 font-medium whitespace-nowrap block">--:--</span>
+          <span id="lastUpdated" class="text-[9.5px] text-slate-400 font-medium whitespace-nowrap block">読込中...</span>
         </div>
       </div>
     </div>
@@ -154,6 +158,12 @@
   
   <!-- TAB 1: ホーム（ダッシュボード） -->
   <main id="tabHome" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3.5">
+
+    <!-- データ読込中バナー（スプラッシュ終了後も取得中の場合のみ表示） -->
+    <div id="dataLoadingBanner" class="flex items-center justify-center gap-2 rounded-xl bg-sky-950/70 border border-sky-500/40 px-3 py-2 text-xs font-bold text-sky-200 shadow-sm">
+      <i class="fa-solid fa-circle-notch fa-spin text-sky-400"></i>
+      <span>最新の全国雪データを読み込み中...</span>
+    </div>
 
     <!-- カテゴリ切り替え（🏂 スキー場 vs ⛰️ バックカントリー） -->
     <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700/80 shadow-sm text-xs font-bold -mb-1.5">
@@ -350,9 +360,10 @@
       <div class="w-full h-48 relative">
         <canvas id="trendChartCanvas"></canvas>
       </div>
-      <div class="flex items-center justify-center gap-4 text-[10px] text-slate-400 mt-2">
+      <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 text-[10px] text-slate-400 mt-2">
         <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-sky-400 inline-block"></span>積雪深(cm)</span>
-        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span>時間降雪量(cm/h)</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span>降雪量(cm/h)</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-blue-400/70 border border-blue-400 inline-block"></span>降雨量(mm/h)</span>
         <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>現在時刻</span>
       </div>
     </div>
@@ -662,10 +673,11 @@
         }, 550);
       }
     }
-    // スプラッシュ画面の独立フェイルセーフ（最大1.5秒で確実に解除）
-    setTimeout(hideSplashScreen, 1500);
+    // スプラッシュ画面の独立フェイルセーフ（最大3秒で確実に解除）
+    setTimeout(hideSplashScreen, 3000);
 
     async function loadData() {
+      const loadingBanner = document.getElementById('dataLoadingBanner');
       try {
         const res = await fetch('data_japan.json');
         if (!res.ok) throw new Error('data_japan.json load failed');
@@ -698,8 +710,14 @@
         populateRegionsAndAreas();
         renderSpotPills();
         renderCurrentSpotDetails();
+        if (loadingBanner) loadingBanner.classList.add('hidden');
       } catch (e) {
         console.error('Data load error:', e);
+        document.getElementById('lastUpdated').textContent = '取得エラー';
+        if (loadingBanner) {
+          loadingBanner.className = "flex items-center justify-between gap-2 rounded-xl bg-rose-950/70 border border-rose-500/40 px-3 py-2 text-xs font-bold text-rose-200 shadow-sm";
+          loadingBanner.innerHTML = '<span>⚠️ データの読み込みに失敗しました</span><button onclick="location.reload()" class="px-2 py-0.5 rounded bg-rose-500 text-slate-950 font-black text-[11px] shrink-0">再読込</button>';
+        }
       }
     }
 
@@ -1098,6 +1116,7 @@
       const labels = [];
       const depthData = [];
       const snowData = [];
+      const rainData = [];
       const tempData = [];
       const windSpeedData = [];
       const windDirData = [];
@@ -1112,6 +1131,7 @@
         labels.push(label);
         depthData.push(hourly.snowDepth[i]);
         snowData.push(hourly.snowfall[i] || 0);
+        rainData.push(hourly.rain ? (hourly.rain[i] || 0) : 0);
         tempData.push(hourly.temperature ? hourly.temperature[i] : null);
         windSpeedData.push(hourly.windSpeed ? hourly.windSpeed[i] : null);
         windDirData.push(hourly.windDirection ? hourly.windDirection[i] : null);
@@ -1168,6 +1188,16 @@
               yAxisID: 'ySnow',
               pointRadius: (ctx) => ctx.dataIndex === nowHighlightIdx ? 4 : 0,
               pointBackgroundColor: '#fbbf24'
+            },
+            {
+              type: 'bar',
+              label: '降雨量(mm/h)',
+              data: rainData,
+              borderColor: '#60a5fa',
+              backgroundColor: 'rgba(96, 165, 250, 0.55)',
+              borderWidth: 1,
+              borderRadius: 2,
+              yAxisID: 'ySnow'
             }
           ]
         },
