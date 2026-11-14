@@ -311,20 +311,20 @@
           </div>
         </div>
         <div>
-          <span class="text-[9.5px] text-slate-400 block">気温 (山頂/山麓)</span>
-          <div class="font-teko text-lg font-bold mt-0.5">
-            <span id="heroTopTemp" class="text-sky-300">--℃</span>
+          <span class="text-[9.5px] text-slate-400 block truncate">気温 (山頂/麓)</span>
+          <div class="font-teko text-lg font-bold mt-0.5 whitespace-nowrap overflow-hidden">
+            <span id="heroTopTemp" class="text-sky-300">--</span>
             <span class="text-slate-500 text-xs"> / </span>
             <span id="heroBaseTemp" class="text-slate-300">--℃</span>
           </div>
         </div>
         <div>
-          <span class="text-[9.5px] text-slate-400 block">山頂風速</span>
-          <span id="heroWind" class="font-teko text-lg font-bold text-slate-200 block mt-0.5">-- m/s</span>
+          <span class="text-[9.5px] text-slate-400 block truncate">山頂風速</span>
+          <span id="heroWind" class="font-teko text-lg font-bold text-slate-200 block mt-0.5 whitespace-nowrap">-- m/s</span>
         </div>
         <div>
           <span id="heroAmedasTitle" class="text-[9.5px] text-slate-400 block truncate">アメダス実測</span>
-          <span id="heroAmedasDepth" class="font-teko text-lg font-bold text-emerald-400 block mt-0.5">-- cm</span>
+          <span id="heroAmedasDepth" class="font-teko text-lg font-bold text-emerald-400 block mt-0.5 whitespace-nowrap">-- cm</span>
         </div>
       </div>
     </div>
@@ -993,7 +993,7 @@
       if (heroWeatherLabel) heroWeatherLabel.textContent = wInfo.label;
 
       // 気温・風・アメダス
-      document.getElementById('heroTopTemp').textContent = `${spot.current.topTemp}℃`;
+      document.getElementById('heroTopTemp').textContent = `${spot.current.topTemp}`;
       const heroBaseTempEl = document.getElementById('heroBaseTemp');
       if (heroBaseTempEl) heroBaseTempEl.textContent = `${spot.current.baseTemp}℃`;
       document.getElementById('heroWind').textContent = `${spot.current.windSpeed} m/s`;
@@ -1003,7 +1003,17 @@
       if (amedasTitleEl) {
         amedasTitleEl.textContent = stationName ? `${stationName}実測` : 'アメダス実測';
       }
-      document.getElementById('heroAmedasDepth').textContent = (spot.current.liveAmedas && spot.current.liveAmedas.snowDepth !== null) ? `${spot.current.liveAmedas.snowDepth} cm` : '―';
+      const amedasDepthEl = document.getElementById('heroAmedasDepth');
+      if (amedasDepthEl) {
+        const dVal = spot.current.liveAmedas ? spot.current.liveAmedas.snowDepth : null;
+        if (dVal !== null && dVal !== undefined && !isNaN(dVal)) {
+          amedasDepthEl.textContent = `${dVal} cm`;
+          amedasDepthEl.className = "font-teko text-lg font-bold text-emerald-400 block mt-0.5 whitespace-nowrap";
+        } else {
+          amedasDepthEl.textContent = '実測無し';
+          amedasDepthEl.className = "text-[11px] font-bold text-slate-500 block mt-1.5 whitespace-nowrap";
+        }
+      }
 
       // お気に入り状態
       updateFavButtonUI();
