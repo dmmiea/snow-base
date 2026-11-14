@@ -276,7 +276,7 @@
             <span class="text-base">🌙</span>
             <div>
               <div class="text-[10px] font-black uppercase tracking-wider text-slate-900/80">OVERNIGHT SNOW (18時〜翌06時)</div>
-              <div class="text-xs font-black">夜間新雪予想: <span id="heroNightSnow" class="text-sm underline font-black">+-- cm</span></div>
+              <div class="text-xs font-black">山頂 夜間新雪: <span id="heroNightSnow" class="text-sm underline font-black">+-- cm</span></div>
             </div>
           </div>
           <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-slate-950/20 text-slate-950 border border-slate-950/20">リセット待ち</span>
@@ -956,7 +956,7 @@
         }
       }
       document.getElementById('heroNightSnow').textContent = `+${nextNightVal} cm`;
-      document.getElementById('heroResetTag').textContent = nextNightVal >= 15 ? 'リセット確定❄️' : (nextNightVal >= 5 ? 'うっすら積雪' : '新雪少なめ');
+      document.getElementById('heroResetTag').textContent = nextNightVal >= 30 ? '極上ディープパウ🔥' : (nextNightVal >= 20 ? '新雪リセット❄️' : (nextNightVal >= 10 ? 'スネパウ(底付き注意)' : (nextNightVal >= 1 ? 'うっすら新雪' : '降雪なし')));
 
       // タグ
       document.getElementById('heroMainTagText').textContent = spot.current.tag;

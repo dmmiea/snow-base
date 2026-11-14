@@ -84,7 +84,7 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
   const tags = [];
 
   const isRain = (weatherCode >= 51 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82);
-  const isMeltedAndFrozen = freezePointIdx >= 0 && snowAfterFreeze < 10;
+  const isMeltedAndFrozen = freezePointIdx >= 0 && snowAfterFreeze < 30;
 
   // 2. 雨天・急激融雪判定
   if (isRain || currentTemp >= 6.0) {
@@ -94,36 +94,80 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
     mainTag = '🌧️ 雨・ウェット (融雪注意)';
     tags.push('雨天', '雪面悪化', '防水必須');
   }
-  // 3. パウダー判定（直近12h降雪 >= 10cm）
-  else if (recentSnowfall >= 10) {
-    if (isMeltedAndFrozen && recentSnowfall < 20) {
+  // 3. 本格ディープパウダー判定（直近12h降雪 >= 30cm）底付きなし黄金ゾーン
+  else if (recentSnowfall >= 30) {
+    if (currentTemp <= -6.0) {
+      score = 95;
+      rank = '神パウ';
+      rankEn = 'DEEP POWDER';
+      mainTag = '❄️ 極上ドライパウダー';
+      tags.push('極上シルキー', '浮遊感', '底付きなし');
+    } else if (currentTemp >= -0.5) {
+      score = 75;
+      rank = '重パウ';
+      rankEn = 'HEAVY POWDER';
+      mainTag = '🌨️ 湿雪・ディープ重パウ';
+      tags.push('湿雪', '重め', '浮遊感あり');
+    } else {
+      score = 90;
+      rank = '極上パウ';
+      rankEn = 'DEEP POWDER';
+      mainTag = '❄️ ディープパウダー (底付きなし)';
+      tags.push('浮遊感', '底付きなし', 'パウダー');
+    }
+  }
+  // 4. スネパウ / 新雪リセット判定（直近12h降雪 20〜29cm）
+  else if (recentSnowfall >= 20) {
+    if (isMeltedAndFrozen && snowAfterFreeze < 25) {
+      score = 75;
+      rank = '底付き注意';
+      rankEn = 'CRUST BASE';
+      mainTag = '⚠️ 新雪パウダー (下層硬め・底付き注意)';
+      tags.push('底付き注意', '下層クラスト', '新雪あり');
+    } else if (currentTemp >= -0.5) {
       score = 70;
+      rank = '重パウ';
+      rankEn = 'HEAVY POWDER';
+      mainTag = '🌨️ 湿雪・重パウ (水分多め)';
+      tags.push('湿雪', '重め', '新雪あり');
+    } else if (currentTemp <= -6.0) {
+      score = 90;
+      rank = '極上パウ';
+      rankEn = 'DRY POWDER';
+      mainTag = '❄️ 極上ドライパウダー (面ツル)';
+      tags.push('極上シルキー', '浮遊感', '面ツルリセット');
+    } else {
+      score = 85;
+      rank = '良質パウ';
+      rankEn = 'FRESH SNOW';
+      mainTag = '❄️ 新雪パウダー (面ツルリセット)';
+      tags.push('パウダー', '面ツルリセット', '浮遊感あり');
+    }
+  }
+  // 5. ちょいパウ / スネ下判定（直近12h降雪 10〜19cm）
+  else if (recentSnowfall >= 10) {
+    if (isMeltedAndFrozen) {
+      score = 68;
       rank = '底付き注意';
       rankEn = 'CRUST BASE';
       mainTag = '⚠️ 底付きパウダー (下層硬め)';
       tags.push('底付き注意', '下層クラスト', '新雪あり');
     } else if (currentTemp >= -0.5) {
       score = 65;
-      rank = '重パウ';
-      rankEn = 'HEAVY POWDER';
-      mainTag = '🌨️ 湿雪・重パウ (水分多め)';
-      tags.push('湿雪', '重め', '新雪あり');
-    } else if (currentTemp <= -6.0) {
-      score = 95;
-      rank = '神パウ';
-      rankEn = 'DEEP POWDER';
-      mainTag = '❄️ 極上ドライパウダー';
-      tags.push('極上シルキー', '浮遊感', '面ツル');
+      rank = '重め新雪';
+      rankEn = 'HEAVY SNOW';
+      mainTag = '🌨️ 湿雪・ちょいパウ';
+      tags.push('湿雪', 'ちょいパウ');
     } else {
-      score = 85;
-      rank = '良質パウ';
-      rankEn = 'FRESH SNOW';
-      mainTag = '❄️ 新雪パウダー';
-      tags.push('パウダー', '浮遊感あり');
+      score = 78;
+      rank = 'ちょいパウ';
+      rankEn = 'LIGHT POWDER';
+      mainTag = '❄️ ライトパウダー (下地注意)';
+      tags.push('ちょいパウ', 'トラック消えかけ');
     }
   }
-  // 4. うっすら新雪（3〜9cm）
-  else if (recentSnowfall >= 3) {
+  // 6. うっすら新雪（直近12h降雪 1〜9cm）
+  else if (recentSnowfall >= 1) {
     if (isMeltedAndFrozen) {
       score = 50;
       rank = 'カリカリ新雪';
@@ -134,11 +178,11 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
       score = 72;
       rank = '良質新雪';
       rankEn = 'LIGHT FRESH';
-      mainTag = 'うっすら新雪リセット';
+      mainTag = 'うっすら新雪';
       tags.push('うっすら新雪', 'パック雪');
     }
   }
-  // 5. 新雪なし（3cm未満）
+  // 7. 新雪なし（1cm未満）
   else {
     if (isMeltedAndFrozen && currentTemp <= 0.0) {
       score = 30;
@@ -456,8 +500,8 @@ async function run() {
       snow: nightSnow,
       depth: s.current.topSnowDepth,
       score: s.current.score,
-      tag: nightSnow >= 20 ? 'リセット確定❄️' : (nightSnow >= 10 ? '新雪パウダー' : (nightSnow >= 3 ? 'うっすら積雪' : '新雪少なめ')),
-      isReset: nightSnow >= 15
+      tag: nightSnow >= 30 ? '極上ディープパウ🔥' : (nightSnow >= 20 ? '新雪リセット❄️' : (nightSnow >= 10 ? 'スネパウ(底付き注意)' : (nightSnow >= 1 ? 'うっすら新雪' : '降雪なし'))),
+      isReset: nightSnow >= 20
     };
   }).sort((a, b) => b.snow - a.snow).slice(0, 25);
 
