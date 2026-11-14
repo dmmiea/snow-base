@@ -272,14 +272,22 @@
       <div class="space-y-1.5 relative z-10">
         <!-- 朝イチ夜間新雪バッジ -->
         <div class="powder-badge text-slate-900 rounded-xl px-3 py-2 flex items-center justify-between shadow-lg">
-          <div class="flex items-center gap-2">
-            <span class="text-base">🌙</span>
-            <div>
-              <div class="text-[10px] font-black uppercase tracking-wider text-slate-900/80">OVERNIGHT SNOW (18時〜翌06時)</div>
-              <div class="text-xs font-black">山頂 夜間新雪: <span id="heroNightSnow" class="text-sm underline font-black">+-- cm</span></div>
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="text-base shrink-0">🌙</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-black uppercase tracking-wider text-slate-900/80 truncate">OVERNIGHT SNOW (18時〜翌06時)</div>
+              <div class="mt-0.5">
+                <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-slate-950/20 text-slate-950 border border-slate-950/20">降雪なし</span>
+              </div>
             </div>
           </div>
-          <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-slate-950/20 text-slate-950 border border-slate-950/20">リセット待ち</span>
+          <div class="text-right shrink-0 pl-2">
+            <div class="text-[9.5px] font-bold text-slate-900/70 leading-none">山頂新雪</div>
+            <div class="flex items-baseline justify-end gap-0.5 mt-0.5">
+              <span id="heroNightSnow" class="font-teko text-3xl font-black leading-none text-slate-950">+--</span>
+              <span class="text-xs font-bold text-slate-900/80">cm</span>
+            </div>
+          </div>
         </div>
 
         <!-- バーン状況タグ一覧 -->
@@ -955,8 +963,15 @@
           else if (nightKeys.length > 0) nextNightVal = spot.nightSnowByDate[nightKeys[nightKeys.length - 1]];
         }
       }
-      document.getElementById('heroNightSnow').textContent = `+${nextNightVal} cm`;
-      document.getElementById('heroResetTag').textContent = nextNightVal >= 30 ? '極上ディープパウ🔥' : (nextNightVal >= 20 ? '新雪リセット❄️' : (nextNightVal >= 10 ? 'スネパウ(底付き注意)' : (nextNightVal >= 1 ? 'うっすら新雪' : '降雪なし')));
+      document.getElementById('heroNightSnow').textContent = `+${nextNightVal}`;
+      let depthTag = '降雪なし';
+      if (nextNightVal >= 80) depthTag = '腰パウ🔥';
+      else if (nextNightVal >= 50) depthTag = 'モモパウ';
+      else if (nextNightVal >= 30) depthTag = 'ヒザパウ';
+      else if (nextNightVal >= 20) depthTag = 'スネパウ';
+      else if (nextNightVal >= 10) depthTag = 'くるぶしパウ';
+      else if (nextNightVal >= 1) depthTag = 'うっすら新雪';
+      document.getElementById('heroResetTag').textContent = depthTag;
 
       // タグ
       document.getElementById('heroMainTagText').textContent = spot.current.tag;

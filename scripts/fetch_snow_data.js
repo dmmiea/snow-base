@@ -491,6 +491,14 @@ async function run() {
   // 1. オーバーナイトスノーランキング (直近18:00〜翌朝06:00の降雪量)
   const rankingNight = [...processedSpots].map(s => {
     const nightSnow = getLatestNightSnow(s.nightSnowByDate);
+    let tag = '降雪なし';
+    if (nightSnow >= 80) tag = '腰パウ🔥';
+    else if (nightSnow >= 50) tag = 'モモパウ';
+    else if (nightSnow >= 30) tag = 'ヒザパウ';
+    else if (nightSnow >= 20) tag = 'スネパウ';
+    else if (nightSnow >= 10) tag = 'くるぶしパウ';
+    else if (nightSnow >= 1) tag = 'うっすら新雪';
+
     return {
       id: s.id,
       name: s.name,
@@ -500,7 +508,7 @@ async function run() {
       snow: nightSnow,
       depth: s.current.topSnowDepth,
       score: s.current.score,
-      tag: nightSnow >= 30 ? '極上ディープパウ🔥' : (nightSnow >= 20 ? '新雪リセット❄️' : (nightSnow >= 10 ? 'スネパウ(底付き注意)' : (nightSnow >= 1 ? 'うっすら新雪' : '降雪なし'))),
+      tag,
       isReset: nightSnow >= 20
     };
   }).sort((a, b) => b.snow - a.snow).slice(0, 25);
