@@ -20,120 +20,155 @@ function getWeatherInfo(code) {
 
 function evaluateSnowCondition(hourlyData, currentHourIndex) {
   if (!hourlyData || !hourlyData.time || currentHourIndex < 0) {
-    return { score: 50, rank: '圧雪良好', rankEn: 'GROOMED', tag: '普通圧雪', tags: ['圧雪'] };
+    return { score: null, rank: '積雪なし', rankEn: 'NO SNOW', tag: '🌱 積雪なし (滑走不可)', tags: ['積雪ゼロ', '滑走不可'] };
   }
 
+  const snowDepthArr = hourlyData.snow_depth || hourlyData.snowDepth || [];
+  const tempArr = hourlyData.temperature_2m || hourlyData.temperature || [];
+  const windArr = hourlyData.wind_speed_10m || hourlyData.windSpeed || [];
+  const weatherArr = hourlyData.weather_code || hourlyData.weatherCode || [];
+  const snowfallArr = hourlyData.snowfall || [];
+
+  const rawDepth = snowDepthArr[currentHourIndex];
+  const currentSnowDepth = hourlyData.snow_depth !== undefined ? (rawDepth || 0) * 100 : (rawDepth || 0);
+
+  // 1. 【最優先】積雪ゼロ判定（滑走不可）
+  if (currentSnowDepth <= 0 || isNaN(currentSnowDepth)) {
+    return {
+      score: null,
+      rank: '積雪なし',
+      rankEn: 'NO SNOW',
+      tag: '🌱 積雪なし (滑走不可)',
+      tags: ['積雪ゼロ', '滑走不可']
+    };
+  }
+
+  // 過去履歴の解析（過去48時間）
   const pastStart = Math.max(0, currentHourIndex - 48);
   let maxPastTemp = -999;
   let minPastTemp = 999;
+  let freezePointIdx = -1; // 融解後に再凍結した最後のインデックス
+
   for (let i = pastStart; i <= currentHourIndex; i++) {
-    const t = hourlyData.temperature_2m[i];
+    const t = tempArr[i];
     if (t > maxPastTemp) maxPastTemp = t;
     if (t < minPastTemp) minPastTemp = t;
+    if (t <= -1.0 && maxPastTemp >= 2.0) {
+      freezePointIdx = i;
+    }
   }
 
+  // 凍結後の累積新雪量をカウント（リセットされたか）
+  let snowAfterFreeze = 0;
+  if (freezePointIdx >= 0) {
+    for (let i = freezePointIdx; i <= currentHourIndex; i++) {
+      snowAfterFreeze += (snowfallArr[i] || 0);
+    }
+  }
+
+  // 直近12時間の新雪量
   let recentSnowfall = 0;
   const recentStart = Math.max(0, currentHourIndex - 12);
   for (let i = recentStart; i <= currentHourIndex; i++) {
-    recentSnowfall += (hourlyData.snowfall[i] || 0);
+    recentSnowfall += (snowfallArr[i] || 0);
   }
 
-  const currentTemp = hourlyData.temperature_2m[currentHourIndex];
-  const currentWind = hourlyData.wind_speed_10m[currentHourIndex];
-  const currentSnowDepth = (hourlyData.snow_depth[currentHourIndex] || 0) * 100;
+  const currentTemp = tempArr[currentHourIndex];
+  const currentWind = windArr[currentHourIndex];
+  const weatherCode = weatherArr[currentHourIndex];
 
-  let score = 65;
-  let rank = '圧雪良好';
-  let rankEn = 'GROOMED';
-  let mainTag = '圧雪バーン';
+  let score = 75;
+  let rank = 'しまり雪';
+  let rankEn = 'PACKED';
+  let mainTag = '⛷️ 上質しまり雪';
   const tags = [];
 
-  const meltedThenFroze = maxPastTemp >= 2.0 && minPastTemp <= -2.0;
+  const isRain = (weatherCode >= 51 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82);
+  const isMeltedAndFrozen = freezePointIdx >= 0 && snowAfterFreeze < 10;
 
-  if (recentSnowfall >= 20) {
-    if (meltedThenFroze) {
-      if (recentSnowfall >= 30) {
-        score = 92;
-        rank = '神パウ';
-        rankEn = 'DEEP POWDER';
-        mainTag = 'リセット極上深雪';
-        tags.push('大雪リセット', 'パウダー天国');
-      } else {
-        score = 78;
-        rank = '良質パウ';
-        rankEn = 'FRESH SNOW';
-        mainTag = '⚠️下層アイス注意(底付きパウ)';
-        tags.push('底付き注意', 'クラスト下層', '新雪あり');
-      }
-    } else {
+  // 2. 雨天・急激融雪判定
+  if (isRain || currentTemp >= 6.0) {
+    score = 25;
+    rank = '雨・ウェット';
+    rankEn = 'WET/RAIN';
+    mainTag = '🌧️ 雨・ウェット (融雪注意)';
+    tags.push('雨天', '雪面悪化', '防水必須');
+  }
+  // 3. パウダー判定（直近12h降雪 >= 10cm）
+  else if (recentSnowfall >= 10) {
+    if (isMeltedAndFrozen && recentSnowfall < 20) {
+      score = 70;
+      rank = '底付き注意';
+      rankEn = 'CRUST BASE';
+      mainTag = '⚠️ 底付きパウダー (下層硬め)';
+      tags.push('底付き注意', '下層クラスト', '新雪あり');
+    } else if (currentTemp >= -0.5) {
+      score = 65;
+      rank = '重パウ';
+      rankEn = 'HEAVY POWDER';
+      mainTag = '🌨️ 湿雪・重パウ (水分多め)';
+      tags.push('湿雪', '重め', '新雪あり');
+    } else if (currentTemp <= -6.0) {
       score = 95;
       rank = '神パウ';
       rankEn = 'DEEP POWDER';
-      mainTag = currentTemp <= -6 ? '極上ドライパウダー' : '面ツル深雪パウダー';
-      tags.push('極上シルキー', '底付きなし', '面ツル');
-    }
-  } else if (recentSnowfall >= 10) {
-    if (meltedThenFroze) {
-      score = 72;
-      rank = '良質パウ';
-      rankEn = 'FRESH SNOW';
-      mainTag = '⚠️底付きパウダー(下層硬め)';
-      tags.push('下層アイス', '新雪10cm+');
+      mainTag = '❄️ 極上ドライパウダー';
+      tags.push('極上シルキー', '浮遊感', '面ツル');
     } else {
       score = 85;
       rank = '良質パウ';
       rankEn = 'FRESH SNOW';
-      mainTag = currentTemp <= -5 ? 'ドライパウダー' : '新雪パウダー';
-      tags.push('新雪クッション', '浮遊感');
+      mainTag = '❄️ 新雪パウダー';
+      tags.push('パウダー', '浮遊感あり');
     }
-  } else if (recentSnowfall >= 3) {
-    if (meltedThenFroze) {
-      score = 55;
-      rank = '締まり雪';
-      rankEn = 'FIRM';
-      mainTag = 'うっすら新雪(下層カリカリ)';
+  }
+  // 4. うっすら新雪（3〜9cm）
+  else if (recentSnowfall >= 3) {
+    if (isMeltedAndFrozen) {
+      score = 50;
+      rank = 'カリカリ新雪';
+      rankEn = 'HARD BASE';
+      mainTag = 'うっすら新雪 (下層硬め)';
       tags.push('スリップ注意', 'エッジ必須');
     } else {
-      score = 75;
-      rank = '良質パウ';
-      rankEn = 'FRESH SNOW';
+      score = 72;
+      rank = '良質新雪';
+      rankEn = 'LIGHT FRESH';
       mainTag = 'うっすら新雪リセット';
-      tags.push('パック新雪', '爽快');
+      tags.push('うっすら新雪', 'パック雪');
     }
-  } else {
-    if (meltedThenFroze && currentTemp <= -1) {
-      score = 35;
-      rank = '難あり';
+  }
+  // 5. 新雪なし（3cm未満）
+  else {
+    if (isMeltedAndFrozen && currentTemp <= 0.0) {
+      score = 30;
+      rank = 'アイスバーン';
       rankEn = 'ICE/HARD';
-      mainTag = '🧊アイスバーン/硬め';
-      tags.push('ガチガチ', 'エッジ注意', '滑落警戒');
-    } else if (currentTemp >= 5) {
-      score = 52;
-      rank = '春雪';
+      mainTag = '🧊 凍結アイスバーン (未解消)';
+      tags.push('下層ガリガリ', 'エッジ注意', '滑落警戒');
+    } else if (currentTemp >= 2.0) {
+      score = 55;
+      rank = 'ザラメ';
       rankEn = 'SPRING/SLUSH';
-      mainTag = '春ザラメ / シャバ雪';
-      tags.push('コブ道場', 'ワックス要');
-    } else if (currentTemp >= 1) {
-      score = 62;
-      rank = '圧雪良好';
-      rankEn = 'GROOMED';
-      mainTag = 'しっとり圧雪';
-      tags.push('カービング快適');
+      mainTag = '☀️ ザラメ / シャバ雪';
+      tags.push('ザラメ雪', 'シャバ雪', 'ワックス要');
     } else {
-      score = 70;
-      rank = '圧雪良好';
-      rankEn = 'GROOMED';
-      mainTag = '上質コーデュロイ圧雪';
-      tags.push('高速カービング', 'エッジ噛み抜群');
+      score = 75;
+      rank = 'しまり雪';
+      rankEn = 'PACKED';
+      mainTag = '⛷️ 上質しまり雪';
+      tags.push('しまり雪', 'グリップ良好', 'スピード爽快');
     }
   }
 
+  // 6. 風速による補正
   if (currentWind >= 12) {
     score -= 10;
-    tags.push('強風・パック雪', 'リフト減速注意');
+    tags.push('強風・風パック', '地吹雪注意');
   }
 
-  if (currentSnowDepth < 40 && currentSnowDepth > 0) {
+  // 7. 積雪深が少ない場合の安全警告
+  if (currentSnowDepth < 30 && currentSnowDepth > 0) {
     score -= 15;
     tags.push('積雪少なめ', 'ブッシュ注意');
   }

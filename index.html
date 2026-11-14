@@ -918,9 +918,26 @@
       document.getElementById('heroTopSnow').textContent = spot.current.topSnowDepth;
       document.getElementById('heroBaseSnow').textContent = spot.current.baseSnowDepth;
 
-      // スコア & ランク
-      document.getElementById('heroScore').textContent = spot.current.score;
-      document.getElementById('heroRank').textContent = spot.current.rank;
+      // スコア & ランク（積雪0cm時はスコア非表示・積雪なし）
+      const scoreVal = spot.current.score;
+      const isNoSnow = scoreVal === null || scoreVal === undefined || spot.current.topSnowDepth <= 0;
+      const heroScoreEl = document.getElementById('heroScore');
+      const heroScoreMaxEl = heroScoreEl.nextElementSibling; // "/100"
+      if (isNoSnow) {
+        heroScoreEl.textContent = '―';
+        heroScoreEl.className = "font-teko text-5xl font-black text-slate-500 leading-none";
+        if (heroScoreMaxEl) heroScoreMaxEl.style.display = 'none';
+        const rankEl = document.getElementById('heroRank');
+        rankEl.textContent = '🌱 積雪なし';
+        rankEl.className = "text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 mt-1";
+      } else {
+        heroScoreEl.textContent = scoreVal;
+        heroScoreEl.className = "font-teko text-5xl font-black text-sky-400 leading-none";
+        if (heroScoreMaxEl) heroScoreMaxEl.style.display = 'inline';
+        const rankEl = document.getElementById('heroRank');
+        rankEl.textContent = spot.current.rank || 'しまり雪';
+        rankEl.className = "text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-500 text-slate-900 mt-1";
+      }
 
       // 夜間新雪（今夜〜翌朝06:00の直近ターゲット値を参照）
       const jstNow = new Date(Date.now() + 9 * 3600000);
@@ -1467,10 +1484,10 @@
               </div>
               <div class="text-right shrink-0">
                 <div class="flex items-baseline justify-end gap-0.5">
-                  <span class="font-teko text-2xl font-black text-sky-400 leading-none">${s.current.score}</span>
-                  <span class="text-xs font-bold text-sky-400">点</span>
+                  <span class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}</span>
+                  ${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs font-bold text-sky-400">点</span>' : ''}
                 </div>
-                <span class="text-[9.5px] font-bold px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">${s.current.rank || 'A'}ランク</span>
+                <span class="text-[9.5px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${s.current.rank || '積雪なし'}</span>
               </div>
             </div>
 
@@ -1800,7 +1817,7 @@
             <div class="text-[10px] text-sky-400 mt-0.5">${s.current.tag}</div>
           </div>
           <div class="text-right">
-            <div class="font-teko text-2xl font-black text-sky-400 leading-none">${s.current.score}<span class="text-xs">点</span></div>
+            <div class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs">点</span>' : ''}</div>
             <div class="text-[10px] text-slate-300 mt-0.5">山頂: ${s.current.topSnowDepth}cm</div>
           </div>
         `;
@@ -1848,7 +1865,7 @@
             <div class="text-xs font-bold text-white">${s.name}</div>
           </div>
           <div class="text-right">
-            <span class="text-xs font-bold text-sky-400">${s.current.score}点</span>
+            <span class="text-xs font-bold ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'}">${s.current.score !== null && s.current.score !== undefined ? s.current.score + '点' : '―'}</span>
           </div>
         `;
         container.appendChild(row);
