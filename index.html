@@ -354,6 +354,22 @@
     </div>
 
     <!-- ===============================
+         7-DAY WEEKLY FORECAST (横向き週間予報)
+         =============================== -->
+    <div class="snow-card rounded-2xl p-4">
+      <div class="flex items-center justify-between mb-2.5">
+        <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+          <i class="fa-solid fa-calendar-days text-sky-400"></i>
+          <span>7日間 週間雪予報</span>
+        </h3>
+        <span class="text-[10px] text-slate-400">※タップで該当日の詳細へ</span>
+      </div>
+      <div id="weeklyForecastContainer" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+        <!-- JSで動的生成 -->
+      </div>
+    </div>
+
+    <!-- ===============================
          TIMELINE (縦スクロール: 標高切替 & Top/Base横並び比較)
          =============================== -->
     <div class="snow-card rounded-2xl p-4 space-y-2.5">
@@ -388,19 +404,6 @@
       <div class="flex items-center justify-between text-[10px] text-slate-400 px-1">
         <span>※雪列: 上段=降雪(cm/h) / 下段=積雪深(cm)</span>
         <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>NOW</span>
-      </div>
-    </div>
-
-    <!-- ===============================
-         7-DAY WEEKLY FORECAST (横向き週間予報)
-         =============================== -->
-    <div class="snow-card rounded-2xl p-4">
-      <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5 mb-2.5">
-        <i class="fa-solid fa-calendar-days text-sky-400"></i>
-        <span>7日間 週間雪予報</span>
-      </h3>
-      <div id="weeklyForecastContainer" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
-        <!-- JSで動的生成 -->
       </div>
     </div>
 
@@ -1272,6 +1275,7 @@
           const dayColor = dayIdx === 0 ? 'text-rose-400' : (dayIdx === 6 ? 'text-sky-400' : 'text-slate-300');
 
           const dateDivider = document.createElement('div');
+          dateDivider.setAttribute('data-date', timeStr.slice(0, 10));
           dateDivider.className = "sticky top-0 z-10 bg-slate-800/95 backdrop-blur-sm px-3 py-1 text-[11px] font-bold border-y border-slate-700/60 flex items-center justify-between text-slate-300";
           dateDivider.innerHTML = `
             <div class="flex items-center gap-1.5">
@@ -1429,6 +1433,8 @@
     }
 
     // 週間天気予報描画
+    let selectedWeeklyDate = null;
+
     function renderWeeklyForecast(spot) {
       const container = document.getElementById('weeklyForecastContainer');
       container.innerHTML = '';
@@ -1442,24 +1448,54 @@
       const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
       daysList.forEach(day => {
         const isToday = day.date === todayStr;
+        const isSelected = selectedWeeklyDate === day.date;
         const dObj = new Date(day.date + 'T00:00:00+09:00');
         const dayOfWeek = weekdays[dObj.getDay()] || '';
         const dateLabel = isToday ? '今日' : `${day.date.slice(5).replace('-', '/')}(${dayOfWeek})`;
-        const col = document.createElement('div');
-        col.className = `flex-shrink-0 w-20 ${isToday ? 'bg-slate-800 border-sky-500/50 ring-1 ring-sky-500/30' : 'bg-slate-800/80 border-slate-700/60'} rounded-xl p-2.5 flex flex-col items-center justify-between text-center border`;
+        const col = document.createElement('button');
+        col.type = 'button';
+        col.onclick = () => scrollToTimelineDate(day.date);
+        
+        let borderAndBg = 'bg-slate-800/80 border-slate-700/60 hover:border-sky-400/60';
+        if (isSelected) {
+          borderAndBg = 'bg-sky-950/60 border-sky-400 ring-2 ring-sky-400/50';
+        } else if (isToday) {
+          borderAndBg = 'bg-slate-800 border-sky-500/50 ring-1 ring-sky-500/30 hover:border-sky-400';
+        }
+
+        col.className = `flex-shrink-0 w-20 ${borderAndBg} rounded-xl p-2.5 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none`;
         col.innerHTML = `
           <span class="text-[10px] font-bold ${isToday ? 'text-amber-400 font-black' : (dayOfWeek === '日' ? 'text-rose-400' : (dayOfWeek === '土' ? 'text-sky-400' : 'text-slate-400'))}">${dateLabel}</span>
-          <span class="text-2xl my-1.5">${day.weatherIcon}</span>
-          <span class="text-[10.5px] font-bold text-slate-300">${day.weatherLabel}</span>
-          <div class="font-teko text-sm font-bold mt-1">
+          <span class="text-2xl my-1.5 pointer-events-none">${day.weatherIcon}</span>
+          <span class="text-[10.5px] font-bold text-slate-300 pointer-events-none">${day.weatherLabel}</span>
+          <div class="font-teko text-sm font-bold mt-1 pointer-events-none">
             <span class="text-rose-400">${day.maxTemp}℃</span> / <span class="text-sky-400">${day.minTemp}℃</span>
           </div>
-          <div class="mt-1 text-[10px] font-black px-1.5 py-0.5 rounded ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700 text-slate-300'}">
+          <div class="mt-1 text-[10px] font-black px-1.5 py-0.5 rounded pointer-events-none ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700 text-slate-300'}">
             ❄️ +${day.totalSnowfall}cm
           </div>
         `;
         container.appendChild(col);
       });
+    }
+
+    // 週間予報から該当日のタイムラインへスクロール
+    function scrollToTimelineDate(targetDateStr) {
+      selectedWeeklyDate = targetDateStr;
+      const spot = currentSpot;
+      if (spot) renderWeeklyForecast(spot);
+
+      const container = document.getElementById('timelineContainer');
+      if (!container) return;
+
+      const targetEl = container.querySelector(`[data-date="${targetDateStr}"]`);
+      if (targetEl) {
+        // コンテナ内部のスクロールのみ（ページ全体のジャンプは一切行わない）
+        container.scrollTo({
+          top: targetEl.offsetTop,
+          behavior: 'smooth'
+        });
+      }
     }
 
     // ホーム画面先頭へリセット（ロゴタップ時）
