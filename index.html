@@ -695,11 +695,26 @@
         document.getElementById('countSki').textContent = skis.length;
         document.getElementById('countBc').textContent = bcs.length;
 
-        // 初期スポット設定 (URLパラメータ ?spot=xxx 優先、なければ白馬八方尾根)
+        // 初期スポット設定 (サーフベース準拠: URLパラメータ ?spot=xxx 優先、なければ登録ポイント先頭、それもなければ白馬八方尾根)
         const urlParams = new URLSearchParams(window.location.search);
         const targetSpotId = urlParams.get('spot');
         const targetSpot = targetSpotId ? appData.spots.find(s => s.id === targetSpotId) : null;
-        const initialSpot = targetSpot || appData.spots.find(s => s.id === 'hakuba_happo') || appData.spots[0];
+        
+        let initialSpot = null;
+        if (targetSpot) {
+          initialSpot = targetSpot;
+          isFavMode = false;
+        } else {
+          const validFavs = favorites.filter(favId => appData.spots.some(s => s.id === favId));
+          if (validFavs.length > 0) {
+            initialSpot = appData.spots.find(s => s.id === validFavs[0]);
+            isFavMode = true; // 登録ポイント一覧（MYスポットピル）をアクティブ化
+          } else {
+            initialSpot = appData.spots.find(s => s.id === 'hakuba_happo') || appData.spots[0];
+            isFavMode = false;
+          }
+        }
+
         if (initialSpot) {
           currentCategory = initialSpot.category || 'ski';
           currentRegion = initialSpot.region || 'shinetsu';
