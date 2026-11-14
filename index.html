@@ -432,7 +432,7 @@
   <!-- TAB 3: エリア一覧 & パウダーランキング（サーフベース準拠統合ビュー） -->
   <main id="tabAreas" class="max-w-md mx-auto px-3.5 pt-2.5 pb-32 space-y-3 hidden">
     <!-- 上部切り替えタブ（エリア別一覧 / パウダーランキング） -->
-    <div class="sticky top-[52px] z-30 bg-slate-950/95 backdrop-blur-md -mx-3.5 px-3.5 py-2 border-b border-slate-800/80 shadow-sm">
+    <div class="sticky z-30 bg-slate-950/95 backdrop-blur-md -mx-3.5 px-3.5 py-2 border-b border-slate-800/80 shadow-sm" style="top: calc(env(safe-area-inset-top, 0px) + 45px);">
       <div class="grid grid-cols-2 gap-1.5 bg-slate-800/90 p-1 rounded-2xl border border-slate-700/80">
         <button type="button" id="btnAreasModeList" onclick="switchAreasSubView('list')" class="py-2 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap">
           <i class="fa-solid fa-layer-group"></i>
@@ -478,13 +478,13 @@
     <!-- B. パウダーランキングパネル -->
     <div id="areasRankingPanel" class="space-y-3 hidden">
       <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-bold gap-1">
-        <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 shadow">
-          🌙 オーバーナイト (18-06時)
+        <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 px-1 rounded-lg text-center bg-sky-500 text-slate-900 shadow whitespace-nowrap truncate">
+          🌙 オーバーナイト
         </button>
-        <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
+        <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-400 hover:text-white whitespace-nowrap truncate">
           ⚡ 6時間速報
         </button>
-        <button id="btnRank24h" onclick="setRankPeriod('24h')" class="flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white">
+        <button id="btnRank24h" onclick="setRankPeriod('24h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-400 hover:text-white whitespace-nowrap truncate">
           ❄️ 24時間累積
         </button>
       </div>
@@ -2009,8 +2009,10 @@
       currentSpotId = id;
       const spot = appData.spots.find(s => s.id === id);
       if (spot) {
+        isFavMode = false;
         currentCategory = spot.category;
         currentRegion = spot.region;
+        currentArea = spot.areaName || 'all';
         updateCategoryUI();
         populateRegionsAndAreas();
         renderSpotPills();
@@ -2023,9 +2025,10 @@
     // ランキングタブ
     function setRankPeriod(period) {
       currentRankPeriod = period;
-      document.getElementById('btnRankNight').className = period === 'night' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold shadow" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
-      document.getElementById('btnRank6h').className = period === '6h' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold shadow" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
-      document.getElementById('btnRank24h').className = period === '24h' ? "flex-1 py-1.5 rounded-lg text-center bg-sky-500 text-slate-900 font-bold shadow" : "flex-1 py-1.5 rounded-lg text-center text-slate-400 hover:text-white font-bold";
+      const baseBtnCls = "flex-1 py-1.5 px-1 rounded-lg text-center whitespace-nowrap truncate font-bold ";
+      document.getElementById('btnRankNight').className = baseBtnCls + (period === 'night' ? "bg-sky-500 text-slate-900 shadow" : "text-slate-400 hover:text-white");
+      document.getElementById('btnRank6h').className = baseBtnCls + (period === '6h' ? "bg-sky-500 text-slate-900 shadow" : "text-slate-400 hover:text-white");
+      document.getElementById('btnRank24h').className = baseBtnCls + (period === '24h' ? "bg-sky-500 text-slate-900 shadow" : "text-slate-400 hover:text-white");
       renderRankingTab();
     }
 
@@ -2053,35 +2056,35 @@
 
       list.forEach((item, idx) => {
         const card = document.createElement('div');
-        card.className = "snow-card rounded-xl p-3 flex items-center justify-between border border-slate-700/60 active:scale-98 transition cursor-pointer";
+        card.className = "snow-card rounded-xl p-3 flex items-center justify-between gap-2 border border-slate-700/60 active:scale-98 transition cursor-pointer";
         card.onclick = () => selectSpotFromMap(item.id);
 
         let badgeHtml = '';
         if (currentRankPeriod === 'night' && item.isReset) {
-          badgeHtml = '<span class="text-[11px] px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-black ml-1.5">リセット❄️</span>';
+          badgeHtml = '<span class="text-[11px] px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-black shrink-0">リセット❄️</span>';
         }
 
         const catBadge = item.category === 'bc'
-          ? '<span class="text-[11px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold ml-1.5">⛰️BC山</span>'
-          : '<span class="text-[11px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold ml-1.5">🏂スキー場</span>';
+          ? '<span class="text-[11px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold shrink-0">⛰️BC</span>'
+          : '<span class="text-[11px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold shrink-0">🏂ゲレンデ</span>';
 
         card.innerHTML = `
-          <div class="flex items-center gap-3">
-            <span class="font-teko text-2xl font-black w-6 text-center ${idx === 0 ? 'text-amber-400' : (idx === 1 ? 'text-slate-300' : (idx === 2 ? 'text-amber-600' : 'text-slate-500'))}">${idx + 1}</span>
-            <div>
-              <div class="text-[11px] text-slate-400 font-bold flex items-center flex-wrap gap-0.5">
-                <span>${item.areaName || item.regionName}</span>
+          <div class="flex items-center gap-2.5 min-w-0 flex-1">
+            <span class="font-teko text-2xl font-black w-6 text-center shrink-0 ${idx === 0 ? 'text-amber-400' : (idx === 1 ? 'text-slate-300' : (idx === 2 ? 'text-amber-600' : 'text-slate-500'))}">${idx + 1}</span>
+            <div class="min-w-0 flex-1">
+              <div class="text-[11px] text-slate-400 font-bold flex items-center flex-wrap gap-1">
+                <span class="truncate">${item.areaName || item.regionName}</span>
                 ${catBadge}
                 ${badgeHtml}
               </div>
-              <div class="text-sm font-bold text-white">${item.name}</div>
-              <div class="text-[11px] text-sky-400 mt-0.5">${item.tag}</div>
+              <div class="text-sm font-bold text-white truncate">${item.name}</div>
+              <div class="text-[11px] text-sky-400 mt-0.5 truncate">${item.tag}</div>
             </div>
           </div>
-          <div class="text-right">
-            <div class="text-[11px] text-slate-400">${labelText}</div>
+          <div class="text-right shrink-0">
+            <div class="text-[10.5px] text-slate-400">${labelText}</div>
             <div class="font-teko text-2xl font-black text-cyan-300 leading-none">+${item.snow} <span class="text-xs">cm</span></div>
-            <div class="text-[11px] text-slate-400">積雪: ${item.depth}cm</div>
+            <div class="text-[10.5px] text-slate-400">積雪: ${item.depth}cm</div>
           </div>
         `;
         container.appendChild(card);
