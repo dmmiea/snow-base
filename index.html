@@ -391,13 +391,13 @@
 
       <!-- 縦スクロールテーブルコンテナ -->
       <div class="rounded-xl border border-slate-700/80 overflow-hidden bg-slate-900/60 shadow-inner">
-        <!-- 固定ヘッダー（5列: 時刻 / 天気 / 気温・風 / ベース雪 / トップ雪） -->
+        <!-- 固定ヘッダー（5列: 時刻 / 天気 / 気温・風 / ベース雪/雨 / トップ雪/雨） -->
         <div class="grid grid-cols-[48px_36px_1.15fr_1fr_1fr] text-center text-[10px] font-bold text-slate-400 bg-slate-800/90 py-2 px-1.5 border-b border-slate-700/80 tracking-wide select-none">
           <div>時刻</div>
           <div>天気</div>
           <div id="tlWeatherHeader" class="text-sky-300">気温・風(トップ)</div>
-          <div class="text-slate-300 bg-slate-800/50 rounded py-0.5 border border-slate-700/50">ベース 雪</div>
-          <div class="text-emerald-400 bg-emerald-950/30 rounded py-0.5 border border-emerald-500/20">トップ 雪</div>
+          <div class="text-slate-300 bg-slate-800/50 rounded py-0.5 border border-slate-700/50">ベース 雪/雨</div>
+          <div class="text-emerald-400 bg-emerald-950/30 rounded py-0.5 border border-emerald-500/20">トップ 雪/雨</div>
         </div>
 
         <!-- 縦スクロール領域 -->
@@ -406,7 +406,7 @@
         </div>
       </div>
       <div class="flex items-center justify-between text-[10px] text-slate-400 px-1">
-        <span>※雪列: 上段=降雪(cm/h) / 下段=積雪深(cm)</span>
+        <span>※雪/雨: 降雪(cm/h)・降雨(mm/h) / 下段=積雪深(cm)</span>
         <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>NOW</span>
       </div>
     </div>
@@ -1246,6 +1246,49 @@
       }
     }
 
+    // タイムライン描画用: 降雪・降雨の上下表示HTML生成ヘルパー（絵文字なし、単位+色判別）
+    function formatPrecipHtml(snowCm, rainMm) {
+      const hasSnow = snowCm > 0;
+      const hasRain = rainMm > 0;
+
+      if (hasSnow && hasRain) {
+        // みぞれ（両方）: 上下に縦並び
+        return `
+          <div class="flex flex-col items-center leading-tight py-0.5">
+            <span class="font-bold text-[11px] text-emerald-400">+${snowCm}cm</span>
+            <span class="font-bold text-[10px] text-sky-400">${rainMm}mm</span>
+          </div>
+        `;
+      } else if (hasSnow) {
+        return `<span class="font-bold text-xs text-emerald-400">+${snowCm}cm</span>`;
+      } else if (hasRain) {
+        return `<span class="font-bold text-xs text-sky-400">${rainMm}mm</span>`;
+      } else {
+        return `<span class="font-bold text-xs text-slate-500">―</span>`;
+      }
+    }
+
+    // サマリー行用: 降雪・降雨合計HTML生成ヘルパー（上下縦並び）
+    function formatSummaryPrecipHtml(snowSum, rainSum, defaultSnowColorClass, defaultRainColorClass) {
+      const hasSnow = snowSum > 0;
+      const hasRain = rainSum > 0;
+
+      if (hasSnow && hasRain) {
+        return `
+          <div class="flex flex-col items-center leading-tight">
+            <span class="font-bold text-[11px] ${defaultSnowColorClass}">+${snowSum}cm</span>
+            <span class="font-bold text-[10px] ${defaultRainColorClass}">${rainSum}mm</span>
+          </div>
+        `;
+      } else if (hasSnow) {
+        return `<div class="font-bold text-xs ${defaultSnowColorClass}">+${snowSum}cm</div>`;
+      } else if (hasRain) {
+        return `<div class="font-bold text-xs ${defaultRainColorClass}">${rainSum}mm</div>`;
+      } else {
+        return `<div class="font-bold text-[11px] opacity-60">0cm</div>`;
+      }
+    }
+
     function renderTimeline(spot) {
       const container = document.getElementById('timelineContainer');
       const prevScrollTop = container ? container.scrollTop : 0;
@@ -1297,12 +1340,14 @@
         const windDir = weatherH.windDirection ? weatherH.windDirection[i] : null;
         const windStr = (windSpeed !== null && windSpeed !== undefined) ? `${getWindDirJa(windDir)} ${Math.round(windSpeed)}m` : '--';
 
-        // トップ雪データ
+        // トップ雪/雨データ
         const topSnow = (topH && topH.snowfall && topH.snowfall[i] !== undefined) ? Math.round(topH.snowfall[i] * 10) / 10 : 0;
+        const topRain = (topH && topH.rain && topH.rain[i] !== undefined) ? Math.round(topH.rain[i] * 10) / 10 : 0;
         const topDepth = (topH && topH.snowDepth && topH.snowDepth[i] !== undefined) ? Math.round(topH.snowDepth[i]) : null;
 
-        // ベース雪データ
+        // ベース雪/雨データ
         const baseSnow = (baseH && baseH.snowfall && baseH.snowfall[i] !== undefined) ? Math.round(baseH.snowfall[i] * 10) / 10 : 0;
+        const baseRain = (baseH && baseH.rain && baseH.rain[i] !== undefined) ? Math.round(baseH.rain[i] * 10) / 10 : 0;
         const baseDepth = (baseH && baseH.snowDepth && baseH.snowDepth[i] !== undefined) ? Math.round(baseH.snowDepth[i]) : null;
 
         const nightVal = spot.nightSnowByDate ? spot.nightSnowByDate[timeStr] : null;
@@ -1337,21 +1382,17 @@
             <span class="text-[9.5px] text-slate-400">${windStr}</span>
           </div>
 
-          <!-- ベース 雪 (降雪 / 積雪) -->
-          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/20 rounded py-1">
-            <span class="font-bold text-xs ${baseSnow > 0 ? 'text-emerald-400' : 'text-slate-500'}">
-              ${baseSnow > 0 ? '+' + baseSnow + 'cm' : '―'}
-            </span>
+          <!-- ベース 雪/雨 (降雪・降雨 / 積雪) -->
+          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/20 rounded py-1 min-h-[36px]">
+            ${formatPrecipHtml(baseSnow, baseRain)}
             <span class="text-[9.5px] ${baseDepth !== null ? 'text-slate-400' : 'text-slate-600'}">
               ${baseDepth !== null ? baseDepth + 'cm' : '--'}
             </span>
           </div>
 
-          <!-- トップ 雪 (降雪 / 積雪) -->
-          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/30 rounded py-1">
-            <span class="font-bold text-xs ${topSnow > 0 ? 'text-emerald-400' : 'text-slate-500'}">
-              ${topSnow > 0 ? '+' + topSnow + 'cm' : '―'}
-            </span>
+          <!-- トップ 雪/雨 (降雪・降雨 / 積雪) -->
+          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/30 rounded py-1 min-h-[36px]">
+            ${formatPrecipHtml(topSnow, topRain)}
             <span class="text-[9.5px] ${topDepth !== null ? 'text-sky-300/80 font-medium' : 'text-slate-600'}">
               ${topDepth !== null ? topDepth + 'cm' : '--'}
             </span>
@@ -1362,17 +1403,31 @@
 
         // 朝06:00の直下に「🌙 夜間新雪合計 (18-06時)」の独立サマリー行を追加（左=ベース, 右=トップ）
         if (hourPart === '06:00') {
-          let nightTop = nightVal !== undefined && nightVal !== null ? nightVal : 0;
-          if (nightTop === 0 && topH && topH.snowfall) {
+          let nightTopSnow = nightVal !== undefined && nightVal !== null ? nightVal : 0;
+          if (nightTopSnow === 0 && topH && topH.snowfall) {
             const startNight = Math.max(0, i - 12);
-            for (let k = startNight; k < i; k++) nightTop += (topH.snowfall[k] || 0);
-            nightTop = Math.round(nightTop * 10) / 10;
+            for (let k = startNight; k < i; k++) nightTopSnow += (topH.snowfall[k] || 0);
+            nightTopSnow = Math.round(nightTopSnow * 10) / 10;
           }
-          let nightBase = 0;
+          let nightBaseSnow = 0;
           if (baseH && baseH.snowfall) {
             const startNight = Math.max(0, i - 12);
-            for (let k = startNight; k < i; k++) nightBase += (baseH.snowfall[k] || 0);
-            nightBase = Math.round(nightBase * 10) / 10;
+            for (let k = startNight; k < i; k++) nightBaseSnow += (baseH.snowfall[k] || 0);
+            nightBaseSnow = Math.round(nightBaseSnow * 10) / 10;
+          }
+
+          // 夜間降雨合計 (18-06時)
+          let nightTopRain = 0;
+          if (topH && topH.rain) {
+            const startNight = Math.max(0, i - 12);
+            for (let k = startNight; k < i; k++) nightTopRain += (topH.rain[k] || 0);
+            nightTopRain = Math.round(nightTopRain * 10) / 10;
+          }
+          let nightBaseRain = 0;
+          if (baseH && baseH.rain) {
+            const startNight = Math.max(0, i - 12);
+            for (let k = startNight; k < i; k++) nightBaseRain += (baseH.rain[k] || 0);
+            nightBaseRain = Math.round(nightBaseRain * 10) / 10;
           }
 
           const sumRow = document.createElement('div');
@@ -1382,11 +1437,11 @@
               <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 inline-block"></span>
               <span>🌙 夜間新雪合計 (18-06時)</span>
             </div>
-            <div class="font-bold ${nightBase > 0 ? 'text-emerald-300 font-black text-xs' : 'text-indigo-300/60 text-[11px]'}">
-              ${nightBase > 0 ? '+' + nightBase + 'cm' : '0cm'}
+            <div>
+              ${formatSummaryPrecipHtml(nightBaseSnow, nightBaseRain, 'text-emerald-300 font-black', 'text-sky-300 font-bold')}
             </div>
-            <div class="font-bold ${nightTop > 0 ? 'text-emerald-300 font-black text-xs' : 'text-indigo-300/60 text-[11px]'}">
-              ${nightTop > 0 ? '+' + nightTop + 'cm' : '0cm'}
+            <div>
+              ${formatSummaryPrecipHtml(nightTopSnow, nightTopRain, 'text-emerald-300 font-black', 'text-sky-300 font-bold')}
             </div>
           `;
           container.appendChild(sumRow);
@@ -1394,18 +1449,30 @@
 
         // 夕18:00の直下に「☀️ 日中降雪合計 (06-18時)」の独立サマリー行を追加（左=ベース, 右=トップ）
         else if (hourPart === '18:00') {
-          let dayTop = 0;
+          let dayTopSnow = 0;
           const startDay = Math.max(0, i - 12);
           for (let k = startDay; k < i; k++) {
-            dayTop += (topH && topH.snowfall ? (topH.snowfall[k] || 0) : 0);
+            dayTopSnow += (topH && topH.snowfall ? (topH.snowfall[k] || 0) : 0);
           }
-          dayTop = Math.round(dayTop * 10) / 10;
+          dayTopSnow = Math.round(dayTopSnow * 10) / 10;
 
-          let dayBase = 0;
+          let dayBaseSnow = 0;
           for (let k = startDay; k < i; k++) {
-            dayBase += (baseH && baseH.snowfall ? (baseH.snowfall[k] || 0) : 0);
+            dayBaseSnow += (baseH && baseH.snowfall ? (baseH.snowfall[k] || 0) : 0);
           }
-          dayBase = Math.round(dayBase * 10) / 10;
+          dayBaseSnow = Math.round(dayBaseSnow * 10) / 10;
+
+          // 日中降雨合計 (06-18時)
+          let dayTopRain = 0;
+          if (topH && topH.rain) {
+            for (let k = startDay; k < i; k++) dayTopRain += (topH.rain[k] || 0);
+            dayTopRain = Math.round(dayTopRain * 10) / 10;
+          }
+          let dayBaseRain = 0;
+          if (baseH && baseH.rain) {
+            for (let k = startDay; k < i; k++) dayBaseRain += (baseH.rain[k] || 0);
+            dayBaseRain = Math.round(dayBaseRain * 10) / 10;
+          }
 
           const sumRow = document.createElement('div');
           sumRow.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-1.5 px-1.5 text-center bg-amber-950/40 border-y border-amber-500/30 text-xs";
@@ -1414,11 +1481,11 @@
               <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block"></span>
               <span>☀️ 日中降雪合計 (06-18時)</span>
             </div>
-            <div class="font-bold ${dayBase > 0 ? 'text-amber-300 font-black text-xs' : 'text-amber-300/60 text-[11px]'}">
-              ${dayBase > 0 ? '+' + dayBase + 'cm' : '0cm'}
+            <div>
+              ${formatSummaryPrecipHtml(dayBaseSnow, dayBaseRain, 'text-amber-300 font-black', 'text-sky-300 font-bold')}
             </div>
-            <div class="font-bold ${dayTop > 0 ? 'text-amber-300 font-black text-xs' : 'text-amber-300/60 text-[11px]'}">
-              ${dayTop > 0 ? '+' + dayTop + 'cm' : '0cm'}
+            <div>
+              ${formatSummaryPrecipHtml(dayTopSnow, dayTopRain, 'text-amber-300 font-black', 'text-sky-300 font-bold')}
             </div>
           `;
           container.appendChild(sumRow);

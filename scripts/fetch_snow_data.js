@@ -306,7 +306,7 @@ async function run() {
     const baseLons = chunk.map(s => s.base.lon).join(',');
     const baseElevs = chunk.map(s => s.base.elevation).join(',');
 
-    const queryParams = 'hourly=temperature_2m,snowfall,snow_depth,weather_code,wind_speed_10m,wind_direction_10m,precipitation&timezone=Asia%2FTokyo&forecast_days=7&past_days=1';
+    const queryParams = 'hourly=temperature_2m,snowfall,snow_depth,weather_code,wind_speed_10m,wind_direction_10m,precipitation,rain&timezone=Asia%2FTokyo&forecast_days=7&past_days=1';
 
     const urlTop = `https://api.open-meteo.com/v1/forecast?latitude=${topLats}&longitude=${topLons}&elevation=${topElevs}&${queryParams}`;
     const urlBase = `https://api.open-meteo.com/v1/forecast?latitude=${baseLats}&longitude=${baseLons}&elevation=${baseElevs}&${queryParams}`;
@@ -438,6 +438,7 @@ async function run() {
             temperature: topData.hourly.temperature_2m,
             snowfall: topData.hourly.snowfall,
             snowDepth: topData.hourly.snow_depth.map(v => Math.round((v || 0) * 100)),
+            rain: topData.hourly.rain || [],
             weatherCode: topData.hourly.weather_code,
             windSpeed: topData.hourly.wind_speed_10m,
             windDirection: topData.hourly.wind_direction_10m
@@ -447,6 +448,7 @@ async function run() {
             temperature: baseData.hourly.temperature_2m,
             snowfall: baseData.hourly.snowfall,
             snowDepth: baseData.hourly.snow_depth.map(v => Math.round((v || 0) * 100)),
+            rain: baseData.hourly.rain || [],
             weatherCode: baseData.hourly.weather_code,
             windSpeed: baseData.hourly.wind_speed_10m,
             windDirection: baseData.hourly.wind_direction_10m
