@@ -918,9 +918,9 @@
       document.getElementById('heroTopSnow').textContent = spot.current.topSnowDepth;
       document.getElementById('heroBaseSnow').textContent = spot.current.baseSnowDepth;
 
-      // スコア & ランク（積雪0cm時はスコア非表示・積雪なし）
+      // スコア & ランク（積雪30cm未満はスコア非表示・積雪不足）
       const scoreVal = spot.current.score;
-      const isNoSnow = scoreVal === null || scoreVal === undefined || spot.current.topSnowDepth <= 0;
+      const isNoSnow = scoreVal === null || scoreVal === undefined || spot.current.topSnowDepth < 30;
       const heroScoreEl = document.getElementById('heroScore');
       const heroScoreMaxEl = heroScoreEl.nextElementSibling; // "/100"
       if (isNoSnow) {
@@ -928,7 +928,7 @@
         heroScoreEl.className = "font-teko text-5xl font-black text-slate-500 leading-none";
         if (heroScoreMaxEl) heroScoreMaxEl.style.display = 'none';
         const rankEl = document.getElementById('heroRank');
-        rankEl.textContent = '🌱 積雪なし';
+        rankEl.textContent = '🌱 積雪不足';
         rankEl.className = "text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 mt-1";
       } else {
         heroScoreEl.textContent = scoreVal;
@@ -1487,7 +1487,7 @@
                   <span class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}</span>
                   ${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs font-bold text-sky-400">点</span>' : ''}
                 </div>
-                <span class="text-[9.5px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${s.current.rank || '積雪なし'}</span>
+                <span class="text-[9.5px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${s.current.rank || '積雪不足'}</span>
               </div>
             </div>
 

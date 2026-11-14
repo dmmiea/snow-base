@@ -32,14 +32,14 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
   const rawDepth = snowDepthArr[currentHourIndex];
   const currentSnowDepth = hourlyData.snow_depth !== undefined ? (rawDepth || 0) * 100 : (rawDepth || 0);
 
-  // 1. 【最優先】積雪ゼロ判定（滑走不可）
-  if (currentSnowDepth <= 0 || isNaN(currentSnowDepth)) {
+  // 1. 【最優先】積雪不足判定（滑走不可：30cm未満）
+  if (currentSnowDepth < 30 || isNaN(currentSnowDepth)) {
     return {
       score: null,
-      rank: '積雪なし',
+      rank: '積雪不足',
       rankEn: 'NO SNOW',
-      tag: '🌱 積雪なし (滑走不可)',
-      tags: ['積雪ゼロ', '滑走不可']
+      tag: '🌱 積雪不足 (滑走不可)',
+      tags: ['積雪30cm未満', '滑走不可', 'ブッシュ・石注意']
     };
   }
 
@@ -167,10 +167,10 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
     tags.push('強風・風パック', '地吹雪注意');
   }
 
-  // 7. 積雪深が少ない場合の安全警告
-  if (currentSnowDepth < 30 && currentSnowDepth > 0) {
-    score -= 15;
-    tags.push('積雪少なめ', 'ブッシュ注意');
+  // 7. 積雪深が浅い場合（30〜49cm）の安全注意
+  if (currentSnowDepth < 50) {
+    score -= 10;
+    tags.push('積雪浅め', 'ブッシュ・小石注意');
   }
 
   score = Math.max(10, Math.min(99, score));
