@@ -223,15 +223,15 @@
             白馬八方尾根スキー場
           </h2>
           <!-- お気に入り★ボタン -->
-          <button id="btnFav" onclick="toggleFavorite()" class="text-slate-400 hover:text-amber-400 text-base active:scale-95 transition ml-0.5" title="MYスポット登録">
+          <button id="btnFav" onclick="toggleFavorite()" class="text-slate-400 hover:text-amber-400 text-xl sm:text-2xl leading-none active:scale-95 transition ml-0.5 inline-flex items-center" title="MYスポット登録">
             <i id="favIcon" class="fa-regular fa-star"></i>
           </button>
           <!-- シェア（共有）ボタン -->
-          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="text-slate-400 hover:text-sky-400 text-sm active:scale-95 transition" title="このスポットをシェア">
+          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="text-slate-400 hover:text-sky-400 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" title="このスポットをシェア">
             <i class="fa-solid fa-arrow-up-from-bracket"></i>
           </button>
           <!-- Googleマップ位置確認ボタン -->
-          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="text-slate-400 hover:text-rose-400 text-sm active:scale-95 transition" title="Googleマップで場所・アクセスを確認">
+          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="text-slate-400 hover:text-rose-400 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" title="Googleマップで場所・アクセスを確認">
             <i class="fa-solid fa-location-dot"></i>
           </button>
         </div>
@@ -350,7 +350,7 @@
       <div class="flex items-center justify-between mb-2">
         <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-chart-line text-sky-400"></i>
-          <span>積雪トレンド</span>
+          <span>SNOW TREND（実測・7日予報）</span>
         </h3>
         <div class="flex bg-slate-900 rounded-lg p-0.5 border border-slate-700/70 text-[10px]">
           <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold">7日間</button>
@@ -375,7 +375,7 @@
       <div class="flex items-center justify-between mb-2.5">
         <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
           <i class="fa-solid fa-calendar-days text-sky-400"></i>
-          <span>7日間 週間雪予報</span>
+          <span>WEEKLY FORECAST（7日間）</span>
         </h3>
         <span class="text-[10px] text-slate-400">※タップで該当日の詳細へ</span>
       </div>
@@ -391,7 +391,7 @@
       <div class="flex items-center justify-between">
         <h3 class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
           <i class="fa-solid fa-clock text-sky-400"></i>
-          <span>時間別タイムライン（1時間刻み）</span>
+          <span>TIMELINE（1時間刻み）</span>
         </h3>
         <!-- 標高切替ピル -->
         <div class="flex rounded-lg bg-slate-800 p-0.5 border border-slate-700 text-[10px] font-bold">
