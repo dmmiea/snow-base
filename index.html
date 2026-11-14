@@ -432,13 +432,13 @@
   <!-- TAB 3: エリア一覧 & パウダーランキング（サーフベース準拠統合ビュー） -->
   <main id="tabAreas" class="max-w-md mx-auto px-3.5 pt-2.5 pb-32 space-y-3 hidden">
     <!-- 上部切り替えタブ（エリア別一覧 / パウダーランキング ＋ スキー場 / BC山 2択） -->
-    <div class="sticky z-30 bg-slate-950/95 backdrop-blur-md -mx-3.5 px-3.5 py-2 border-b border-slate-800/80 shadow-sm space-y-1.5" style="top: calc(env(safe-area-inset-top, 0px) + 45px);">
-      <div class="grid grid-cols-2 gap-1.5 bg-slate-800/90 p-1 rounded-2xl border border-slate-700/80">
-        <button type="button" id="btnAreasModeList" onclick="switchAreasSubView('list')" class="py-1.5 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap">
+    <div class="sticky z-30 bg-slate-950/95 backdrop-blur-md -mx-3.5 px-3.5 pt-1 pb-2 border-b border-slate-800/80 shadow-sm space-y-2" style="top: calc(env(safe-area-inset-top, 0px) + 49px);">
+      <div class="grid grid-cols-2 border-b border-slate-800/90">
+        <button type="button" id="btnAreasModeList" onclick="switchAreasSubView('list')" class="py-2 text-xs font-black text-sky-400 border-b-2 border-sky-400 transition flex items-center justify-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-layer-group"></i>
           <span>エリア別一覧</span>
         </button>
-        <button type="button" id="btnAreasModeRanking" onclick="switchAreasSubView('ranking')" class="py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap">
+        <button type="button" id="btnAreasModeRanking" onclick="switchAreasSubView('ranking')" class="py-2 text-xs font-bold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition flex items-center justify-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-crown text-amber-400"></i>
           <span>パウダーランキング</span>
         </button>
@@ -1839,15 +1839,18 @@
       const panelList = document.getElementById('areasListPanel');
       const panelRank = document.getElementById('areasRankingPanel');
 
+      const activeTabCls = 'py-2 text-xs font-black text-sky-400 border-b-2 border-sky-400 transition flex items-center justify-center gap-1.5 whitespace-nowrap';
+      const inactiveTabCls = 'py-2 text-xs font-bold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition flex items-center justify-center gap-1.5 whitespace-nowrap';
+
       if (currentAreasSubView === 'list') {
-        if (btnList) btnList.className = 'py-1.5 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
-        if (btnRank) btnRank.className = 'py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
+        if (btnList) btnList.className = activeTabCls;
+        if (btnRank) btnRank.className = inactiveTabCls;
         if (panelList) panelList.classList.remove('hidden');
         if (panelRank) panelRank.classList.add('hidden');
         renderAreasAccordionList();
       } else {
-        if (btnRank) btnRank.className = 'py-1.5 px-3 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
-        if (btnList) btnList.className = 'py-1.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
+        if (btnRank) btnRank.className = activeTabCls;
+        if (btnList) btnList.className = inactiveTabCls;
         if (panelRank) panelRank.classList.remove('hidden');
         if (panelList) panelList.classList.add('hidden');
         renderRankingTab();
