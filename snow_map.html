@@ -83,15 +83,12 @@
       </div>
     </div>
 
-    <!-- 種別フィルター（全て / スキー場 / BC） -->
+    <!-- 種別フィルター（🏂 スキー場 / ⛰️ BC山 完全分離2択・デフォルト スキー場） -->
     <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-[11px] font-bold">
-      <button type="button" onclick="filterCategory('all')" id="btnCatAll" class="px-2 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition">
-        全て
-      </button>
-      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2 py-1 rounded text-slate-400 hover:text-white transition">
+      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2.5 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition">
         🏂 スキー場
       </button>
-      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2 py-1 rounded text-slate-400 hover:text-white transition">
+      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2.5 py-1 rounded text-slate-400 hover:text-white transition">
         ⛰️ BC山
       </button>
     </div>
@@ -119,28 +116,40 @@
   <div class="relative flex-1 bg-slate-900 overflow-hidden">
     <div id="map"></div>
 
-    <!-- 左下：凡例カード（折りたたみ対応・サーフベース同一設計） -->
+    <!-- 左下：凡例カード（7段階 🌙夜間新雪基準・折りたたみ対応） -->
     <div id="legendCard" class="absolute bottom-3 left-3 z-10 bg-slate-900/95 backdrop-blur-md rounded-xl p-2.5 shadow-xl border border-slate-800 text-xs pointer-events-auto max-w-[210px] transition-all duration-200">
       <button type="button" onclick="toggleLegend()" class="w-full font-bold text-slate-200 flex items-center justify-between text-[11px] cursor-pointer hover:text-white transition gap-2 select-none">
-        <span class="flex items-center gap-1">📍 凡例 & スコア</span>
+        <span class="flex items-center gap-1">🌙 凡例（夜間新雪）</span>
         <i id="legendChevron" class="fa-solid fa-chevron-down text-[11px] text-slate-400 transition-transform duration-200"></i>
       </button>
-      <div id="legendContent" class="space-y-1.5 pt-2 border-t border-slate-800 mt-1.5 text-[11px]">
+      <div id="legendContent" class="space-y-1 pt-2 border-t border-slate-800 mt-1.5 text-[10.5px]">
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-sky-400 border border-white flex items-center justify-center text-[11px] text-slate-950 font-bold">80</span>
-          <span class="text-slate-200 font-semibold">パウダー極上 (80点以上)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-fuchsia-500 border border-white shrink-0 shadow-sm shadow-fuchsia-500/50"></span>
+          <span class="text-fuchsia-300 font-bold">腰パウ (80cm+)</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-emerald-400 border border-white flex items-center justify-center text-[11px] text-slate-950 font-bold">60</span>
-          <span class="text-slate-300">良好バーン (60〜79点)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-violet-500 border border-white shrink-0 shadow-sm shadow-violet-500/50"></span>
+          <span class="text-violet-300 font-semibold">モモパウ (50〜79cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-slate-500 border border-slate-300 flex items-center justify-center text-[11px] text-white">40</span>
-          <span class="text-slate-400">標準・クラスト (59点以下)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-blue-500 border border-white shrink-0"></span>
+          <span class="text-blue-300 font-semibold">ヒザパウ (30〜49cm)</span>
         </div>
-        <div class="pt-1 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
-          <span>🏂 スキー場: 丸ピン</span>
-          <span>⛰️ BC山: 三角ピン</span>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-cyan-400 border border-white shrink-0"></span>
+          <span class="text-cyan-200 font-semibold">スネパウ (20〜29cm)</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-sky-400 border border-white shrink-0"></span>
+          <span class="text-sky-200 font-semibold">くるぶし (10〜19cm)</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 border border-white shrink-0"></span>
+          <span class="text-emerald-300">うっすら (1〜9cm)</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-slate-600 border border-slate-400 shrink-0"></span>
+          <span class="text-slate-400">降雪なし (0cm)</span>
         </div>
       </div>
     </div>
@@ -149,7 +158,7 @@
   <script>
     let map = null;
     let allSpots = [];
-    let activeCategory = 'all';
+    let activeCategory = 'ski'; // デフォルトはスキー場
     let markersLayer = null;
     let legendOpen = true;
 
@@ -212,6 +221,35 @@
       }
     }
 
+    // ホーム画面と完全連動する「夜間新雪量（18-06時）」取得ロジック
+    function getSpotNightSnow(s) {
+      if (!s || !s.nightSnowByDate) return 0;
+      const jstNow = new Date(Date.now() + 9 * 3600000);
+      const jstHour = jstNow.getUTCHours();
+      const targetMorning = new Date(jstNow.getTime() + (jstHour >= 12 ? 24 * 3600000 : 0));
+      const target06Str = `${targetMorning.toISOString().slice(0, 10)}T06:00`;
+      const nightKeys = Object.keys(s.nightSnowByDate);
+      if (s.nightSnowByDate[target06Str] !== undefined) {
+        return s.nightSnowByDate[target06Str];
+      }
+      const upcoming = nightKeys.filter(k => k >= target06Str);
+      if (upcoming.length > 0) return s.nightSnowByDate[upcoming[0]];
+      if (nightKeys.length > 0) return s.nightSnowByDate[nightKeys[nightKeys.length - 1]];
+      return 0;
+    }
+
+    // ホーム画面の判定基準と完全一致する7段階新雪設定
+    function getNightSnowTier(val) {
+      const v = typeof val === 'number' ? val : 0;
+      if (v >= 80) return { label: '腰パウ', bg: '#d946ef', badgeCls: 'bg-fuchsia-500', textCls: 'text-fuchsia-300', isDeep: true };
+      if (v >= 50) return { label: 'モモパウ', bg: '#8b5cf6', badgeCls: 'bg-violet-500', textCls: 'text-violet-300', isDeep: true };
+      if (v >= 30) return { label: 'ヒザパウ', bg: '#3b82f6', badgeCls: 'bg-blue-500', textCls: 'text-blue-300', isDeep: true };
+      if (v >= 20) return { label: 'スネパウ', bg: '#22d3ee', badgeCls: 'bg-cyan-400', textCls: 'text-cyan-200', isDeep: true };
+      if (v >= 10) return { label: 'くるぶし', bg: '#38bdf8', badgeCls: 'bg-sky-400', textCls: 'text-sky-200', isDeep: false };
+      if (v >= 1) return { label: 'うっすら', bg: '#10b981', badgeCls: 'bg-emerald-500', textCls: 'text-emerald-300', isDeep: false };
+      return { label: '降雪なし', bg: '#475569', badgeCls: 'bg-slate-600', textCls: 'text-slate-400', isDeep: false };
+    }
+
     function renderMarkers() {
       if (!markersLayer) return;
       markersLayer.clearLayers();
@@ -228,68 +266,72 @@
         if (!s.top || typeof s.top.lat !== 'number' || typeof s.top.lon !== 'number') return;
 
         const isBc = s.category === 'bc';
-        const score = (s.current && s.current.score) || 50;
-        const color = score >= 80 ? '#38bdf8' : (score >= 60 ? '#34d399' : '#94a3b8');
-        const borderColor = score >= 80 ? '#0284c7' : (score >= 60 ? '#059669' : '#475569');
+        const nightVal = Math.round(getSpotNightSnow(s) * 10) / 10;
+        const tier = getNightSnowTier(nightVal);
+        const iconChar = isBc ? '⛰️' : '🏂';
 
-        let marker;
-        if (isBc) {
-          // バックカントリー：三角形アイコン風
-          const icon = L.divIcon({
-            className: 'custom-bc-icon',
-            html: `
-              <div style="width: 20px; height: 20px; display: flex; items-center; justify-content: center;">
-                <div style="width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 16px solid ${color}; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"></div>
-              </div>
-            `,
-            iconSize: [20, 20],
-            iconAnchor: [10, 10]
-          });
-          marker = L.marker([s.top.lat, s.top.lon], { icon });
-        } else {
-          // スキー場：丸形マーカー（高スコアは鮮やかな光彩）
-          marker = L.circleMarker([s.top.lat, s.top.lon], {
-            radius: score >= 80 ? 7 : 6,
-            fillColor: color,
-            color: '#ffffff',
-            weight: 1.5,
-            opacity: 1,
-            fillOpacity: 0.9
-          });
-        }
+        // サーフベース準拠の大きめ白枠ピン（L.divIcon）
+        // 新雪があるスポットはピンを一回り強調し、右上に新雪量バッジを表示
+        const pinSize = tier.isDeep ? 28 : (nightVal >= 1 ? 26 : 22);
+        const badgeHtml = nightVal >= 1
+          ? `<span class="absolute -top-2 -right-3 px-1 py-0.2 rounded-full ${tier.badgeCls} text-white font-black text-[9px] font-mono leading-none border border-slate-900 shadow-md pointer-events-none">+${nightVal}</span>`
+          : '';
+
+        const iconHtml = `
+          <div class="relative flex items-center justify-center select-none" style="width: ${pinSize}px; height: ${pinSize}px;">
+            <div class="w-full h-full rounded-full flex items-center justify-center text-white border-2 border-white shadow-lg text-[10px] sm:text-xs" style="background-color: ${tier.bg}; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5));">
+              ${iconChar}
+            </div>
+            ${badgeHtml}
+          </div>
+        `;
+
+        const icon = L.divIcon({
+          className: 'custom-snow-pin',
+          html: iconHtml,
+          iconSize: [pinSize, pinSize],
+          iconAnchor: [pinSize / 2, pinSize / 2]
+        });
+
+        const marker = L.marker([s.top.lat, s.top.lon], { icon });
 
         const topSnow = (s.current && s.current.topSnowDepth) || 0;
-        const rank = (s.current && s.current.rank) || 'B';
+        const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
+        const rank = (s.current && s.current.rank) || '積雪不足';
         const tag = (s.current && s.current.tag) || '雪質安定';
         const elev = (s.top && s.top.elevation) || 0;
 
         const popupHtml = `
           <div class="p-3 text-slate-100 font-sans text-xs">
             <div class="flex items-center justify-between border-b border-slate-700/80 pb-1.5 mb-2">
-              <span class="text-[11px] font-bold text-sky-400 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-800/60">
+              <span class="text-[11px] font-bold ${isBc ? 'text-emerald-400 bg-emerald-950/80 border-emerald-800/60' : 'text-sky-400 bg-sky-950/80 border-sky-800/60'} px-2 py-0.5 rounded border">
                 ${isBc ? '⛰️ バックカントリー' : '🏂 スキー場'}
               </span>
               <span class="text-[11px] text-slate-400">${s.areaName || s.regionName}</span>
             </div>
             <div class="font-bold text-sm text-white leading-tight mb-2">${s.name}</div>
             
-            <div class="grid grid-cols-2 gap-1.5 bg-slate-950 p-2 rounded-lg border border-slate-800 text-[11px] mb-2">
+            <div class="grid grid-cols-2 gap-1.5 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-[11px] mb-2.5">
               <div>
-                <span class="text-slate-400 text-[11px] block">トップ積雪</span>
-                <span class="font-bold text-white font-mono text-sm">${topSnow}</span> <span class="text-[11px] text-slate-400">cm</span>
+                <span class="text-slate-400 text-[10px] block">🌙 夜間新雪 (18-06時)</span>
+                <span class="font-bold font-mono text-base ${tier.textCls}">+${nightVal}</span> <span class="text-[10px] text-slate-400">cm</span>
+                <span class="text-[10px] px-1.5 py-0.2 rounded ${tier.badgeCls} text-white font-bold ml-1 inline-block">${tier.label}</span>
               </div>
               <div>
-                <span class="text-slate-400 text-[11px] block">雪質スコア</span>
-                <span class="font-bold font-mono text-sm" style="color:${color};">${score}点</span>
-                <span class="text-[11px] bg-slate-800 px-1 py-0.2 rounded text-slate-300 ml-1 font-bold">${rank}</span>
+                <span class="text-slate-400 text-[10px] block">山頂 積雪深</span>
+                <span class="font-bold text-white font-mono text-base">${topSnow}</span> <span class="text-[10px] text-slate-400">cm</span>
               </div>
-              <div class="col-span-2 pt-1 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-                <span class="text-slate-400">トップ標高: ${elev}m</span>
-                <span class="text-sky-300 font-semibold">${tag}</span>
+              <div class="col-span-2 pt-1.5 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+                <span class="text-slate-400">標高: ${elev}m</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-slate-400">雪質:</span>
+                  <span class="font-bold ${score !== null ? 'text-sky-300' : 'text-slate-500'}">${score !== null ? score + '点' : '―'}</span>
+                  <span class="text-[10px] text-slate-300 px-1 py-0.2 bg-slate-800 rounded border border-slate-700">${tag}</span>
+                </div>
               </div>
             </div>
 
-            <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
+            <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
               <span>このスポットの予報を見る</span>
               <i class="fa-solid fa-arrow-right text-[11px]"></i>
             </button>
@@ -303,13 +345,11 @@
 
     function filterCategory(cat) {
       activeCategory = cat;
-      const bAll = document.getElementById('btnCatAll');
       const bSki = document.getElementById('btnCatSki');
       const bBc = document.getElementById('btnCatBc');
 
-      bAll.className = cat === 'all' ? "px-2 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2 py-1 rounded text-slate-400 hover:text-white transition";
-      bSki.className = cat === 'ski' ? "px-2 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2 py-1 rounded text-slate-400 hover:text-white transition";
-      bBc.className = cat === 'bc' ? "px-2 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2 py-1 rounded text-slate-400 hover:text-white transition";
+      if (bSki) bSki.className = cat === 'ski' ? "px-2.5 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2.5 py-1 rounded text-slate-400 hover:text-white transition";
+      if (bBc) bBc.className = cat === 'bc' ? "px-2.5 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2.5 py-1 rounded text-slate-400 hover:text-white transition";
 
       renderMarkers();
     }
