@@ -384,7 +384,7 @@
       </div>
       <div class="mt-2 text-[10px] text-slate-400 flex items-center justify-end gap-3 px-1">
         <span><strong class="text-slate-300">❄️</strong> 1日合計 (0-24時)</span>
-        <span><strong class="text-cyan-300">🌙</strong> 朝イチ新雪 (前夜18-06時)</span>
+        <span><strong class="text-cyan-300">🌙</strong> オーバーナイト (18-06時)</span>
       </div>
     </div>
 
@@ -1669,13 +1669,11 @@
             <span class="text-rose-400">${day.maxTemp}℃</span> / <span class="text-sky-400">${day.minTemp}℃</span>
           </div>
           <div class="w-full mt-1.5 space-y-1 pointer-events-none">
-            <div class="text-[10px] font-black px-1 py-0.5 rounded leading-tight flex items-center justify-between ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700/80 text-slate-300'}">
-              <span class="opacity-80 font-normal">❄️1日</span>
-              <span>+${day.totalSnowfall}<span class="text-[9px] font-normal">cm</span></span>
+            <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700/80 text-slate-300'}">
+              ❄️ +${day.totalSnowfall}cm
             </div>
-            <div class="text-[10px] font-black px-1 py-0.5 rounded leading-tight flex items-center justify-between ${nightVal >= 10 ? 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white' : (nightVal > 0 ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-700/60' : 'bg-slate-800 text-slate-400 border border-slate-700/60')}">
-              <span class="opacity-80 font-normal">🌙朝イチ</span>
-              <span>+${nightVal}<span class="text-[9px] font-normal">cm</span></span>
+            <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${nightVal >= 10 ? 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white' : (nightVal > 0 ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-700/60' : 'bg-slate-800 text-slate-400 border border-slate-700/60')}">
+              🌙 +${nightVal}cm
             </div>
           </div>
         `;
