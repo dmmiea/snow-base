@@ -552,11 +552,27 @@
 
   <!-- TAB 5: MYスポット -->
   <main id="tabMySpots" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3 hidden">
-    <h2 class="text-sm font-bold text-white flex items-center gap-1.5">
-      <i class="fa-solid fa-star text-amber-400"></i>
-      <span>登録中のMYスポット</span>
-    </h2>
-    <div id="mySpotsListContainer" class="space-y-2">
+    <!-- サーフベース準拠：MYスポットヘッダー＆追加カード -->
+    <div class="snow-card rounded-2xl p-3.5 border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-slate-900 to-sky-500/10 shadow-sm flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-amber-400/20 border border-amber-300/40 text-amber-400 flex items-center justify-center shadow-sm shrink-0">
+          <i class="fa-solid fa-star text-base"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <h3 class="text-sm font-black text-white">MYスポット一覧</h3>
+            <span id="mySpotsViewCountBadge" class="text-[11px] px-2 py-0.2 rounded-full bg-amber-400/20 text-amber-300 font-bold border border-amber-400/30">0地点</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-0.5 truncate">登録スポットの夜間新雪・積雪・雪質を一目で比較</p>
+        </div>
+      </div>
+      <button type="button" onclick="openSearchModal()" class="px-2.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow-sm transition active:scale-95 flex items-center gap-1 shrink-0">
+        <i class="fa-solid fa-plus text-[11px]"></i>
+        <span>追加</span>
+      </button>
+    </div>
+
+    <div id="mySpotsListContainer" class="space-y-3">
       <!-- JSで動的生成 -->
     </div>
   </main>
@@ -2962,55 +2978,178 @@
       }, 2500);
     }
 
+    // MYスポット画面からの★トグル（イベント伝播停止）
+    function toggleFavFromMyPoints(event, spotId) {
+      if (event) event.stopPropagation();
+      const idx = favorites.indexOf(spotId);
+      if (idx > -1) {
+        favorites.splice(idx, 1);
+        showToast('⭐ MYスポットから解除しました');
+      } else {
+        favorites.push(spotId);
+        showToast('⭐ MYスポットに追加しました');
+      }
+      localStorage.setItem('snow_base_favs', JSON.stringify(favorites));
+      updateFavButtonUI();
+      renderSpotPills();
+      updateBottomNavBadges();
+      renderMySpotsTab();
+    }
+
     function renderMySpotsTab() {
       const container = document.getElementById('mySpotsListContainer');
+      const countBadge = document.getElementById('mySpotsViewCountBadge');
+      if (!container) return;
       container.innerHTML = '';
 
-      if (favorites.length === 0) {
-        container.innerHTML = '<div class="text-center py-10 text-slate-400 text-xs">まだお気に入りスポットがありません。<br>ヒーローカード右上の★ボタンから登録できます。</div>';
+      if (!appData || !appData.spots) return;
+
+      const validFavSpots = appData.spots.filter(s => favorites.includes(s.id));
+      if (countBadge) {
+        countBadge.textContent = `${validFavSpots.length}地点`;
+      }
+
+      if (validFavSpots.length === 0) {
+        container.innerHTML = `
+          <div class="snow-card rounded-2xl p-6 text-center border border-slate-700/60 space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 text-amber-400 flex items-center justify-center mx-auto text-xl">
+              <i class="fa-regular fa-star"></i>
+            </div>
+            <div class="space-y-1">
+              <h4 class="text-sm font-black text-white">MYスポットがまだ登録されていません</h4>
+              <p class="text-xs text-slate-400 leading-relaxed">ホーム画面のスポット名横にある「★」マークをタップするか、下のボタンからよく行くゲレンデ・BC山を登録すると、ここで一括比較できます。</p>
+            </div>
+            <button type="button" onclick="openSearchModal()" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow-sm transition inline-flex items-center gap-1.5 active:scale-95">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>全国スポットから検索して追加</span>
+            </button>
+          </div>
+        `;
         return;
       }
 
-      const favSpots = appData.spots.filter(s => favorites.includes(s.id));
-      favSpots.forEach(s => {
-        const nightSnow = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(s) : 0;
+      const jstNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
+      const todayStr = jstNow.toISOString().slice(0, 10);
+      const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+
+      validFavSpots.forEach(s => {
+        const nightVal = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(s) : 0;
         const isBC = s.category === 'bc';
         const catBadge = isBC
           ? '<span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold shrink-0 whitespace-nowrap">⛰️BC山</span>'
           : '<span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold shrink-0 whitespace-nowrap">🏂スキー場</span>';
 
-        const weatherIcon = (s.current && s.current.weatherInfo && s.current.weatherInfo.icon) ? s.current.weatherInfo.icon : '❄️';
+        const wInfo = (s.current && s.current.weatherInfo) ? s.current.weatherInfo : (typeof getWeatherInfo === 'function' ? getWeatherInfo(s.current.weatherCode || 0) : { text: '晴れ', icon: '☀️' });
         const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
-        const depth = (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : '--';
+        const scoreRank = (s.current && s.current.rank) ? s.current.rank : (score !== null ? '積雪不足' : '―');
+        const topDepth = (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : '--';
+        const baseDepth = (s.current && typeof s.current.baseSnowDepth === 'number') ? s.current.baseSnowDepth : '--';
+        const topTemp = (s.current && typeof s.current.topTemp === 'number') ? s.current.topTemp : '--';
+        const windSpeed = (s.current && typeof s.current.windSpeed === 'number') ? s.current.windSpeed : '--';
         const tagStr = (s.current && s.current.tag) ? s.current.tag : '';
 
+        // 今後3日間の降雪ミニ予報
+        const next3Days = (s.dailySummary || []).filter(d => d.date >= todayStr).slice(0, 3);
+        const daysGridHtml = next3Days.map((d, dIdx) => {
+          const dObj = new Date(d.date + 'T00:00:00+09:00');
+          const dow = weekdays[dObj.getDay()] || '';
+          const dayLabel = dIdx === 0 ? '今日' : (dIdx === 1 ? '明日' : `${d.date.slice(5).replace('-', '/')}(${dow})`);
+          const dNight = (s.nightSnowByDate && s.nightSnowByDate[`${d.date}T06:00`] !== undefined)
+            ? s.nightSnowByDate[`${d.date}T06:00`]
+            : 0;
+          const isHeavyNight = dNight >= 10;
+
+          return `
+            <div class="rounded-xl p-2 text-center border ${isHeavyNight ? 'bg-sky-950/60 border-sky-500/50' : 'bg-slate-950/60 border-slate-800/90'}">
+              <div class="flex items-center justify-center gap-1 text-[11px] font-bold ${dIdx === 0 ? 'text-amber-300' : 'text-slate-300'}">
+                <span>${dayLabel}</span>
+                <span>${d.weatherIcon || '❄️'}</span>
+              </div>
+              <div class="mt-1 text-xs font-black ${isHeavyNight ? 'text-cyan-300' : (dNight > 0 ? 'text-sky-300' : 'text-slate-400')} whitespace-nowrap">
+                🌙 +${dNight}cm
+              </div>
+              <div class="text-[10.5px] text-slate-400 font-medium whitespace-nowrap mt-0.5">
+                1日 +${d.totalSnowfall || 0}cm
+              </div>
+            </div>
+          `;
+        }).join('');
+
         const card = document.createElement('div');
-        card.className = "snow-card rounded-xl p-3 flex items-center justify-between gap-2.5 border border-slate-700/60 active:scale-98 transition cursor-pointer hover:border-slate-600";
         card.onclick = () => selectSpotFromMap(s.id);
+        card.className = "snow-card rounded-2xl p-3.5 border border-slate-700/70 hover:border-sky-400/70 bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/30 shadow-md cursor-pointer active:scale-[0.99] transition space-y-2.5";
 
         card.innerHTML = `
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
-              ${catBadge}
+          <!-- 上段: スポット基本情報 ＋ スコア ＋ ★解除ボタン -->
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
+                ${catBadge}
+              </div>
+              <div class="flex items-center gap-1.5 mt-1">
+                <span class="text-xs shrink-0">${wInfo.icon}</span>
+                <h4 class="text-sm sm:text-base font-black text-white truncate">${s.name}</h4>
+              </div>
+              ${tagStr ? `<div class="mt-1"><span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-sky-300 border border-slate-700/80 whitespace-nowrap">${tagStr}</span></div>` : ''}
             </div>
-            <div class="flex items-center gap-1.5 mt-1">
-              <span class="text-xs shrink-0">${weatherIcon}</span>
-              <span class="text-sm font-bold text-white truncate">${s.name}</span>
-            </div>
-            <div class="text-[11px] text-slate-400 mt-1 flex items-center flex-wrap gap-x-2 gap-y-0.5">
-              <span>積雪 <strong class="text-slate-200">${depth}cm</strong></span>
-              <span>スコア <strong class="${score !== null ? 'text-sky-300' : 'text-slate-400'}">${score !== null ? score + '点' : '―'}</strong></span>
-              ${tagStr ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700/80 whitespace-nowrap">${tagStr}</span>` : ''}
+            <div class="flex items-center gap-2 shrink-0">
+              <div class="text-right flex flex-col items-end">
+                <div class="flex items-baseline justify-end gap-0.5">
+                  <span class="font-teko text-2xl font-black ${score !== null ? 'text-sky-400' : 'text-slate-500'} leading-none">${score !== null ? score : '―'}</span>
+                  ${score !== null ? '<span class="text-xs font-bold text-sky-400">点</span>' : ''}
+                </div>
+                <span class="text-[10.5px] font-bold px-1.5 py-0.2 rounded mt-0.5 ${score !== null ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${scoreRank}</span>
+              </div>
+              <button type="button" onclick="toggleFavFromMyPoints(event, '${s.id}')" class="w-8 h-8 rounded-full bg-amber-400/10 hover:bg-amber-400/20 text-amber-400 border border-amber-400/30 flex items-center justify-center transition active:scale-90" title="MYスポット解除">
+                <i class="fa-solid fa-star text-xs"></i>
+              </button>
             </div>
           </div>
-          <div class="text-right shrink-0 flex items-center gap-2">
-            <div>
-              <div class="text-[10px] text-slate-400">🌙夜間新雪</div>
-              <div class="font-teko text-2xl font-black ${nightSnow > 0 ? 'text-cyan-300' : 'text-slate-400'} leading-none">+${nightSnow}<span class="text-xs ml-0.5">cm</span></div>
+
+          <!-- 中段: 2カラム主要状況比較BOX（サーフベース準拠） -->
+          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800/80 text-xs">
+            <div class="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800 flex flex-col justify-between gap-1">
+              <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold">
+                <span>🌙 夜間新雪</span>
+                <span class="text-[10px] text-slate-500">18-06時</span>
+              </div>
+              <div class="flex items-baseline gap-1.5">
+                <span class="font-teko text-2xl font-black ${nightVal > 0 ? 'text-cyan-300' : 'text-slate-400'} leading-none">+${nightVal}</span>
+                <span class="text-xs text-slate-400">cm</span>
+              </div>
+              <div class="text-[10.5px] text-slate-400 border-t border-slate-800/70 pt-1 mt-0.5">
+                積雪深: <strong class="text-slate-200">${topDepth}</strong> / ${baseDepth}cm
+              </div>
             </div>
-            <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+
+            <div class="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800 flex flex-col justify-between gap-1">
+              <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold">
+                <span>🏔️ 気象・山頂</span>
+                <span class="text-[10px] text-slate-400 font-normal">${wInfo.text || ''}</span>
+              </div>
+              <div class="flex items-baseline gap-1.5">
+                <span class="font-teko text-2xl font-black ${topTemp !== '--' && Number(topTemp) <= 0 ? 'text-sky-300' : 'text-slate-200'} leading-none">${topTemp}</span>
+                <span class="text-xs text-slate-400">℃</span>
+              </div>
+              <div class="text-[10.5px] text-slate-400 border-t border-slate-800/70 pt-1 mt-0.5">
+                風速: <strong class="text-slate-200">${windSpeed}</strong> m/s
+              </div>
+            </div>
           </div>
+
+          <!-- 下段: 今後3日間の降雪ミニ予報グリッド -->
+          ${next3Days.length > 0 ? `
+            <div class="pt-1">
+              <div class="text-[10.5px] font-bold text-slate-400 mb-1 flex items-center justify-between">
+                <span>今後3日間の降雪・夜間新雪</span>
+                <span class="text-slate-500 text-[10px]">詳細 ➔</span>
+              </div>
+              <div class="grid grid-cols-3 gap-1.5">
+                ${daysGridHtml}
+              </div>
+            </div>
+          ` : ''}
         `;
         container.appendChild(card);
       });
