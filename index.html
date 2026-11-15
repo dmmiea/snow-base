@@ -344,6 +344,32 @@
     </div>
 
     <!-- ===============================
+         みんなのリアル雪レポサマリーカード（サーフベース準拠）
+         =============================== -->
+    <div id="homeReportCard" class="snow-card rounded-2xl p-3 border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-slate-900 to-sky-950/30 shadow-sm flex items-center justify-between">
+      <div class="flex items-center space-x-2.5 min-w-0 pr-1">
+        <div class="w-9 h-9 rounded-xl bg-amber-400/15 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-sm shrink-0">
+          <i class="fa-solid fa-users text-sm"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center space-x-1.5">
+            <span class="text-xs font-bold text-white tracking-wide">REPORT</span>
+            <span id="reportCountBadge" class="text-[11px] bg-amber-400/20 text-amber-300 font-bold px-1.5 py-0.2 rounded-full border border-amber-400/30">0件</span>
+          </div>
+          <div class="text-[11.5px] text-slate-400 mt-0.5 flex items-center gap-2 truncate">
+            <span>評価: <strong id="userAvgRate" class="text-amber-300 font-bold">未報告</strong></span>
+            <span class="truncate">雪質: <strong id="userAvgSnow" class="text-slate-200 font-bold">—</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="openReportModal()" class="py-2 px-3 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-sky-500/20 active:scale-95 transition flex items-center gap-1.5 shrink-0">
+        <i class="fa-solid fa-plus text-xs"></i>
+        <span>REPORT</span>
+      </button>
+    </div>
+
+    <!-- ===============================
          TREND CHART (実績＋予報シームレス連結)
          =============================== -->
     <div class="snow-card rounded-2xl p-4">
@@ -513,15 +539,11 @@
 
   <!-- TAB 4: 統合フィード（登録スポット速報 ＆ 雪レポ） -->
   <main id="tabFeed" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3.5 hidden">
-    <div class="flex items-center justify-between">
-      <h2 class="text-sm font-bold text-white flex items-center gap-1.5">
+    <div class="flex items-center justify-between px-1">
+      <h2 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
         <i class="fa-solid fa-rss text-sky-400"></i>
-        <span>全国最新フィード</span>
+        <span>全国最新雪レポフィード</span>
       </h2>
-      <button onclick="openReportModal()" class="px-3 py-1.5 rounded-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs flex items-center gap-1 shadow-md shadow-sky-500/20 active:scale-95">
-        <i class="fa-solid fa-pen"></i>
-        <span>雪レポ投稿</span>
-      </button>
     </div>
     <div id="feedListContainer" class="space-y-3">
       <!-- JSで動的生成 -->
@@ -538,6 +560,14 @@
       <!-- JSで動的生成 -->
     </div>
   </main>
+
+  <!-- ===============================
+       ホーム画面右下：スマート追従「雪レポ投稿ボタン（FAB）」（サーフベース準拠）
+       =============================== -->
+  <button type="button" id="floatingReportFab" onclick="openReportModal()" class="fixed right-3.5 z-40 py-2.5 px-3.5 rounded-full bg-gradient-to-r from-sky-600 to-blue-600 text-white font-bold text-xs shadow-lg shadow-sky-600/30 border border-sky-400/40 flex items-center gap-1.5 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none active:scale-95" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 56px);">
+    <i class="fa-solid fa-plus text-xs"></i>
+    <span>REPORT</span>
+  </button>
 
   <!-- ===============================
        BOTTOM NAVIGATION BAR (サーフベース準拠・5等分グリッド)
@@ -597,65 +627,108 @@
   </div>
 
   <!-- ===============================
-       MODAL: 雪レポ投稿
+       MODAL: 雪レポ投稿（サーフベース準拠・クリーンデザイン）
        =============================== -->
-  <div id="modalReport" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
-      <div class="p-3 border-b border-slate-800 flex items-center justify-between">
-        <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
-          <i class="fa-solid fa-pen-to-square text-sky-400"></i>
-          <span>雪レポを投稿</span>
-        </h3>
-        <button onclick="closeReportModal()" class="text-slate-400 hover:text-white p-1">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="p-4 overflow-y-auto space-y-3 text-xs">
-        <div>
-          <label class="block text-slate-400 font-bold mb-1">滑走スポット</label>
-          <div id="reportSpotLabel" class="font-bold text-white bg-slate-800 px-3 py-2 rounded-lg border border-slate-700">--</div>
-        </div>
-        <div>
-          <label class="block text-slate-400 font-bold mb-1">体感満足度</label>
-          <div class="flex gap-2" id="reportRatingStars">
-            <button type="button" onclick="setReportRating(1)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
-            <button type="button" onclick="setReportRating(2)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
-            <button type="button" onclick="setReportRating(3)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
-            <button type="button" onclick="setReportRating(4)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
-            <button type="button" onclick="setReportRating(5)" class="text-xl text-amber-400"><i class="fa-solid fa-star"></i></button>
+  <div id="modalReport" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3.5">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-md max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+      <!-- ヘッダー -->
+      <div class="p-3.5 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center border border-sky-500/30">
+            <i class="fa-solid fa-pen-to-square text-sm"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-white">雪レポート登録</h3>
+            <p class="text-[11px] text-slate-400">現地のリアルな雪質・コンディションを共有</p>
           </div>
         </div>
+        <button onclick="closeReportModal()" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center border border-slate-700 transition">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+
+      <!-- スクロール入力ボディ -->
+      <div class="p-4 overflow-y-auto space-y-3.5 text-xs">
+        <!-- 1. 滑走スポット選択（変更可能） -->
         <div>
-          <label class="block text-slate-400 font-bold mb-1">雪質・バーン状況</label>
-          <select id="reportSnowType" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-bold">
-            <option value="極上ドライパウダー">❄️ 極上ドライパウダー (浮遊感)</option>
-            <option value="底付き注意パウダー">⚠️ 底付きパウダー (下層硬め)</option>
-            <option value="上質圧雪">⛷️ 上質コーデュロイ圧雪 (カービング)</option>
-            <option value="硬め・アイスバーン">🧊 硬め・アイスバーン (エッジ注意)</option>
-            <option value="湿雪・重パウ">🌨️ 湿雪・重パウ</option>
-            <option value="春ザラメ・シャバ雪">☀️ 春ザラメ・シャバ雪</option>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-slate-300 font-bold">滑走スポット</label>
+            <span class="text-[11px] text-slate-400">タップして変更可能</span>
+          </div>
+          <div class="relative">
+            <select id="reportSpotSelect" onchange="onReportSpotChange(this.value)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none focus:border-sky-500 appearance-none pr-8">
+              <!-- JSで動的生成 -->
+            </select>
+            <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-xs">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 滑走時間帯（チップ選択） -->
+        <div>
+          <label class="block text-slate-300 font-bold mb-1.5">滑走時間帯</label>
+          <div class="grid grid-cols-4 gap-1.5" id="reportTimeSlotGroup">
+            <button type="button" onclick="setReportTimeSlot('朝イチ')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition" data-slot="朝イチ">朝イチ</button>
+            <button type="button" onclick="setReportTimeSlot('午前')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition" data-slot="午前">午前</button>
+            <button type="button" onclick="setReportTimeSlot('午後')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition" data-slot="午後">午後</button>
+            <button type="button" onclick="setReportTimeSlot('ナイター')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition" data-slot="ナイター">ナイター</button>
+          </div>
+        </div>
+
+        <!-- 3. 体感満足度（★1〜5） -->
+        <div>
+          <label class="block text-slate-300 font-bold mb-1">体感満足度</label>
+          <div class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-2 rounded-xl border border-slate-700" id="reportRatingStars">
+            <button type="button" onclick="setReportRating(1)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(2)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(3)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(4)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(5)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <span id="reportRatingLabel" class="text-xs font-bold text-amber-300 ml-2">5点 (最高)</span>
+          </div>
+        </div>
+
+        <!-- 4. 雪質・バーン状況（絵文字なしクリーン選択） -->
+        <div>
+          <label class="block text-slate-300 font-bold mb-1">雪質・バーン状況</label>
+          <select id="reportSnowType" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none focus:border-sky-500">
+            <option value="極上ドライパウダー">極上ドライパウダー (浮遊感)</option>
+            <option value="底付き注意パウダー">底付きパウダー (下層硬め)</option>
+            <option value="上質コーデュロイ圧雪">上質コーデュロイ圧雪 (カービング)</option>
+            <option value="硬め・アイスバーン">硬め・アイスバーン (エッジ注意)</option>
+            <option value="湿雪・重雪">湿雪・重雪 (重パウ)</option>
+            <option value="春ザラメ・シャバ雪">春ザラメ・シャバ雪</option>
           </select>
         </div>
+
+        <!-- 5. 新雪の深さ（絵文字なしクリーン選択） -->
         <div>
-          <label class="block text-slate-400 font-bold mb-1">新雪の深さ</label>
-          <select id="reportSnowDepth" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white font-bold">
-            <option value="なし">新雪なし (圧雪バーン)</option>
+          <label class="block text-slate-300 font-bold mb-1">新雪の深さ</label>
+          <select id="reportSnowDepth" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none focus:border-sky-500">
+            <option value="なし">新雪なし (圧雪)</option>
             <option value="くるぶし (5〜10cm)">くるぶし (5〜10cm)</option>
             <option value="すね (10〜20cm)">すね (10〜20cm)</option>
-            <option value="ひざ (20〜40cm)">ひざ (20〜40cm) ❄️</option>
-            <option value="もも・腰 (40〜70cm)">もも・腰 (40〜70cm) ❄️❄️</option>
-            <option value="オーバーヘッド (70cm+)">オーバーヘッド (70cm+) 🚀</option>
+            <option value="ひざ (20〜40cm)">ひざ (20〜40cm)</option>
+            <option value="もも・腰 (40〜70cm)">もも・腰 (40〜70cm)</option>
+            <option value="オーバーヘッド (70cm+)">オーバーヘッド (70cm+)</option>
           </select>
         </div>
+
+        <!-- 6. 現地の様子・コメント -->
         <div>
-          <label class="block text-slate-400 font-bold mb-1">現地の様子・コメント</label>
-          <textarea id="reportComment" rows="3" placeholder="コース状況、おすすめワックス、混雑具合、視界など..." class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"></textarea>
+          <label class="block text-slate-300 font-bold mb-1">現地のひとことメモ（任意）</label>
+          <textarea id="reportComment" rows="2" maxlength="120" placeholder="例: 朝イチの非圧雪コースが軽く、視界も良好でした" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 text-xs"></textarea>
         </div>
-        <div>
-          <button type="button" onclick="submitReport()" class="w-full py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-sm shadow-lg shadow-sky-500/20 active:scale-95 transition">
-            雪レポを投稿する
-          </button>
-        </div>
+      </div>
+
+      <!-- 送信フッター -->
+      <div class="p-3.5 border-t border-slate-800 bg-slate-900/90">
+        <button type="button" onclick="submitReport()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-black text-xs shadow-lg shadow-sky-500/25 active:scale-95 transition flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
+          <span>雪レポを登録する</span>
+        </button>
+        <p class="text-[11px] text-center text-slate-500 mt-1.5">※全国のスキーヤー・スノーボーダーと即座にリアルタイム共有されます</p>
       </div>
     </div>
   </div>
@@ -677,7 +750,9 @@
     let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
     let isFavMode = false;
     let currentRating = 5;
+    let currentReportSlot = '朝イチ';
     let currentTab = 'home';
+    let isHomeReportCardInView = true;
     let currentAreasSubView = 'list'; // 'list' | 'ranking'
     let areasRegionFilter = 'all';
     let areasCategoryFilter = 'ski'; // 'ski' | 'bc'
@@ -847,6 +922,7 @@
         switchTab(initTab);
       }
       updateBottomNavBadges();
+      initSmartReportFabObserver();
     }
 
     // カテゴリ切替 (スキー場 / BC)
@@ -1175,6 +1251,9 @@
 
       // 週間予報描画
       renderWeeklyForecast(spot);
+
+      // ホーム画面の雪レポサマリー更新
+      updateHomeReportSummary(spot);
     }
 
     // 風向角度(0〜360)を8方位日本語に変換
@@ -1756,6 +1835,9 @@
       } else if (tabId === 'mySpots') {
         renderMySpotsTab();
       }
+
+      // スマート追従FABの表示切り替え（サーフベース準拠）
+      updateFloatingReportFabVisibility();
     }
 
     // フィード既読・ボトムナビバッジ管理 (サーフベース準拠)
@@ -2428,66 +2510,193 @@
           spotId: "happo",
           spotName: "白馬八方尾根スキー場",
           rating: 5,
-          snowType: "❄️ 極上ドライパウダー",
+          timeSlot: "朝イチ",
+          snowType: "極上ドライパウダー",
           snowDepth: "すね (10〜20cm)",
-          comment: "朝イチ黒菱ゲレンデ最高でした！気温-8度で完全リセット。面ツル浮遊感抜群。",
+          comment: "朝イチ黒菱ゲレンデ最高でした。気温-8度で完全リセット、浮遊感抜群。",
           time: "本日 08:45"
         },
         {
           spotId: "hirafu",
           spotName: "ニセコ東急 グラン・ヒラフ",
           rating: 5,
-          snowType: "❄️ 極上ドライパウダー",
+          timeSlot: "午前",
+          snowType: "極上ドライパウダー",
           snowDepth: "もも・腰 (40〜70cm)",
-          comment: "花園ツリーラン深すぎ注意！底付き一切なしの神パウです。",
+          comment: "花園ツリーラン深すぎ注意。底付き一切なしの極上パウダーです。",
           time: "本日 09:15"
         }
       ]);
 
       displayList.forEach(r => {
         const item = document.createElement('div');
-        item.className = "snow-card rounded-xl p-3 border border-slate-700/60 space-y-1.5 transition hover:border-slate-600";
+        item.className = "snow-card rounded-2xl p-3.5 border border-slate-700/60 space-y-2 transition hover:border-slate-600 bg-slate-900/90 shadow-md";
         
         let starsHtml = '';
         for (let i = 0; i < 5; i++) {
           starsHtml += `<i class="fa-solid fa-star ${i < r.rating ? 'text-amber-400' : 'text-slate-600'} text-xs"></i>`;
         }
 
+        const slotHtml = r.timeSlot ? `<span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">${r.timeSlot}</span>` : '';
+        const cleanSnowType = (r.snowType || '極上パウダー').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
+        const cleanSnowDepth = (r.snowDepth || 'すね').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
+
         item.innerHTML = `
-          <div class="flex items-start justify-between">
-            <div>
-              <div class="font-bold text-sm text-white flex items-center gap-1.5 ${r.spotId ? 'cursor-pointer hover:text-sky-300' : ''}" ${r.spotId ? `onclick="selectSpotFromMap('${r.spotId}')"` : ''}>
-                <span>${r.spotName}</span>
-                <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0">
+              <div class="font-bold text-sm text-white flex items-center gap-1.5 truncate ${r.spotId ? 'cursor-pointer hover:text-sky-300' : ''}" ${r.spotId ? `onclick="selectSpotFromMap('${r.spotId}')"` : ''}>
+                <span class="truncate">${r.spotName}</span>
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
               </div>
-              <div class="flex items-center gap-2 mt-0.5">
-                <div class="flex">${starsHtml}</div>
-                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800">${r.snowType}</span>
+              <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+                <div class="flex shrink-0">${starsHtml}</div>
+                ${slotHtml}
+                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700">${cleanSnowType}</span>
               </div>
             </div>
-            <span class="text-[11px] text-slate-400">${r.time || '本日'}</span>
+            <span class="text-[11px] text-slate-400 shrink-0 font-medium">${r.time || '本日'}</span>
           </div>
-          <div class="text-xs text-slate-300 pt-1 leading-relaxed">${r.comment}</div>
-          <div class="text-[11px] text-slate-400 flex items-center gap-1 pt-0.5">
-            <i class="fa-solid fa-ruler-vertical text-sky-400"></i>
-            <span>体感新雪: <b class="text-slate-200">${r.snowDepth}</b></span>
+          ${r.comment ? `<div class="text-xs text-slate-200 leading-relaxed bg-slate-950/40 p-2 rounded-xl border border-slate-800/80">${r.comment}</div>` : ''}
+          <div class="text-[11px] text-slate-400 flex items-center justify-between pt-0.5 border-t border-slate-800/60">
+            <span class="flex items-center gap-1">
+              <i class="fa-solid fa-ruler-vertical text-sky-400"></i>
+              <span>新雪深さ: <b class="text-slate-200">${cleanSnowDepth}</b></span>
+            </span>
+            ${r.spotId ? `<button onclick="selectSpotFromMap('${r.spotId}')" class="text-sky-400 font-bold hover:underline flex items-center gap-0.5">詳細を見る <i class="fa-solid fa-chevron-right text-[10px]"></i></button>` : ''}
           </div>
         `;
         container.appendChild(item);
       });
     }
 
-    // 雪レポ投稿モーダル
+    // ホーム画面の雪レポサマリー更新（本日分集計・サーフベース準拠）
+    function updateHomeReportSummary(spot) {
+      if (!spot) return;
+      const repBadge = document.getElementById('reportCountBadge');
+      const repRate = document.getElementById('userAvgRate');
+      const repSnow = document.getElementById('userAvgSnow');
+      if (!repBadge || !repRate || !repSnow) return;
+
+      const allReports = [...snowReports, ...localReports];
+      const spotReports = allReports.filter(r => r.spotId === spot.id);
+
+      repBadge.textContent = `${spotReports.length}件`;
+      if (spotReports.length > 0) {
+        let totalStars = 0;
+        const snowCounts = {};
+        spotReports.forEach(r => {
+          totalStars += (Number(r.rating) || 5);
+          const st = (r.snowType || '').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
+          if (st) snowCounts[st] = (snowCounts[st] || 0) + 1;
+        });
+        const avg = (totalStars / spotReports.length).toFixed(1);
+        repRate.textContent = `★ ${avg}`;
+        repRate.className = "text-amber-300 font-bold";
+
+        const topSnow = Object.entries(snowCounts).sort((a, b) => b[1] - a[1])[0];
+        repSnow.textContent = topSnow ? topSnow[0] : 'パウダー良好';
+      } else {
+        repRate.textContent = '未報告';
+        repRate.className = "text-slate-500 font-medium";
+        repSnow.textContent = '—';
+      }
+    }
+
+    // スマート追従「雪レポ投稿ボタン（FAB）」制御（サーフベース準拠）
+    function updateFloatingReportFabVisibility() {
+      const fab = document.getElementById('floatingReportFab');
+      if (!fab) return;
+      const shouldShow = (currentTab === 'feed') || (currentTab === 'home' && !isHomeReportCardInView);
+      if (shouldShow) {
+        fab.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+        fab.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      } else {
+        fab.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+        fab.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      }
+    }
+
+    function initSmartReportFabObserver() {
+      const targetCard = document.getElementById('homeReportCard');
+      if (!targetCard || !('IntersectionObserver' in window)) return;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (currentTab !== 'home') return;
+          isHomeReportCardInView = entry.isIntersecting;
+          updateFloatingReportFabVisibility();
+        });
+      }, {
+        root: null,
+        rootMargin: '-100px 0px -56px 0px',
+        threshold: 0.05
+      });
+      observer.observe(targetCard);
+    }
+
+    // 雪レポ投稿モーダル制御
+    function populateReportSpotSelect(selectedId) {
+      const select = document.getElementById('reportSpotSelect');
+      if (!select || !appData || !appData.spots) return;
+      select.innerHTML = '';
+
+      // 現在選択中や登録スポットを優先、カテゴリ・地域ごとに整列
+      const spots = [...appData.spots].sort((a, b) => a.name.localeCompare(b.name, 'ja'));
+      spots.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        const catLabel = s.category === 'bc' ? '[BC]' : '[スキー場]';
+        const areaLabel = s.areaName || s.regionName || '';
+        opt.textContent = `${s.name} ${catLabel} (${areaLabel})`;
+        if (s.id === selectedId) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function onReportSpotChange(newSpotId) {
+      // ユーザーがモーダル内でスポットを切り替えた時の同期
+      currentSpotId = newSpotId;
+    }
+
+    function setReportTimeSlot(slot) {
+      currentReportSlot = slot;
+      const btns = document.querySelectorAll('.report-slot-btn');
+      btns.forEach(btn => {
+        if (btn.dataset.slot === slot) {
+          btn.className = "report-slot-btn py-1.5 rounded-lg text-xs font-black border border-sky-400 bg-sky-500 text-slate-950 shadow transition";
+        } else {
+          btn.className = "report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition";
+        }
+      });
+    }
+
     function openReportModal() {
-      const spot = appData.spots.find(s => s.id === currentSpotId);
-      document.getElementById('reportSpotLabel').textContent = spot ? spot.name : '選択中のスポット';
-      document.getElementById('modalReport').classList.remove('hidden');
-      document.getElementById('modalReport').classList.add('flex');
+      const spot = appData ? appData.spots.find(s => s.id === currentSpotId) : null;
+      populateReportSpotSelect(spot ? spot.id : currentSpotId);
+
+      // 時間帯の初期選択（現在時刻から自動推測）
+      const jstHour = (new Date(Date.now() + 9 * 3600000)).getUTCHours();
+      let autoSlot = '朝イチ';
+      if (jstHour >= 6 && jstHour < 10) autoSlot = '朝イチ';
+      else if (jstHour >= 10 && jstHour < 13) autoSlot = '午前';
+      else if (jstHour >= 13 && jstHour < 17) autoSlot = '午後';
+      else autoSlot = 'ナイター';
+      setReportTimeSlot(autoSlot);
+
+      setReportRating(5);
+
+      const modal = document.getElementById('modalReport');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
     }
 
     function closeReportModal() {
-      document.getElementById('modalReport').classList.add('hidden');
-      document.getElementById('modalReport').classList.remove('flex');
+      const modal = document.getElementById('modalReport');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
     }
 
     function setReportRating(stars) {
@@ -2500,32 +2709,41 @@
           btn.className = "fa-regular fa-star text-slate-600";
         }
       });
+      const label = document.getElementById('reportRatingLabel');
+      if (label) {
+        const ratingTexts = {
+          1: '1点 (かなり厳しい)',
+          2: '2点 (イマイチ)',
+          3: '3点 (普通・楽しめる)',
+          4: '4点 (良いコンディション)',
+          5: '5点 (最高！浮遊感/面ツル)'
+        };
+        label.textContent = ratingTexts[stars] || `${stars}点`;
+      }
     }
 
     async function submitReport() {
-      const spot = appData.spots.find(s => s.id === currentSpotId);
+      const select = document.getElementById('reportSpotSelect');
+      const chosenSpotId = select ? select.value : currentSpotId;
+      const spot = appData ? appData.spots.find(s => s.id === chosenSpotId) : null;
       const snowType = document.getElementById('reportSnowType').value;
       const snowDepth = document.getElementById('reportSnowDepth').value;
       const comment = document.getElementById('reportComment').value.trim();
 
-      if (!comment) {
-        alert('現地の様子やコメントを入力してください');
-        return;
-      }
-
       const submitBtn = document.querySelector('#modalReport button[onclick="submitReport()"]');
-      const origText = submitBtn ? submitBtn.innerText : '雪レポを投稿する';
+      const origText = submitBtn ? submitBtn.innerHTML : '<span>雪レポを登録する</span>';
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerText = '送信中...';
+        submitBtn.innerHTML = '<span>送信中...</span>';
       }
 
       const newReportData = {
-        spotId: spot ? spot.id : currentSpotId,
+        spotId: spot ? spot.id : chosenSpotId,
         spotName: spot ? spot.name : '雪山スポット',
         category: spot ? spot.category : 'ski',
         region: spot ? spot.region : '',
         rating: currentRating,
+        timeSlot: currentReportSlot,
         snowType,
         snowDepth,
         comment,
@@ -2541,11 +2759,12 @@
           localReports.unshift(fallbackItem);
           localStorage.setItem('snow_base_reports', JSON.stringify(localReports));
           renderFeedTab();
+          if (spot) updateHomeReportSummary(spot);
         }
 
         closeReportModal();
         document.getElementById('reportComment').value = '';
-        alert('雪レポを投稿しました！ありがとうございます！全国にリアルタイム共有されました。');
+        alert(`【雪レポ登録完了】\n${spot ? spot.name : '雪山スポット'}\n${currentReportSlot} / ${snowType}\n\nレポートありがとうございます！全国のスキーヤー・スノーボーダーとリアルタイム共有されました。`);
       } catch (err) {
         console.warn('⚠️ Firestore send failed, falling back to local storage:', err);
         const fallbackItem = { ...newReportData, time: 'たった今' };
@@ -2553,12 +2772,13 @@
         localStorage.setItem('snow_base_reports', JSON.stringify(localReports));
         closeReportModal();
         document.getElementById('reportComment').value = '';
-        alert('雪レポを投稿しました！（オフライン保持）');
+        alert('雪レポを登録しました！（オフライン保持）');
         renderFeedTab();
+        if (spot) updateHomeReportSummary(spot);
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.innerText = origText;
+          submitBtn.innerHTML = origText;
         }
       }
     }
