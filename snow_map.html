@@ -321,12 +321,12 @@
                 <span class="text-slate-400 text-[10px] block">山頂 積雪深</span>
                 <span class="font-bold text-white font-mono text-base">${topSnow}</span> <span class="text-[10px] text-slate-400">cm</span>
               </div>
-              <div class="col-span-2 pt-1.5 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-                <span class="text-slate-400">標高: ${elev}m</span>
-                <div class="flex items-center gap-1.5">
+              <div class="col-span-2 pt-1.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[11px]">
+                <span class="text-slate-400 whitespace-nowrap">標高: ${elev}m</span>
+                <div class="flex items-center gap-1.5 whitespace-nowrap">
                   <span class="text-slate-400">雪質:</span>
                   <span class="font-bold ${score !== null ? 'text-sky-300' : 'text-slate-500'}">${score !== null ? score + '点' : '―'}</span>
-                  <span class="text-[10px] text-slate-300 px-1 py-0.2 bg-slate-800 rounded border border-slate-700">${tag}</span>
+                  <span class="text-[10px] text-slate-300 px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 whitespace-nowrap">${tag}</span>
                 </div>
               </div>
             </div>
