@@ -2973,19 +2973,43 @@
 
       const favSpots = appData.spots.filter(s => favorites.includes(s.id));
       favSpots.forEach(s => {
+        const nightSnow = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(s) : 0;
+        const isBC = s.category === 'bc';
+        const catBadge = isBC
+          ? '<span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold shrink-0 whitespace-nowrap">⛰️BC山</span>'
+          : '<span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold shrink-0 whitespace-nowrap">🏂スキー場</span>';
+
+        const weatherIcon = (s.current && s.current.weatherInfo && s.current.weatherInfo.icon) ? s.current.weatherInfo.icon : '❄️';
+        const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
+        const depth = (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : '--';
+        const tagStr = (s.current && s.current.tag) ? s.current.tag : '';
+
         const card = document.createElement('div');
-        card.className = "snow-card rounded-xl p-3 flex items-center justify-between border border-slate-700/60 active:scale-98 transition cursor-pointer";
+        card.className = "snow-card rounded-xl p-3 flex items-center justify-between gap-2.5 border border-slate-700/60 active:scale-98 transition cursor-pointer hover:border-slate-600";
         card.onclick = () => selectSpotFromMap(s.id);
 
         card.innerHTML = `
-          <div>
-            <div class="text-[11px] text-slate-400 font-bold">${s.areaName || s.regionName}</div>
-            <div class="text-sm font-bold text-white">${s.name}</div>
-            <div class="text-[11px] text-sky-400 mt-0.5">${s.current.tag}</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
+              ${catBadge}
+            </div>
+            <div class="flex items-center gap-1.5 mt-1">
+              <span class="text-xs shrink-0">${weatherIcon}</span>
+              <span class="text-sm font-bold text-white truncate">${s.name}</span>
+            </div>
+            <div class="text-[11px] text-slate-400 mt-1 flex items-center flex-wrap gap-x-2 gap-y-0.5">
+              <span>積雪 <strong class="text-slate-200">${depth}cm</strong></span>
+              <span>スコア <strong class="${score !== null ? 'text-sky-300' : 'text-slate-400'}">${score !== null ? score + '点' : '―'}</strong></span>
+              ${tagStr ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700/80 whitespace-nowrap">${tagStr}</span>` : ''}
+            </div>
           </div>
-          <div class="text-right">
-            <div class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs">点</span>' : ''}</div>
-            <div class="text-[11px] text-slate-300 mt-0.5">トップ: ${s.current.topSnowDepth}cm</div>
+          <div class="text-right shrink-0 flex items-center gap-2">
+            <div>
+              <div class="text-[10px] text-slate-400">🌙夜間新雪</div>
+              <div class="font-teko text-2xl font-black ${nightSnow > 0 ? 'text-cyan-300' : 'text-slate-400'} leading-none">+${nightSnow}<span class="text-xs ml-0.5">cm</span></div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
           </div>
         `;
         container.appendChild(card);
