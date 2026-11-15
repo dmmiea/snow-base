@@ -21,5 +21,8 @@
   "license": "MIT",
   "devDependencies": {
     "wrangler": "^4.159.0"
+  },
+  "dependencies": {
+    "web-push": "^4.0.0"
   }
 }

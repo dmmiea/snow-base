@@ -13,3 +13,4 @@ crawled_all_japan.json
 .env*
 !.env.example
 scratch/
+vapid_keys.json

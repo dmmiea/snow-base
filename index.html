@@ -134,6 +134,12 @@
       </div>
       
       <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+        <!-- プッシュ通知設定ボタン -->
+        <button id="btnNotification" onclick="openNotificationModal()" class="relative w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center justify-center border border-slate-700 active:scale-95 shadow-sm shrink-0" title="雪予報プッシュ通知設定">
+          <i class="fa-regular fa-bell text-sky-400 text-xs sm:text-sm"></i>
+          <span id="notifActiveDot" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-slate-900"></span>
+        </button>
+
         <!-- 検索ボタン -->
         <button id="btnOpenSearch" onclick="openSearchModal()" class="h-8 px-2 sm:px-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-1 text-xs font-bold border border-slate-700 active:scale-95 shadow-sm whitespace-nowrap shrink-0">
           <i class="fa-solid fa-magnifying-glass text-sky-400 text-xs"></i>
@@ -623,6 +629,173 @@
       </button>
     </div>
   </nav>
+
+  <!-- ===============================
+       MODAL: 雪予報プッシュ通知設定（サーフベース準拠・厳選降雪アラート）
+       =============================== -->
+  <div id="notificationModal" onclick="if(event.target===this) closeNotificationModal()" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-5 w-full max-w-lg shadow-2xl space-y-3.5 max-h-[92vh] flex flex-col">
+      <!-- モーダルヘッダー -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center border border-sky-500/30">
+            <i class="fa-solid fa-bell text-sm"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-white">パウダー・降雪プッシュ通知設定</h3>
+            <p class="text-[11px] text-slate-400">設定した新雪量以上が降る時＆週末雪予想だけ自動通知</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeNotificationModal()" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+
+      <!-- スクロール可能ボディ -->
+      <div class="overflow-y-auto space-y-3.5 pr-1 text-xs">
+
+        <!-- iOS PWA ホーム画面追加ガイド -->
+        <div id="iosPwaGuide" style="display: none;" class="p-3 bg-amber-950/50 rounded-2xl border border-amber-500/40 space-y-2">
+          <div class="flex items-center gap-1.5 text-amber-300 font-bold text-xs">
+            <i class="fa-brands fa-apple text-base"></i>
+            <span>iPhoneで通知を受け取る手順</span>
+          </div>
+          <p class="text-[11px] text-amber-100/90 leading-relaxed">
+            iOS Safariの仕様上、プッシュ通知を受信するには本アプリを<strong>「ホーム画面に追加」</strong>して起動する必要があります。
+          </p>
+          <div class="bg-slate-900/80 p-2.5 rounded-xl text-[11px] text-slate-200 space-y-1.5 border border-amber-500/30">
+            <div class="flex items-center gap-2">
+              <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] flex-shrink-0">1</span>
+              <span>画面下部中央の <strong>共有ボタン</strong> <i class="fa-solid fa-arrow-up-from-bracket mx-0.5 text-sky-400"></i> をタップ</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] flex-shrink-0">2</span>
+              <span>メニュー内の <strong>「ホーム画面に追加」</strong> <i class="fa-regular fa-square-plus mx-0.5 text-slate-300"></i> をタップ</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] flex-shrink-0">3</span>
+              <span>ホーム画面の <strong>POWDER BASE アイコン</strong> から起動し、ここで通知をONにする</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 接続ステータス & 有効化カード -->
+        <div class="p-3 bg-slate-800/80 rounded-2xl border border-slate-700/80 flex items-center justify-between gap-2">
+          <div class="space-y-0.5">
+            <span class="text-[11px] text-slate-400 font-medium block">通知ステータス</span>
+            <div id="notifStatusText" class="font-bold text-slate-200 text-xs">確認中...</div>
+          </div>
+          <button type="button" id="btnTogglePush" onclick="togglePushSubscription()" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-sm active:scale-95 transition flex-shrink-0">
+            通知を有効にする
+          </button>
+        </div>
+
+        <!-- テスト通知送信ボタン -->
+        <div id="testNotifContainer" class="hidden flex items-center justify-between p-2.5 bg-emerald-950/50 rounded-2xl border border-emerald-500/40">
+          <div class="flex items-center gap-1.5 text-emerald-300">
+            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+            <span class="text-xs font-bold">通知が接続されています</span>
+          </div>
+          <button type="button" onclick="triggerTestNotification()" class="px-2.5 py-1 bg-slate-900 hover:bg-emerald-950 text-emerald-300 text-xs font-bold rounded-lg border border-emerald-500/50 shadow-sm active:scale-95 transition flex items-center gap-1">
+            <i class="fa-solid fa-paper-plane text-[11px]"></i>
+            <span>テスト通知を試す</span>
+          </button>
+        </div>
+
+        <!-- 降雪しきい値設定 -->
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-snowflake text-sky-400"></i>
+            <span>通知する新雪の基準（この量以上降る時だけ通知）</span>
+          </span>
+          <div class="grid grid-cols-4 gap-1.5 bg-slate-800/70 p-1.5 rounded-2xl border border-slate-700/80">
+            <button type="button" onclick="setNotifThreshold(5)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-300 hover:bg-slate-700" data-threshold="5">+5cm</button>
+            <button type="button" onclick="setNotifThreshold(10)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition bg-sky-500 text-slate-950 shadow" data-threshold="10">+10cm</button>
+            <button type="button" onclick="setNotifThreshold(20)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-300 hover:bg-slate-700" data-threshold="20">+20cm</button>
+            <button type="button" onclick="setNotifThreshold(30)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-300 hover:bg-slate-700" data-threshold="30">+30cm</button>
+          </div>
+        </div>
+
+        <!-- 通知タイミング設定 -->
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+            <i class="fa-regular fa-clock text-sky-400"></i>
+            <span>受信ルール（すべて基準以上の降雪時のみ配信）</span>
+          </span>
+          <div class="grid grid-cols-1 gap-2 bg-slate-800/70 p-3 rounded-2xl border border-slate-700/80">
+            <label class="flex items-center justify-between cursor-pointer py-0.5 gap-2">
+              <div>
+                <span class="text-xs font-bold text-white">🌙 朝のパウダー速報（06:00台）</span>
+                <p class="text-[11px] text-slate-400">今朝の夜間新雪が基準以上積もった朝だけ通知</p>
+              </div>
+              <input type="checkbox" id="timingMorning" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-400 rounded shrink-0">
+            </label>
+            <div class="border-t border-slate-700/60"></div>
+            <label class="flex items-center justify-between cursor-pointer py-0.5 gap-2">
+              <div>
+                <span class="text-xs font-bold text-white">🌨️ 夜の予報アラート（19:00台）</span>
+                <p class="text-[11px] text-slate-400">明朝の新雪、または3日以内に基準以上降る予報時だけ通知</p>
+              </div>
+              <input type="checkbox" id="timingEvening" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-400 rounded shrink-0">
+            </label>
+            <div class="border-t border-slate-700/60"></div>
+            <label class="flex items-center justify-between cursor-pointer py-0.5 gap-2">
+              <div>
+                <span class="text-xs font-bold text-white">📅 週末パウダー予想（木・金 19:00台）</span>
+                <p class="text-[11px] text-slate-400">土日のいずれかで基準以上の降雪予報がある週末だけ通知</p>
+              </div>
+              <input type="checkbox" id="timingWeekend" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-400 rounded shrink-0">
+            </label>
+            <div class="border-t border-slate-700/60"></div>
+            <label class="flex items-center justify-between cursor-pointer py-0.5 gap-2">
+              <div>
+                <span class="text-xs font-bold text-sky-300">🤖 AI全国パウダー大賞</span>
+                <p class="text-[11px] text-slate-400">MYスポット以外でも全国トップ級（+20cm以上）出現時にお知らせ</p>
+              </div>
+              <input type="checkbox" id="chkAutoPickup" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-400 rounded shrink-0">
+            </label>
+          </div>
+        </div>
+
+        <!-- お気に入りスポット通知選択 -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+              <i class="fa-solid fa-location-dot text-rose-400"></i>
+              <span>通知を受け取るスポット</span>
+              <span id="notifSelectedCountBadge" class="text-[11px] px-1.5 py-0.5 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700">0箇所</span>
+            </span>
+            <button type="button" id="btnToggleAllNotif" onclick="toggleAllNotifSpots()" class="text-[11px] text-sky-300 bg-sky-950/70 px-2 py-0.5 rounded-md border border-sky-700/80 hover:bg-sky-900 font-bold transition whitespace-nowrap">
+              MY全選択
+            </button>
+          </div>
+          <!-- 地方フィルターピル -->
+          <div id="notifRegionFilterBar" class="flex items-center gap-1 overflow-x-auto hide-scrollbar py-0.5 text-[11px]">
+            <button type="button" onclick="renderNotifSpotSelector('fav')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-amber-500 text-slate-950 whitespace-nowrap" data-filter="fav">⭐ MYスポット</button>
+            <button type="button" onclick="renderNotifSpotSelector('selected')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="selected">選択中のみ</button>
+            <button type="button" onclick="renderNotifSpotSelector('hokkaido')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="hokkaido">北海道</button>
+            <button type="button" onclick="renderNotifSpotSelector('tohoku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="tohoku">東北</button>
+            <button type="button" onclick="renderNotifSpotSelector('shinetsu')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="shinetsu">信越</button>
+            <button type="button" onclick="renderNotifSpotSelector('hokuriku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="hokuriku">北陸</button>
+            <button type="button" onclick="renderNotifSpotSelector('kanto')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="kanto">関東</button>
+            <button type="button" onclick="renderNotifSpotSelector('tokai')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="tokai">東海</button>
+            <button type="button" onclick="renderNotifSpotSelector('kansai')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="kansai">関西</button>
+            <button type="button" onclick="renderNotifSpotSelector('chugoku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="chugoku">中国</button>
+          </div>
+          <div id="notifSpotList" class="flex flex-wrap gap-1.5 p-2.5 bg-slate-800/70 rounded-2xl border border-slate-700/80 max-h-40 overflow-y-auto">
+            <!-- JSで動的生成 -->
+          </div>
+        </div>
+
+        <!-- 保存完了フィードバックアラート -->
+        <div id="notifAutoSaveAlert" class="hidden p-2.5 rounded-xl bg-emerald-950/60 text-emerald-300 text-xs font-bold border border-emerald-500/40 flex items-center gap-1.5">
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+          <span>通知設定を保存しました</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- ===============================
        MODAL: 高速スポット検索
@@ -3191,11 +3364,371 @@
       });
     }
 
-    // PWA Service Worker 登録
+    // ===============================
+    // Web Push 通知管理（VAPID + Firestore）
+    // ===============================
+    const VAPID_PUBLIC_KEY = 'BOm5Tz8kGTzgCgr5bI2HaFk1fO57GYDOEdypkEQEzom26ARV6KHLCcyy7qlq8RCT5nKIv6PkfTpOr0CNECneSCs';
+    const NOTIF_STORAGE_KEY = 'powder_notif_settings';
+    let currentNotifFilter = 'fav';
+    let notifSaveTimer = null;
+
+    function loadNotifSettings() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(NOTIF_STORAGE_KEY) || 'null');
+        if (saved) return saved;
+      } catch (e) {}
+      return {
+        thresholdCm: 10,
+        timingMorning: true,
+        timingEvening: true,
+        timingWeekend: true,
+        autoPickup: true,
+        favSpots: Array.isArray(favorites) ? [...favorites] : []
+      };
+    }
+
+    let notifSettings = loadNotifSettings();
+
+    function urlBase64ToUint8Array(base64String) {
+      const padding = '='.repeat((4 - base64String.length % 4) % 4);
+      const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+    }
+
+    async function hashEndpoint(endpoint) {
+      if (window.crypto && window.crypto.subtle) {
+        const msgBuffer = new TextEncoder().encode(endpoint);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 40);
+      }
+      // フォールバック
+      return btoa(endpoint).replace(/[^a-zA-Z0-9]/g, '').slice(0, 40);
+    }
+
+    function openNotificationModal() {
+      const modal = document.getElementById('notificationModal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      // 初回かつ通知スポット未設定ならMYスポットを自動反映
+      if ((!notifSettings.favSpots || notifSettings.favSpots.length === 0) && Array.isArray(favorites) && favorites.length > 0) {
+        notifSettings.favSpots = [...favorites];
+      }
+
+      // iOS Safari 非PWAチェック
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+      const iosGuide = document.getElementById('iosPwaGuide');
+      if (iosGuide) {
+        iosGuide.style.display = (isIOS && !isStandalone) ? 'block' : 'none';
+      }
+
+      syncNotifFormFromState();
+      refreshPushStatusUI();
+      renderNotifSpotSelector(currentNotifFilter);
+    }
+
+    function closeNotificationModal() {
+      const modal = document.getElementById('notificationModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function syncNotifFormFromState() {
+      const mEl = document.getElementById('timingMorning');
+      const eEl = document.getElementById('timingEvening');
+      const wEl = document.getElementById('timingWeekend');
+      const aEl = document.getElementById('chkAutoPickup');
+      if (mEl) mEl.checked = notifSettings.timingMorning !== false;
+      if (eEl) eEl.checked = notifSettings.timingEvening !== false;
+      if (wEl) wEl.checked = notifSettings.timingWeekend !== false;
+      if (aEl) aEl.checked = notifSettings.autoPickup !== false;
+      updateThresholdBtnUI();
+    }
+
+    function setNotifThreshold(cm) {
+      notifSettings.thresholdCm = cm;
+      updateThresholdBtnUI();
+      saveNotificationSettingsToFirestore();
+    }
+
+    function updateThresholdBtnUI() {
+      document.querySelectorAll('.notif-threshold-btn').forEach(btn => {
+        const val = Number(btn.getAttribute('data-threshold'));
+        if (val === Number(notifSettings.thresholdCm || 10)) {
+          btn.className = 'notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition bg-sky-500 text-slate-950 shadow';
+        } else {
+          btn.className = 'notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-300 hover:bg-slate-700';
+        }
+      });
+    }
+
+    async function refreshPushStatusUI() {
+      const statusText = document.getElementById('notifStatusText');
+      const btnToggle = document.getElementById('btnTogglePush');
+      const testBox = document.getElementById('testNotifContainer');
+      const activeDot = document.getElementById('notifActiveDot');
+
+      if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) {
+        if (statusText) statusText.textContent = 'このブラウザはプッシュ通知に非対応です';
+        if (btnToggle) {
+          btnToggle.disabled = true;
+          btnToggle.classList.add('opacity-50');
+        }
+        return;
+      }
+
+      if (Notification.permission === 'denied') {
+        if (statusText) statusText.innerHTML = '<span class="text-rose-400">通知がブロックされています（端末設定から許可してください）</span>';
+        if (btnToggle) {
+          btnToggle.textContent = 'ブロック中';
+          btnToggle.disabled = true;
+          btnToggle.classList.add('opacity-50');
+        }
+        if (testBox) testBox.classList.add('hidden');
+        if (activeDot) activeDot.classList.add('hidden');
+        return;
+      }
+
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.getSubscription();
+        if (sub) {
+          if (statusText) statusText.innerHTML = '<span class="text-emerald-400">ON（プッシュ通知受信中）</span>';
+          if (btnToggle) {
+            btnToggle.textContent = '通知をOFFにする';
+            btnToggle.disabled = false;
+            btnToggle.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-700 hover:bg-rose-600 text-white shadow-sm active:scale-95 transition flex-shrink-0';
+          }
+          if (testBox) testBox.classList.remove('hidden');
+          if (activeDot) activeDot.classList.remove('hidden');
+        } else {
+          if (statusText) statusText.innerHTML = '<span class="text-slate-300">OFF（未登録）</span>';
+          if (btnToggle) {
+            btnToggle.textContent = '通知を有効にする';
+            btnToggle.disabled = false;
+            btnToggle.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-sm active:scale-95 transition flex-shrink-0';
+          }
+          if (testBox) testBox.classList.add('hidden');
+          if (activeDot) activeDot.classList.add('hidden');
+        }
+      } catch (err) {
+        console.warn('Push status check failed:', err);
+      }
+    }
+
+    async function togglePushSubscription() {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        showToast('この環境ではプッシュ通知を利用できません');
+        return;
+      }
+      const btnToggle = document.getElementById('btnTogglePush');
+      if (btnToggle) btnToggle.disabled = true;
+
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        const existingSub = await reg.pushManager.getSubscription();
+
+        if (existingSub) {
+          const docId = await hashEndpoint(existingSub.endpoint);
+          await existingSub.unsubscribe();
+          if (db) {
+            await db.collection('snow_push_subscriptions').doc(docId).delete().catch(() => {});
+          }
+          showToast('プッシュ通知をOFFにしました');
+        } else {
+          const permission = await Notification.requestPermission();
+          if (permission !== 'granted') {
+            showToast('通知が許可されませんでした');
+            await refreshPushStatusUI();
+            return;
+          }
+          const sub = await reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+          });
+          await saveSubscriptionPayload(sub);
+          showToast('❄️ プッシュ通知を有効にしました！');
+        }
+      } catch (err) {
+        console.error('Push toggle error:', err);
+        showToast('通知設定の切り替えに失敗しました');
+      } finally {
+        await refreshPushStatusUI();
+      }
+    }
+
+    async function saveSubscriptionPayload(sub) {
+      const subJson = sub.toJSON();
+      const docId = await hashEndpoint(sub.endpoint);
+      const payload = {
+        endpoint: sub.endpoint,
+        p256dh: subJson.keys?.p256dh || '',
+        auth: subJson.keys?.auth || '',
+        threshold_cm: Number(notifSettings.thresholdCm || 10),
+        timing_morning: notifSettings.timingMorning !== false,
+        timing_evening: notifSettings.timingEvening !== false,
+        timing_weekend: notifSettings.timingWeekend !== false,
+        auto_pickup: notifSettings.autoPickup !== false,
+        fav_spots: Array.isArray(notifSettings.favSpots) ? notifSettings.favSpots : [],
+        updatedAt: new Date().toISOString()
+      };
+      if (db) {
+        await db.collection('snow_push_subscriptions').doc(docId).set(payload, { merge: true });
+      }
+    }
+
+    async function saveNotificationSettingsToFirestore() {
+      const mEl = document.getElementById('timingMorning');
+      const eEl = document.getElementById('timingEvening');
+      const wEl = document.getElementById('timingWeekend');
+      const aEl = document.getElementById('chkAutoPickup');
+
+      notifSettings.timingMorning = mEl ? mEl.checked : true;
+      notifSettings.timingEvening = eEl ? eEl.checked : true;
+      notifSettings.timingWeekend = wEl ? wEl.checked : true;
+      notifSettings.autoPickup = aEl ? aEl.checked : true;
+
+      localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(notifSettings));
+
+      try {
+        if ('serviceWorker' in navigator) {
+          const reg = await navigator.serviceWorker.ready;
+          const sub = await reg.pushManager.getSubscription();
+          if (sub) {
+            await saveSubscriptionPayload(sub);
+          }
+        }
+        const alertEl = document.getElementById('notifAutoSaveAlert');
+        if (alertEl) {
+          alertEl.classList.remove('hidden');
+          clearTimeout(notifSaveTimer);
+          notifSaveTimer = setTimeout(() => alertEl.classList.add('hidden'), 2000);
+        }
+      } catch (e) {
+        console.warn('Failed to sync notification settings:', e);
+      }
+    }
+
+    async function triggerTestNotification() {
+      try {
+        if (!('serviceWorker' in navigator)) return;
+        const reg = await navigator.serviceWorker.ready;
+        const threshold = notifSettings.thresholdCm || 10;
+        await reg.showNotification('❄️ POWDER BASE テスト通知', {
+          body: `通知は正常に接続されています！（設定基準: +${threshold}cm以上の降雪・週末予想でお知らせ）`,
+          icon: 'icons/icon-192.png',
+          badge: 'icons/icon-192.png',
+          tag: 'powder-base-test',
+          data: { url: './', spotId: currentSpotId || null, targetTab: 'home' }
+        });
+      } catch (err) {
+        console.error('Test notification failed:', err);
+        showToast('テスト通知の送信に失敗しました');
+      }
+    }
+
+    function renderNotifSpotSelector(filter = 'fav') {
+      currentNotifFilter = filter;
+      document.querySelectorAll('.notif-filter-btn').forEach(btn => {
+        const f = btn.getAttribute('data-filter');
+        if (f === filter) {
+          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-sky-500 text-slate-950 whitespace-nowrap';
+        } else if (f === 'fav') {
+          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-amber-400 border border-amber-500/40 hover:bg-slate-700 whitespace-nowrap';
+        } else {
+          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap';
+        }
+      });
+
+      const badge = document.getElementById('notifSelectedCountBadge');
+      const selectedSet = new Set(notifSettings.favSpots || []);
+      if (badge) badge.textContent = `${selectedSet.size}箇所`;
+
+      const container = document.getElementById('notifSpotList');
+      if (!container || !appData || !Array.isArray(appData.spots)) return;
+
+      let list = appData.spots;
+      if (filter === 'fav') {
+        const favSet = new Set(favorites || []);
+        list = list.filter(s => favSet.has(s.id));
+      } else if (filter === 'selected') {
+        list = list.filter(s => selectedSet.has(s.id));
+      } else {
+        list = list.filter(s => s.region === filter);
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="text-[11px] text-slate-400 py-3 px-2 w-full text-center">${filter === 'fav' ? 'MYスポットが未登録です。上の地方タブから直接選ぶこともできます。' : '該当するスポットがありません'}</div>`;
+        return;
+      }
+
+      container.innerHTML = list.slice(0, 120).map(s => {
+        const isSelected = selectedSet.has(s.id);
+        const catIcon = s.category === 'bc' ? '⛰️' : '🏂';
+        return `
+          <button type="button" onclick="toggleNotifSpot('${s.id}')" class="px-2 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 border ${isSelected ? 'bg-sky-500/20 text-sky-300 border-sky-400/70' : 'bg-slate-900/80 text-slate-400 border-slate-700 hover:text-white'}">
+            <span>${catIcon}</span>
+            <span>${s.name}</span>
+            ${isSelected ? '<i class="fa-solid fa-check text-[10px] text-sky-400 ml-0.5"></i>' : ''}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleNotifSpot(spotId) {
+      const set = new Set(notifSettings.favSpots || []);
+      if (set.has(spotId)) set.delete(spotId);
+      else set.add(spotId);
+      notifSettings.favSpots = Array.from(set);
+      renderNotifSpotSelector(currentNotifFilter);
+      saveNotificationSettingsToFirestore();
+    }
+
+    function toggleAllNotifSpots() {
+      const favList = Array.isArray(favorites) ? favorites : [];
+      const selectedSet = new Set(notifSettings.favSpots || []);
+      const allFavSelected = favList.length > 0 && favList.every(id => selectedSet.has(id));
+
+      if (allFavSelected || (favList.length === 0 && selectedSet.size > 0)) {
+        notifSettings.favSpots = [];
+      } else {
+        favList.forEach(id => selectedSet.add(id));
+        notifSettings.favSpots = Array.from(selectedSet);
+      }
+      renderNotifSpotSelector(currentNotifFilter);
+      saveNotificationSettingsToFirestore();
+    }
+
+    // PWA Service Worker 登録 & 通知クリックメッセージ受信
     if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (!event.data) return;
+        if (event.data.action === 'SELECT_SPOT' && event.data.spotId) {
+          if (typeof selectSpotFromMap === 'function') {
+            selectSpotFromMap(event.data.spotId);
+          }
+        } else if (event.data.action === 'OPEN_TAB' && event.data.tab) {
+          if (typeof switchTab === 'function') {
+            switchTab(event.data.tab);
+          }
+        }
+      });
+
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('✅ POWDER BASE SW registered:', reg.scope))
+          .then(reg => {
+            console.log('✅ POWDER BASE SW registered:', reg.scope);
+            refreshPushStatusUI();
+          })
           .catch(err => console.warn('⚠️ SW registration failed:', err));
       });
     }

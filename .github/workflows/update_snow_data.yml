@@ -28,15 +28,26 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install Dependencies
+        run: npm ci
+
       - name: Run Fetch Snow Data Script
         run: |
           node scripts/fetch_snow_data.js
+
+      - name: Run Push Notification Engine
+        continue-on-error: true
+        env:
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+        run: |
+          node scripts/send_push_notification.js
 
       - name: Commit and push if data changed
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data_japan.json
+          git add data_japan.json scripts/notification_history.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: ❄️ 自動データ巡回更新 [skip ci]" && git push)
 
       - name: Deploy to Cloudflare
