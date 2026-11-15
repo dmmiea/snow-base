@@ -1398,22 +1398,10 @@
       }
     }
 
-    // サマリー行用: 降雪・降雨合計HTML生成ヘルパー（上下縦並び）
+    // サマリー行用: 降雪合計HTML生成ヘルパー（雨は表示せず純粋な降雪cmのみ表示）
     function formatSummaryPrecipHtml(snowSum, rainSum, defaultSnowColorClass, defaultRainColorClass) {
-      const hasSnow = snowSum > 0;
-      const hasRain = rainSum > 0;
-
-      if (hasSnow && hasRain) {
-        return `
-          <div class="flex flex-col items-center leading-tight">
-            <span class="font-bold text-[11px] ${defaultSnowColorClass}">+${snowSum}cm</span>
-            <span class="font-bold text-[11px] ${defaultRainColorClass}">${rainSum}mm</span>
-          </div>
-        `;
-      } else if (hasSnow) {
+      if (snowSum > 0) {
         return `<div class="font-bold text-xs ${defaultSnowColorClass}">+${snowSum}cm</div>`;
-      } else if (hasRain) {
-        return `<div class="font-bold text-xs ${defaultRainColorClass}">${rainSum}mm</div>`;
       } else {
         return `<div class="font-bold text-[11px] opacity-60">0cm</div>`;
       }
