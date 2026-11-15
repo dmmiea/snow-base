@@ -22,7 +22,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #0f172a;
+      background-color: #f1f5f9;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
@@ -30,7 +30,7 @@
       height: 100%;
       width: 100%;
       z-index: 1;
-      background-color: #0f172a;
+      background-color: #f1f5f9;
     }
     .hide-scrollbar::-webkit-scrollbar {
       display: none;
@@ -41,54 +41,54 @@
     }
     .leaflet-popup-content-wrapper {
       border-radius: 1rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25);
       padding: 0;
       overflow: hidden;
       min-width: 240px;
       max-width: 290px;
-      background-color: #0f172a;
-      border: 1px solid #334155;
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
     }
     .leaflet-popup-content {
       margin: 0 !important;
       line-height: 1.4;
     }
     .leaflet-popup-tip {
-      background-color: #0f172a;
+      background-color: #ffffff;
     }
     .leaflet-container a.leaflet-popup-close-button {
-      color: #94a3b8;
+      color: #475569;
       padding: 8px 8px 0 0;
     }
     .leaflet-container a.leaflet-popup-close-button:hover {
-      color: #f8fafc;
+      color: #0f172a;
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 flex flex-col h-full overflow-hidden select-none">
+<body class="bg-slate-100 text-slate-900 flex flex-col h-full overflow-hidden select-none">
 
   <!-- ===============================
        1. マップヘッダー（省スペーススリム設計）
        =============================== -->
-  <header class="bg-slate-950 text-white px-3 py-1.5 shadow-md z-20 border-b border-slate-800 flex items-center justify-between">
+  <header class="bg-white text-slate-900 px-3 py-1.5 shadow-sm z-20 border-b border-slate-200 flex items-center justify-between">
     <div class="flex items-center space-x-2">
-      <div class="w-6 h-6 rounded-lg bg-gradient-to-tr from-sky-400 to-blue-600 flex items-center justify-center font-black text-white shadow text-xs">
+      <div class="w-6 h-6 rounded-lg bg-sky-700 flex items-center justify-center font-black text-white shadow text-xs">
         ❄️
       </div>
       <div>
-        <h1 class="text-xs font-bold tracking-tight flex items-center gap-1.5">
+        <h1 class="text-xs font-extrabold tracking-tight flex items-center gap-1.5 text-slate-900">
           <span>全国雪山マップ</span>
-          <span id="mapCountBadge" class="text-[11px] bg-sky-950 text-sky-400 border border-sky-800/80 px-1.5 py-0.2 rounded-full font-mono">--地点</span>
+          <span id="mapCountBadge" class="text-[11px] bg-sky-50 text-sky-800 border border-sky-300 px-1.5 py-0.2 rounded-full font-mono font-bold">--地点</span>
         </h1>
       </div>
     </div>
 
     <!-- 種別フィルター（🏂 スキー場 / ⛰️ BC山 完全分離2択・デフォルト スキー場） -->
-    <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-[11px] font-bold">
-      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2.5 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition">
+    <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold">
+      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition">
         🏂 スキー場
       </button>
-      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2.5 py-1 rounded text-slate-400 hover:text-white transition">
+      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition">
         ⛰️ BC山
       </button>
     </div>
@@ -97,59 +97,59 @@
   <!-- ===============================
        2. 地域クイックジャンプバー（横スクロール）
        =============================== -->
-  <nav class="bg-slate-950/90 backdrop-blur-md border-b border-slate-800 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto hide-scrollbar z-10 text-xs">
-    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap mr-0.5">地域:</span>
-    <button onclick="jumpToRegion('all')" class="region-pill active px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-sky-500 text-slate-950 shadow-sm transition text-[11px]" data-region="all">全国</button>
-    <button onclick="jumpToRegion('hokkaido')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="hokkaido">北海道</button>
-    <button onclick="jumpToRegion('tohoku')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="tohoku">東北</button>
-    <button onclick="jumpToRegion('shinetsu')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="shinetsu">信越・妙高</button>
-    <button onclick="jumpToRegion('hakuba')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="hakuba">❄️ 白馬エリア</button>
-    <button onclick="jumpToRegion('yuzawa')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="yuzawa">上越・湯沢</button>
-    <button onclick="jumpToRegion('gunma')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="gunma">群馬・尾瀬</button>
-    <button onclick="jumpToRegion('hokuriku')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="hokuriku">北陸</button>
-    <button onclick="jumpToRegion('west')" class="region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]" data-region="west">西日本・中四国</button>
+  <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto hide-scrollbar z-10 text-xs">
+    <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider whitespace-nowrap mr-0.5">地域:</span>
+    <button onclick="jumpToRegion('all')" class="region-pill active px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-sky-700 text-white shadow-sm transition text-[11px]" data-region="all">全国</button>
+    <button onclick="jumpToRegion('hokkaido')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="hokkaido">北海道</button>
+    <button onclick="jumpToRegion('tohoku')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="tohoku">東北</button>
+    <button onclick="jumpToRegion('shinetsu')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="shinetsu">信越・妙高</button>
+    <button onclick="jumpToRegion('hakuba')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="hakuba">❄️ 白馬エリア</button>
+    <button onclick="jumpToRegion('yuzawa')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="yuzawa">上越・湯沢</button>
+    <button onclick="jumpToRegion('gunma')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="gunma">群馬・尾瀬</button>
+    <button onclick="jumpToRegion('hokuriku')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="hokuriku">北陸</button>
+    <button onclick="jumpToRegion('west')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="west">西日本・中四国</button>
   </nav>
 
   <!-- ===============================
        3. 地図メインコンテナ
        =============================== -->
-  <div class="relative flex-1 bg-slate-900 overflow-hidden">
+  <div class="relative flex-1 bg-slate-100 overflow-hidden">
     <div id="map"></div>
 
     <!-- 左下：凡例カード（7段階 🌙夜間新雪基準・折りたたみ対応） -->
-    <div id="legendCard" class="absolute bottom-3 left-3 z-10 bg-slate-900/95 backdrop-blur-md rounded-xl p-2.5 shadow-xl border border-slate-800 text-xs pointer-events-auto max-w-[210px] transition-all duration-200">
-      <button type="button" onclick="toggleLegend()" class="w-full font-bold text-slate-200 flex items-center justify-between text-[11px] cursor-pointer hover:text-white transition gap-2 select-none">
+    <div id="legendCard" class="absolute bottom-3 left-3 z-10 bg-white/95 backdrop-blur-md rounded-xl p-2.5 shadow-lg border border-slate-300 text-xs pointer-events-auto max-w-[210px] transition-all duration-200">
+      <button type="button" onclick="toggleLegend()" class="w-full font-bold text-slate-900 flex items-center justify-between text-[11px] cursor-pointer hover:text-sky-700 transition gap-2 select-none">
         <span class="flex items-center gap-1">🌙 凡例（夜間新雪）</span>
-        <i id="legendChevron" class="fa-solid fa-chevron-down text-[11px] text-slate-400 transition-transform duration-200"></i>
+        <i id="legendChevron" class="fa-solid fa-chevron-down text-[11px] text-slate-600 transition-transform duration-200"></i>
       </button>
-      <div id="legendContent" class="space-y-1 pt-2 border-t border-slate-800 mt-1.5 text-[10.5px]">
+      <div id="legendContent" class="space-y-1 pt-2 border-t border-slate-200 mt-1.5 text-[10.5px]">
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-fuchsia-500 border border-white shrink-0 shadow-sm shadow-fuchsia-500/50"></span>
-          <span class="text-fuchsia-300 font-bold">腰パウ (80cm+)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-fuchsia-600 border border-slate-900 shrink-0 shadow-sm"></span>
+          <span class="text-fuchsia-800 font-bold">腰パウ (80cm+)</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-violet-500 border border-white shrink-0 shadow-sm shadow-violet-500/50"></span>
-          <span class="text-violet-300 font-semibold">モモパウ (50〜79cm)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-violet-600 border border-slate-900 shrink-0 shadow-sm"></span>
+          <span class="text-violet-800 font-bold">モモパウ (50〜79cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-blue-500 border border-white shrink-0"></span>
-          <span class="text-blue-300 font-semibold">ヒザパウ (30〜49cm)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-orange-600 border border-slate-900 shrink-0"></span>
+          <span class="text-orange-800 font-bold">ヒザパウ (30〜49cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-cyan-400 border border-white shrink-0"></span>
-          <span class="text-cyan-200 font-semibold">スネパウ (20〜29cm)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-amber-500 border border-slate-900 shrink-0"></span>
+          <span class="text-amber-800 font-bold">スネパウ (20〜29cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-sky-400 border border-white shrink-0"></span>
-          <span class="text-sky-200 font-semibold">くるぶし (10〜19cm)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-sky-600 border border-slate-900 shrink-0"></span>
+          <span class="text-sky-800 font-bold">くるぶし (10〜19cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 border border-white shrink-0"></span>
-          <span class="text-emerald-300">うっすら (1〜9cm)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-slate-900 shrink-0"></span>
+          <span class="text-emerald-800 font-semibold">うっすら (1〜9cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="w-3.5 h-3.5 rounded-full bg-slate-600 border border-slate-400 shrink-0"></span>
-          <span class="text-slate-400">降雪なし (0cm)</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-slate-500 border border-slate-700 shrink-0"></span>
+          <span class="text-slate-700 font-medium">降雪なし (0cm)</span>
         </div>
       </div>
     </div>
@@ -238,16 +238,16 @@
       return 0;
     }
 
-    // ホーム画面の判定基準と完全一致する7段階新雪設定
+    // ホーム画面の判定基準と完全一致する7段階新雪設定（ゴーグル耐性高コントラスト）
     function getNightSnowTier(val) {
       const v = typeof val === 'number' ? val : 0;
-      if (v >= 80) return { label: '腰パウ', bg: '#d946ef', badgeCls: 'bg-fuchsia-500', textCls: 'text-fuchsia-300', isDeep: true };
-      if (v >= 50) return { label: 'モモパウ', bg: '#8b5cf6', badgeCls: 'bg-violet-500', textCls: 'text-violet-300', isDeep: true };
-      if (v >= 30) return { label: 'ヒザパウ', bg: '#3b82f6', badgeCls: 'bg-blue-500', textCls: 'text-blue-300', isDeep: true };
-      if (v >= 20) return { label: 'スネパウ', bg: '#22d3ee', badgeCls: 'bg-cyan-400', textCls: 'text-cyan-200', isDeep: true };
-      if (v >= 10) return { label: 'くるぶし', bg: '#38bdf8', badgeCls: 'bg-sky-400', textCls: 'text-sky-200', isDeep: false };
-      if (v >= 1) return { label: 'うっすら', bg: '#10b981', badgeCls: 'bg-emerald-500', textCls: 'text-emerald-300', isDeep: false };
-      return { label: '降雪なし', bg: '#475569', badgeCls: 'bg-slate-600', textCls: 'text-slate-400', isDeep: false };
+      if (v >= 80) return { label: '腰パウ', bg: '#c026d3', badgeCls: 'bg-fuchsia-600', textCls: 'text-fuchsia-700', isDeep: true };
+      if (v >= 50) return { label: 'モモパウ', bg: '#7c3aed', badgeCls: 'bg-violet-600', textCls: 'text-violet-700', isDeep: true };
+      if (v >= 30) return { label: 'ヒザパウ', bg: '#ea580c', badgeCls: 'bg-orange-600', textCls: 'text-orange-700', isDeep: true };
+      if (v >= 20) return { label: 'スネパウ', bg: '#f59e0b', badgeCls: 'bg-amber-600', textCls: 'text-amber-700', isDeep: true };
+      if (v >= 10) return { label: 'くるぶし', bg: '#0284c7', badgeCls: 'bg-sky-600', textCls: 'text-sky-700', isDeep: false };
+      if (v >= 1) return { label: 'うっすら', bg: '#059669', badgeCls: 'bg-emerald-600', textCls: 'text-emerald-700', isDeep: false };
+      return { label: '降雪なし', bg: '#64748b', badgeCls: 'bg-slate-500', textCls: 'text-slate-600', isDeep: false };
     }
 
     function renderMarkers() {
@@ -302,36 +302,36 @@
         const elev = (s.top && s.top.elevation) || 0;
 
         const popupHtml = `
-          <div class="p-3 text-slate-100 font-sans text-xs">
-            <div class="flex items-center justify-between border-b border-slate-700/80 pb-1.5 mb-2">
-              <span class="text-[11px] font-bold ${isBc ? 'text-emerald-400 bg-emerald-950/80 border-emerald-800/60' : 'text-sky-400 bg-sky-950/80 border-sky-800/60'} px-2 py-0.5 rounded border">
+          <div class="p-3 text-slate-900 font-sans text-xs bg-white">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-1.5 mb-2">
+              <span class="text-[11px] font-bold ${isBc ? 'text-emerald-800 bg-emerald-50 border-emerald-300' : 'text-sky-800 bg-sky-50 border-sky-300'} px-2 py-0.5 rounded border">
                 ${isBc ? '⛰️ バックカントリー' : '🏂 スキー場'}
               </span>
-              <span class="text-[11px] text-slate-400">${s.areaName || s.regionName}</span>
+              <span class="text-[11px] font-bold text-slate-600">${s.areaName || s.regionName}</span>
             </div>
-            <div class="font-bold text-sm text-white leading-tight mb-2">${s.name}</div>
+            <div class="font-black text-sm text-slate-900 leading-tight mb-2">${s.name}</div>
             
-            <div class="grid grid-cols-2 gap-1.5 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-[11px] mb-2.5">
+            <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-[11px] mb-2.5">
               <div>
-                <span class="text-slate-400 text-[10px] block">🌙 夜間新雪 (18-06時)</span>
-                <span class="font-bold font-mono text-base ${tier.textCls}">+${nightVal}</span> <span class="text-[10px] text-slate-400">cm</span>
+                <span class="text-slate-600 font-semibold text-[10px] block">🌙 夜間新雪 (18-06時)</span>
+                <span class="font-black font-mono text-base ${tier.textCls}">+${nightVal}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
                 <span class="text-[10px] px-1.5 py-0.2 rounded ${tier.badgeCls} text-white font-bold ml-1 inline-block">${tier.label}</span>
               </div>
               <div>
-                <span class="text-slate-400 text-[10px] block">山頂 積雪深</span>
-                <span class="font-bold text-white font-mono text-base">${topSnow}</span> <span class="text-[10px] text-slate-400">cm</span>
+                <span class="text-slate-600 font-semibold text-[10px] block">山頂 積雪深</span>
+                <span class="font-black text-slate-900 font-mono text-base">${topSnow}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
               </div>
-              <div class="col-span-2 pt-1.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[11px]">
-                <span class="text-slate-400 whitespace-nowrap">標高: ${elev}m</span>
+              <div class="col-span-2 pt-1.5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[11px]">
+                <span class="text-slate-700 font-semibold whitespace-nowrap">標高: ${elev}m</span>
                 <div class="flex items-center gap-1.5 whitespace-nowrap">
-                  <span class="text-slate-400">雪質:</span>
-                  <span class="font-bold ${score !== null ? 'text-sky-300' : 'text-slate-500'}">${score !== null ? score + '点' : '―'}</span>
-                  <span class="text-[10px] text-slate-300 px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 whitespace-nowrap">${tag}</span>
+                  <span class="text-slate-600 font-semibold">雪質:</span>
+                  <span class="font-black ${score !== null ? 'text-sky-700' : 'text-slate-500'}">${score !== null ? score + '点' : '―'}</span>
+                  <span class="text-[10px] text-slate-800 font-bold px-1.5 py-0.5 bg-white rounded border border-slate-300 whitespace-nowrap">${tag}</span>
                 </div>
               </div>
             </div>
 
-            <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
+            <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg bg-sky-700 hover:bg-sky-800 active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
               <span>このスポットの予報を見る</span>
               <i class="fa-solid fa-arrow-right text-[11px]"></i>
             </button>
@@ -348,8 +348,8 @@
       const bSki = document.getElementById('btnCatSki');
       const bBc = document.getElementById('btnCatBc');
 
-      if (bSki) bSki.className = cat === 'ski' ? "px-2.5 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2.5 py-1 rounded text-slate-400 hover:text-white transition";
-      if (bBc) bBc.className = cat === 'bc' ? "px-2.5 py-1 rounded bg-sky-500 text-slate-950 font-black shadow transition" : "px-2.5 py-1 rounded text-slate-400 hover:text-white transition";
+      if (bSki) bSki.className = cat === 'ski' ? "px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition" : "px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition";
+      if (bBc) bBc.className = cat === 'bc' ? "px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition" : "px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition";
 
       renderMarkers();
     }
@@ -357,9 +357,9 @@
     function jumpToRegion(regKey) {
       document.querySelectorAll('.region-pill').forEach(btn => {
         if (btn.dataset.region === regKey) {
-          btn.className = "region-pill active px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-sky-500 text-slate-950 shadow-sm transition text-[11px]";
+          btn.className = "region-pill active px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-sky-700 text-white shadow-sm transition text-[11px]";
         } else {
-          btn.className = "region-pill px-2.5 py-1 rounded-full font-medium whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-[11px]";
+          btn.className = "region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]";
         }
       });
 

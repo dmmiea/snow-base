@@ -370,8 +370,8 @@ async function run() {
       icon: 'icons/icon-192.png',
       badge: 'icons/icon-192.png',
       spotId: primarySpotId ? String(primarySpotId) : null,
-      targetTab: 'home',
-      url: primarySpotId ? `./?spot=${encodeURIComponent(primarySpotId)}` : './',
+      targetTab: 'feed',
+      url: './#feed',
       tag: `powder-base-${timingMode}-${jst.todayISO}`
     });
 

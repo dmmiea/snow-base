@@ -13,7 +13,7 @@
 
   <!-- PWA & Mobile Web App Meta -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#f8fafc">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="POWDER BASE">
@@ -44,8 +44,8 @@
   <style>
     body {
       font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #0f172a; /* Slate 900 ダーク基調スノーテーマ */
-      color: #f8fafc;
+      background-color: #f1f5f9; /* Slate 100 高視認ゲレンデライト基調 */
+      color: #0f172a;
       -webkit-tap-highlight-color: transparent;
       font-feature-settings: "palt";
     }
@@ -54,16 +54,15 @@
       letter-spacing: 0.03em;
     }
     .snow-card {
-      background: rgba(30, 41, 59, 0.85); /* Slate 800 */
-      border: 1px solid rgba(51, 65, 85, 0.8);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3), 0 2px 6px -1px rgba(0, 0, 0, 0.2);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 2px 10px -2px rgba(15, 23, 42, 0.08), 0 1px 3px 0 rgba(15, 23, 42, 0.05);
     }
     .snow-gradient {
-      background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #075985 100%);
+      background: linear-gradient(135deg, #0369a1 0%, #075985 50%, #0c4a6e 100%);
     }
     .powder-badge {
-      background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      background: linear-gradient(135deg, #fb923c 0%, #f59e0b 100%);
     }
     .hide-scrollbar::-webkit-scrollbar {
       display: none;
@@ -73,8 +72,8 @@
       scrollbar-width: none;
     }
     .tab-active {
-      background-color: #38bdf8 !important;
-      color: #0f172a !important;
+      background-color: #0369a1 !important;
+      color: #ffffff !important;
       font-weight: 700 !important;
     }
     #tabMap {
@@ -101,17 +100,17 @@
   <!-- ===============================
        0. SPLASH SCREEN (アプリ起動スプラッシュ画面)
        =============================== -->
-  <div id="splashScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-900 transition-opacity duration-500 ease-out select-none">
+  <div id="splashScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-50 transition-opacity duration-500 ease-out select-none">
     <div class="flex flex-col items-center justify-center animate-splash-logo select-none px-4">
       <!-- アイコン背面アクセント光彩 -->
-      <div class="w-20 h-20 rounded-3xl shadow-2xl shadow-sky-500/25 mb-3 relative overflow-hidden border border-slate-700/80 bg-slate-900 flex items-center justify-center">
+      <div class="w-20 h-20 rounded-3xl shadow-xl shadow-sky-700/20 mb-3 relative overflow-hidden border border-slate-300 bg-white flex items-center justify-center">
         <img src="icons/apple-touch-icon-180.png" alt="POWDER BASE JAPAN" class="w-full h-full object-cover">
       </div>
       <div class="text-center">
-        <span class="font-teko text-4xl font-extrabold tracking-widest text-white leading-none uppercase block">POWDER BASE</span>
-        <span class="text-[11px] tracking-wider text-sky-400 font-bold uppercase mt-1.5 block">JAPAN - NATIONWIDE POWDER DASHBOARD</span>
-        <div class="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
-          <i class="fa-solid fa-circle-notch fa-spin text-sky-400 text-[11px]"></i>
+        <span class="font-teko text-4xl font-extrabold tracking-widest text-slate-900 leading-none uppercase block">POWDER BASE</span>
+        <span class="text-[11px] tracking-wider text-sky-700 font-bold uppercase mt-1.5 block">JAPAN - NATIONWIDE POWDER DASHBOARD</span>
+        <div class="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-600 font-bold">
+          <i class="fa-solid fa-circle-notch fa-spin text-sky-700 text-[11px]"></i>
           <span>最新データを取得中...</span>
         </div>
       </div>
@@ -121,38 +120,38 @@
   <!-- ===============================
        1. TOP APP BAR
        =============================== -->
-  <header class="bg-slate-900 border-b border-slate-800 px-3 sm:px-4 shadow-md sticky top-0 z-50" style="padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-bottom: 8px;">
+  <header class="bg-white border-b border-slate-200 px-3 sm:px-4 shadow-sm sticky top-0 z-50" style="padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-bottom: 8px;">
     <div class="max-w-md mx-auto flex items-center justify-between gap-2">
       <div onclick="resetToHomeTop()" class="flex items-center space-x-1.5 sm:space-x-2 cursor-pointer active:scale-95 transition select-none min-w-0" title="ホーム先頭へ戻る">
-        <div class="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white font-bold text-xs sm:text-sm">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-xl bg-sky-700 flex items-center justify-center shadow-sm text-white font-bold text-xs sm:text-sm">
           ❄️
         </div>
         <h1 class="flex items-center space-x-1.5 m-0 p-0 font-normal min-w-0">
-          <span class="font-teko text-xl sm:text-2xl font-bold tracking-wider text-sky-400 leading-none uppercase whitespace-nowrap">POWDER BASE</span>
-          <span class="text-[11px] sm:text-[11px] px-1.5 py-0.2 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700 shrink-0 whitespace-nowrap">JAPAN</span>
+          <span class="font-teko text-xl sm:text-2xl font-bold tracking-wider text-slate-900 leading-none uppercase whitespace-nowrap">POWDER BASE</span>
+          <span class="text-[11px] sm:text-[11px] px-1.5 py-0.2 rounded-md bg-sky-50 text-sky-800 font-extrabold border border-sky-300 shrink-0 whitespace-nowrap">JAPAN</span>
         </h1>
       </div>
       
       <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
         <!-- プッシュ通知設定ボタン -->
-        <button id="btnNotification" onclick="openNotificationModal()" class="relative w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center justify-center border border-slate-700 active:scale-95 shadow-sm shrink-0" title="雪予報プッシュ通知設定">
-          <i class="fa-regular fa-bell text-sky-400 text-xs sm:text-sm"></i>
-          <span id="notifActiveDot" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-slate-900"></span>
+        <button id="btnNotification" onclick="openNotificationModal()" class="relative w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 transition flex items-center justify-center border border-slate-300 active:scale-95 shadow-sm shrink-0" title="雪予報プッシュ通知設定">
+          <i class="fa-regular fa-bell text-sky-700 text-xs sm:text-sm"></i>
+          <span id="notifActiveDot" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white"></span>
         </button>
 
         <!-- 検索ボタン -->
-        <button id="btnOpenSearch" onclick="openSearchModal()" class="h-8 px-2 sm:px-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-1 text-xs font-bold border border-slate-700 active:scale-95 shadow-sm whitespace-nowrap shrink-0">
-          <i class="fa-solid fa-magnifying-glass text-sky-400 text-xs"></i>
+        <button id="btnOpenSearch" onclick="openSearchModal()" class="h-8 px-2 sm:px-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 transition flex items-center gap-1 text-xs font-bold border border-slate-300 active:scale-95 shadow-sm whitespace-nowrap shrink-0">
+          <i class="fa-solid fa-magnifying-glass text-sky-700 text-xs"></i>
           <span>検索</span>
         </button>
 
         <!-- LIVE インジケーター -->
-        <div class="text-right whitespace-nowrap pl-1.5 border-l border-slate-800 shrink-0">
+        <div class="text-right whitespace-nowrap pl-1.5 border-l border-slate-200 shrink-0">
           <div class="flex items-center justify-end space-x-1">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="text-[11px] font-bold text-emerald-400">LIVE</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+            <span class="text-[11px] font-extrabold text-emerald-700">LIVE</span>
           </div>
-          <span id="lastUpdated" class="text-[11px] text-slate-400 font-medium whitespace-nowrap block">読込中...</span>
+          <span id="lastUpdated" class="text-[11px] text-slate-600 font-bold whitespace-nowrap block">読込中...</span>
         </div>
       </div>
     </div>
@@ -166,29 +165,29 @@
   <main id="tabHome" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3.5">
 
     <!-- データ読込中バナー（スプラッシュ終了後も取得中の場合のみ表示） -->
-    <div id="dataLoadingBanner" class="flex items-center justify-center gap-2 rounded-xl bg-sky-950/70 border border-sky-500/40 px-3 py-2 text-xs font-bold text-sky-200 shadow-sm">
-      <i class="fa-solid fa-circle-notch fa-spin text-sky-400"></i>
+    <div id="dataLoadingBanner" class="flex items-center justify-center gap-2 rounded-xl bg-sky-50 border border-sky-300 px-3 py-2 text-xs font-bold text-sky-900 shadow-sm">
+      <i class="fa-solid fa-circle-notch fa-spin text-sky-700"></i>
       <span>最新の全国雪データを読み込み中...</span>
     </div>
 
     <!-- カテゴリ切り替え（🏂 スキー場 vs ⛰️ バックカントリー） -->
-    <div class="flex rounded-xl bg-slate-800/90 p-1 border border-slate-700/80 shadow-sm text-xs font-bold -mb-1.5">
-      <button id="btnCategorySki" onclick="setCategory('ski')" class="flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow">
+    <div class="flex rounded-xl bg-white p-1 border border-slate-300 shadow-sm text-xs font-bold -mb-1.5">
+      <button id="btnCategorySki" onclick="setCategory('ski')" class="flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-700 text-white shadow-sm">
         <span>🏂</span>
         <span>スキー場 (<span id="countSki">573</span>)</span>
       </button>
-      <button id="btnCategoryBc" onclick="setCategory('bc')" class="flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white">
+      <button id="btnCategoryBc" onclick="setCategory('bc')" class="flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-700 hover:text-slate-900">
         <span>⛰️</span>
         <span>バックカントリー (<span id="countBc">779</span>)</span>
       </button>
     </div>
 
     <!-- 地域・エリアセレクター（Sticky） -->
-    <div class="sticky z-40 bg-slate-900 -mx-3.5 px-3.5 pt-1 pb-2 border-b border-slate-800 space-y-1.5" style="top: calc(env(safe-area-inset-top, 0px) + 52px);">
+    <div class="sticky z-40 bg-slate-100 -mx-3.5 px-3.5 pt-1 pb-2 border-b border-slate-200 space-y-1.5" style="top: calc(env(safe-area-inset-top, 0px) + 52px);">
       <div class="grid grid-cols-2 gap-1.5 text-xs">
         <div>
-          <label class="block text-[11px] font-bold text-slate-400 mb-0.5">① 地方を選択</label>
-          <select id="selectRegion" onchange="onRegionChange(this.value)" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:border-sky-500">
+          <label class="block text-[11px] font-bold text-slate-700 mb-0.5">① 地方を選択</label>
+          <select id="selectRegion" onchange="onRegionChange(this.value)" class="w-full bg-white border border-slate-300 text-slate-900 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:border-sky-700 shadow-sm">
             <option value="all">全国</option>
             <option value="hokkaido">北海道</option>
             <option value="tohoku">東北</option>
@@ -201,8 +200,8 @@
           </select>
         </div>
         <div>
-          <label class="block text-[11px] font-bold text-slate-400 mb-0.5">② エリアを選択</label>
-          <select id="selectArea" onchange="onAreaChange(this.value)" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:border-sky-500">
+          <label class="block text-[11px] font-bold text-slate-700 mb-0.5">② エリアを選択</label>
+          <select id="selectArea" onchange="onAreaChange(this.value)" class="w-full bg-white border border-slate-300 text-slate-900 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none focus:border-sky-700 shadow-sm">
             <!-- JSで動的生成 -->
           </select>
         </div>
@@ -219,71 +218,71 @@
          =============================== -->
     <div class="snow-card rounded-2xl p-4 relative overflow-hidden">
       <!-- 背景アクセント光彩 -->
-      <div class="absolute -right-12 -top-12 w-40 h-40 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="absolute -right-12 -top-12 w-40 h-40 bg-sky-500/5 rounded-full blur-2xl pointer-events-none"></div>
 
       <!-- スポットヘッダー -->
       <div class="mb-3 relative z-10">
         <!-- 1段目：スポット名 ＆ 3点ボタン（サーフベース完全準拠・インライン配置） -->
         <div class="flex items-center gap-2 flex-wrap mb-1.5">
-          <h2 id="heroSpotName" class="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+          <h2 id="heroSpotName" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">
             白馬八方尾根スキー場
           </h2>
           <!-- お気に入り★ボタン -->
-          <button id="btnFav" onclick="toggleFavorite()" class="text-slate-400 hover:text-amber-400 text-xl sm:text-2xl leading-none active:scale-95 transition ml-0.5 inline-flex items-center" title="MYスポット登録">
+          <button id="btnFav" onclick="toggleFavorite()" class="text-slate-400 hover:text-amber-500 text-xl sm:text-2xl leading-none active:scale-95 transition ml-0.5 inline-flex items-center" title="MYスポット登録">
             <i id="favIcon" class="fa-regular fa-star"></i>
           </button>
           <!-- シェア（共有）ボタン -->
-          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="text-slate-400 hover:text-sky-400 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" title="このスポットをシェア">
+          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="text-slate-500 hover:text-sky-700 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" title="このスポットをシェア">
             <i class="fa-solid fa-arrow-up-from-bracket"></i>
           </button>
           <!-- Googleマップ位置確認ボタン -->
-          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="text-slate-400 hover:text-rose-400 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" title="Googleマップで場所・アクセスを確認">
+          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="text-slate-500 hover:text-rose-600 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" title="Googleマップで場所・アクセスを確認">
             <i class="fa-solid fa-location-dot"></i>
           </button>
         </div>
         <!-- 2段目：属性バッジ群（純粋にバッジのみで横並び） -->
         <div class="flex items-center flex-wrap gap-1.5">
-          <span id="heroCategoryBadge" class="text-[11px] font-black px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">🏂 スキー場</span>
-          <span id="heroAreaName" class="text-xs font-bold text-slate-400">白馬・小谷</span>
-          <span id="heroSlopeBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">🧭 北斜面</span>
-          <span id="heroElevDiffBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">↕ 標高差 --m</span>
+          <span id="heroCategoryBadge" class="text-[11px] font-black px-1.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-300">🏂 スキー場</span>
+          <span id="heroAreaName" class="text-xs font-bold text-slate-700">白馬・小谷</span>
+          <span id="heroSlopeBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-300">🧭 北斜面</span>
+          <span id="heroElevDiffBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-300">↕ 標高差 --m</span>
         </div>
       </div>
 
       <!-- メイン指標: スコア & 積雪深 & バーンタグ -->
       <div class="grid grid-cols-12 gap-2 mb-3 relative z-10">
         <!-- スコアサークル/バッジ -->
-        <div class="col-span-4 bg-slate-800/80 rounded-xl p-2.5 flex flex-col items-center justify-center border border-slate-700/60 text-center">
-          <span class="text-[11px] font-bold text-slate-400">雪質スコア</span>
+        <div class="col-span-4 bg-slate-50 rounded-xl p-2.5 flex flex-col items-center justify-center border border-slate-200 text-center">
+          <span class="text-[11px] font-bold text-slate-700">雪質スコア</span>
           <div class="flex items-baseline justify-center">
-            <span id="heroScore" class="font-teko text-5xl font-black text-sky-400 leading-none">--</span>
-            <span class="text-xs text-slate-400 font-bold ml-0.5">/100</span>
+            <span id="heroScore" class="font-teko text-5xl font-black text-sky-700 leading-none">--</span>
+            <span class="text-xs text-slate-600 font-bold ml-0.5">/100</span>
           </div>
-          <span id="heroRank" class="text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-500 text-slate-900 mt-1">圧雪良好</span>
+          <span id="heroRank" class="text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-700 text-white mt-1">圧雪良好</span>
         </div>
 
         <!-- 積雪深（トップ & ベース） -->
-        <div class="col-span-8 bg-slate-800/80 rounded-xl p-2.5 flex flex-col justify-between border border-slate-700/60">
+        <div class="col-span-8 bg-slate-50 rounded-xl p-2.5 flex flex-col justify-between border border-slate-200">
           <div class="flex justify-between items-center text-xs">
             <div class="min-w-0 pr-1">
-              <span class="text-slate-400 font-bold flex items-center gap-1">
-                <i class="fa-solid fa-mountain text-sky-400 text-[11px]"></i>
+              <span class="text-slate-700 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-mountain text-sky-700 text-[11px]"></i>
                 <span>トップ (<span id="heroTopElev">1831m</span>)</span>
               </span>
-              <span id="heroTopLabel" class="text-[11px] text-slate-400 truncate block max-w-[140px]">八方池山荘</span>
+              <span id="heroTopLabel" class="text-[11px] text-slate-600 font-medium truncate block max-w-[140px]">八方池山荘</span>
             </div>
-            <span class="font-teko text-2xl font-black text-white whitespace-nowrap"><span id="heroTopSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
+            <span class="font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroTopSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
           </div>
-          <div class="border-t border-slate-700/50 my-1"></div>
+          <div class="border-t border-slate-200 my-1"></div>
           <div class="flex justify-between items-center text-xs">
             <div class="min-w-0 pr-1">
-              <span class="text-slate-400 font-bold flex items-center gap-1">
-                <i class="fa-solid fa-house text-emerald-400 text-[11px]"></i>
+              <span class="text-slate-700 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-house text-emerald-700 text-[11px]"></i>
                 <span>ベース (<span id="heroBaseElev">760m</span>)</span>
               </span>
-              <span id="heroBaseLabel" class="text-[11px] text-slate-400 truncate block max-w-[140px]">八方ゴンドラ山麓駅</span>
+              <span id="heroBaseLabel" class="text-[11px] text-slate-600 font-medium truncate block max-w-[140px]">八方ゴンドラ山麓駅</span>
             </div>
-            <span class="font-teko text-2xl font-black text-slate-200 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-normal text-slate-400 ml-1">cm</span></span>
+            <span class="font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
           </div>
         </div>
       </div>
@@ -291,28 +290,28 @@
       <!-- バーン判定タグ & 夜間新雪ハイライト -->
       <div class="space-y-1.5 relative z-10">
         <!-- 朝イチ夜間新雪バッジ -->
-        <div class="powder-badge text-slate-900 rounded-xl px-3 py-2 flex items-center justify-between shadow-lg">
+        <div class="powder-badge text-slate-950 rounded-xl px-3 py-2 flex items-center justify-between shadow-md border border-orange-600/30">
           <div class="flex items-center gap-2 min-w-0">
             <span class="text-base shrink-0">🌙</span>
             <div class="min-w-0">
-              <div class="text-[11px] font-black uppercase tracking-wider text-slate-900/80 truncate">OVERNIGHT SNOW (18時〜翌06時)</div>
+              <div class="text-[11px] font-black uppercase tracking-wider text-slate-950/85 truncate">OVERNIGHT SNOW (18時〜翌06時)</div>
               <div class="mt-0.5">
-                <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-slate-950/20 text-slate-950 border border-slate-950/20">降雪なし</span>
+                <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-white/80 text-slate-950 border border-slate-900/20">降雪なし</span>
               </div>
             </div>
           </div>
           <div class="text-right shrink-0 pl-2">
-            <div class="text-[11px] font-bold text-slate-900/70 leading-none">トップ新雪</div>
+            <div class="text-[11px] font-bold text-slate-950/80 leading-none">トップ新雪</div>
             <div class="flex items-baseline justify-end gap-0.5 mt-0.5">
               <span id="heroNightSnow" class="font-teko text-3xl font-black leading-none text-slate-950">+--</span>
-              <span class="text-xs font-bold text-slate-900/80">cm</span>
+              <span class="text-xs font-bold text-slate-950/85">cm</span>
             </div>
           </div>
         </div>
 
         <!-- バーン状況タグ一覧 -->
         <div class="flex flex-wrap gap-1.5 pt-1">
-          <span id="heroMainTag" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-sky-950/80 text-sky-300 border border-sky-800 flex items-center">
+          <span id="heroMainTag" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-sky-50 text-sky-900 border border-sky-300 flex items-center">
             <span id="heroMainTagText">極上ドライパウダー</span>
           </span>
           <div id="heroSubTags" class="flex flex-wrap gap-1">
@@ -322,29 +321,29 @@
       </div>
 
       <!-- 気温 & 風速 & 現在天気 & アメダス実況（スマホ2列x2段 / PC4列） -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 pt-3 border-t border-slate-700/60 text-center text-xs relative z-10 px-0.5">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 pt-3 border-t border-slate-200 text-center text-xs relative z-10 px-0.5">
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[11px] text-slate-400 block whitespace-nowrap">現在天気</span>
+          <span class="text-[11px] text-slate-600 font-bold block whitespace-nowrap">現在天気</span>
           <div class="mt-0.5 flex items-center justify-center gap-1">
             <span id="heroWeatherIcon" class="text-base">❄️</span>
-            <span id="heroWeatherLabel" class="text-xs font-bold text-white whitespace-nowrap">雪</span>
+            <span id="heroWeatherLabel" class="text-xs font-black text-slate-900 whitespace-nowrap">雪</span>
           </div>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[11px] text-slate-400 block whitespace-nowrap">気温 (トップ/ベース)</span>
+          <span class="text-[11px] text-slate-600 font-bold block whitespace-nowrap">気温 (トップ/ベース)</span>
           <div class="font-teko text-base sm:text-lg font-bold mt-0.5 whitespace-nowrap">
-            <span id="heroTopTemp" class="text-sky-300">--</span>
+            <span id="heroTopTemp" class="text-sky-800">--</span>
             <span class="text-slate-500 text-xs"> / </span>
-            <span id="heroBaseTemp" class="text-slate-300">--℃</span>
+            <span id="heroBaseTemp" class="text-slate-800">--℃</span>
           </div>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[11px] text-slate-400 block whitespace-nowrap">トップ風速</span>
-          <span id="heroWind" class="font-teko text-base sm:text-lg font-bold text-slate-200 block mt-0.5 whitespace-nowrap">-- m/s</span>
+          <span class="text-[11px] text-slate-600 font-bold block whitespace-nowrap">トップ風速</span>
+          <span id="heroWind" class="font-teko text-base sm:text-lg font-bold text-slate-900 block mt-0.5 whitespace-nowrap">-- m/s</span>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span id="heroAmedasTitle" class="text-[11px] text-slate-400 block truncate whitespace-nowrap">アメダス実測</span>
-          <span id="heroAmedasDepth" class="font-teko text-base sm:text-lg font-bold text-emerald-400 block mt-0.5 whitespace-nowrap">-- cm</span>
+          <span id="heroAmedasTitle" class="text-[11px] text-slate-600 font-bold block truncate whitespace-nowrap">アメダス実測</span>
+          <span id="heroAmedasDepth" class="font-teko text-base sm:text-lg font-bold text-emerald-700 block mt-0.5 whitespace-nowrap">-- cm</span>
         </div>
       </div>
     </div>
@@ -352,24 +351,24 @@
     <!-- ===============================
          みんなのリアル雪レポサマリーカード（サーフベース準拠）
          =============================== -->
-    <div id="homeReportCard" class="snow-card rounded-2xl p-3 border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-slate-900 to-sky-950/30 shadow-sm flex items-center justify-between">
+    <div id="homeReportCard" class="snow-card rounded-2xl p-3 border border-amber-300 bg-gradient-to-r from-amber-50 via-white to-sky-50 shadow-sm flex items-center justify-between">
       <div class="flex items-center space-x-2.5 min-w-0 pr-1">
-        <div class="w-9 h-9 rounded-xl bg-amber-400/15 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-sm shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-700 shadow-sm shrink-0">
           <i class="fa-solid fa-users text-sm"></i>
         </div>
         <div class="min-w-0">
           <div class="flex items-center space-x-1.5">
-            <span class="text-xs font-bold text-white tracking-wide">REPORT</span>
-            <span id="reportCountBadge" class="text-[11px] bg-amber-400/20 text-amber-300 font-bold px-1.5 py-0.2 rounded-full border border-amber-400/30">0件</span>
+            <span class="text-xs font-black text-slate-900 tracking-wide">REPORT</span>
+            <span id="reportCountBadge" class="text-[11px] bg-amber-100 text-amber-900 font-bold px-1.5 py-0.2 rounded-full border border-amber-300">0件</span>
           </div>
-          <div class="text-[11.5px] text-slate-400 mt-0.5 flex items-center gap-2 truncate">
-            <span>評価: <strong id="userAvgRate" class="text-amber-300 font-bold">未報告</strong></span>
-            <span class="truncate">雪質: <strong id="userAvgSnow" class="text-slate-200 font-bold">—</strong></span>
+          <div class="text-[11.5px] text-slate-700 mt-0.5 flex items-center gap-2 truncate">
+            <span>評価: <strong id="userAvgRate" class="text-amber-700 font-bold">未報告</strong></span>
+            <span class="truncate">雪質: <strong id="userAvgSnow" class="text-slate-900 font-bold">—</strong></span>
           </div>
         </div>
       </div>
 
-      <button onclick="openReportModal()" class="py-2 px-3 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-sky-500/20 active:scale-95 transition flex items-center gap-1.5 shrink-0">
+      <button onclick="openReportModal()" class="py-2 px-3 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
         <i class="fa-solid fa-plus text-xs"></i>
         <span>REPORT</span>
       </button>
@@ -380,23 +379,23 @@
          =============================== -->
     <div class="snow-card rounded-2xl p-4">
       <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-bold text-slate-200 flex items-center gap-1.5 whitespace-nowrap">
-          <i class="fa-solid fa-chart-line text-sky-400"></i>
+        <h3 class="text-sm font-black text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
+          <i class="fa-solid fa-chart-line text-sky-700"></i>
           <span>SNOW TREND（実測・7日予報）</span>
         </h3>
-        <div class="flex bg-slate-900 rounded-lg p-0.5 border border-slate-700/70 text-[11px]">
-          <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold">7日間</button>
-          <button id="btnTrend48h" onclick="setTrendRange('48h')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold">48h</button>
+        <div class="flex bg-slate-100 rounded-lg p-0.5 border border-slate-300 text-[11px]">
+          <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-white bg-sky-700 font-bold">7日間</button>
+          <button id="btnTrend48h" onclick="setTrendRange('48h')" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold">48h</button>
         </div>
       </div>
       <div class="w-full h-48 relative">
         <canvas id="trendChartCanvas"></canvas>
       </div>
-      <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 text-[11px] text-slate-400 mt-2">
-        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-sky-400 inline-block"></span>積雪深(cm)</span>
-        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span>降雪量(cm/h)</span>
-        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-blue-400/70 border border-blue-400 inline-block"></span>降雨量(mm/h)</span>
-        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>現在時刻</span>
+      <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 text-[11px] font-bold text-slate-700 mt-2">
+        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-sky-700 inline-block"></span>積雪深(cm)</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-orange-600 inline-block"></span>降雪量(cm/h)</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-sky-600/70 border border-sky-700 inline-block"></span>降雨量(mm/h)</span>
+        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-orange-600 inline-block"></span>現在時刻</span>
       </div>
     </div>
 
@@ -405,18 +404,18 @@
          =============================== -->
     <div class="snow-card rounded-2xl p-4">
       <div class="flex items-center justify-between mb-2.5">
-        <h3 class="text-sm font-bold text-slate-200 flex items-center gap-1.5">
-          <i class="fa-solid fa-calendar-days text-sky-400"></i>
+        <h3 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <i class="fa-solid fa-calendar-days text-sky-700"></i>
           <span>WEEKLY FORECAST（7日間）</span>
         </h3>
-        <span class="text-[11px] text-slate-400">※タップで該当日の詳細へ</span>
+        <span class="text-[11px] font-bold text-slate-600">※タップで該当日の詳細へ</span>
       </div>
       <div id="weeklyForecastContainer" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
         <!-- JSで動的生成 -->
       </div>
-      <div class="mt-2 text-[10px] text-slate-400 flex items-center justify-end gap-3 px-1">
-        <span><strong class="text-slate-300">❄️</strong> 1日合計 (0-24時)</span>
-        <span><strong class="text-cyan-300">🌙</strong> オーバーナイト (18-06時)</span>
+      <div class="mt-2 text-[10.5px] font-bold text-slate-600 flex items-center justify-end gap-3 px-1">
+        <span><strong class="text-slate-900">❄️</strong> 1日合計 (0-24時)</span>
+        <span><strong class="text-orange-700">🌙</strong> オーバーナイト (18-06時)</span>
       </div>
     </div>
 
@@ -425,36 +424,36 @@
          =============================== -->
     <div class="snow-card rounded-2xl p-4 space-y-2.5">
       <div class="flex items-center justify-between">
-        <h3 class="text-sm font-bold text-slate-200 flex items-center gap-1.5">
-          <i class="fa-solid fa-clock text-sky-400"></i>
+        <h3 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <i class="fa-solid fa-clock text-sky-700"></i>
           <span>TIMELINE（1時間刻み）</span>
         </h3>
         <!-- 標高切替ピル（タイムライン表の並び順「左:ベース / 右:トップ」に完全一致） -->
-        <div class="flex rounded-lg bg-slate-800 p-0.5 border border-slate-700 text-[11px] font-bold">
-          <button id="btnElevBase" onclick="setElevLevel('base')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">ベース</button>
-          <button id="btnElevTop" onclick="setElevLevel('top')" class="px-2 py-0.5 rounded text-slate-900 bg-sky-400">トップ</button>
+        <div class="flex rounded-lg bg-slate-100 p-0.5 border border-slate-300 text-[11px] font-bold">
+          <button id="btnElevBase" onclick="setElevLevel('base')" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900">ベース</button>
+          <button id="btnElevTop" onclick="setElevLevel('top')" class="px-2 py-0.5 rounded text-white bg-sky-700">トップ</button>
         </div>
       </div>
 
       <!-- 縦スクロールテーブルコンテナ -->
-      <div class="rounded-xl border border-slate-700/80 overflow-hidden bg-slate-900/60 shadow-inner">
+      <div class="rounded-xl border border-slate-300 overflow-hidden bg-white shadow-inner">
         <!-- 固定ヘッダー（5列: 時刻 / 天気 / 気温・風 / ベース雪/雨 / トップ雪/雨） -->
-        <div class="grid grid-cols-[52px_38px_1.15fr_1fr_1fr] text-center text-[11px] font-bold text-slate-400 bg-slate-800/90 py-2 px-1.5 border-b border-slate-700/80 tracking-wide select-none">
+        <div class="grid grid-cols-[52px_38px_1.15fr_1fr_1fr] text-center text-[11px] font-bold text-slate-700 bg-slate-100 py-2 px-1.5 border-b border-slate-300 tracking-wide select-none">
           <div>時刻</div>
           <div>天気</div>
-          <div id="tlWeatherHeader" class="text-sky-300">気温・風(トップ)</div>
-          <div class="text-slate-300 bg-slate-800/50 rounded py-0.5 border border-slate-700/50">ベース 雪/雨</div>
-          <div class="text-emerald-400 bg-emerald-950/30 rounded py-0.5 border border-emerald-500/20">トップ 雪/雨</div>
+          <div id="tlWeatherHeader" class="text-sky-800">気温・風(トップ)</div>
+          <div class="text-slate-800 bg-white rounded py-0.5 border border-slate-300">ベース 雪/雨</div>
+          <div class="text-emerald-800 bg-emerald-50 rounded py-0.5 border border-emerald-300">トップ 雪/雨</div>
         </div>
 
         <!-- 縦スクロール領域 -->
-        <div id="timelineContainer" class="relative divide-y divide-slate-800/70 max-h-[440px] overflow-y-auto hide-scrollbar text-xs">
+        <div id="timelineContainer" class="relative divide-y divide-slate-200 max-h-[440px] overflow-y-auto hide-scrollbar text-xs">
           <!-- JSで動的生成 -->
         </div>
       </div>
-      <div class="flex items-center justify-between text-[11px] text-slate-400 px-1">
+      <div class="flex items-center justify-between text-[11px] font-bold text-slate-600 px-1">
         <span>※雪/雨: 降雪(cm/h)・降雨(mm/h) / 下段=積雪深(cm)</span>
-        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span>NOW</span>
+        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-orange-600 inline-block"></span>NOW</span>
       </div>
     </div>
 
@@ -462,29 +461,29 @@
 
   <!-- TAB 2: 全マップ画面 (サーフベース準拠 独立iframe設計) -->
   <main id="tabMap" class="w-full hidden overflow-hidden">
-    <iframe id="inlineSnowMapFrame" data-src="snow_map.html" src="about:blank" title="全国雪山マップ" class="w-full h-full border-0 bg-slate-900 block"></iframe>
+    <iframe id="inlineSnowMapFrame" data-src="snow_map.html" src="about:blank" title="全国雪山マップ" class="w-full h-full border-0 bg-slate-100 block"></iframe>
   </main>
 
   <!-- TAB 3: エリア一覧 & パウダーランキング（サーフベース準拠統合ビュー） -->
   <main id="tabAreas" class="max-w-md mx-auto px-3.5 pt-2.5 pb-32 space-y-3 hidden">
     <!-- 上部切り替えタブ（エリア別一覧 / パウダーランキング ＋ スキー場 / BC山 2択） -->
-    <div class="sticky z-30 bg-slate-950/95 backdrop-blur-md -mx-3.5 px-3.5 pt-1 pb-2 border-b border-slate-800/80 shadow-sm space-y-2" style="top: calc(env(safe-area-inset-top, 0px) + 49px);">
-      <div class="grid grid-cols-2 border-b border-slate-800/90">
-        <button type="button" id="btnAreasModeList" onclick="switchAreasSubView('list')" class="py-2 text-xs font-black text-sky-400 border-b-2 border-sky-400 transition flex items-center justify-center gap-1.5 whitespace-nowrap">
+    <div class="sticky z-30 bg-slate-100/95 backdrop-blur-md -mx-3.5 px-3.5 pt-1 pb-2 border-b border-slate-300 shadow-sm space-y-2" style="top: calc(env(safe-area-inset-top, 0px) + 49px);">
+      <div class="grid grid-cols-2 border-b border-slate-300">
+        <button type="button" id="btnAreasModeList" onclick="switchAreasSubView('list')" class="py-2 text-xs font-black text-sky-700 border-b-2 border-sky-700 transition flex items-center justify-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-layer-group"></i>
           <span>エリア別一覧</span>
         </button>
-        <button type="button" id="btnAreasModeRanking" onclick="switchAreasSubView('ranking')" class="py-2 text-xs font-bold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition flex items-center justify-center gap-1.5 whitespace-nowrap">
-          <i class="fa-solid fa-crown text-amber-400"></i>
+        <button type="button" id="btnAreasModeRanking" onclick="switchAreasSubView('ranking')" class="py-2 text-xs font-bold text-slate-600 hover:text-slate-900 border-b-2 border-transparent transition flex items-center justify-center gap-1.5 whitespace-nowrap">
+          <i class="fa-solid fa-crown text-amber-600"></i>
           <span>パウダーランキング</span>
         </button>
       </div>
       <!-- スキー場 / バックカントリー 完全分離2択トグル -->
-      <div class="grid grid-cols-2 gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
-        <button type="button" id="btnAreasCatSki" onclick="setAreasCategoryFilter('ski')" class="py-1.5 px-2.5 rounded-lg text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap">
+      <div class="grid grid-cols-2 gap-1.5 bg-white p-1 rounded-xl border border-slate-300">
+        <button type="button" id="btnAreasCatSki" onclick="setAreasCategoryFilter('ski')" class="py-1.5 px-2.5 rounded-lg text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-700 text-white shadow-sm whitespace-nowrap">
           <span>🏂 スキー場</span>
         </button>
-        <button type="button" id="btnAreasCatBc" onclick="setAreasCategoryFilter('bc')" class="py-1.5 px-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap">
+        <button type="button" id="btnAreasCatBc" onclick="setAreasCategoryFilter('bc')" class="py-1.5 px-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-700 hover:text-slate-900 whitespace-nowrap">
           <span>⛰️ バックカントリー</span>
         </button>
       </div>
@@ -494,9 +493,9 @@
     <div id="areasListPanel" class="space-y-2.5">
       <!-- クイック検索バー -->
       <div class="relative">
-        <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-        <input type="text" id="areasSearchInput" oninput="setAreasSearchQuery(this.value)" placeholder="エリア名・スキー場・山名で絞り込み..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-8 pr-8 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-sky-500 transition">
-        <button type="button" id="btnAreasSearchClear" onclick="clearAreasSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1" aria-label="検索クリア">
+        <i class="fa-solid fa-magnifying-glass text-slate-500 text-xs absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+        <input type="text" id="areasSearchInput" oninput="setAreasSearchQuery(this.value)" placeholder="エリア名・スキー場・山名で絞り込み..." class="w-full bg-white border border-slate-300 rounded-xl pl-8 pr-8 py-2 text-xs text-slate-900 font-bold placeholder-slate-400 focus:outline-none focus:border-sky-700 transition shadow-sm">
+        <button type="button" id="btnAreasSearchClear" onclick="clearAreasSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900 p-1" aria-label="検索クリア">
           <i class="fa-solid fa-circle-xmark text-xs"></i>
         </button>
       </div>
@@ -504,11 +503,11 @@
       <!-- コンディションフィルター ＋ すべて展開 -->
       <div class="flex items-center justify-between gap-1.5">
         <div class="flex items-center gap-1 overflow-x-auto hide-scrollbar">
-          <button type="button" id="btnAreasCondAll" onclick="setAreasConditionFilter('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-black bg-sky-500 text-slate-900 whitespace-nowrap transition">すべて</button>
-          <button type="button" id="btnAreasCondFresh" onclick="setAreasConditionFilter('fresh')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white whitespace-nowrap transition">❄️ 新雪あり</button>
-          <button type="button" id="btnAreasCondOpen" onclick="setAreasConditionFilter('open')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white whitespace-nowrap transition">⛷️ 滑走可能(30cm~)</button>
+          <button type="button" id="btnAreasCondAll" onclick="setAreasConditionFilter('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-black bg-sky-700 text-white whitespace-nowrap transition">すべて</button>
+          <button type="button" id="btnAreasCondFresh" onclick="setAreasConditionFilter('fresh')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white text-slate-800 border border-slate-300 hover:bg-slate-50 whitespace-nowrap transition">❄️ 新雪あり</button>
+          <button type="button" id="btnAreasCondOpen" onclick="setAreasConditionFilter('open')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white text-slate-800 border border-slate-300 hover:bg-slate-50 whitespace-nowrap transition">⛷️ 滑走可能(30cm~)</button>
         </div>
-        <button type="button" id="btnToggleAllAccordions" onclick="toggleAllAreaAccordions()" class="text-[11px] font-bold text-sky-300 bg-sky-950/60 hover:bg-sky-900/70 px-2.5 py-1 rounded-lg border border-sky-700/60 transition active:scale-95 shrink-0 whitespace-nowrap">
+        <button type="button" id="btnToggleAllAccordions" onclick="toggleAllAreaAccordions()" class="text-[11px] font-bold text-sky-800 bg-sky-50 hover:bg-sky-100 px-2.5 py-1 rounded-lg border border-sky-300 transition active:scale-95 shrink-0 whitespace-nowrap">
           すべて展開
         </button>
       </div>
@@ -526,14 +525,14 @@
 
     <!-- B. パウダーランキングパネル -->
     <div id="areasRankingPanel" class="space-y-3 hidden">
-      <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-bold gap-1">
-        <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 px-1 rounded-lg text-center bg-sky-500 text-slate-900 shadow whitespace-nowrap truncate">
+      <div class="flex rounded-xl bg-white p-1 border border-slate-300 text-xs font-bold gap-1 shadow-sm">
+        <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 px-1 rounded-lg text-center bg-sky-700 text-white shadow whitespace-nowrap truncate">
           🌙 オーバーナイト
         </button>
-        <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-400 hover:text-white whitespace-nowrap truncate">
+        <button id="btnRank6h" onclick="setRankPeriod('6h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate">
           ⚡ 6時間速報
         </button>
-        <button id="btnRank24h" onclick="setRankPeriod('24h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-400 hover:text-white whitespace-nowrap truncate">
+        <button id="btnRank24h" onclick="setRankPeriod('24h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate">
           ❄️ 24時間累積
         </button>
       </div>
@@ -546,8 +545,8 @@
   <!-- TAB 4: 統合フィード（登録スポット速報 ＆ 雪レポ） -->
   <main id="tabFeed" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3.5 hidden">
     <div class="flex items-center justify-between px-1">
-      <h2 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-        <i class="fa-solid fa-rss text-sky-400"></i>
+      <h2 class="text-xs font-black text-slate-800 flex items-center gap-1.5">
+        <i class="fa-solid fa-rss text-sky-700"></i>
         <span>全国最新雪レポフィード</span>
       </h2>
     </div>
@@ -559,20 +558,20 @@
   <!-- TAB 5: MYスポット -->
   <main id="tabMySpots" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3 hidden">
     <!-- サーフベース準拠：MYスポットヘッダー＆追加カード -->
-    <div class="snow-card rounded-2xl p-3.5 border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-slate-900 to-sky-500/10 shadow-sm flex items-center justify-between gap-2">
+    <div class="snow-card rounded-2xl p-3.5 border border-amber-300 bg-gradient-to-r from-amber-50 via-white to-sky-50 shadow-sm flex items-center justify-between gap-2">
       <div class="flex items-center gap-2.5 min-w-0">
-        <div class="w-9 h-9 rounded-xl bg-amber-400/20 border border-amber-300/40 text-amber-400 flex items-center justify-center shadow-sm shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-amber-100 border border-amber-300 text-amber-700 flex items-center justify-center shadow-sm shrink-0">
           <i class="fa-solid fa-star text-base"></i>
         </div>
         <div class="min-w-0">
           <div class="flex items-center gap-1.5 flex-wrap">
-            <h3 class="text-sm font-black text-white">MYスポット一覧</h3>
-            <span id="mySpotsViewCountBadge" class="text-[11px] px-2 py-0.2 rounded-full bg-amber-400/20 text-amber-300 font-bold border border-amber-400/30">0地点</span>
+            <h3 class="text-sm font-black text-slate-900">MYスポット一覧</h3>
+            <span id="mySpotsViewCountBadge" class="text-[11px] px-2 py-0.2 rounded-full bg-amber-100 text-amber-900 font-bold border border-amber-300">0地点</span>
           </div>
-          <p class="text-[11px] text-slate-400 mt-0.5 truncate">登録スポットの夜間新雪・積雪・雪質を一目で比較</p>
+          <p class="text-[11px] text-slate-600 font-medium mt-0.5 truncate">登録スポットの夜間新雪・積雪・雪質を一目で比較</p>
         </div>
       </div>
-      <button type="button" onclick="openSearchModal()" class="px-2.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow-sm transition active:scale-95 flex items-center gap-1 shrink-0">
+      <button type="button" onclick="openSearchModal()" class="px-2.5 py-1.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white text-xs font-bold shadow-sm transition active:scale-95 flex items-center gap-1 shrink-0">
         <i class="fa-solid fa-plus text-[11px]"></i>
         <span>追加</span>
       </button>
@@ -586,7 +585,7 @@
   <!-- ===============================
        ホーム画面右下：スマート追従「雪レポ投稿ボタン（FAB）」（サーフベース準拠）
        =============================== -->
-  <button type="button" id="floatingReportFab" onclick="openReportModal()" class="fixed right-3.5 z-40 py-2.5 px-3.5 rounded-full bg-gradient-to-r from-sky-600 to-blue-600 text-white font-bold text-xs shadow-lg shadow-sky-600/30 border border-sky-400/40 flex items-center gap-1.5 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none active:scale-95" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 56px);">
+  <button type="button" id="floatingReportFab" onclick="openReportModal()" class="fixed right-3.5 z-40 py-2.5 px-3.5 rounded-full bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow-lg shadow-sky-900/25 border border-sky-500/40 flex items-center gap-1.5 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none active:scale-95" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 56px);">
     <i class="fa-solid fa-plus text-xs"></i>
     <span>REPORT</span>
   </button>
@@ -594,36 +593,36 @@
   <!-- ===============================
        BOTTOM NAVIGATION BAR (サーフベース準拠・5等分グリッド)
        =============================== -->
-  <nav id="bottomNavBar" aria-label="メインナビゲーション" class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 shadow-[0_-4px_20px_rgba(2,6,23,0.45)]" style="padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px);">
+  <nav id="bottomNavBar" aria-label="メインナビゲーション" class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_20px_rgba(15,23,42,0.08)]" style="padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px);">
     <div class="max-w-md mx-auto grid grid-cols-5 h-12 px-1 pt-1">
-      <button type="button" onclick="switchTab('home')" id="navHome" class="relative flex flex-col items-center justify-center gap-0.5 text-sky-400 font-black transition active:scale-95">
-        <span id="navIndicatorHome" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400"></span>
+      <button type="button" onclick="switchTab('home')" id="navHome" class="relative flex flex-col items-center justify-center gap-0.5 text-sky-700 font-black transition active:scale-95">
+        <span id="navIndicatorHome" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-700"></span>
         <i class="fa-solid fa-house text-sm"></i>
         <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">ホーム</span>
       </button>
-      <button type="button" onclick="switchTab('areas')" id="navAreas" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95">
-        <span id="navIndicatorAreas" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400 hidden"></span>
+      <button type="button" onclick="switchTab('areas')" id="navAreas" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:text-slate-900 font-bold transition active:scale-95">
+        <span id="navIndicatorAreas" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-700 hidden"></span>
         <i class="fa-solid fa-table-list text-sm"></i>
         <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">エリア一覧</span>
       </button>
-      <button type="button" onclick="switchTab('feed')" id="navFeed" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95">
-        <span id="navIndicatorFeed" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400 hidden"></span>
+      <button type="button" onclick="switchTab('feed')" id="navFeed" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:text-slate-900 font-bold transition active:scale-95">
+        <span id="navIndicatorFeed" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-700 hidden"></span>
         <div class="relative">
           <i class="fa-solid fa-bell text-sm"></i>
-          <span id="navFeedBadgeDot" class="absolute -top-0.5 -right-1 w-2 h-2 rounded-full bg-amber-500 ring-2 ring-slate-900 hidden"></span>
+          <span id="navFeedBadgeDot" class="absolute -top-0.5 -right-1 w-2 h-2 rounded-full bg-orange-600 ring-2 ring-white hidden"></span>
         </div>
         <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">フィード</span>
       </button>
-      <button type="button" onclick="switchTab('map')" id="navMap" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95">
-        <span id="navIndicatorMap" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400 hidden"></span>
+      <button type="button" onclick="switchTab('map')" id="navMap" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:text-slate-900 font-bold transition active:scale-95">
+        <span id="navIndicatorMap" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-700 hidden"></span>
         <i class="fa-solid fa-map-location-dot text-sm"></i>
         <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">マップ</span>
       </button>
-      <button type="button" onclick="switchTab('mySpots')" id="navMySpots" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95">
-        <span id="navIndicatorMySpots" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-400 hidden"></span>
+      <button type="button" onclick="switchTab('mySpots')" id="navMySpots" class="relative flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:text-slate-900 font-bold transition active:scale-95">
+        <span id="navIndicatorMySpots" class="absolute top-0 inset-x-3 h-0.5 rounded-b-full bg-sky-700 hidden"></span>
         <div class="relative">
           <i class="fa-solid fa-star text-sm"></i>
-          <span id="navMySpotsBadge" class="absolute -top-1.5 -right-3 px-1 min-w-[14px] h-[14px] rounded-full bg-amber-500 text-slate-950 text-[10.5px] font-black flex items-center justify-center leading-none shadow-sm hidden">0</span>
+          <span id="navMySpotsBadge" class="absolute -top-1.5 -right-3 px-1 min-w-[14px] h-[14px] rounded-full bg-orange-600 text-white text-[10.5px] font-black flex items-center justify-center leading-none shadow-sm hidden">0</span>
         </div>
         <span class="text-[11px] leading-none tracking-tight whitespace-nowrap">MYスポット</span>
       </button>
@@ -633,20 +632,20 @@
   <!-- ===============================
        MODAL: 雪予報プッシュ通知設定（サーフベース準拠・厳選降雪アラート）
        =============================== -->
-  <div id="notificationModal" onclick="if(event.target===this) closeNotificationModal()" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3">
-    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 sm:p-5 w-full max-w-lg shadow-2xl space-y-3.5 max-h-[92vh] flex flex-col">
+  <div id="notificationModal" onclick="if(event.target===this) closeNotificationModal()" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-3">
+    <div class="bg-white border border-slate-300 rounded-3xl p-4 sm:p-5 w-full max-w-lg shadow-2xl space-y-3.5 max-h-[92vh] flex flex-col">
       <!-- モーダルヘッダー -->
-      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
         <div class="flex items-center space-x-2.5">
-          <div class="w-8 h-8 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center border border-sky-500/30">
+          <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center border border-sky-300">
             <i class="fa-solid fa-bell text-sm"></i>
           </div>
           <div>
-            <h3 class="font-bold text-sm text-white">パウダー・降雪プッシュ通知設定</h3>
-            <p class="text-[11px] text-slate-400">設定した新雪量以上が降る時＆週末雪予想だけ自動通知</p>
+            <h3 class="font-black text-sm text-slate-900">パウダー・降雪プッシュ通知設定</h3>
+            <p class="text-[11px] text-slate-600 font-medium">設定した新雪量以上が降る時＆週末雪予想だけ自動通知</p>
           </div>
         </div>
-        <button type="button" onclick="closeNotificationModal()" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition">
+        <button type="button" onclick="closeNotificationModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 flex items-center justify-center border border-slate-300 transition">
           <i class="fa-solid fa-xmark text-xs"></i>
         </button>
       </div>
@@ -655,48 +654,48 @@
       <div class="overflow-y-auto space-y-3.5 pr-1 text-xs">
 
         <!-- iOS PWA ホーム画面追加ガイド -->
-        <div id="iosPwaGuide" style="display: none;" class="p-3 bg-amber-950/50 rounded-2xl border border-amber-500/40 space-y-2">
-          <div class="flex items-center gap-1.5 text-amber-300 font-bold text-xs">
+        <div id="iosPwaGuide" style="display: none;" class="p-3 bg-amber-50 rounded-2xl border border-amber-300 space-y-2">
+          <div class="flex items-center gap-1.5 text-amber-900 font-bold text-xs">
             <i class="fa-brands fa-apple text-base"></i>
             <span>iPhoneで通知を受け取る手順</span>
           </div>
-          <p class="text-[11px] text-amber-100/90 leading-relaxed">
+          <p class="text-[11px] text-amber-950 leading-relaxed">
             iOS Safariの仕様上、プッシュ通知を受信するには本アプリを<strong>「ホーム画面に追加」</strong>して起動する必要があります。
           </p>
-          <div class="bg-slate-900/80 p-2.5 rounded-xl text-[11px] text-slate-200 space-y-1.5 border border-amber-500/30">
+          <div class="bg-white p-2.5 rounded-xl text-[11px] text-slate-800 space-y-1.5 border border-amber-300">
             <div class="flex items-center gap-2">
-              <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] flex-shrink-0">1</span>
-              <span>画面下部中央の <strong>共有ボタン</strong> <i class="fa-solid fa-arrow-up-from-bracket mx-0.5 text-sky-400"></i> をタップ</span>
+              <span class="w-4 h-4 rounded-full bg-amber-200 text-amber-950 font-bold flex items-center justify-center text-[10px] flex-shrink-0">1</span>
+              <span>画面下部中央の <strong>共有ボタン</strong> <i class="fa-solid fa-arrow-up-from-bracket mx-0.5 text-sky-700"></i> をタップ</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] flex-shrink-0">2</span>
-              <span>メニュー内の <strong>「ホーム画面に追加」</strong> <i class="fa-regular fa-square-plus mx-0.5 text-slate-300"></i> をタップ</span>
+              <span class="w-4 h-4 rounded-full bg-amber-200 text-amber-950 font-bold flex items-center justify-center text-[10px] flex-shrink-0">2</span>
+              <span>メニュー内の <strong>「ホーム画面に追加」</strong> <i class="fa-regular fa-square-plus mx-0.5 text-slate-700"></i> をタップ</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-[10px] flex-shrink-0">3</span>
+              <span class="w-4 h-4 rounded-full bg-amber-200 text-amber-950 font-bold flex items-center justify-center text-[10px] flex-shrink-0">3</span>
               <span>ホーム画面の <strong>POWDER BASE アイコン</strong> から起動し、ここで通知をONにする</span>
             </div>
           </div>
         </div>
 
         <!-- 接続ステータス & 有効化カード -->
-        <div class="p-3 bg-slate-800/80 rounded-2xl border border-slate-700/80 flex items-center justify-between gap-2">
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-300 flex items-center justify-between gap-2">
           <div class="space-y-0.5">
-            <span class="text-[11px] text-slate-400 font-medium block">通知ステータス</span>
-            <div id="notifStatusText" class="font-bold text-slate-200 text-xs">確認中...</div>
+            <span class="text-[11px] text-slate-600 font-bold block">通知ステータス</span>
+            <div id="notifStatusText" class="font-bold text-slate-900 text-xs">確認中...</div>
           </div>
-          <button type="button" id="btnTogglePush" onclick="togglePushSubscription()" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-sm active:scale-95 transition flex-shrink-0">
+          <button type="button" id="btnTogglePush" onclick="togglePushSubscription()" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-700 hover:bg-sky-800 text-white shadow-sm active:scale-95 transition flex-shrink-0">
             通知を有効にする
           </button>
         </div>
 
         <!-- テスト通知送信ボタン -->
-        <div id="testNotifContainer" class="hidden flex items-center justify-between p-2.5 bg-emerald-950/50 rounded-2xl border border-emerald-500/40">
-          <div class="flex items-center gap-1.5 text-emerald-300">
-            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <div id="testNotifContainer" class="hidden flex items-center justify-between p-2.5 bg-emerald-50 rounded-2xl border border-emerald-300">
+          <div class="flex items-center gap-1.5 text-emerald-900">
+            <i class="fa-solid fa-circle-check text-emerald-700"></i>
             <span class="text-xs font-bold">通知が接続されています</span>
           </div>
-          <button type="button" onclick="triggerTestNotification()" class="px-2.5 py-1 bg-slate-900 hover:bg-emerald-950 text-emerald-300 text-xs font-bold rounded-lg border border-emerald-500/50 shadow-sm active:scale-95 transition flex items-center gap-1">
+          <button type="button" onclick="triggerTestNotification()" class="px-2.5 py-1 bg-white hover:bg-emerald-100 text-emerald-800 text-xs font-bold rounded-lg border border-emerald-400 shadow-sm active:scale-95 transition flex items-center gap-1">
             <i class="fa-solid fa-paper-plane text-[11px]"></i>
             <span>テスト通知を試す</span>
           </button>
@@ -704,55 +703,55 @@
 
         <!-- 降雪しきい値設定 -->
         <div class="space-y-2">
-          <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-snowflake text-sky-400"></i>
+          <span class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+            <i class="fa-solid fa-snowflake text-sky-700"></i>
             <span>通知する新雪の基準（この量以上降る時だけ通知）</span>
           </span>
-          <div class="grid grid-cols-4 gap-1.5 bg-slate-800/70 p-1.5 rounded-2xl border border-slate-700/80">
-            <button type="button" onclick="setNotifThreshold(5)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-300 hover:bg-slate-700" data-threshold="5">+5cm</button>
-            <button type="button" onclick="setNotifThreshold(10)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition bg-sky-500 text-slate-950 shadow" data-threshold="10">+10cm</button>
-            <button type="button" onclick="setNotifThreshold(20)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-300 hover:bg-slate-700" data-threshold="20">+20cm</button>
-            <button type="button" onclick="setNotifThreshold(30)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-300 hover:bg-slate-700" data-threshold="30">+30cm</button>
+          <div class="grid grid-cols-4 gap-1.5 bg-slate-100 p-1.5 rounded-2xl border border-slate-300">
+            <button type="button" onclick="setNotifThreshold(5)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-800 hover:bg-slate-200" data-threshold="5">+5cm</button>
+            <button type="button" onclick="setNotifThreshold(10)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition bg-sky-700 text-white shadow" data-threshold="10">+10cm</button>
+            <button type="button" onclick="setNotifThreshold(20)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-800 hover:bg-slate-200" data-threshold="20">+20cm</button>
+            <button type="button" onclick="setNotifThreshold(30)" class="notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-800 hover:bg-slate-200" data-threshold="30">+30cm</button>
           </div>
         </div>
 
         <!-- 通知タイミング設定 -->
         <div class="space-y-2">
-          <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-            <i class="fa-regular fa-clock text-sky-400"></i>
+          <span class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+            <i class="fa-regular fa-clock text-sky-700"></i>
             <span>受信ルール（すべて基準以上の降雪時のみ配信）</span>
           </span>
-          <div class="grid grid-cols-1 gap-2 bg-slate-800/70 p-3 rounded-2xl border border-slate-700/80">
+          <div class="grid grid-cols-1 gap-2 bg-slate-50 p-3 rounded-2xl border border-slate-300">
             <label class="flex items-center justify-between cursor-pointer py-0.5 gap-2">
               <div>
-                <span class="text-xs font-bold text-white">🌙 朝のパウダー速報（06:00台）</span>
-                <p class="text-[11px] text-slate-400">今朝の夜間新雪が基準以上積もった朝だけ通知</p>
+                <span class="text-xs font-bold text-slate-900">🌙 朝のパウダー速報（06:00台）</span>
+                <p class="text-[11px] text-slate-600">今朝の夜間新雪が基準以上積もった朝だけ通知</p>
               </div>
-              <input type="checkbox" id="timingMorning" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-400 rounded shrink-0">
+              <input type="checkbox" id="timingMorning" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-700 rounded shrink-0">
             </label>
-            <div class="border-t border-slate-700/60"></div>
+            <div class="border-t border-slate-200"></div>
             <label class="flex items-center justify-between cursor-pointer py-0.5 gap-2">
               <div>
-                <span class="text-xs font-bold text-white">🌨️ 夜の予報アラート（19:00台）</span>
-                <p class="text-[11px] text-slate-400">明朝の新雪、または3日以内に基準以上降る予報時だけ通知</p>
+                <span class="text-xs font-bold text-slate-900">🌨️ 夜の予報アラート（19:00台）</span>
+                <p class="text-[11px] text-slate-600">明朝の新雪、または3日以内に基準以上降る予報時だけ通知</p>
               </div>
-              <input type="checkbox" id="timingEvening" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-400 rounded shrink-0">
+              <input type="checkbox" id="timingEvening" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-700 rounded shrink-0">
             </label>
-            <div class="border-t border-slate-700/60"></div>
+            <div class="border-t border-slate-200"></div>
             <label class="flex items-center justify-between cursor-pointer py-0.5 gap-2">
               <div>
-                <span class="text-xs font-bold text-white">📅 週末パウダー予想（木・金 19:00台）</span>
-                <p class="text-[11px] text-slate-400">土日のいずれかで基準以上の降雪予報がある週末だけ通知</p>
+                <span class="text-xs font-bold text-slate-900">📅 週末パウダー予想（木・金 19:00台）</span>
+                <p class="text-[11px] text-slate-600">土日のいずれかで基準以上の降雪予報がある週末だけ通知</p>
               </div>
-              <input type="checkbox" id="timingWeekend" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-400 rounded shrink-0">
+              <input type="checkbox" id="timingWeekend" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-700 rounded shrink-0">
             </label>
-            <div class="border-t border-slate-700/60"></div>
+            <div class="border-t border-slate-200"></div>
             <label class="flex items-center justify-between cursor-pointer py-0.5 gap-2">
               <div>
-                <span class="text-xs font-bold text-sky-300">🤖 AI全国パウダー大賞</span>
-                <p class="text-[11px] text-slate-400">MYスポット以外でも全国トップ級（+20cm以上）出現時にお知らせ</p>
+                <span class="text-xs font-bold text-sky-800">🤖 AI全国パウダー大賞</span>
+                <p class="text-[11px] text-slate-600">MYスポット以外でも全国トップ級（+20cm以上）出現時にお知らせ</p>
               </div>
-              <input type="checkbox" id="chkAutoPickup" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-400 rounded shrink-0">
+              <input type="checkbox" id="chkAutoPickup" checked onchange="saveNotificationSettingsToFirestore()" class="w-4 h-4 accent-sky-700 rounded shrink-0">
             </label>
           </div>
         </div>
@@ -760,36 +759,36 @@
         <!-- お気に入りスポット通知選択 -->
         <div class="space-y-2">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-              <i class="fa-solid fa-location-dot text-rose-400"></i>
+            <span class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-location-dot text-rose-600"></i>
               <span>通知を受け取るスポット</span>
-              <span id="notifSelectedCountBadge" class="text-[11px] px-1.5 py-0.5 rounded-md bg-sky-950 text-sky-300 font-extrabold border border-sky-700">0箇所</span>
+              <span id="notifSelectedCountBadge" class="text-[11px] px-1.5 py-0.5 rounded-md bg-sky-50 text-sky-800 font-extrabold border border-sky-300">0箇所</span>
             </span>
-            <button type="button" id="btnToggleAllNotif" onclick="toggleAllNotifSpots()" class="text-[11px] text-sky-300 bg-sky-950/70 px-2 py-0.5 rounded-md border border-sky-700/80 hover:bg-sky-900 font-bold transition whitespace-nowrap">
+            <button type="button" id="btnToggleAllNotif" onclick="toggleAllNotifSpots()" class="text-[11px] text-sky-800 bg-sky-50 px-2 py-0.5 rounded-md border border-sky-300 hover:bg-sky-100 font-bold transition whitespace-nowrap">
               MY全選択
             </button>
           </div>
           <!-- 地方フィルターピル -->
           <div id="notifRegionFilterBar" class="flex items-center gap-1 overflow-x-auto hide-scrollbar py-0.5 text-[11px]">
-            <button type="button" onclick="renderNotifSpotSelector('fav')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-amber-500 text-slate-950 whitespace-nowrap" data-filter="fav">⭐ MYスポット</button>
-            <button type="button" onclick="renderNotifSpotSelector('selected')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="selected">選択中のみ</button>
-            <button type="button" onclick="renderNotifSpotSelector('hokkaido')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="hokkaido">北海道</button>
-            <button type="button" onclick="renderNotifSpotSelector('tohoku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="tohoku">東北</button>
-            <button type="button" onclick="renderNotifSpotSelector('shinetsu')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="shinetsu">信越</button>
-            <button type="button" onclick="renderNotifSpotSelector('hokuriku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="hokuriku">北陸</button>
-            <button type="button" onclick="renderNotifSpotSelector('kanto')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="kanto">関東</button>
-            <button type="button" onclick="renderNotifSpotSelector('tokai')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="tokai">東海</button>
-            <button type="button" onclick="renderNotifSpotSelector('kansai')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="kansai">関西</button>
-            <button type="button" onclick="renderNotifSpotSelector('chugoku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap" data-filter="chugoku">中国</button>
+            <button type="button" onclick="renderNotifSpotSelector('fav')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-sky-700 text-white whitespace-nowrap" data-filter="fav">⭐ MYスポット</button>
+            <button type="button" onclick="renderNotifSpotSelector('selected')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="selected">選択中のみ</button>
+            <button type="button" onclick="renderNotifSpotSelector('hokkaido')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="hokkaido">北海道</button>
+            <button type="button" onclick="renderNotifSpotSelector('tohoku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="tohoku">東北</button>
+            <button type="button" onclick="renderNotifSpotSelector('shinetsu')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="shinetsu">信越</button>
+            <button type="button" onclick="renderNotifSpotSelector('hokuriku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="hokuriku">北陸</button>
+            <button type="button" onclick="renderNotifSpotSelector('kanto')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="kanto">関東</button>
+            <button type="button" onclick="renderNotifSpotSelector('tokai')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="tokai">東海</button>
+            <button type="button" onclick="renderNotifSpotSelector('kansai')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="kansai">関西</button>
+            <button type="button" onclick="renderNotifSpotSelector('chugoku')" class="notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap" data-filter="chugoku">中国</button>
           </div>
-          <div id="notifSpotList" class="flex flex-wrap gap-1.5 p-2.5 bg-slate-800/70 rounded-2xl border border-slate-700/80 max-h-40 overflow-y-auto">
+          <div id="notifSpotList" class="flex flex-wrap gap-1.5 p-2.5 bg-slate-50 rounded-2xl border border-slate-300 max-h-40 overflow-y-auto">
             <!-- JSで動的生成 -->
           </div>
         </div>
 
         <!-- 保存完了フィードバックアラート -->
-        <div id="notifAutoSaveAlert" class="hidden p-2.5 rounded-xl bg-emerald-950/60 text-emerald-300 text-xs font-bold border border-emerald-500/40 flex items-center gap-1.5">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <div id="notifAutoSaveAlert" class="hidden p-2.5 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-300 flex items-center gap-1.5">
+          <i class="fa-solid fa-circle-check text-emerald-700"></i>
           <span>通知設定を保存しました</span>
         </div>
 
@@ -800,16 +799,16 @@
   <!-- ===============================
        MODAL: 高速スポット検索
        =============================== -->
-  <div id="modalSearch" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
-      <div class="p-3 border-b border-slate-800 flex items-center gap-2">
-        <i class="fa-solid fa-magnifying-glass text-sky-400 text-sm ml-1"></i>
-        <input type="text" id="searchInput" oninput="onSearchInput(this.value)" placeholder="スキー場名、山名、エリアで検索..." class="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none">
-        <button onclick="closeSearchModal()" class="text-slate-400 hover:text-white p-1 text-base">
+  <div id="modalSearch" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white border border-slate-300 rounded-2xl w-full max-w-md max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-3 border-b border-slate-200 flex items-center gap-2">
+        <i class="fa-solid fa-magnifying-glass text-sky-700 text-sm ml-1"></i>
+        <input type="text" id="searchInput" oninput="onSearchInput(this.value)" placeholder="スキー場名、山名、エリアで検索..." class="w-full bg-transparent text-sm text-slate-900 font-bold placeholder-slate-400 focus:outline-none">
+        <button onclick="closeSearchModal()" class="text-slate-500 hover:text-slate-900 p-1 text-base">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div id="searchResults" class="p-2 overflow-y-auto space-y-1 flex-1">
+      <div id="searchResults" class="p-2 overflow-y-auto space-y-1 flex-1 bg-slate-50">
         <!-- 検索結果がここに動的表示 -->
       </div>
     </div>
@@ -818,20 +817,20 @@
   <!-- ===============================
        MODAL: 雪レポ投稿（サーフベース準拠・クリーンデザイン）
        =============================== -->
-  <div id="modalReport" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3.5">
-    <div class="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-md max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+  <div id="modalReport" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-3.5">
+    <div class="bg-white border border-slate-300 rounded-2xl w-full max-w-md max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
       <!-- ヘッダー -->
-      <div class="p-3.5 border-b border-slate-800 flex items-center justify-between">
+      <div class="p-3.5 border-b border-slate-200 flex items-center justify-between">
         <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center border border-sky-500/30">
+          <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center border border-sky-300">
             <i class="fa-solid fa-pen-to-square text-sm"></i>
           </div>
           <div>
-            <h3 class="font-bold text-sm text-white">雪レポート登録</h3>
-            <p class="text-[11px] text-slate-400">現地のリアルな雪質・コンディションを共有</p>
+            <h3 class="font-black text-sm text-slate-900">雪レポート登録</h3>
+            <p class="text-[11px] text-slate-600">現地のリアルな雪質・コンディションを共有</p>
           </div>
         </div>
-        <button onclick="closeReportModal()" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center border border-slate-700 transition">
+        <button onclick="closeReportModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 flex items-center justify-center border border-slate-300 transition">
           <i class="fa-solid fa-xmark text-xs"></i>
         </button>
       </div>
@@ -840,44 +839,44 @@
       <div class="p-4 overflow-y-auto space-y-3.5 text-xs">
         <!-- 1. 滑走スポット表示（ホーム選択中スポット固定表示） -->
         <div>
-          <label class="block text-slate-300 font-bold mb-1">滑走スポット</label>
-          <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2.5 flex items-center justify-between">
+          <label class="block text-slate-800 font-bold mb-1">滑走スポット</label>
+          <div class="bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 flex items-center justify-between">
             <div class="flex items-center gap-2 min-w-0">
-              <span id="reportSpotCategoryBadge" class="text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 shrink-0">スキー場</span>
-              <span id="reportSpotLabel" class="font-bold text-white text-xs truncate">--</span>
+              <span id="reportSpotCategoryBadge" class="text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-sky-50 text-sky-800 border border-sky-300 shrink-0">スキー場</span>
+              <span id="reportSpotLabel" class="font-bold text-slate-900 text-xs truncate">--</span>
             </div>
-            <span id="reportSpotAreaLabel" class="text-[11px] text-slate-400 shrink-0 ml-2">--</span>
+            <span id="reportSpotAreaLabel" class="text-[11px] text-slate-600 font-medium shrink-0 ml-2">--</span>
           </div>
         </div>
 
         <!-- 2. 滑走時間帯（チップ選択） -->
         <div>
-          <label class="block text-slate-300 font-bold mb-1.5">滑走時間帯</label>
+          <label class="block text-slate-800 font-bold mb-1.5">滑走時間帯</label>
           <div class="grid grid-cols-4 gap-1.5" id="reportTimeSlotGroup">
-            <button type="button" onclick="setReportTimeSlot('朝イチ')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition" data-slot="朝イチ">朝イチ</button>
-            <button type="button" onclick="setReportTimeSlot('午前')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition" data-slot="午前">午前</button>
-            <button type="button" onclick="setReportTimeSlot('午後')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition" data-slot="午後">午後</button>
-            <button type="button" onclick="setReportTimeSlot('ナイター')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition" data-slot="ナイター">ナイター</button>
+            <button type="button" onclick="setReportTimeSlot('朝イチ')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition" data-slot="朝イチ">朝イチ</button>
+            <button type="button" onclick="setReportTimeSlot('午前')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition" data-slot="午前">午前</button>
+            <button type="button" onclick="setReportTimeSlot('午後')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition" data-slot="午後">午後</button>
+            <button type="button" onclick="setReportTimeSlot('ナイター')" class="report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition" data-slot="ナイター">ナイター</button>
           </div>
         </div>
 
         <!-- 3. 体感満足度（★1〜5） -->
         <div>
-          <label class="block text-slate-300 font-bold mb-1">体感満足度</label>
-          <div class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-2 rounded-xl border border-slate-700" id="reportRatingStars">
-            <button type="button" onclick="setReportRating(1)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-            <button type="button" onclick="setReportRating(2)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-            <button type="button" onclick="setReportRating(3)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-            <button type="button" onclick="setReportRating(4)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-            <button type="button" onclick="setReportRating(5)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-            <span id="reportRatingLabel" class="text-xs font-bold text-amber-300 ml-2">5点</span>
+          <label class="block text-slate-800 font-bold mb-1">体感満足度</label>
+          <div class="flex items-center gap-1.5 bg-slate-50 px-3 py-2 rounded-xl border border-slate-300" id="reportRatingStars">
+            <button type="button" onclick="setReportRating(1)" class="text-xl text-amber-500 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(2)" class="text-xl text-amber-500 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(3)" class="text-xl text-amber-500 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(4)" class="text-xl text-amber-500 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <button type="button" onclick="setReportRating(5)" class="text-xl text-amber-500 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            <span id="reportRatingLabel" class="text-xs font-bold text-amber-700 ml-2">5点</span>
           </div>
         </div>
 
         <!-- 4. 雪質・バーン状況（ホーム画面バッジ統一・段階順） -->
         <div>
-          <label class="block text-slate-300 font-bold mb-1">雪質・バーン状況</label>
-          <select id="reportSnowType" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none focus:border-sky-500">
+          <label class="block text-slate-800 font-bold mb-1">雪質・バーン状況</label>
+          <select id="reportSnowType" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold text-xs focus:outline-none focus:border-sky-700">
             <option value="神パウ">神パウ</option>
             <option value="極上パウ">極上パウ</option>
             <option value="良質パウ">良質パウ</option>
@@ -892,8 +891,8 @@
 
         <!-- 5. 新雪の深さ（案B：7段階・カッコ説明なし） -->
         <div>
-          <label class="block text-slate-300 font-bold mb-1">新雪の深さ</label>
-          <select id="reportSnowDepth" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none focus:border-sky-500">
+          <label class="block text-slate-800 font-bold mb-1">新雪の深さ</label>
+          <select id="reportSnowDepth" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold text-xs focus:outline-none focus:border-sky-700">
             <option value="新雪なし">新雪なし</option>
             <option value="くるぶし 5〜15cm">くるぶし 5〜15cm</option>
             <option value="すね 15〜30cm">すね 15〜30cm</option>
@@ -906,18 +905,18 @@
 
         <!-- 6. 現地の様子・コメント -->
         <div>
-          <label class="block text-slate-300 font-bold mb-1">現地のひとことメモ（任意）</label>
-          <textarea id="reportComment" rows="2" maxlength="120" placeholder="例: 朝イチの非圧雪コースが軽く、視界も良好でした" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 text-xs"></textarea>
+          <label class="block text-slate-800 font-bold mb-1">現地のひとことメモ（任意）</label>
+          <textarea id="reportComment" rows="2" maxlength="120" placeholder="例: 朝イチの非圧雪コースが軽く、視界も良好でした" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-700 text-xs"></textarea>
         </div>
       </div>
 
       <!-- 送信フッター -->
-      <div class="p-3.5 border-t border-slate-800 bg-slate-900/90">
-        <button type="button" onclick="submitReport()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-black text-xs shadow-lg shadow-sky-500/25 active:scale-95 transition flex items-center justify-center gap-1.5">
+      <div class="p-3.5 border-t border-slate-200 bg-slate-50">
+        <button type="button" onclick="submitReport()" class="w-full py-2.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-black text-xs shadow-md active:scale-95 transition flex items-center justify-center gap-1.5">
           <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
           <span>雪レポを登録する</span>
         </button>
-        <p class="text-[11px] text-center text-slate-500 mt-1.5">※全国のスキーヤー・スノーボーダーと即座にリアルタイム共有されます</p>
+        <p class="text-[11px] text-center text-slate-600 mt-1.5">※全国のスキーヤー・スノーボーダーと即座にリアルタイム共有されます</p>
       </div>
     </div>
   </div>
@@ -1138,11 +1137,11 @@
       const btnSki = document.getElementById('btnCategorySki');
       const btnBc = document.getElementById('btnCategoryBc');
       if (currentCategory === 'ski') {
-        btnSki.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow font-bold";
-        btnBc.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white font-bold";
+        btnSki.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-700 text-white shadow-sm font-bold";
+        btnBc.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-700 hover:text-slate-900 font-bold";
       } else {
-        btnSki.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white font-bold";
-        btnBc.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow font-bold";
+        btnSki.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 text-slate-700 hover:text-slate-900 font-bold";
+        btnBc.className = "flex-1 py-1.5 rounded-lg text-center transition flex items-center justify-center gap-1.5 bg-sky-700 text-white shadow-sm font-bold";
       }
     }
 
@@ -1204,12 +1203,12 @@
       // ⭐ MYスポット ピル (常に一番左)
       const validFavs = favorites.filter(favId => appData.spots.some(s => s.id === favId));
       const favBtn = document.createElement("button");
-      favBtn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border flex items-center gap-1.5 shadow ${
+      favBtn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border flex items-center gap-1.5 shadow-sm ${
         isFavMode
-          ? "bg-amber-400 text-slate-950 border-amber-300 font-black ring-2 ring-amber-300/40"
-          : "bg-slate-800 text-amber-400 border-amber-500/40 hover:bg-slate-700"
+          ? "bg-amber-500 text-slate-950 border-amber-600 font-black ring-2 ring-amber-400/50"
+          : "bg-white text-amber-700 border-amber-400 hover:bg-amber-50"
       }`;
-      favBtn.innerHTML = `<i class="fa-solid fa-star text-[11px]"></i><span>MYスポット</span><span class="text-[11px] px-1.5 py-0.2 rounded-full font-black ${isFavMode ? 'bg-amber-950 text-amber-300' : 'bg-amber-400/20 text-amber-300 border border-amber-400/30'}">${validFavs.length}</span>`;
+      favBtn.innerHTML = `<i class="fa-solid fa-star text-[11px]"></i><span>MYスポット</span><span class="text-[11px] px-1.5 py-0.2 rounded-full font-black ${isFavMode ? 'bg-slate-900 text-amber-300' : 'bg-amber-100 text-amber-900 border border-amber-300'}">${validFavs.length}</span>`;
       
       favBtn.onclick = () => {
         isFavMode = !isFavMode;
@@ -1234,8 +1233,8 @@
         // === MYスポット一覧表示モード ===
         if (validFavs.length === 0) {
           const emptyHint = document.createElement("div");
-          emptyHint.className = "text-[11px] text-amber-300 bg-amber-950/40 px-3 py-1 rounded-full border border-amber-500/30 font-medium flex items-center gap-1.5 whitespace-nowrap shrink-0";
-          emptyHint.innerHTML = `<i class="fa-regular fa-star text-amber-400"></i><span>右上の★を押してMYスポットを登録してください</span>`;
+          emptyHint.className = "text-[11px] text-amber-900 bg-amber-50 px-3 py-1 rounded-full border border-amber-300 font-bold flex items-center gap-1.5 whitespace-nowrap shrink-0";
+          emptyHint.innerHTML = `<i class="fa-regular fa-star text-amber-600"></i><span>右上の★を押してMYスポットを登録してください</span>`;
           container.appendChild(emptyHint);
         } else {
           validFavs.forEach(favId => {
@@ -1246,11 +1245,11 @@
             if (isSelected) activeBtn = btn;
             btn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border flex items-center gap-1 shrink-0 ${
               isSelected
-                ? "bg-sky-400 text-slate-900 border-sky-400 shadow font-black"
-                : "bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600"
+                ? "bg-sky-700 text-white border-sky-700 shadow-sm font-black"
+                : "bg-white text-slate-800 border-slate-300 hover:bg-slate-50"
             }`;
             const subName = spot.areaName || spot.regionName || "";
-            btn.innerHTML = `<span>${spot.name}</span><span class="text-[11px] ${isSelected ? 'text-slate-900 font-semibold' : 'text-slate-400'}">(${spot.category === 'bc' ? '⛰️' : '🏂'}${subName})</span>`;
+            btn.innerHTML = `<span>${spot.name}</span><span class="text-[11px] ${isSelected ? 'text-sky-100 font-semibold' : 'text-slate-600'}">(${spot.category === 'bc' ? '⛰️' : '🏂'}${subName})</span>`;
             btn.onclick = () => {
               currentSpotId = spot.id;
               currentCategory = spot.category;
@@ -1270,7 +1269,7 @@
         filtered.forEach(s => {
           const btn = document.createElement('button');
           const isSelected = s.id === currentSpotId;
-          btn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border ${isSelected ? 'bg-sky-400 text-slate-900 border-sky-400 shadow' : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600'}`;
+          btn.className = `px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition active:scale-95 border ${isSelected ? 'bg-sky-700 text-white border-sky-700 shadow-sm' : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-50'}`;
           btn.textContent = s.name;
           if (isSelected) activeBtn = btn;
           btn.onclick = () => {
@@ -1350,14 +1349,14 @@
         if (heroScoreMaxEl) heroScoreMaxEl.style.display = 'none';
         const rankEl = document.getElementById('heroRank');
         rankEl.textContent = '積雪不足';
-        rankEl.className = "text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 mt-1";
+        rankEl.className = "text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 mt-1";
       } else {
         heroScoreEl.textContent = scoreVal;
-        heroScoreEl.className = "font-teko text-5xl font-black text-sky-400 leading-none";
+        heroScoreEl.className = "font-teko text-5xl font-black text-sky-700 leading-none";
         if (heroScoreMaxEl) heroScoreMaxEl.style.display = 'inline';
         const rankEl = document.getElementById('heroRank');
         rankEl.textContent = spot.current.rank || 'しまり雪';
-        rankEl.className = "text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-500 text-slate-900 mt-1";
+        rankEl.className = "text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-700 text-white mt-1";
       }
 
       // 夜間新雪（今夜〜翌朝06:00の直近ターゲット値を参照）
@@ -1394,7 +1393,7 @@
       subContainer.innerHTML = '';
       (spot.current.tags || []).forEach(t => {
         const badge = document.createElement('span');
-        badge.className = "text-[11px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700";
+        badge.className = "text-[11px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-300";
         badge.textContent = t.replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F000}-\u{1F02F}\s]+/u, '').trim();
         subContainer.appendChild(badge);
       });
@@ -1422,10 +1421,10 @@
         const dVal = spot.current.liveAmedas ? spot.current.liveAmedas.snowDepth : null;
         if (dVal !== null && dVal !== undefined && !isNaN(dVal)) {
           amedasDepthEl.textContent = `${dVal} cm`;
-          amedasDepthEl.className = "font-teko text-lg font-bold text-emerald-400 block mt-0.5 whitespace-nowrap";
+          amedasDepthEl.className = "font-teko text-lg font-bold text-emerald-700 block mt-0.5 whitespace-nowrap";
         } else {
           amedasDepthEl.textContent = '実測無し';
-          amedasDepthEl.className = "text-[11px] font-bold text-slate-500 block mt-1.5 whitespace-nowrap";
+          amedasDepthEl.className = "text-[11px] font-bold text-slate-600 block mt-1.5 whitespace-nowrap";
         }
       }
 
@@ -1456,11 +1455,11 @@
     function setTrendRange(range) {
       currentTrendRange = range;
       document.getElementById('btnTrend7d').className = range === '7d'
-        ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold"
-        : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
+        ? "px-2 py-0.5 rounded text-white bg-sky-700 font-bold"
+        : "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold";
       document.getElementById('btnTrend48h').className = range === '48h'
-        ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold"
-        : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
+        ? "px-2 py-0.5 rounded text-white bg-sky-700 font-bold"
+        : "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold";
       const spot = appData.spots.find(s => s.id === currentSpotId);
       if (spot) renderTrendChart(spot);
     }
@@ -1539,34 +1538,34 @@
               type: 'line',
               label: '積雪深(cm)',
               data: depthData,
-              borderColor: '#38bdf8',
-              backgroundColor: 'rgba(56, 189, 248, 0.12)',
-              borderWidth: 2,
+              borderColor: '#0369a1',
+              backgroundColor: 'rgba(3, 105, 161, 0.12)',
+              borderWidth: 2.2,
               fill: true,
               tension: 0.3,
               yAxisID: 'yDepth',
               pointRadius: (ctx) => ctx.dataIndex === nowHighlightIdx ? 5 : 0,
-              pointBackgroundColor: '#fbbf24'
+              pointBackgroundColor: '#ea580c'
             },
             {
               type: 'line',
               label: '降雪量(cm/h)',
               data: snowData,
-              borderColor: '#34d399',
-              backgroundColor: 'rgba(52, 211, 153, 0.18)',
-              borderWidth: 1.8,
+              borderColor: '#ea580c',
+              backgroundColor: 'rgba(234, 88, 12, 0.18)',
+              borderWidth: 2,
               fill: true,
               tension: 0.25,
               yAxisID: 'ySnow',
               pointRadius: (ctx) => ctx.dataIndex === nowHighlightIdx ? 4 : 0,
-              pointBackgroundColor: '#fbbf24'
+              pointBackgroundColor: '#ea580c'
             },
             {
               type: 'bar',
               label: '降雨量(mm/h)',
               data: rainData,
-              borderColor: '#60a5fa',
-              backgroundColor: 'rgba(96, 165, 250, 0.55)',
+              borderColor: '#0284c7',
+              backgroundColor: 'rgba(2, 132, 199, 0.5)',
               borderWidth: 1,
               borderRadius: 2,
               yAxisID: 'ySnow'
@@ -1581,10 +1580,10 @@
           plugins: {
             legend: { display: false },
             tooltip: {
-              backgroundColor: 'rgba(15, 23, 42, 0.95)',
-              titleColor: '#38bdf8',
-              bodyColor: '#fff',
-              borderColor: '#334155',
+              backgroundColor: 'rgba(255, 255, 255, 0.97)',
+              titleColor: '#0369a1',
+              bodyColor: '#0f172a',
+              borderColor: '#cbd5e1',
               borderWidth: 1,
               callbacks: {
                 afterBody(items) {
@@ -1602,10 +1601,10 @@
           },
           scales: {
             x: {
-              grid: { color: 'rgba(51, 65, 85, 0.3)' },
+              grid: { color: 'rgba(148, 163, 184, 0.25)' },
               ticks: {
-                color: '#94a3b8',
-                font: { size: 9 },
+                color: '#334155',
+                font: { size: 9, weight: 'bold' },
                 maxTicksLimit: currentTrendRange === '7d' ? 8 : 12
               }
             },
@@ -1613,15 +1612,15 @@
               position: 'left',
               beginAtZero: true,
               suggestedMax: 10,
-              grid: { color: 'rgba(51, 65, 85, 0.3)' },
-              ticks: { color: '#38bdf8', font: { size: 9 }, precision: 0 }
+              grid: { color: 'rgba(148, 163, 184, 0.25)' },
+              ticks: { color: '#0369a1', font: { size: 9, weight: 'bold' }, precision: 0 }
             },
             ySnow: {
               position: 'right',
               beginAtZero: true,
               suggestedMax: 5,
               grid: { drawOnChartArea: false },
-              ticks: { color: '#34d399', font: { size: 9 } }
+              ticks: { color: '#ea580c', font: { size: 9, weight: 'bold' } }
             }
           }
         }
@@ -1633,8 +1632,8 @@
 
     function setElevLevel(level) {
       currentElevLevel = level;
-      document.getElementById('btnElevTop').className = level === 'top' ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold" : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
-      document.getElementById('btnElevBase').className = level === 'base' ? "px-2 py-0.5 rounded text-slate-900 bg-sky-400 font-bold" : "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold";
+      document.getElementById('btnElevTop').className = level === 'top' ? "px-2 py-0.5 rounded text-white bg-sky-700 font-bold" : "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold";
+      document.getElementById('btnElevBase').className = level === 'base' ? "px-2 py-0.5 rounded text-white bg-sky-700 font-bold" : "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold";
       
       const headerEl = document.getElementById('tlWeatherHeader');
       if (headerEl) {
@@ -1657,16 +1656,16 @@
         // みぞれ（両方）: 上下に縦並び
         return `
           <div class="flex flex-col items-center leading-tight py-0.5">
-            <span class="font-bold text-[11px] text-emerald-400">+${snowCm}cm</span>
-            <span class="font-bold text-[11px] text-sky-400">${rainMm}mm</span>
+            <span class="font-black text-[11px] text-orange-700">+${snowCm}cm</span>
+            <span class="font-bold text-[11px] text-sky-700">${rainMm}mm</span>
           </div>
         `;
       } else if (hasSnow) {
-        return `<span class="font-bold text-xs text-emerald-400">+${snowCm}cm</span>`;
+        return `<span class="font-black text-xs text-orange-700">+${snowCm}cm</span>`;
       } else if (hasRain) {
-        return `<span class="font-bold text-xs text-sky-400">${rainMm}mm</span>`;
+        return `<span class="font-bold text-xs text-sky-700">${rainMm}mm</span>`;
       } else {
-        return `<span class="font-bold text-xs text-slate-500">―</span>`;
+        return `<span class="font-bold text-xs text-slate-400">―</span>`;
       }
     }
 
@@ -1709,14 +1708,14 @@
           const rowDateObj = new Date(year, parseInt(mStr, 10) - 1, parseInt(dStr, 10));
           const dayIdx = rowDateObj.getDay();
           const dayName = dayNames[dayIdx] || '';
-          const dayColor = dayIdx === 0 ? 'text-rose-400' : (dayIdx === 6 ? 'text-sky-400' : 'text-slate-300');
+          const dayColor = dayIdx === 0 ? 'text-rose-700' : (dayIdx === 6 ? 'text-sky-700' : 'text-slate-700');
 
           const dateDivider = document.createElement('div');
           dateDivider.setAttribute('data-date', timeStr.slice(0, 10));
-          dateDivider.className = "sticky top-0 z-10 bg-slate-800/95 backdrop-blur-sm px-3 py-1 text-[11px] font-bold border-y border-slate-700/60 flex items-center justify-between text-slate-300";
+          dateDivider.className = "sticky top-0 z-10 bg-slate-100/95 backdrop-blur-sm px-3 py-1 text-[11px] font-bold border-y border-slate-300 flex items-center justify-between text-slate-900";
           dateDivider.innerHTML = `
             <div class="flex items-center gap-1.5">
-              <i class="fa-solid fa-calendar text-[11px] text-sky-400"></i>
+              <i class="fa-solid fa-calendar text-[11px] text-sky-700"></i>
               <span>${parseInt(mStr, 10)}月${parseInt(dStr, 10)}日</span>
               <span class="${dayColor}">(${dayName})</span>
             </div>
@@ -1746,19 +1745,19 @@
         const row = document.createElement('div');
 
         if (isNow) {
-          row.className = "grid grid-cols-[52px_38px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center bg-amber-500/10 border-l-2 border-amber-400 relative transition-colors";
+          row.className = "grid grid-cols-[52px_38px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center bg-orange-50 border-l-4 border-orange-600 relative transition-colors";
           targetNowRow = row;
         } else {
-          row.className = "grid grid-cols-[52px_38px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center hover:bg-slate-800/40 transition-colors";
+          row.className = "grid grid-cols-[52px_38px_1.15fr_1fr_1fr] items-center py-2 px-1.5 text-center hover:bg-slate-50 transition-colors";
         }
 
-        const tempColor = (temp !== '--' && temp <= 0) ? 'text-sky-300' : 'text-amber-300';
+        const tempColor = (temp !== '--' && temp <= 0) ? 'text-sky-800' : 'text-orange-700';
 
         row.innerHTML = `
           <!-- 時刻 -->
           <div class="flex flex-col items-center justify-center">
-            ${isNow ? '<span class="text-[11px] font-black px-1 rounded bg-amber-400 text-slate-950 block leading-tight">NOW</span>' : ''}
-            <span class="font-bold text-xs ${isNow ? 'text-amber-300 font-black' : 'text-slate-200'}">${hourPart}</span>
+            ${isNow ? '<span class="text-[10.5px] font-black px-1 rounded bg-orange-600 text-white block leading-tight">NOW</span>' : ''}
+            <span class="font-bold text-xs ${isNow ? 'text-orange-800 font-black' : 'text-slate-900'}">${hourPart}</span>
           </div>
 
           <!-- 天気 -->
@@ -1769,21 +1768,21 @@
           <!-- 気温 & 風 (切替対象) -->
           <div class="flex flex-col items-center justify-center leading-tight">
             <span class="font-teko text-base font-bold ${tempColor} tracking-tight">${temp}℃</span>
-            <span class="text-[11px] text-slate-400">${windStr}</span>
+            <span class="text-[11px] text-slate-600 font-semibold">${windStr}</span>
           </div>
 
           <!-- ベース 雪/雨 (降雪・降雨 / 積雪) -->
-          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/20 rounded py-1 min-h-[36px]">
+          <div class="flex flex-col items-center justify-center leading-tight bg-slate-50 rounded py-1 min-h-[36px]">
             ${formatPrecipHtml(baseSnow, baseRain)}
-            <span class="text-[11px] ${baseDepth !== null ? 'text-slate-400' : 'text-slate-600'}">
+            <span class="text-[11px] font-semibold ${baseDepth !== null ? 'text-slate-700' : 'text-slate-400'}">
               ${baseDepth !== null ? baseDepth + 'cm' : '--'}
             </span>
           </div>
 
           <!-- トップ 雪/雨 (降雪・降雨 / 積雪) -->
-          <div class="flex flex-col items-center justify-center leading-tight bg-slate-900/30 rounded py-1 min-h-[36px]">
+          <div class="flex flex-col items-center justify-center leading-tight bg-sky-50/70 rounded py-1 min-h-[36px]">
             ${formatPrecipHtml(topSnow, topRain)}
-            <span class="text-[11px] ${topDepth !== null ? 'text-sky-300/80 font-medium' : 'text-slate-600'}">
+            <span class="text-[11px] font-bold ${topDepth !== null ? 'text-sky-800' : 'text-slate-400'}">
               ${topDepth !== null ? topDepth + 'cm' : '--'}
             </span>
           </div>
@@ -1821,17 +1820,17 @@
           }
 
           const sumRow = document.createElement('div');
-          sumRow.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-1.5 px-1.5 text-center bg-indigo-950/70 border-y border-indigo-500/30 text-xs";
+          sumRow.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-1.5 px-1.5 text-center bg-indigo-50 border-y border-indigo-300 text-xs";
           sumRow.innerHTML = `
-            <div class="col-span-3 text-left pl-1.5 flex items-center gap-1.5 text-indigo-200 font-bold text-[11px]">
-              <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 inline-block"></span>
+            <div class="col-span-3 text-left pl-1.5 flex items-center gap-1.5 text-indigo-950 font-bold text-[11px]">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-700 inline-block"></span>
               <span>🌙 夜間新雪合計 (18-06時)</span>
             </div>
             <div>
-              ${formatSummaryPrecipHtml(nightBaseSnow, nightBaseRain, 'text-emerald-300 font-black', 'text-sky-300 font-bold')}
+              ${formatSummaryPrecipHtml(nightBaseSnow, nightBaseRain, 'text-orange-700 font-black', 'text-sky-700 font-bold')}
             </div>
             <div>
-              ${formatSummaryPrecipHtml(nightTopSnow, nightTopRain, 'text-emerald-300 font-black', 'text-sky-300 font-bold')}
+              ${formatSummaryPrecipHtml(nightTopSnow, nightTopRain, 'text-orange-700 font-black', 'text-sky-700 font-bold')}
             </div>
           `;
           container.appendChild(sumRow);
@@ -1865,17 +1864,17 @@
           }
 
           const sumRow = document.createElement('div');
-          sumRow.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-1.5 px-1.5 text-center bg-amber-950/40 border-y border-amber-500/30 text-xs";
+          sumRow.className = "grid grid-cols-[48px_36px_1.15fr_1fr_1fr] items-center py-1.5 px-1.5 text-center bg-amber-50 border-y border-amber-300 text-xs";
           sumRow.innerHTML = `
-            <div class="col-span-3 text-left pl-1.5 flex items-center gap-1.5 text-amber-200 font-bold text-[11px]">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block"></span>
+            <div class="col-span-3 text-left pl-1.5 flex items-center gap-1.5 text-amber-950 font-bold text-[11px]">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-600 inline-block"></span>
               <span>☀️ 日中降雪合計 (06-18時)</span>
             </div>
             <div>
-              ${formatSummaryPrecipHtml(dayBaseSnow, dayBaseRain, 'text-amber-300 font-black', 'text-sky-300 font-bold')}
+              ${formatSummaryPrecipHtml(dayBaseSnow, dayBaseRain, 'text-amber-800 font-black', 'text-sky-700 font-bold')}
             </div>
             <div>
-              ${formatSummaryPrecipHtml(dayTopSnow, dayTopRain, 'text-amber-300 font-black', 'text-sky-300 font-bold')}
+              ${formatSummaryPrecipHtml(dayTopSnow, dayTopRain, 'text-amber-800 font-black', 'text-sky-700 font-bold')}
             </div>
           `;
           container.appendChild(sumRow);
@@ -1921,26 +1920,26 @@
         col.type = 'button';
         col.onclick = () => scrollToTimelineDate(day.date);
         
-        let borderAndBg = 'bg-slate-800/80 border-slate-700/60 hover:border-sky-400/60';
+        let borderAndBg = 'bg-slate-50 border-slate-300 hover:border-sky-600';
         if (isSelected) {
-          borderAndBg = 'bg-sky-950/60 border-sky-400 ring-2 ring-sky-400/50';
+          borderAndBg = 'bg-sky-50 border-sky-700 ring-2 ring-sky-600/40';
         } else if (isToday) {
-          borderAndBg = 'bg-slate-800 border-sky-500/50 ring-1 ring-sky-500/30 hover:border-sky-400';
+          borderAndBg = 'bg-white border-sky-600 ring-1 ring-sky-500/40 hover:border-sky-700';
         }
 
         col.className = `flex-shrink-0 w-[92px] ${borderAndBg} rounded-xl p-2 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none`;
         col.innerHTML = `
-          <span class="text-[11px] font-bold ${isToday ? 'text-amber-400 font-black' : (dayOfWeek === '日' ? 'text-rose-400' : (dayOfWeek === '土' ? 'text-sky-400' : 'text-slate-400'))}">${dateLabel}</span>
+          <span class="text-[11px] font-bold ${isToday ? 'text-orange-700 font-black' : (dayOfWeek === '日' ? 'text-rose-700' : (dayOfWeek === '土' ? 'text-sky-700' : 'text-slate-700'))}">${dateLabel}</span>
           <span class="text-2xl my-1 pointer-events-none">${day.weatherIcon}</span>
-          <span class="text-[11px] font-bold text-slate-300 pointer-events-none truncate max-w-full">${day.weatherLabel}</span>
+          <span class="text-[11px] font-bold text-slate-800 pointer-events-none truncate max-w-full">${day.weatherLabel}</span>
           <div class="font-teko text-sm font-bold mt-0.5 pointer-events-none">
-            <span class="text-rose-400">${day.maxTemp}℃</span> / <span class="text-sky-400">${day.minTemp}℃</span>
+            <span class="text-rose-700">${day.maxTemp}℃</span> <span class="text-slate-400">/</span> <span class="text-sky-800">${day.minTemp}℃</span>
           </div>
           <div class="w-full mt-1.5 space-y-1 pointer-events-none">
-            <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700/80 text-slate-300'}">
+            <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${day.totalSnowfall >= 10 ? 'bg-sky-700 text-white' : 'bg-slate-200 text-slate-800'}">
               ❄️ +${day.totalSnowfall}cm
             </div>
-            <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${nightVal >= 10 ? 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white' : (nightVal > 0 ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-700/60' : 'bg-slate-800 text-slate-400 border border-slate-700/60')}">
+            <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${nightVal >= 10 ? 'bg-orange-600 text-white' : (nightVal > 0 ? 'bg-orange-50 text-orange-800 border border-orange-300' : 'bg-white text-slate-500 border border-slate-300')}">
               🌙 +${nightVal}cm
             </div>
           </div>
@@ -1991,11 +1990,11 @@
         const ind = document.getElementById('navIndicator' + cap);
         if (t === tabId) {
           if (el) el.classList.remove('hidden');
-          if (nav) nav.className = "relative flex flex-col items-center justify-center gap-0.5 text-sky-400 font-black transition active:scale-95";
+          if (nav) nav.className = "relative flex flex-col items-center justify-center gap-0.5 text-sky-700 font-black transition active:scale-95";
           if (ind) ind.classList.remove('hidden');
         } else {
           if (el) el.classList.add('hidden');
-          if (nav) nav.className = "relative flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-bold transition active:scale-95";
+          if (nav) nav.className = "relative flex flex-col items-center justify-center gap-0.5 text-slate-600 hover:text-slate-900 font-bold transition active:scale-95";
           if (ind) ind.classList.add('hidden');
         }
       });
@@ -2111,8 +2110,8 @@
       const panelList = document.getElementById('areasListPanel');
       const panelRank = document.getElementById('areasRankingPanel');
 
-      const activeTabCls = 'py-2 text-xs font-black text-sky-400 border-b-2 border-sky-400 transition flex items-center justify-center gap-1.5 whitespace-nowrap';
-      const inactiveTabCls = 'py-2 text-xs font-bold text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition flex items-center justify-center gap-1.5 whitespace-nowrap';
+      const activeTabCls = 'py-2 text-xs font-black text-sky-700 border-b-2 border-sky-700 transition flex items-center justify-center gap-1.5 whitespace-nowrap';
+      const inactiveTabCls = 'py-2 text-xs font-bold text-slate-600 hover:text-slate-900 border-b-2 border-transparent transition flex items-center justify-center gap-1.5 whitespace-nowrap';
 
       if (currentAreasSubView === 'list') {
         if (btnList) btnList.className = activeTabCls;
@@ -2142,8 +2141,8 @@
       areasCategoryFilter = cat === 'bc' ? 'bc' : 'ski';
       const btnSki = document.getElementById('btnAreasCatSki');
       const btnBc = document.getElementById('btnAreasCatBc');
-      const activeCls = 'py-1.5 px-2.5 rounded-lg text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-500 text-slate-900 shadow-sm whitespace-nowrap';
-      const inactiveCls = 'py-1.5 px-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white whitespace-nowrap';
+      const activeCls = 'py-1.5 px-2.5 rounded-lg text-xs font-black transition flex items-center justify-center gap-1.5 bg-sky-700 text-white shadow-sm whitespace-nowrap';
+      const inactiveCls = 'py-1.5 px-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-700 hover:text-slate-900 whitespace-nowrap';
       if (btnSki) btnSki.className = areasCategoryFilter === 'ski' ? activeCls : inactiveCls;
       if (btnBc) btnBc.className = areasCategoryFilter === 'bc' ? activeCls : inactiveCls;
       if (currentAreasSubView === 'ranking') {
@@ -2170,8 +2169,8 @@
 
     function setAreasConditionFilter(cond) {
       areasConditionFilter = ['fresh', 'open'].includes(cond) ? cond : 'all';
-      const activeCls = 'px-2.5 py-1 rounded-lg text-[11px] font-black bg-sky-500 text-slate-900 whitespace-nowrap transition';
-      const inactiveCls = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white whitespace-nowrap transition';
+      const activeCls = 'px-2.5 py-1 rounded-lg text-[11px] font-black bg-sky-700 text-white whitespace-nowrap transition';
+      const inactiveCls = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white text-slate-800 border border-slate-300 hover:bg-slate-50 whitespace-nowrap transition';
       const btnAll = document.getElementById('btnAreasCondAll');
       const btnFresh = document.getElementById('btnAreasCondFresh');
       const btnOpen = document.getElementById('btnAreasCondOpen');
@@ -2255,14 +2254,14 @@
           const active = areasRegionFilter === r.key;
           return `<button type="button" onclick="setAreasRegionFilter('${r.key}')" class="px-2.5 py-1 rounded-full text-xs whitespace-nowrap border transition shrink-0 ${
             active
-              ? 'bg-sky-500 text-slate-900 font-black border-sky-400 shadow-sm'
-              : 'bg-slate-800 text-slate-300 font-bold border-slate-700 hover:text-white'
+              ? 'bg-sky-700 text-white font-black border-sky-700 shadow-sm'
+              : 'bg-white text-slate-800 font-bold border-slate-300 hover:bg-slate-50'
           }">${r.label}</button>`;
         }).join('');
       }
 
       if (!appData || !appData.spots) {
-        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">データを読み込み中です...</div>';
+        container.innerHTML = '<div class="text-center py-8 text-slate-600 font-bold text-xs">データを読み込み中です...</div>';
         return;
       }
 
@@ -2273,7 +2272,7 @@
       }
 
       if (groups.length === 0) {
-        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">条件に一致するエリアがありません</div>';
+        container.innerHTML = '<div class="text-center py-8 text-slate-600 font-bold text-xs">条件に一致するエリアがありません</div>';
         return;
       }
 
@@ -2295,8 +2294,8 @@
         const bestScore = (bestSpot && bestSpot.current && typeof bestSpot.current.score === 'number') ? bestSpot.current.score : null;
         const bestRank = (bestSpot && bestSpot.current && bestSpot.current.rank) ? bestSpot.current.rank : '積雪不足';
         const scoreBadgeCls = bestScore !== null
-          ? (bestScore >= 80 ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' : (bestScore >= 60 ? 'bg-sky-500/20 text-sky-300 border-sky-500/40' : 'bg-slate-700/80 text-slate-200 border-slate-600'))
-          : 'bg-slate-800 text-slate-400 border-slate-700';
+          ? (bestScore >= 80 ? 'bg-orange-100 text-orange-900 border-orange-400' : (bestScore >= 60 ? 'bg-sky-100 text-sky-900 border-sky-400' : 'bg-slate-100 text-slate-800 border-slate-300'))
+          : 'bg-slate-100 text-slate-600 border-slate-300';
 
         const rowsHtml = isOpen ? group.spots.map(s => {
           const nightSnow = getSpotNightSnow(s);
@@ -2305,26 +2304,26 @@
           const weatherIcon = (s.current && s.current.weatherInfo && s.current.weatherInfo.icon) ? s.current.weatherInfo.icon : '❄️';
           const tagStr = (s.current && s.current.tag) ? s.current.tag : '';
           const isFav = favorites.includes(s.id);
-          const favStar = isFav ? '<i class="fa-solid fa-star text-amber-400 text-[11px] shrink-0"></i>' : '';
+          const favStar = isFav ? '<i class="fa-solid fa-star text-amber-500 text-[11px] shrink-0"></i>' : '';
 
           return `
-            <button type="button" onclick="selectSpotFromMap('${s.id}')" class="w-full text-left px-3 py-2.5 flex items-center justify-between gap-2 hover:bg-slate-800/70 active:bg-slate-800 transition border-t border-slate-800/80">
+            <button type="button" onclick="selectSpotFromMap('${s.id}')" class="w-full text-left px-3 py-2.5 flex items-center justify-between gap-2 hover:bg-slate-100 active:bg-slate-200 transition border-t border-slate-200">
               <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-1.5">
                   <span class="text-xs shrink-0">${weatherIcon}</span>
                   ${favStar}
-                  <span class="text-sm font-bold text-white truncate">${s.name}</span>
+                  <span class="text-sm font-black text-slate-900 truncate">${s.name}</span>
                 </div>
-                <div class="text-[11px] text-slate-400 mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5">
-                  <span>積雪 <strong class="text-slate-200">${depth}cm</strong></span>
-                  <span>スコア <strong class="${score !== null ? 'text-sky-300' : 'text-slate-400'}">${score !== null ? score + '点' : '―'}</strong></span>
-                  ${tagStr ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700/80">${tagStr}</span>` : ''}
+                <div class="text-[11px] text-slate-600 mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5">
+                  <span>積雪 <strong class="text-slate-900">${depth}cm</strong></span>
+                  <span>スコア <strong class="${score !== null ? 'text-sky-800' : 'text-slate-500'}">${score !== null ? score + '点' : '―'}</strong></span>
+                  ${tagStr ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-white text-slate-800 font-bold border border-slate-300">${tagStr}</span>` : ''}
                 </div>
               </div>
               <div class="text-right shrink-0 flex items-center gap-2">
                 <div>
-                  <div class="text-[10px] text-slate-400">夜間新雪</div>
-                  <div class="font-teko text-xl font-black ${nightSnow > 0 ? 'text-cyan-300' : 'text-slate-400'} leading-none">+${nightSnow}<span class="text-[11px] ml-0.5">cm</span></div>
+                  <div class="text-[10px] text-slate-600 font-bold">夜間新雪</div>
+                  <div class="font-teko text-xl font-black ${nightSnow > 0 ? 'text-orange-700' : 'text-slate-500'} leading-none">+${nightSnow}<span class="text-[11px] ml-0.5">cm</span></div>
                 </div>
                 <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
               </div>
@@ -2333,29 +2332,29 @@
         }).join('') : '';
 
         return `
-          <div class="snow-card rounded-xl border border-slate-700/70 overflow-hidden">
-            <button type="button" onclick="toggleAreaAccordion('${group.compositeKey.replace(/'/g, "\\'")}')" class="w-full px-3.5 py-2.5 flex flex-col gap-1.5 text-left hover:bg-slate-800/50 transition">
+          <div class="snow-card rounded-xl border border-slate-300 overflow-hidden">
+            <button type="button" onclick="toggleAreaAccordion('${group.compositeKey.replace(/'/g, "\\'")}')" class="w-full px-3.5 py-2.5 flex flex-col gap-1.5 text-left hover:bg-slate-50 transition">
               <div class="w-full flex items-center justify-between gap-2">
                 <div class="min-w-0 flex-1 flex items-center gap-1.5">
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-black bg-sky-950 text-sky-300 border border-sky-800/80 shrink-0">${group.regionName}</span>
-                  <span class="text-sm font-black text-white truncate">${group.areaName}</span>
-                  <span class="text-[11px] text-slate-400 font-bold shrink-0">(${group.spots.length})</span>
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-black bg-sky-50 text-sky-800 border border-sky-300 shrink-0">${group.regionName}</span>
+                  <span class="text-sm font-black text-slate-900 truncate">${group.areaName}</span>
+                  <span class="text-[11px] text-slate-600 font-bold shrink-0">(${group.spots.length})</span>
                 </div>
-                <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180 text-sky-400' : ''}"></i>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-600 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180 text-sky-700' : ''}"></i>
               </div>
-              <div class="w-full flex items-center justify-between gap-2 pt-1.5 border-t border-slate-800/80 text-[11px]">
+              <div class="w-full flex items-center justify-between gap-2 pt-1.5 border-t border-slate-200 text-[11px]">
                 <div class="flex items-center gap-2 min-w-0">
-                  <span class="text-slate-400">最大積雪 <strong class="text-slate-200">${maxDepth}cm</strong></span>
-                  ${maxNight > 0 ? `<span class="px-1.5 py-0.2 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-700/60 font-bold">🌙+${maxNight}cm</span>` : ''}
+                  <span class="text-slate-600 font-medium">最大積雪 <strong class="text-slate-900">${maxDepth}cm</strong></span>
+                  ${maxNight > 0 ? `<span class="px-1.5 py-0.2 rounded bg-orange-100 text-orange-900 border border-orange-300 font-black">🌙+${maxNight}cm</span>` : ''}
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
-                  <span class="text-slate-400">最高</span>
+                  <span class="text-slate-600 font-medium">最高</span>
                   <span class="px-1.5 py-0.5 rounded border font-black leading-none ${scoreBadgeCls}">${bestScore !== null ? bestScore + '点' : '―'}</span>
-                  <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold border ${bestScore !== null ? 'bg-sky-500/15 text-sky-300 border-sky-500/30' : 'bg-slate-800/90 text-slate-400 border-slate-700'} leading-none">${bestRank}</span>
+                  <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold border ${bestScore !== null ? 'bg-sky-50 text-sky-900 border-sky-300' : 'bg-slate-100 text-slate-600 border-slate-300'} leading-none">${bestRank}</span>
                 </div>
               </div>
             </button>
-            ${isOpen ? `<div class="bg-slate-900/50">${rowsHtml}</div>` : ''}
+            ${isOpen ? `<div class="bg-slate-50">${rowsHtml}</div>` : ''}
           </div>
         `;
       }).join('');
@@ -2384,9 +2383,9 @@
     function setRankPeriod(period) {
       currentRankPeriod = period;
       const baseBtnCls = "flex-1 py-1.5 px-1 rounded-lg text-center whitespace-nowrap truncate font-bold ";
-      document.getElementById('btnRankNight').className = baseBtnCls + (period === 'night' ? "bg-sky-500 text-slate-900 shadow" : "text-slate-400 hover:text-white");
-      document.getElementById('btnRank6h').className = baseBtnCls + (period === '6h' ? "bg-sky-500 text-slate-900 shadow" : "text-slate-400 hover:text-white");
-      document.getElementById('btnRank24h').className = baseBtnCls + (period === '24h' ? "bg-sky-500 text-slate-900 shadow" : "text-slate-400 hover:text-white");
+      document.getElementById('btnRankNight').className = baseBtnCls + (period === 'night' ? "bg-sky-700 text-white shadow" : "text-slate-700 hover:text-slate-900");
+      document.getElementById('btnRank6h').className = baseBtnCls + (period === '6h' ? "bg-sky-700 text-white shadow" : "text-slate-700 hover:text-slate-900");
+      document.getElementById('btnRank24h').className = baseBtnCls + (period === '24h' ? "bg-sky-700 text-white shadow" : "text-slate-700 hover:text-slate-900");
       renderRankingTab();
     }
 
@@ -2395,7 +2394,7 @@
       container.innerHTML = '';
 
       if (!appData || !appData.spots) {
-        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">現在ランキングデータを集計中です</div>';
+        container.innerHTML = '<div class="text-center py-8 text-slate-600 font-bold text-xs">現在ランキングデータを集計中です</div>';
         return;
       }
 
@@ -2438,41 +2437,41 @@
         .slice(0, 25);
 
       if (list.length === 0) {
-        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">該当カテゴリのデータがありません</div>';
+        container.innerHTML = '<div class="text-center py-8 text-slate-600 font-bold text-xs">該当カテゴリのデータがありません</div>';
         return;
       }
 
       list.forEach((item, idx) => {
         const card = document.createElement('div');
-        card.className = "snow-card rounded-xl p-3 flex items-center justify-between gap-2 border border-slate-700/60 active:scale-98 transition cursor-pointer";
+        card.className = "snow-card rounded-xl p-3 flex items-center justify-between gap-2 border border-slate-300 active:scale-98 transition cursor-pointer";
         card.onclick = () => selectSpotFromMap(item.id);
 
         let badgeHtml = '';
         if (currentRankPeriod === 'night' && item.isReset) {
-          badgeHtml = '<span class="text-[11px] px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-black shrink-0">リセット❄️</span>';
+          badgeHtml = '<span class="text-[11px] px-1.5 py-0.2 rounded bg-orange-600 text-white font-black shrink-0">リセット❄️</span>';
         }
 
         const catBadge = item.category === 'bc'
-          ? '<span class="text-[11px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold shrink-0">⛰️BC</span>'
-          : '<span class="text-[11px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold shrink-0">🏂ゲレンデ</span>';
+          ? '<span class="text-[11px] px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold shrink-0">⛰️BC</span>'
+          : '<span class="text-[11px] px-1.5 py-0.2 rounded bg-sky-50 text-sky-800 border border-sky-300 font-bold shrink-0">🏂ゲレンデ</span>';
 
         card.innerHTML = `
           <div class="flex items-center gap-2.5 min-w-0 flex-1">
-            <span class="font-teko text-2xl font-black w-6 text-center shrink-0 ${idx === 0 ? 'text-amber-400' : (idx === 1 ? 'text-slate-300' : (idx === 2 ? 'text-amber-600' : 'text-slate-500'))}">${idx + 1}</span>
+            <span class="font-teko text-2xl font-black w-6 text-center shrink-0 ${idx === 0 ? 'text-amber-600' : (idx === 1 ? 'text-slate-700' : (idx === 2 ? 'text-orange-700' : 'text-slate-500'))}">${idx + 1}</span>
             <div class="min-w-0 flex-1">
-              <div class="text-[11px] text-slate-400 font-bold flex items-center flex-wrap gap-1">
+              <div class="text-[11px] text-slate-600 font-bold flex items-center flex-wrap gap-1">
                 <span class="truncate">${item.areaName || item.regionName}</span>
                 ${catBadge}
                 ${badgeHtml}
               </div>
-              <div class="text-sm font-bold text-white truncate">${item.name}</div>
-              <div class="text-[11px] text-sky-400 mt-0.5 truncate">${item.tag}</div>
+              <div class="text-sm font-black text-slate-900 truncate">${item.name}</div>
+              <div class="text-[11px] text-sky-800 font-bold mt-0.5 truncate">${item.tag}</div>
             </div>
           </div>
           <div class="text-right shrink-0">
-            <div class="text-[10.5px] text-slate-400">${labelText}</div>
-            <div class="font-teko text-2xl font-black text-cyan-300 leading-none">+${item.snow} <span class="text-xs">cm</span></div>
-            <div class="text-[10.5px] text-slate-400">積雪: ${item.depth}cm</div>
+            <div class="text-[10.5px] text-slate-600 font-bold">${labelText}</div>
+            <div class="font-teko text-2xl font-black text-orange-700 leading-none">+${item.snow} <span class="text-xs">cm</span></div>
+            <div class="text-[10.5px] text-slate-600 font-bold">積雪: ${item.depth}cm</div>
           </div>
         `;
         container.appendChild(card);
@@ -2622,16 +2621,16 @@
       // 1. MYスポット未登録時は先頭に登録ガイドカードを表示
       if (favSpots.length === 0) {
         const emptyGuide = document.createElement('div');
-        emptyGuide.className = "snow-card rounded-2xl p-4 border border-amber-500/30 bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/20 text-center space-y-2.5 shadow-md";
+        emptyGuide.className = "snow-card rounded-2xl p-4 border border-amber-300 bg-gradient-to-br from-white via-white to-amber-50/80 text-center space-y-2.5 shadow-sm";
         emptyGuide.innerHTML = `
-          <div class="w-10 h-10 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-base border border-amber-400/30">
+          <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto text-base border border-amber-300">
             <i class="fa-solid fa-star"></i>
           </div>
-          <div class="text-xs font-bold text-white">MYスポットを登録して最新速報を受け取る</div>
-          <p class="text-[11px] text-slate-400 leading-relaxed max-w-xs mx-auto">
+          <div class="text-xs font-bold text-slate-900">MYスポットを登録して最新速報を受け取る</div>
+          <p class="text-[11px] text-slate-600 leading-relaxed max-w-xs mx-auto">
             よく行くスキー場や山を★お気に入り登録すると、ここに今後3日間の降雪・夜間新雪速報が定時配信（6:00 / 19:30）されます。
           </p>
-          <button onclick="openSearchModal()" class="px-4 py-1.5 rounded-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs shadow-md active:scale-95 transition inline-flex items-center gap-1">
+          <button onclick="openSearchModal()" class="px-4 py-1.5 rounded-full bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow-sm active:scale-95 transition inline-flex items-center gap-1">
             <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
             <span>スポットを探して登録する</span>
           </button>
@@ -2738,15 +2737,15 @@
             const isHeavyNight = dNight >= 10;
 
             return `
-              <div class="rounded-xl p-2 text-center border ${isHeavyNight ? 'bg-sky-950/60 border-sky-500/50' : 'bg-slate-950/60 border-slate-800/90'}">
-                <div class="flex items-center justify-center gap-1 text-[11px] font-bold ${dIdx === 0 ? 'text-amber-300' : 'text-slate-300'}">
+              <div class="rounded-xl p-2 text-center border ${isHeavyNight ? 'bg-orange-50 border-orange-300' : 'bg-slate-50 border-slate-200'}">
+                <div class="flex items-center justify-center gap-1 text-[11px] font-bold ${dIdx === 0 ? 'text-amber-700' : 'text-slate-700'}">
                   <span>${dayLabel}</span>
                   <span>${d.weatherIcon}</span>
                 </div>
-                <div class="mt-1 text-xs font-black ${isHeavyNight ? 'text-cyan-300' : (dNight > 0 ? 'text-sky-300' : 'text-slate-400')} whitespace-nowrap">
+                <div class="mt-1 text-xs font-black ${isHeavyNight ? 'text-orange-700' : (dNight > 0 ? 'text-sky-700' : 'text-slate-500')} whitespace-nowrap">
                   🌙 +${dNight}cm
                 </div>
-                <div class="text-[10.5px] text-slate-400 font-medium whitespace-nowrap mt-0.5">
+                <div class="text-[10.5px] text-slate-500 font-medium whitespace-nowrap mt-0.5">
                   1日 +${d.totalSnowfall}cm
                 </div>
               </div>
@@ -2755,49 +2754,49 @@
 
           const card = document.createElement('div');
           card.onclick = () => selectSpotFromMap(s.id);
-          card.className = "snow-card rounded-2xl p-3.5 border border-sky-500/40 hover:border-sky-400 bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/40 shadow-lg cursor-pointer active:scale-[0.99] transition space-y-2.5";
+          card.className = "snow-card rounded-2xl p-3.5 border border-sky-300 hover:border-sky-600 bg-white shadow-sm cursor-pointer active:scale-[0.99] transition space-y-2.5";
           card.innerHTML = `
             <div class="flex items-start justify-between gap-2">
               <div class="min-w-0">
                 <div class="flex items-center gap-1.5 flex-wrap">
-                  <span class="text-[11px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold shrink-0">
+                  <span class="text-[11px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-300 font-bold shrink-0">
                     <i class="fa-solid fa-star text-[10px]"></i> MY
                   </span>
-                  <span class="text-[11px] px-1.5 py-0.2 rounded ${isBC ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-sky-950 text-sky-300 border border-sky-800'} font-bold shrink-0">
+                  <span class="text-[11px] px-1.5 py-0.2 rounded ${isBC ? 'bg-emerald-50 text-emerald-800 border border-emerald-300' : 'bg-sky-50 text-sky-800 border border-sky-300'} font-bold shrink-0">
                     ${isBC ? 'BC山' : 'スキー場'}
                   </span>
-                  <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
+                  <span class="text-[11px] text-slate-600 font-bold truncate">${s.areaName || s.regionName}</span>
                 </div>
-                <h3 class="text-sm sm:text-base font-black text-white mt-1 truncate">${s.name}</h3>
+                <h3 class="text-sm sm:text-base font-black text-slate-900 mt-1 truncate">${s.name}</h3>
               </div>
               <div class="text-right shrink-0">
                 <div class="flex items-baseline justify-end gap-0.5">
-                  <span class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}</span>
-                  ${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs font-bold text-sky-400">点</span>' : ''}
+                  <span class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-700' : 'text-slate-400'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}</span>
+                  ${s.current.score !== null && s.current.score !== undefined ? '<span class="text-xs font-bold text-sky-700">点</span>' : ''}
                 </div>
-                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${s.current.rank || '積雪不足'}</span>
+                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-50 text-sky-800 border border-sky-300' : 'bg-slate-100 text-slate-600 border border-slate-300'}">${s.current.rank || '積雪不足'}</span>
               </div>
             </div>
 
             <!-- 夜間新雪ハイライト ＋ 基本コンディション -->
-            <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl ${nightVal >= 10 ? 'bg-gradient-to-r from-sky-500/25 to-indigo-500/25 border border-sky-400/40' : 'bg-slate-950/70 border border-slate-800'}">
+            <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl ${nightVal >= 10 ? 'bg-orange-50 border border-orange-300' : 'bg-slate-50 border border-slate-200'}">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🌙</span>
                 <div>
-                  <span class="text-[10.5px] text-slate-400 block leading-none">${jstNow.getHours() >= 12 ? '明朝 夜間新雪 (18-06時)' : '今朝 夜間新雪 (18-06時)'}</span>
-                  <span class="text-sm font-black ${nightVal >= 10 ? 'text-cyan-300' : 'text-white'}">+${nightVal}cm</span>
+                  <span class="text-[10.5px] text-slate-600 block leading-none">${jstNow.getHours() >= 12 ? '明朝 夜間新雪 (18-06時)' : '今朝 夜間新雪 (18-06時)'}</span>
+                  <span class="text-sm font-black ${nightVal >= 10 ? 'text-orange-700' : 'text-slate-900'}">+${nightVal}cm</span>
                 </div>
               </div>
-              <div class="text-right text-[11px] text-slate-300 font-bold">
+              <div class="text-right text-[11px] text-slate-800 font-bold">
                 <div>積雪 ${s.current.topSnowDepth}/${s.current.baseSnowDepth}cm</div>
-                <div class="text-slate-400 font-normal">${wInfo.icon} ${s.current.topTemp}℃ / 風${s.current.windSpeed}m/s</div>
+                <div class="text-slate-600 font-normal">${wInfo.icon} ${s.current.topTemp}℃ / 風${s.current.windSpeed}m/s</div>
               </div>
             </div>
 
             <!-- 今後3日間の降雪・夜間新雪予報 -->
             ${next3Days.length > 0 ? `
               <div>
-                <div class="text-[10.5px] font-bold text-slate-400 mb-1 flex items-center justify-between">
+                <div class="text-[10.5px] font-bold text-slate-600 mb-1 flex items-center justify-between">
                   <span>今後3日間の降雪予報</span>
                   <span>🌙夜間新雪 / 1日計</span>
                 </div>
@@ -2807,9 +2806,9 @@
               </div>
             ` : ''}
 
-            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
+            <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-200">
               <span>登録スポット最新速報</span>
-              <span class="text-sky-400 font-bold flex items-center gap-0.5">詳細予報を見る <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+              <span class="text-sky-700 font-bold flex items-center gap-0.5">詳細予報を見る <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
             </div>
           `;
           container.appendChild(card);
@@ -2819,14 +2818,14 @@
         // 雪レポカード（新雪深さを主役に強調）
         const r = item;
         const card = document.createElement('div');
-        card.className = "snow-card rounded-2xl p-3.5 border border-slate-700/70 hover:border-sky-400/60 space-y-2 transition bg-slate-900/95 shadow-md";
+        card.className = "snow-card rounded-2xl p-3.5 border border-slate-300 hover:border-sky-600 space-y-2 transition bg-white shadow-sm";
 
         let starsHtml = '';
         for (let i = 0; i < 5; i++) {
-          starsHtml += `<i class="fa-solid fa-star ${i < r.rating ? 'text-amber-400' : 'text-slate-600'} text-[11px]"></i>`;
+          starsHtml += `<i class="fa-solid fa-star ${i < r.rating ? 'text-amber-500' : 'text-slate-300'} text-[11px]"></i>`;
         }
 
-        const slotHtml = r.timeSlot ? `<span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700">${r.timeSlot}</span>` : '';
+        const slotHtml = r.timeSlot ? `<span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-300">${r.timeSlot}</span>` : '';
         const cleanSnowType = (r.snowType || 'しまり雪').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
         const cleanSnowDepth = (r.snowDepth || '新雪なし').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
         const isDeep = cleanSnowDepth !== '新雪なし' && cleanSnowDepth !== 'なし';
@@ -2835,20 +2834,20 @@
           <div class="flex items-start justify-between gap-2">
             <div class="min-w-0">
               <div class="flex items-center gap-1.5 flex-wrap">
-                <span class="text-[10.5px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-700/70 font-bold shrink-0">雪レポ</span>
-                ${r.isMySpot ? '<span class="text-[10.5px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold shrink-0">MY</span>' : ''}
-                <span class="text-[11px] text-slate-400 font-medium">${r.time || '本日'}</span>
+                <span class="text-[10.5px] px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold shrink-0">雪レポ</span>
+                ${r.isMySpot ? '<span class="text-[10.5px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-300 font-bold shrink-0">MY</span>' : ''}
+                <span class="text-[11px] text-slate-500 font-medium">${r.time || '本日'}</span>
               </div>
-              <div class="font-black text-sm text-white mt-1 truncate ${r.spotId ? 'cursor-pointer hover:text-sky-300' : ''}" ${r.spotId ? `onclick="selectSpotFromMap('${r.spotId}')"` : ''}>
+              <div class="font-black text-sm text-slate-900 mt-1 truncate ${r.spotId ? 'cursor-pointer hover:text-sky-700' : ''}" ${r.spotId ? `onclick="selectSpotFromMap('${r.spotId}')"` : ''}>
                 ${r.spotName}
               </div>
             </div>
             <!-- 新雪深さ（主役・大きく強調）＋ 雪質 -->
             <div class="text-right shrink-0 flex flex-col items-end gap-1">
-              <span class="px-2.5 py-1 rounded-xl text-xs sm:text-sm font-black tracking-tight border ${isDeep ? 'bg-sky-500/20 text-cyan-300 border-sky-400/50 shadow-sm' : 'bg-slate-800 text-slate-300 border-slate-700'}">
+              <span class="px-2.5 py-1 rounded-xl text-xs sm:text-sm font-black tracking-tight border ${isDeep ? 'bg-orange-50 text-orange-800 border-orange-300 shadow-sm' : 'bg-slate-100 text-slate-700 border-slate-300'}">
                 ${cleanSnowDepth}
               </span>
-              <span class="text-[11px] font-bold px-2 py-0.2 rounded bg-slate-800 text-sky-300 border border-slate-700">${cleanSnowType}</span>
+              <span class="text-[11px] font-bold px-2 py-0.2 rounded bg-sky-50 text-sky-800 border border-sky-300">${cleanSnowType}</span>
             </div>
           </div>
 
@@ -2857,11 +2856,11 @@
             ${slotHtml}
           </div>
 
-          ${r.comment ? `<div class="text-xs text-slate-200 leading-relaxed bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/80">${r.comment}</div>` : ''}
+          ${r.comment ? `<div class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-200">${r.comment}</div>` : ''}
 
-          <div class="text-[11px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/60">
+          <div class="text-[11px] text-slate-500 flex items-center justify-between pt-1 border-t border-slate-200">
             <span>みんなの現地レポート</span>
-            ${r.spotId ? `<button onclick="selectSpotFromMap('${r.spotId}')" class="text-sky-400 font-bold hover:underline flex items-center gap-0.5">詳細を見る <i class="fa-solid fa-chevron-right text-[10px]"></i></button>` : ''}
+            ${r.spotId ? `<button onclick="selectSpotFromMap('${r.spotId}')" class="text-sky-700 font-bold hover:underline flex items-center gap-0.5">詳細を見る <i class="fa-solid fa-chevron-right text-[10px]"></i></button>` : ''}
           </div>
         `;
         container.appendChild(card);
@@ -2890,7 +2889,7 @@
         });
         const avg = (totalStars / spotReports.length).toFixed(1);
         repRate.textContent = `★ ${avg}`;
-        repRate.className = "text-amber-300 font-bold";
+        repRate.className = "text-amber-700 font-bold";
 
         const topSnow = Object.entries(snowCounts).sort((a, b) => b[1] - a[1])[0];
         repSnow.textContent = topSnow ? topSnow[0] : 'パウダー良好';
@@ -2939,9 +2938,9 @@
       const btns = document.querySelectorAll('.report-slot-btn');
       btns.forEach(btn => {
         if (btn.dataset.slot === slot) {
-          btn.className = "report-slot-btn py-1.5 rounded-lg text-xs font-black border border-sky-400 bg-sky-500 text-slate-950 shadow transition";
+          btn.className = "report-slot-btn py-1.5 rounded-lg text-xs font-black border border-sky-700 bg-sky-700 text-white shadow-sm transition";
         } else {
-          btn.className = "report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition";
+          btn.className = "report-slot-btn py-1.5 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition";
         }
       });
     }
@@ -2988,9 +2987,9 @@
       const btns = document.querySelectorAll('#reportRatingStars button i');
       btns.forEach((btn, idx) => {
         if (idx < stars) {
-          btn.className = "fa-solid fa-star text-amber-400";
+          btn.className = "fa-solid fa-star text-amber-500";
         } else {
-          btn.className = "fa-regular fa-star text-slate-600";
+          btn.className = "fa-regular fa-star text-slate-300";
         }
       });
       const label = document.getElementById('reportRatingLabel');
@@ -3076,7 +3075,7 @@
       const isFav = favorites.includes(currentSpotId);
       const icon = document.getElementById('favIcon');
       if (isFav) {
-        icon.className = "fa-solid fa-star text-amber-400 text-sm";
+        icon.className = "fa-solid fa-star text-amber-500 text-sm";
       } else {
         icon.className = "fa-regular fa-star text-slate-400 text-sm";
       }
@@ -3184,15 +3183,15 @@
 
       if (validFavSpots.length === 0) {
         container.innerHTML = `
-          <div class="snow-card rounded-2xl p-6 text-center border border-slate-700/60 space-y-3">
-            <div class="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 text-amber-400 flex items-center justify-center mx-auto text-xl">
+          <div class="snow-card rounded-2xl p-6 text-center border border-slate-300 space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-300 text-amber-600 flex items-center justify-center mx-auto text-xl">
               <i class="fa-regular fa-star"></i>
             </div>
             <div class="space-y-1">
-              <h4 class="text-sm font-black text-white">MYスポットがまだ登録されていません</h4>
-              <p class="text-xs text-slate-400 leading-relaxed">ホーム画面のスポット名横にある「★」マークをタップするか、上の追加ボタンからよく行くゲレンデ・BC山を登録すると、ここで一括比較できます。</p>
+              <h4 class="text-sm font-black text-slate-900">MYスポットがまだ登録されていません</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">ホーム画面のスポット名横にある「★」マークをタップするか、上の追加ボタンからよく行くゲレンデ・BC山を登録すると、ここで一括比較できます。</p>
             </div>
-            <button type="button" onclick="openSearchModal()" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow-sm transition inline-flex items-center gap-1.5 active:scale-95">
+            <button type="button" onclick="openSearchModal()" class="px-4 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white text-xs font-bold shadow-sm transition inline-flex items-center gap-1.5 active:scale-95">
               <i class="fa-solid fa-magnifying-glass"></i>
               <span>全国スポットから検索して追加</span>
             </button>
@@ -3211,8 +3210,8 @@
         const nightVal = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(s) : 0;
         const isBC = s.category === 'bc';
         const catBadge = isBC
-          ? '<span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold shrink-0 whitespace-nowrap">⛰️BC山</span>'
-          : '<span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 font-bold shrink-0 whitespace-nowrap">🏂スキー場</span>';
+          ? '<span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold shrink-0 whitespace-nowrap">⛰️BC山</span>'
+          : '<span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-50 text-sky-800 border border-sky-300 font-bold shrink-0 whitespace-nowrap">🏂スキー場</span>';
 
         const wInfo = (s.current && s.current.weatherInfo) ? s.current.weatherInfo : (typeof getWeatherInfo === 'function' ? getWeatherInfo(s.current.weatherCode || 0) : { text: '晴れ', icon: '☀️' });
         const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
@@ -3235,15 +3234,15 @@
           const isHeavyNight = dNight >= 10;
 
           return `
-            <div class="rounded-lg p-1.5 text-center border ${isHeavyNight ? 'bg-sky-950/60 border-sky-500/50' : 'bg-slate-950/60 border-slate-800/90'}">
-              <div class="flex items-center justify-center gap-1 text-[10.5px] font-bold ${dIdx === 0 ? 'text-amber-300' : 'text-slate-300'}">
+            <div class="rounded-lg p-1.5 text-center border ${isHeavyNight ? 'bg-orange-50 border-orange-300' : 'bg-slate-50 border-slate-200'}">
+              <div class="flex items-center justify-center gap-1 text-[10.5px] font-bold ${dIdx === 0 ? 'text-amber-700' : 'text-slate-700'}">
                 <span>${dayLabel}</span>
                 <span>${d.weatherIcon || '❄️'}</span>
               </div>
-              <div class="mt-0.5 text-xs font-black ${isHeavyNight ? 'text-cyan-300' : (dNight > 0 ? 'text-sky-300' : 'text-slate-400')} whitespace-nowrap">
+              <div class="mt-0.5 text-xs font-black ${isHeavyNight ? 'text-orange-700' : (dNight > 0 ? 'text-sky-700' : 'text-slate-500')} whitespace-nowrap">
                 🌙 +${dNight}cm
               </div>
-              <div class="text-[10px] text-slate-400 font-medium whitespace-nowrap mt-0.5">
+              <div class="text-[10px] text-slate-500 font-medium whitespace-nowrap mt-0.5">
                 1日 +${d.totalSnowfall || 0}cm
               </div>
             </div>
@@ -3252,58 +3251,58 @@
 
         const card = document.createElement('div');
         card.onclick = () => selectSpotFromMap(s.id);
-        card.className = "snow-card rounded-2xl p-3 border border-sky-500/30 hover:border-sky-400/60 bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/30 shadow-md cursor-pointer active:scale-[0.99] transition space-y-2";
+        card.className = "snow-card rounded-2xl p-3 border border-slate-300 hover:border-sky-600 bg-white shadow-sm cursor-pointer active:scale-[0.99] transition space-y-2";
 
         card.innerHTML = `
           <!-- 上段: スポット名 ＋ バッジ ＋ スコア ＋ ★解除ボタン -->
           <div class="flex items-start justify-between gap-2">
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-1.5 flex-wrap">
-                <span class="text-[10.5px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold shrink-0">
+                <span class="text-[10.5px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-300 font-bold shrink-0">
                   <i class="fa-solid fa-star text-[9px]"></i> MY
                 </span>
                 ${catBadge}
-                <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
+                <span class="text-[11px] text-slate-600 font-bold truncate">${s.areaName || s.regionName}</span>
               </div>
               <div class="flex items-center gap-1.5 mt-0.5">
                 <span class="text-xs shrink-0">${wInfo.icon}</span>
-                <h4 class="text-sm sm:text-base font-black text-white truncate">${s.name}</h4>
+                <h4 class="text-sm sm:text-base font-black text-slate-900 truncate">${s.name}</h4>
               </div>
-              ${tagStr ? `<div class="mt-0.5"><span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-sky-300 border border-slate-700/80 whitespace-nowrap">${tagStr}</span></div>` : ''}
+              ${tagStr ? `<div class="mt-0.5"><span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 text-sky-800 border border-slate-300 whitespace-nowrap font-bold">${tagStr}</span></div>` : ''}
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <div class="text-right flex flex-col items-end">
                 <div class="flex items-baseline justify-end gap-0.5">
-                  <span class="font-teko text-2xl font-black ${score !== null ? 'text-sky-400' : 'text-slate-500'} leading-none">${score !== null ? score : '―'}</span>
-                  ${score !== null ? '<span class="text-xs font-bold text-sky-400">点</span>' : ''}
+                  <span class="font-teko text-2xl font-black ${score !== null ? 'text-sky-700' : 'text-slate-400'} leading-none">${score !== null ? score : '―'}</span>
+                  ${score !== null ? '<span class="text-xs font-bold text-sky-700">点</span>' : ''}
                 </div>
-                <span class="text-[10px] font-bold px-1.5 py-0.2 rounded mt-0.5 ${score !== null ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${scoreRank}</span>
+                <span class="text-[10px] font-bold px-1.5 py-0.2 rounded mt-0.5 ${score !== null ? 'bg-sky-50 text-sky-800 border border-sky-300' : 'bg-slate-100 text-slate-600 border border-slate-300'}">${scoreRank}</span>
               </div>
-              <button type="button" onclick="toggleFavFromMyPoints(event, '${s.id}')" class="w-7 h-7 rounded-full bg-amber-400/10 hover:bg-amber-400/20 text-amber-400 border border-amber-400/30 flex items-center justify-center transition active:scale-90" title="MYスポット解除">
+              <button type="button" onclick="toggleFavFromMyPoints(event, '${s.id}')" class="w-7 h-7 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-600 border border-amber-300 flex items-center justify-center transition active:scale-90" title="MYスポット解除">
                 <i class="fa-solid fa-star text-xs"></i>
               </button>
             </div>
           </div>
 
           <!-- 中段: フィード準拠の薄型ハイライトバー（夜間新雪 ＋ 気象・積雪） -->
-          <div class="flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-xl ${nightVal >= 10 ? 'bg-gradient-to-r from-sky-500/25 to-indigo-500/25 border border-sky-400/40' : 'bg-slate-950/70 border border-slate-800'}">
+          <div class="flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-xl ${nightVal >= 10 ? 'bg-orange-50 border border-orange-300' : 'bg-slate-50 border border-slate-200'}">
             <div class="flex items-center gap-1.5 min-w-0">
               <span class="text-sm">🌙</span>
               <div>
-                <span class="text-[10px] text-slate-400 block leading-tight">${nightLabel}</span>
-                <span class="text-sm font-black ${nightVal >= 10 ? 'text-cyan-300' : 'text-white'} leading-none">+${nightVal}cm</span>
+                <span class="text-[10px] text-slate-600 block leading-tight">${nightLabel}</span>
+                <span class="text-sm font-black ${nightVal >= 10 ? 'text-orange-700' : 'text-slate-900'} leading-none">+${nightVal}cm</span>
               </div>
             </div>
-            <div class="text-right text-[10.5px] text-slate-300 font-bold shrink-0">
+            <div class="text-right text-[10.5px] text-slate-800 font-bold shrink-0">
               <div>積雪 ${topDepth}/${baseDepth}cm</div>
-              <div class="text-slate-400 font-normal">${wInfo.icon} ${topTemp}℃ / 風${windSpeed}m/s</div>
+              <div class="text-slate-600 font-normal">${wInfo.icon} ${topTemp}℃ / 風${windSpeed}m/s</div>
             </div>
           </div>
 
           <!-- 下段: 今後3日間の降雪ミニ予報グリッド（薄型） -->
           ${next3Days.length > 0 ? `
             <div class="pt-0.5">
-              <div class="text-[10px] font-bold text-slate-400 mb-1 flex items-center justify-between">
+              <div class="text-[10px] font-bold text-slate-600 mb-1 flex items-center justify-between">
                 <span>今後3日間の降雪予報</span>
                 <span class="text-slate-500 text-[9.5px]">🌙夜間新雪 / 1日計</span>
               </div>
@@ -3346,18 +3345,18 @@
 
       matched.forEach(s => {
         const row = document.createElement('div');
-        row.className = "p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 flex items-center justify-between cursor-pointer border border-slate-700/50 transition";
+        row.className = "p-2 rounded-lg bg-white hover:bg-sky-50 flex items-center justify-between cursor-pointer border border-slate-300 transition";
         row.onclick = () => {
           closeSearchModal();
           selectSpotFromMap(s.id);
         };
         row.innerHTML = `
           <div>
-            <span class="text-[11px] text-slate-400 font-bold">${s.areaName || s.regionName} (${s.category === 'bc' ? '⛰️山' : '🏂ゲレンデ'})</span>
-            <div class="text-xs font-bold text-white">${s.name}</div>
+            <span class="text-[11px] text-slate-500 font-bold">${s.areaName || s.regionName} (${s.category === 'bc' ? '⛰️山' : '🏂ゲレンデ'})</span>
+            <div class="text-xs font-bold text-slate-900">${s.name}</div>
           </div>
           <div class="text-right">
-            <span class="text-xs font-bold ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-400' : 'text-slate-500'}">${s.current.score !== null && s.current.score !== undefined ? s.current.score + '点' : '―'}</span>
+            <span class="text-xs font-bold ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-700' : 'text-slate-400'}">${s.current.score !== null && s.current.score !== undefined ? s.current.score + '点' : '―'}</span>
           </div>
         `;
         container.appendChild(row);
@@ -3464,9 +3463,9 @@
       document.querySelectorAll('.notif-threshold-btn').forEach(btn => {
         const val = Number(btn.getAttribute('data-threshold'));
         if (val === Number(notifSettings.thresholdCm || 10)) {
-          btn.className = 'notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition bg-sky-500 text-slate-950 shadow';
+          btn.className = 'notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition bg-sky-700 text-white shadow-sm';
         } else {
-          btn.className = 'notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-300 hover:bg-slate-700';
+          btn.className = 'notif-threshold-btn py-1.5 rounded-xl text-xs font-bold transition text-slate-800 hover:bg-slate-200';
         }
       });
     }
@@ -3487,7 +3486,7 @@
       }
 
       if (Notification.permission === 'denied') {
-        if (statusText) statusText.innerHTML = '<span class="text-rose-400">通知がブロックされています（端末設定から許可してください）</span>';
+        if (statusText) statusText.innerHTML = '<span class="text-rose-700 font-bold">通知がブロックされています（端末設定から許可してください）</span>';
         if (btnToggle) {
           btnToggle.textContent = 'ブロック中';
           btnToggle.disabled = true;
@@ -3502,20 +3501,20 @@
         const reg = await navigator.serviceWorker.ready;
         const sub = await reg.pushManager.getSubscription();
         if (sub) {
-          if (statusText) statusText.innerHTML = '<span class="text-emerald-400">ON（プッシュ通知受信中）</span>';
+          if (statusText) statusText.innerHTML = '<span class="text-emerald-700 font-bold">ON（プッシュ通知受信中）</span>';
           if (btnToggle) {
             btnToggle.textContent = '通知をOFFにする';
             btnToggle.disabled = false;
-            btnToggle.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-700 hover:bg-rose-600 text-white shadow-sm active:scale-95 transition flex-shrink-0';
+            btnToggle.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-600 hover:bg-rose-600 text-white shadow-sm active:scale-95 transition flex-shrink-0';
           }
           if (testBox) testBox.classList.remove('hidden');
           if (activeDot) activeDot.classList.remove('hidden');
         } else {
-          if (statusText) statusText.innerHTML = '<span class="text-slate-300">OFF（未登録）</span>';
+          if (statusText) statusText.innerHTML = '<span class="text-slate-700">OFF（未登録）</span>';
           if (btnToggle) {
             btnToggle.textContent = '通知を有効にする';
             btnToggle.disabled = false;
-            btnToggle.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-sm active:scale-95 transition flex-shrink-0';
+            btnToggle.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-700 hover:bg-sky-800 text-white shadow-sm active:scale-95 transition flex-shrink-0';
           }
           if (testBox) testBox.classList.add('hidden');
           if (activeDot) activeDot.classList.add('hidden');
@@ -3628,7 +3627,7 @@
           icon: 'icons/icon-192.png',
           badge: 'icons/icon-192.png',
           tag: 'powder-base-test',
-          data: { url: './', spotId: currentSpotId || null, targetTab: 'home' }
+          data: { url: './#feed', spotId: currentSpotId || null, targetTab: 'feed' }
         });
       } catch (err) {
         console.error('Test notification failed:', err);
@@ -3641,11 +3640,11 @@
       document.querySelectorAll('.notif-filter-btn').forEach(btn => {
         const f = btn.getAttribute('data-filter');
         if (f === filter) {
-          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-sky-500 text-slate-950 whitespace-nowrap';
+          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-sky-700 text-white whitespace-nowrap';
         } else if (f === 'fav') {
-          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-amber-400 border border-amber-500/40 hover:bg-slate-700 whitespace-nowrap';
+          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-amber-700 border border-amber-400 hover:bg-amber-50 whitespace-nowrap';
         } else {
-          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 whitespace-nowrap';
+          btn.className = 'notif-filter-btn px-2.5 py-1 rounded-md font-bold transition bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 whitespace-nowrap';
         }
       });
 
@@ -3667,7 +3666,7 @@
       }
 
       if (list.length === 0) {
-        container.innerHTML = `<div class="text-[11px] text-slate-400 py-3 px-2 w-full text-center">${filter === 'fav' ? 'MYスポットが未登録です。上の地方タブから直接選ぶこともできます。' : '該当するスポットがありません'}</div>`;
+        container.innerHTML = `<div class="text-[11px] text-slate-600 font-bold py-3 px-2 w-full text-center">${filter === 'fav' ? 'MYスポットが未登録です。上の地方タブから直接選ぶこともできます。' : '該当するスポットがありません'}</div>`;
         return;
       }
 
@@ -3675,10 +3674,10 @@
         const isSelected = selectedSet.has(s.id);
         const catIcon = s.category === 'bc' ? '⛰️' : '🏂';
         return `
-          <button type="button" onclick="toggleNotifSpot('${s.id}')" class="px-2 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 border ${isSelected ? 'bg-sky-500/20 text-sky-300 border-sky-400/70' : 'bg-slate-900/80 text-slate-400 border-slate-700 hover:text-white'}">
+          <button type="button" onclick="toggleNotifSpot('${s.id}')" class="px-2 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 border ${isSelected ? 'bg-sky-50 text-sky-900 border-sky-600' : 'bg-white text-slate-700 border-slate-300 hover:text-slate-900'}">
             <span>${catIcon}</span>
             <span>${s.name}</span>
-            ${isSelected ? '<i class="fa-solid fa-check text-[10px] text-sky-400 ml-0.5"></i>' : ''}
+            ${isSelected ? '<i class="fa-solid fa-check text-[10px] text-sky-700 ml-0.5"></i>' : ''}
           </button>
         `;
       }).join('');

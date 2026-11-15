@@ -123,9 +123,9 @@ self.addEventListener('push', (event) => {
     badge: data.badge || 'icons/icon-192.png',
     vibrate: [100, 50, 100],
     data: {
-      url: data.url || './',
+      url: data.url || './#feed',
       spotId: data.spotId || null,
-      targetTab: data.targetTab || 'home'
+      targetTab: data.targetTab || 'feed'
     },
     tag: data.tag || 'powder-base-alert',
     renotify: true
@@ -143,29 +143,25 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   const notifData = event.notification.data || {};
-  let targetUrl = notifData.url || './';
+  let targetUrl = notifData.url || './#feed';
 
   // オープンリダイレクト防御（同一オリジンのみ許可）
   try {
     const parsed = new URL(targetUrl, self.location.origin);
     if (parsed.origin !== self.location.origin) {
-      targetUrl = './';
+      targetUrl = './#feed';
     } else {
       targetUrl = parsed.href;
     }
   } catch (_) {
-    targetUrl = './';
+    targetUrl = './#feed';
   }
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
       for (const client of clientList) {
         if (client.url.startsWith(self.location.origin) && 'focus' in client) {
-          if (notifData.spotId) {
-            client.postMessage({ action: 'SELECT_SPOT', spotId: String(notifData.spotId) });
-          } else if (notifData.targetTab) {
-            client.postMessage({ action: 'OPEN_TAB', tab: notifData.targetTab });
-          }
+          client.postMessage({ action: 'OPEN_TAB', tab: notifData.targetTab || 'feed' });
           return client.focus();
         }
       }
