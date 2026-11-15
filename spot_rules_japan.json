@@ -1466,29 +1466,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski40",
-    "name": "旭山雪の村",
-    "category": "ski",
-    "region": "hokkaido",
-    "regionName": "北海道",
-    "areaName": "道北",
-    "base": {
-      "lat": 43.752,
-      "lon": 142.4833,
-      "elevation": 164,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 43.7678,
-      "lon": 142.4833,
-      "elevation": 213,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "12442",
-    "amedasName": "旭川",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski30",
     "name": "上川町営中山",
     "category": "ski",
@@ -1765,29 +1742,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski59",
-    "name": "砂川市民",
-    "category": "ski",
-    "region": "hokkaido",
-    "regionName": "北海道",
-    "areaName": "道北",
-    "base": {
-      "lat": 43.4731,
-      "lon": 141.9264,
-      "elevation": 79,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 43.4573,
-      "lon": 141.9264,
-      "elevation": 97,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "15241",
-    "amedasName": "滝川",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski50",
     "name": "中富良野北星",
     "category": "ski",
@@ -1923,52 +1877,6 @@
     },
     "amedasId": "200011",
     "amedasName": "裏の沢",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski67",
-    "name": "三井グリーンランドホワイトパーク",
-    "category": "ski",
-    "region": "hokkaido",
-    "regionName": "北海道",
-    "areaName": "道北",
-    "base": {
-      "lat": 43.1534,
-      "lon": 141.7822,
-      "elevation": 22,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 43.1692,
-      "lon": 141.7822,
-      "elevation": 42,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "200019",
-    "amedasName": "岩見沢河川",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski69",
-    "name": "栗山町",
-    "category": "ski",
-    "region": "hokkaido",
-    "regionName": "北海道",
-    "areaName": "道北",
-    "base": {
-      "lat": 43.05,
-      "lon": 141.7856,
-      "elevation": 26,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 43.0658,
-      "lon": 141.7856,
-      "elevation": 45,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "15442",
-    "amedasName": "夕張",
     "slopeOrientation": "N"
   },
   {
@@ -2823,29 +2731,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski120",
-    "name": "北広島クラッセホテル",
-    "category": "ski",
-    "region": "hokkaido",
-    "regionName": "北海道",
-    "areaName": "道央",
-    "base": {
-      "lat": 42.9722,
-      "lon": 141.5283,
-      "elevation": 84,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 42.9564,
-      "lon": 141.5283,
-      "elevation": 110,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "14206",
-    "amedasName": "恵庭島松",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski121",
     "name": "恵庭市民",
     "category": "ski",
@@ -3145,29 +3030,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski138",
-    "name": "古平家族旅行村",
-    "category": "ski",
-    "region": "hokkaido",
-    "regionName": "北海道",
-    "areaName": "道央",
-    "base": {
-      "lat": 43.2578,
-      "lon": 140.6567,
-      "elevation": 47,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 43.242,
-      "lon": 140.6567,
-      "elevation": 266,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "16076",
-    "amedasName": "余市",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski141",
     "name": "倶知安町旭ヶ丘",
     "category": "ski",
@@ -3260,29 +3122,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski150",
-    "name": "船見台",
-    "category": "ski",
-    "region": "hokkaido",
-    "regionName": "北海道",
-    "areaName": "道央",
-    "base": {
-      "lat": 42.5861,
-      "lon": 140.7275,
-      "elevation": 127,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 42.5861,
-      "lon": 140.715,
-      "elevation": 200,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "21226",
-    "amedasName": "大岸",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski149",
     "name": "ウインザースノービレッジ",
     "category": "ski",
@@ -3326,29 +3165,6 @@
     },
     "amedasId": "16206",
     "amedasName": "蘭越",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski152",
-    "name": "北湯沢温泉",
-    "category": "ski",
-    "region": "hokkaido",
-    "regionName": "北海道",
-    "areaName": "道央",
-    "base": {
-      "lat": 42.6242,
-      "lon": 141.0256,
-      "elevation": 303,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 42.6084,
-      "lon": 141.0256,
-      "elevation": 308,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300147",
-    "amedasName": "優徳",
     "slopeOrientation": "N"
   },
   {
@@ -3950,29 +3766,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski188",
-    "name": "スノーワールドタザワ",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "秋田",
-    "base": {
-      "lat": 39.7342,
-      "lon": 140.4894,
-      "elevation": 810,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.7184,
-      "lon": 140.4894,
-      "elevation": 849,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300102",
-    "amedasName": "鎧畑",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski196",
     "name": "ジュネス栗駒",
     "category": "ski",
@@ -3993,52 +3786,6 @@
     },
     "amedasId": "300108",
     "amedasName": "椿台",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski195",
-    "name": "湯沢",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "秋田",
-    "base": {
-      "lat": 39.0886,
-      "lon": 140.6178,
-      "elevation": 234,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.0728,
-      "lon": 140.6178,
-      "elevation": 283,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300109",
-    "amedasName": "皆瀬",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski197",
-    "name": "由利本荘市長坂",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "秋田",
-    "base": {
-      "lat": 39.4544,
-      "lon": 140.1781,
-      "elevation": 35,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.4386,
-      "lon": 140.1781,
-      "elevation": 154,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "32496",
-    "amedasName": "大正寺",
     "slopeOrientation": "N"
   },
   {
@@ -4134,29 +3881,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski192",
-    "name": "山内",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "秋田",
-    "base": {
-      "lat": 39.285,
-      "lon": 140.6189,
-      "elevation": 146,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.2692,
-      "lon": 140.6189,
-      "elevation": 158,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300107",
-    "amedasName": "小松川",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski194",
     "name": "増田町営天下森",
     "category": "ski",
@@ -4177,75 +3901,6 @@
     },
     "amedasId": "300108",
     "amedasName": "椿台",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski193",
-    "name": "横手公園",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "秋田",
-    "base": {
-      "lat": 39.3081,
-      "lon": 140.5744,
-      "elevation": 68,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.3239,
-      "lon": 140.5744,
-      "elevation": 92,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "32596",
-    "amedasName": "横手",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski200",
-    "name": "鳥海オコジョランド",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "秋田",
-    "base": {
-      "lat": 39.1523,
-      "lon": 140.1264,
-      "elevation": 341,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.1681,
-      "lon": 140.1264,
-      "elevation": 353,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "32626",
-    "amedasName": "矢島",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski203",
-    "name": "井川町営赤沢山",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "秋田",
-    "base": {
-      "lat": 39.872,
-      "lon": 140.1283,
-      "elevation": 73,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.8878,
-      "lon": 140.1283,
-      "elevation": 81,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "32296",
-    "amedasName": "五城目",
     "slopeOrientation": "N"
   },
   {
@@ -4502,29 +4157,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski222",
-    "name": "北上市民和賀",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "岩手",
-    "base": {
-      "lat": 39.2956,
-      "lon": 140.9714,
-      "elevation": 126,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.2798,
-      "lon": 140.9714,
-      "elevation": 189,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300215",
-    "amedasName": "和賀仙人",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski218",
     "name": "花巻鉛温泉",
     "category": "ski",
@@ -4610,52 +4242,6 @@
       "lat": 38.842,
       "lon": 139.9811,
       "elevation": 277,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "35146",
-    "amedasName": "狩川",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski225",
-    "name": "奥州市越路",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "岩手",
-    "base": {
-      "lat": 39.1544,
-      "lon": 141.3592,
-      "elevation": 487,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 39.1386,
-      "lon": 141.3592,
-      "elevation": 664,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300213",
-    "amedasName": "種山",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski231",
-    "name": "眺海の森平田",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "山形",
-    "base": {
-      "lat": 38.8631,
-      "lon": 139.985,
-      "elevation": 147,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 38.8473,
-      "lon": 139.985,
-      "elevation": 207,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "35146",
@@ -4755,29 +4341,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski237",
-    "name": "猿羽根山",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "山形",
-    "base": {
-      "lat": 38.665,
-      "lon": 140.3228,
-      "elevation": 61,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 38.6808,
-      "lon": 140.3228,
-      "elevation": 136,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "35162",
-    "amedasName": "新庄",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski230",
     "name": "秋山",
     "category": "ski",
@@ -4824,29 +4387,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski234",
-    "name": "八幡",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "山形",
-    "base": {
-      "lat": 39.0058,
-      "lon": 140.0475,
-      "elevation": 230,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 38.99,
-      "lon": 140.0475,
-      "elevation": 383,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300114",
-    "amedasName": "小滝",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski238",
     "name": "山形赤倉温泉",
     "category": "ski",
@@ -4890,29 +4430,6 @@
     },
     "amedasId": "35216",
     "amedasName": "肘折",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski242",
-    "name": "村山市農村文化保存伝承館",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "山形",
-    "base": {
-      "lat": 38.4748,
-      "lon": 140.3489,
-      "elevation": 83,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 38.4906,
-      "lon": 140.3489,
-      "elevation": 89,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "35231",
-    "amedasName": "尾花沢",
     "slopeOrientation": "N"
   },
   {
@@ -5074,52 +4591,6 @@
     },
     "amedasId": "35231",
     "amedasName": "尾花沢",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski254",
-    "name": "大石田町営里山",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "山形",
-    "base": {
-      "lat": 38.5592,
-      "lon": 140.3847,
-      "elevation": 67,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 38.575,
-      "lon": 140.3847,
-      "elevation": 70,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "35231",
-    "amedasName": "尾花沢",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski245",
-    "name": "あつみ温泉一本木",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "山形",
-    "base": {
-      "lat": 38.5958,
-      "lon": 139.6431,
-      "elevation": 245,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 38.58,
-      "lon": 139.6431,
-      "elevation": 392,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300051",
-    "amedasName": "山北",
     "slopeOrientation": "N"
   },
   {
@@ -5422,29 +4893,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski267",
-    "name": "栗子国際スキー＆リゾート",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "山形",
-    "base": {
-      "lat": 37.8106,
-      "lon": 140.2586,
-      "elevation": 667,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.8264,
-      "lon": 140.2586,
-      "elevation": 713,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300169",
-    "amedasName": "栗子国道維持出張所",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski268",
     "name": "天元台高原",
     "category": "ski",
@@ -5511,29 +4959,6 @@
     },
     "amedasId": "34096",
     "amedasName": "川渡",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski275",
-    "name": "St MARY",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "宮城",
-    "base": {
-      "lat": 38.2183,
-      "lon": 140.5211,
-      "elevation": 449,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 38.2025,
-      "lon": 140.5211,
-      "elevation": 784,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "200042",
-    "amedasName": "笹谷",
     "slopeOrientation": "N"
   },
   {
@@ -5672,29 +5097,6 @@
     },
     "amedasId": "200044",
     "amedasName": "滑津",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski284",
-    "name": "横向温泉",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "福島",
-    "base": {
-      "lat": 37.6572,
-      "lon": 140.26,
-      "elevation": 1102,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.6414,
-      "lon": 140.26,
-      "elevation": 1190,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "36276",
-    "amedasName": "猪苗代",
     "slopeOrientation": "N"
   },
   {
@@ -5974,52 +5376,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski297",
-    "name": "柳津温泉",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "福島",
-    "base": {
-      "lat": 37.5214,
-      "lon": 139.7136,
-      "elevation": 225,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.5372,
-      "lon": 139.7136,
-      "elevation": 344,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "36251",
-    "amedasName": "西会津",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski300",
-    "name": "スキーリゾート天栄",
-    "category": "ski",
-    "region": "tohoku",
-    "regionName": "東北",
-    "areaName": "福島",
-    "base": {
-      "lat": 37.1836,
-      "lon": 139.7639,
-      "elevation": 630,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.1678,
-      "lon": 139.7639,
-      "elevation": 727,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "36641",
-    "amedasName": "田島",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski293",
     "name": "グランデコスノーリゾート",
     "category": "ski",
@@ -6135,29 +5491,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski308",
-    "name": "那須温泉ファミリー",
-    "category": "ski",
-    "region": "kanto",
-    "regionName": "関東",
-    "areaName": "栃木",
-    "base": {
-      "lat": 37.1028,
-      "lon": 139.9839,
-      "elevation": 1145,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.1186,
-      "lon": 139.9839,
-      "elevation": 1244,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "41011",
-    "amedasName": "那須高原",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski309",
     "name": "ハンターマウンテン塩原",
     "category": "ski",
@@ -6270,29 +5603,6 @@
     },
     "amedasId": "41116",
     "amedasName": "土呂部",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski321",
-    "name": "武尊牧場",
-    "category": "ski",
-    "region": "kanto",
-    "regionName": "関東",
-    "areaName": "群馬",
-    "base": {
-      "lat": 36.7978,
-      "lon": 139.1894,
-      "elevation": 1136,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.782,
-      "lon": 139.1894,
-      "elevation": 1143,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "200063",
-    "amedasName": "タキガ沢",
     "slopeOrientation": "N"
   },
   {
@@ -6480,29 +5790,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski334",
-    "name": "赤城山第三",
-    "category": "ski",
-    "region": "kanto",
-    "regionName": "関東",
-    "areaName": "群馬",
-    "base": {
-      "lat": 36.5433,
-      "lon": 139.1872,
-      "elevation": 1371,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.5275,
-      "lon": 139.1872,
-      "elevation": 1372,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "42251",
-    "amedasName": "前橋",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski339",
     "name": "パルコール嬬恋",
     "category": "ski",
@@ -6661,29 +5948,6 @@
     },
     "amedasId": "48331",
     "amedasName": "軽井沢",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski342",
-    "name": "ワンダーバレーさど",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "新潟(下越)",
-    "base": {
-      "lat": 38.0509,
-      "lon": 138.3775,
-      "elevation": 62,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 38.0667,
-      "lon": 138.3775,
-      "elevation": 124,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "54157",
-    "amedasName": "相川",
     "slopeOrientation": "N"
   },
   {
@@ -7285,52 +6549,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski386",
-    "name": "魚沼市営大原",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "新潟(中越)",
-    "base": {
-      "lat": 37.2448,
-      "lon": 139.0858,
-      "elevation": 684,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.2606,
-      "lon": 139.0858,
-      "elevation": 945,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300057",
-    "amedasName": "大湯",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski393",
-    "name": "十日町市営中峰",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "新潟(中越)",
-    "base": {
-      "lat": 37.2031,
-      "lon": 138.7911,
-      "elevation": 118,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.1873,
-      "lon": 138.7911,
-      "elevation": 172,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "54676",
-    "amedasName": "十日町",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski390",
     "name": "冬鳥越スキーガーデン",
     "category": "ski",
@@ -7397,52 +6615,6 @@
     },
     "amedasId": "300014",
     "amedasName": "銀山平",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski394",
-    "name": "中条桂",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "新潟(中越)",
-    "base": {
-      "lat": 37.1525,
-      "lon": 138.7797,
-      "elevation": 181,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.1367,
-      "lon": 138.7797,
-      "elevation": 295,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "54676",
-    "amedasName": "十日町",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski397",
-    "name": "マウンテンパーク津南",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "新潟(中越)",
-    "base": {
-      "lat": 37.0089,
-      "lon": 138.6197,
-      "elevation": 359,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.0247,
-      "lon": 138.6197,
-      "elevation": 549,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300059",
-    "amedasName": "天水越",
     "slopeOrientation": "N"
   },
   {
@@ -7627,29 +6799,6 @@
     },
     "amedasId": "200096",
     "amedasName": "赤倉",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski414",
-    "name": "吉川六角山",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "新潟(上越)",
-    "base": {
-      "lat": 37.2189,
-      "lon": 138.4069,
-      "elevation": 28,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 37.2031,
-      "lon": 138.4069,
-      "elevation": 69,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "54661",
-    "amedasName": "安塚",
     "slopeOrientation": "N"
   },
   {
@@ -8458,29 +7607,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski459",
-    "name": "斑尾高原サンパティック",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "長野(北信)",
-    "base": {
-      "lat": 36.8517,
-      "lon": 138.3,
-      "elevation": 838,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.8359,
-      "lon": 138.3,
-      "elevation": 878,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300011",
-    "amedasName": "斑尾",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski458",
     "name": "さかえ倶楽部",
     "category": "ski",
@@ -8593,29 +7719,6 @@
     },
     "amedasId": "300010",
     "amedasName": "苗間",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski461",
-    "name": "斑尾高原豊田",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "長野(北信)",
-    "base": {
-      "lat": 36.812,
-      "lon": 138.2931,
-      "elevation": 628,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.8278,
-      "lon": 138.2931,
-      "elevation": 821,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300011",
-    "amedasName": "斑尾",
     "slopeOrientation": "N"
   },
   {
@@ -8777,29 +7880,6 @@
     },
     "amedasId": "300222",
     "amedasName": "山口",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski480",
-    "name": "白馬みねかた",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "長野(北信)",
-    "base": {
-      "lat": 36.6492,
-      "lon": 137.8756,
-      "elevation": 870,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.665,
-      "lon": 137.8756,
-      "elevation": 948,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "48141",
-    "amedasName": "白馬",
     "slopeOrientation": "N"
   },
   {
@@ -9125,29 +8205,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski497",
-    "name": "エコーバレー",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "長野(中南信)",
-    "base": {
-      "lat": 36.1206,
-      "lon": 138.2075,
-      "elevation": 1500,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.1048,
-      "lon": 138.2075,
-      "elevation": 1663,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "48491",
-    "amedasName": "諏訪",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski498",
     "name": "ブランシュたかやま",
     "category": "ski",
@@ -9191,29 +8248,6 @@
     },
     "amedasId": "48491",
     "amedasName": "諏訪",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski502",
-    "name": "乗鞍高原いがや",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "長野(中南信)",
-    "base": {
-      "lat": 36.1203,
-      "lon": 137.6317,
-      "elevation": 1398,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.1045,
-      "lon": 137.6317,
-      "elevation": 1505,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300004",
-    "amedasName": "白骨",
     "slopeOrientation": "N"
   },
   {
@@ -9467,29 +8501,6 @@
     },
     "amedasId": "48531",
     "amedasName": "開田高原",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski515",
-    "name": "あららぎ高原",
-    "category": "ski",
-    "region": "shinetsu",
-    "regionName": "信越",
-    "areaName": "長野(中南信)",
-    "base": {
-      "lat": 35.39,
-      "lon": 137.6753,
-      "elevation": 1125,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 35.4058,
-      "lon": 137.6753,
-      "elevation": 1142,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "48767",
-    "amedasName": "飯田",
     "slopeOrientation": "N"
   },
   {
@@ -9769,29 +8780,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski532",
-    "name": "白木ヶ峰",
-    "category": "ski",
-    "region": "tokai",
-    "regionName": "東海",
-    "areaName": "岐阜",
-    "base": {
-      "lat": 36.4114,
-      "lon": 137.1897,
-      "elevation": 320,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.3956,
-      "lon": 137.1897,
-      "elevation": 588,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300171",
-    "amedasName": "打保",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski534",
     "name": "モンデウス飛騨位山スノーパーク",
     "category": "ski",
@@ -9812,52 +8800,6 @@
     },
     "amedasId": "300181",
     "amedasName": "宮",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski539",
-    "name": "白川郷平瀬温泉白弓",
-    "category": "ski",
-    "region": "tokai",
-    "regionName": "東海",
-    "areaName": "岐阜",
-    "base": {
-      "lat": 36.1714,
-      "lon": 136.9056,
-      "elevation": 622,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.1872,
-      "lon": 136.9056,
-      "elevation": 665,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300040",
-    "amedasName": "平瀬",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski540",
-    "name": "荘川高原",
-    "category": "ski",
-    "region": "tokai",
-    "regionName": "東海",
-    "areaName": "岐阜",
-    "base": {
-      "lat": 36.0425,
-      "lon": 136.9572,
-      "elevation": 864,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.0583,
-      "lon": 136.9572,
-      "elevation": 874,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300180",
-    "amedasName": "新渕",
     "slopeOrientation": "N"
   },
   {
@@ -9930,29 +8872,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski547",
-    "name": "イトシロシャーロットタウン",
-    "category": "ski",
-    "region": "tokai",
-    "regionName": "東海",
-    "areaName": "岐阜",
-    "base": {
-      "lat": 35.9692,
-      "lon": 136.7717,
-      "elevation": 672,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 35.9534,
-      "lon": 136.7717,
-      "elevation": 943,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300043",
-    "amedasName": "檜峠",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski550",
     "name": "鷲ヶ岳",
     "category": "ski",
@@ -9996,29 +8915,6 @@
     },
     "amedasId": "300044",
     "amedasName": "蛭ヶ野",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski553",
-    "name": "母袋温泉",
-    "category": "ski",
-    "region": "tokai",
-    "regionName": "東海",
-    "areaName": "岐阜",
-    "base": {
-      "lat": 35.8667,
-      "lon": 136.9522,
-      "elevation": 791,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 35.8509,
-      "lon": 136.9522,
-      "elevation": 893,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300021",
-    "amedasName": "東市布",
     "slopeOrientation": "N"
   },
   {
@@ -10111,29 +9007,6 @@
     },
     "amedasId": "200097",
     "amedasName": "千寿ヶ原",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski567",
-    "name": "閑乗寺",
-    "category": "ski",
-    "region": "hokuriku",
-    "regionName": "北陸",
-    "areaName": "富山",
-    "base": {
-      "lat": 36.6114,
-      "lon": 137.0908,
-      "elevation": 93,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.6272,
-      "lon": 137.0908,
-      "elevation": 109,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "55151",
-    "amedasName": "秋ヶ島",
     "slopeOrientation": "N"
   },
   {
@@ -10252,29 +9125,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski568",
-    "name": "スノーバレー利賀",
-    "category": "ski",
-    "region": "hokuriku",
-    "regionName": "北陸",
-    "areaName": "富山",
-    "base": {
-      "lat": 36.4142,
-      "lon": 137.0353,
-      "elevation": 751,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.3984,
-      "lon": 137.0353,
-      "elevation": 1209,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300240",
-    "amedasName": "大長谷",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski570",
     "name": "たいら",
     "category": "ski",
@@ -10321,29 +9171,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski582",
-    "name": "白山白峰温泉",
-    "category": "ski",
-    "region": "hokuriku",
-    "regionName": "北陸",
-    "areaName": "石川",
-    "base": {
-      "lat": 36.1606,
-      "lon": 136.6317,
-      "elevation": 583,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.1764,
-      "lon": 136.6317,
-      "elevation": 635,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "200102",
-    "amedasName": "風嵐",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski581",
     "name": "大倉岳高原",
     "category": "ski",
@@ -10364,29 +9191,6 @@
     },
     "amedasId": "200107",
     "amedasName": "尾小屋",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski589",
-    "name": "莇生田",
-    "category": "ski",
-    "region": "hokuriku",
-    "regionName": "北陸",
-    "areaName": "福井",
-    "base": {
-      "lat": 35.945,
-      "lon": 136.2797,
-      "elevation": 56,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 35.9292,
-      "lon": 136.2797,
-      "elevation": 240,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300023",
-    "amedasName": "谷口",
     "slopeOrientation": "N"
   },
   {
@@ -10436,29 +9240,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski577",
-    "name": "白山瀬女高原",
-    "category": "ski",
-    "region": "hokuriku",
-    "regionName": "北陸",
-    "areaName": "石川",
-    "base": {
-      "lat": 36.2836,
-      "lon": 136.6522,
-      "elevation": 344,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.2678,
-      "lon": 136.6522,
-      "elevation": 595,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300088",
-    "amedasName": "尾口",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski579",
     "name": "金沢市営医王山",
     "category": "ski",
@@ -10502,29 +9283,6 @@
     },
     "amedasId": "57176",
     "amedasName": "九頭竜",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski585",
-    "name": "六呂師高原",
-    "category": "ski",
-    "region": "hokuriku",
-    "regionName": "北陸",
-    "areaName": "福井",
-    "base": {
-      "lat": 36.0056,
-      "lon": 136.5753,
-      "elevation": 398,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 36.0214,
-      "lon": 136.5753,
-      "elevation": 507,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "57121",
-    "amedasName": "大野",
     "slopeOrientation": "N"
   },
   {
@@ -10640,29 +9398,6 @@
     },
     "amedasId": "300290",
     "amedasName": "葛川坊村町",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski590",
-    "name": "森山高原",
-    "category": "ski",
-    "region": "hokuriku",
-    "regionName": "北陸",
-    "areaName": "福井",
-    "base": {
-      "lat": 35.9311,
-      "lon": 136.52,
-      "elevation": 275,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 35.9153,
-      "lon": 136.52,
-      "elevation": 716,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "57121",
-    "amedasName": "大野",
     "slopeOrientation": "N"
   },
   {
@@ -10824,29 +9559,6 @@
     },
     "amedasId": "200118",
     "amedasName": "栗栖野",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski616",
-    "name": "ミタカスノーパーク",
-    "category": "ski",
-    "region": "kansai",
-    "regionName": "関西",
-    "areaName": "兵庫",
-    "base": {
-      "lat": 35.4133,
-      "lon": 134.5247,
-      "elevation": 493,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 35.3975,
-      "lon": 134.5247,
-      "elevation": 865,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300293",
-    "amedasName": "秋岡",
     "slopeOrientation": "N"
   },
   {
@@ -11126,29 +9838,6 @@
     "slopeOrientation": "N"
   },
   {
-    "id": "ski_ski629",
-    "name": "津黒高原",
-    "category": "ski",
-    "region": "chugoku",
-    "regionName": "中国",
-    "areaName": "岡山",
-    "base": {
-      "lat": 35.2583,
-      "lon": 133.7958,
-      "elevation": 605,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 35.2425,
-      "lon": 133.7958,
-      "elevation": 865,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "300279",
-    "amedasName": "蒜山下和",
-    "slopeOrientation": "N"
-  },
-  {
     "id": "ski_ski631",
     "name": "ひるぜんベアバレー",
     "category": "ski",
@@ -11192,29 +9881,6 @@
     },
     "amedasId": "300261",
     "amedasName": "都川",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski651",
-    "name": "ホワイトバレー松原",
-    "category": "ski",
-    "region": "chugoku",
-    "regionName": "中国",
-    "areaName": "広島",
-    "base": {
-      "lat": 34.6284,
-      "lon": 132.2356,
-      "elevation": 639,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 34.6442,
-      "lon": 132.2356,
-      "elevation": 699,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "200123",
-    "amedasName": "松原",
     "slopeOrientation": "N"
   },
   {
@@ -11330,29 +9996,6 @@
     },
     "amedasId": "300271",
     "amedasName": "名賀",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski663",
-    "name": "休暇村奥大山スキー場",
-    "category": "ski",
-    "region": "chugoku",
-    "regionName": "中国",
-    "areaName": "鳥取",
-    "base": {
-      "lat": 35.3528,
-      "lon": 133.5156,
-      "elevation": 631,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 35.3686,
-      "lon": 133.5156,
-      "elevation": 726,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": "200151",
-    "amedasName": "大山寺",
     "slopeOrientation": "N"
   },
   {
@@ -11537,29 +10180,6 @@
     },
     "amedasId": "86157",
     "amedasName": "南阿蘇",
-    "slopeOrientation": "N"
-  },
-  {
-    "id": "ski_ski679",
-    "name": "天狗高原",
-    "category": "ski",
-    "region": "chugoku",
-    "regionName": "中国",
-    "areaName": "高知",
-    "base": {
-      "lat": 33.4614,
-      "lon": 133.0036,
-      "elevation": 967,
-      "label": "リフト最下部・ゲレンデベース"
-    },
-    "top": {
-      "lat": 33.4772,
-      "lon": 133.0036,
-      "elevation": 1356,
-      "label": "リフト最上部・ゲレンデトップ"
-    },
-    "amedasId": null,
-    "amedasName": null,
     "slopeOrientation": "N"
   },
   {
