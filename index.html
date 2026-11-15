@@ -253,7 +253,7 @@
       <div class="grid grid-cols-12 gap-2 mb-3 relative z-10">
         <!-- スコアサークル/バッジ -->
         <div class="col-span-4 bg-slate-50 rounded-xl p-2.5 flex flex-col items-center justify-center border border-slate-200 text-center">
-          <span class="text-[11px] font-bold text-slate-700">雪質スコア</span>
+          <span id="heroScoreLabel" class="text-[11px] font-bold text-slate-700">雪質スコア</span>
           <div class="flex items-baseline justify-center">
             <span id="heroScore" class="font-teko text-5xl font-black text-sky-700 leading-none">--</span>
             <span class="text-xs text-slate-600 font-bold ml-0.5">/100</span>
@@ -318,6 +318,15 @@
             <!-- JSで動的挿入 -->
           </div>
         </div>
+
+        <!-- BC専用 山岳警戒バナー（BC選択時のみ表示） -->
+        <div id="heroBcAlertBox" class="hidden mt-2 rounded-xl px-3 py-2 border text-xs">
+          <div class="flex items-center justify-between gap-2">
+            <span id="heroBcAlertTitle" class="font-black flex items-center gap-1.5"></span>
+            <span class="text-[10px] font-bold opacity-80 shrink-0">山岳気象目安</span>
+          </div>
+          <p id="heroBcAlertDesc" class="text-[11px] mt-0.5 leading-snug font-medium"></p>
+        </div>
       </div>
 
       <!-- 気温 & 風速 & 現在天気 & アメダス実況（スマホ2列x2段 / PC4列） -->
@@ -338,7 +347,7 @@
           </div>
         </div>
         <div class="shrink-0 flex flex-col items-center">
-          <span class="text-[11px] text-slate-600 font-bold block whitespace-nowrap">トップ風速</span>
+          <span id="heroWindLabel" class="text-[11px] text-slate-600 font-bold block whitespace-nowrap">トップ風速</span>
           <span id="heroWind" class="font-teko text-base sm:text-lg font-bold text-slate-900 block mt-0.5 whitespace-nowrap">-- m/s</span>
         </div>
         <div class="shrink-0 flex flex-col items-center">
@@ -1298,7 +1307,18 @@
       // ヒーローカード基本情報
       document.getElementById('heroSpotName').textContent = spot.name;
       document.getElementById('heroAreaName').textContent = spot.areaName || spot.regionName;
-      document.getElementById('heroCategoryBadge').textContent = spot.category === 'bc' ? '⛰️ バックカントリー' : '🏂 スキー場';
+      const isBc = spot.category === 'bc';
+      const catBadgeEl = document.getElementById('heroCategoryBadge');
+      if (catBadgeEl) {
+        catBadgeEl.textContent = isBc ? '⛰️ バックカントリー' : '🏂 スキー場';
+        catBadgeEl.className = isBc
+          ? 'text-[11px] font-black px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-300'
+          : 'text-[11px] font-black px-1.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-300';
+      }
+      const scoreLabelEl = document.getElementById('heroScoreLabel');
+      if (scoreLabelEl) {
+        scoreLabelEl.textContent = isBc ? '山岳コンディション' : '雪質スコア';
+      }
 
       // 斜面方位
       const slopeMap = {
@@ -1352,11 +1372,15 @@
         rankEl.className = "text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 mt-1";
       } else {
         heroScoreEl.textContent = scoreVal;
-        heroScoreEl.className = "font-teko text-5xl font-black text-sky-700 leading-none";
+        heroScoreEl.className = isBc
+          ? "font-teko text-5xl font-black text-emerald-700 leading-none"
+          : "font-teko text-5xl font-black text-sky-700 leading-none";
         if (heroScoreMaxEl) heroScoreMaxEl.style.display = 'inline';
         const rankEl = document.getElementById('heroRank');
-        rankEl.textContent = spot.current.rank || 'しまり雪';
-        rankEl.className = "text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-700 text-white mt-1";
+        rankEl.textContent = spot.current.rank || (isBc ? '安定しまり雪' : 'しまり雪');
+        rankEl.className = isBc
+          ? "text-[11px] font-black px-2 py-0.5 rounded-full bg-emerald-700 text-white mt-1"
+          : "text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-700 text-white mt-1";
       }
 
       // 夜間新雪（今夜〜翌朝06:00の直近ターゲット値を参照）
@@ -1398,6 +1422,47 @@
         subContainer.appendChild(badge);
       });
 
+      // BC専用 山岳警戒バナー表示制御
+      const bcAlertBox = document.getElementById('heroBcAlertBox');
+      const bcAlertTitle = document.getElementById('heroBcAlertTitle');
+      const bcAlertDesc = document.getElementById('heroBcAlertDesc');
+      if (bcAlertBox && bcAlertTitle && bcAlertDesc) {
+        if (isBc) {
+          let alertInfo = spot.current.bcAlert;
+          if (!alertInfo) {
+            // バッチ未更新データ向けフォールバック判定
+            const wSpd = Number(spot.current.windSpeed || 0);
+            const s24 = Number(spot.current.snow24h || 0);
+            const tTop = Number(spot.current.topTemp || 0);
+            const dTop = Number(spot.current.topSnowDepth || 0);
+            if (dTop < 30) {
+              alertInfo = { level: 'HIGH', label: '積雪不足・滑走不可', reasons: ['積雪30cm未満'] };
+            } else if (wSpd >= 15 || s24 >= 40) {
+              alertInfo = { level: 'HIGH', label: wSpd >= 15 ? `入山警戒 (稜線暴風 ${Math.round(wSpd)}m/s)` : `入山警戒 (急増雪 ${Math.round(s24)}cm)`, reasons: [] };
+            } else if (wSpd >= 10 || tTop >= 0 || dTop < 100) {
+              alertInfo = { level: 'MODERATE', label: wSpd >= 10 ? `山岳注意 (強風 ${Math.round(wSpd)}m/s)` : (tTop >= 0 ? '山岳注意 (気温0℃以上)' : '山岳注意 (積雪100cm未満)'), reasons: [] };
+            } else {
+              alertInfo = { level: 'LOW', label: '比較的安定', reasons: [] };
+            }
+          }
+          bcAlertBox.classList.remove('hidden', 'bg-rose-50', 'border-rose-300', 'text-rose-900', 'bg-amber-50', 'border-amber-300', 'text-amber-900', 'bg-emerald-50', 'border-emerald-300', 'text-emerald-900');
+          if (alertInfo.level === 'HIGH') {
+            bcAlertBox.classList.add('bg-rose-50', 'border-rose-300', 'text-rose-900');
+            bcAlertTitle.textContent = `🔴 ${alertInfo.label}`;
+          } else if (alertInfo.level === 'MODERATE') {
+            bcAlertBox.classList.add('bg-amber-50', 'border-amber-300', 'text-amber-900');
+            bcAlertTitle.textContent = `🟡 ${alertInfo.label}`;
+          } else {
+            bcAlertBox.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-900');
+            bcAlertTitle.textContent = `🟢 ${alertInfo.label}`;
+          }
+          const reasonText = (alertInfo.reasons && alertInfo.reasons.length > 0) ? `【要因】${alertInfo.reasons.join(' / ')} — ` : '';
+          bcAlertDesc.textContent = `${reasonText}雪崩情報・装備を確認の上、自己責任で行動してください。`;
+        } else {
+          bcAlertBox.classList.add('hidden');
+        }
+      }
+
       // 現在天気 (アイコン & ラベル)
       const wInfo = spot.current.weatherInfo || getWeatherInfo(spot.current.weatherCode || 0);
       const heroWeatherIcon = document.getElementById('heroWeatherIcon');
@@ -1409,7 +1474,20 @@
       document.getElementById('heroTopTemp').textContent = `${spot.current.topTemp}`;
       const heroBaseTempEl = document.getElementById('heroBaseTemp');
       if (heroBaseTempEl) heroBaseTempEl.textContent = `${spot.current.baseTemp}℃`;
-      document.getElementById('heroWind').textContent = `${spot.current.windSpeed} m/s`;
+      const heroWindLabelEl = document.getElementById('heroWindLabel');
+      if (heroWindLabelEl) heroWindLabelEl.textContent = isBc ? '稜線・山頂風' : 'トップ風速';
+      let windDirStr = spot.current.windDirText;
+      if (!windDirStr && spot.topHourly && Array.isArray(spot.topHourly.windDirection) && spot.topHourly.time) {
+        const jstNowW = new Date(Date.now() + 9 * 3600000);
+        const curHStr = jstNowW.toISOString().slice(0, 13);
+        const wIdx = spot.topHourly.time.findIndex(t => t.startsWith(curHStr));
+        if (wIdx >= 0 && spot.topHourly.windDirection[wIdx] !== undefined) {
+          windDirStr = getWindDirJa(spot.topHourly.windDirection[wIdx]);
+        }
+      }
+      document.getElementById('heroWind').textContent = (isBc && windDirStr && windDirStr !== '--')
+        ? `${windDirStr} ${spot.current.windSpeed} m/s`
+        : `${spot.current.windSpeed} m/s`;
 
       const amedasTitleEl = document.getElementById('heroAmedasTitle');
       const stationName = (spot.current.liveAmedas && spot.current.liveAmedas.stationName) || spot.amedasName;

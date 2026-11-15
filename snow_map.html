@@ -298,8 +298,22 @@
         const topSnow = (s.current && s.current.topSnowDepth) || 0;
         const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
         const rank = (s.current && s.current.rank) || '積雪不足';
-        const tag = (s.current && s.current.tag) || '雪質安定';
+        const tag = (s.current && s.current.tag) || (isBc ? '山岳安定' : '雪質安定');
         const elev = (s.top && s.top.elevation) || 0;
+        const windSpd = (s.current && typeof s.current.windSpeed === 'number') ? s.current.windSpeed : null;
+        const windDir = (s.current && s.current.windDirText) ? s.current.windDirText : '';
+        const bcAlert = (isBc && s.current && s.current.bcAlert) ? s.current.bcAlert : null;
+        let bcAlertBadgeHtml = '';
+        if (isBc) {
+          const lvl = bcAlert ? bcAlert.level : (windSpd >= 15 ? 'HIGH' : (windSpd >= 10 || topSnow < 100 ? 'MODERATE' : 'LOW'));
+          const lbl = bcAlert ? bcAlert.label : (lvl === 'HIGH' ? '入山警戒' : (lvl === 'MODERATE' ? '山岳注意' : '比較的安定'));
+          const cls = lvl === 'HIGH'
+            ? 'bg-rose-50 text-rose-800 border-rose-300'
+            : (lvl === 'MODERATE' ? 'bg-amber-50 text-amber-800 border-amber-300' : 'bg-emerald-50 text-emerald-800 border-emerald-300');
+          const icon = lvl === 'HIGH' ? '🔴' : (lvl === 'MODERATE' ? '🟡' : '🟢');
+          const windStr = windSpd !== null ? ` / 風: ${windDir ? windDir + ' ' : ''}${windSpd}m/s` : '';
+          bcAlertBadgeHtml = `<div class="col-span-2 px-2 py-1 rounded-lg border text-[10px] font-bold ${cls}">${icon} ${lbl}${windStr}</div>`;
+        }
 
         const popupHtml = `
           <div class="p-3 text-slate-900 font-sans text-xs bg-white">
@@ -324,14 +338,15 @@
               <div class="col-span-2 pt-1.5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[11px]">
                 <span class="text-slate-700 font-semibold whitespace-nowrap">標高: ${elev}m</span>
                 <div class="flex items-center gap-1.5 whitespace-nowrap">
-                  <span class="text-slate-600 font-semibold">雪質:</span>
-                  <span class="font-black ${score !== null ? 'text-sky-700' : 'text-slate-500'}">${score !== null ? score + '点' : '―'}</span>
+                  <span class="text-slate-600 font-semibold">${isBc ? '山岳:' : '雪質:'}</span>
+                  <span class="font-black ${score !== null ? (isBc ? 'text-emerald-700' : 'text-sky-700') : 'text-slate-500'}">${score !== null ? score + '点' : '―'}</span>
                   <span class="text-[10px] text-slate-800 font-bold px-1.5 py-0.5 bg-white rounded border border-slate-300 whitespace-nowrap">${tag}</span>
                 </div>
               </div>
+              ${bcAlertBadgeHtml}
             </div>
 
-            <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg bg-sky-700 hover:bg-sky-800 active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
+            <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg ${isBc ? 'bg-emerald-700 hover:bg-emerald-800' : 'bg-sky-700 hover:bg-sky-800'} active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
               <span>このスポットの予報を見る</span>
               <i class="fa-solid fa-arrow-right text-[11px]"></i>
             </button>

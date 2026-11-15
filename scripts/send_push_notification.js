@@ -168,6 +168,13 @@ function getDailySnow(spot, dateISO) {
 
 function formatSpotTag(spot) {
   const icon = spot.category === 'bc' ? '⛰️' : '🏂';
+  if (spot.category === 'bc' && spot.current) {
+    const alertLevel = spot.current.bcAlert && spot.current.bcAlert.level;
+    const wind = Number(spot.current.windSpeed || 0);
+    if (alertLevel === 'HIGH' || wind >= 12) {
+      return `${icon}${spot.name}(⚠️強風/警戒)`;
+    }
+  }
   return `${icon}${spot.name}`;
 }
 

@@ -18,9 +18,74 @@ function getWeatherInfo(code) {
   return { label: '雪', icon: '❄️' };
 }
 
-function evaluateSnowCondition(hourlyData, currentHourIndex) {
+function getWindDirJa(deg) {
+  if (deg === undefined || deg === null || isNaN(deg)) return '--';
+  const dirs = ['北', '北東', '東', '南東', '南', '南西', '西', '北西'];
+  return dirs[Math.round(deg / 45) % 8];
+}
+
+function evaluateBcAlert({ currentSnowDepth, currentTemp, currentWind, isRain, recentSnowfall, snow24h, tempRise24h, isMeltedAndFrozen }) {
+  const reasons = [];
+  let level = 'LOW';
+
+  if (currentWind >= 15) {
+    level = 'HIGH';
+    reasons.push(`稜線暴風(${Math.round(currentWind)}m/s)`);
+  } else if (currentWind >= 10) {
+    if (level !== 'HIGH') level = 'MODERATE';
+    reasons.push(`強風・風成雪注意(${Math.round(currentWind)}m/s)`);
+  }
+
+  if (snow24h >= 40) {
+    level = 'HIGH';
+    reasons.push(`急増雪(24h:${Math.round(snow24h)}cm・雪崩警戒)`);
+  } else if (snow24h >= 25 && currentWind >= 10) {
+    if (level !== 'HIGH') level = 'MODERATE';
+    reasons.push(`風雪による吹き溜まり・スラブ注意`);
+  }
+
+  if (isRain || (currentTemp >= 1.5 && snow24h >= 10)) {
+    level = 'HIGH';
+    reasons.push('湿雪・雨による雪崩警戒');
+  } else if (tempRise24h >= 6) {
+    level = 'HIGH';
+    reasons.push(`急昇温(+${Math.round(tempRise24h)}℃)・雪崩警戒`);
+  } else if (currentTemp >= 0) {
+    if (level !== 'HIGH') level = 'MODERATE';
+    reasons.push('気温0℃以上・湿雪/グライド注意');
+  }
+
+  if (isMeltedAndFrozen && recentSnowfall >= 10) {
+    if (level !== 'HIGH') level = 'MODERATE';
+    reasons.push('クラスト上の新雪・弱層注意');
+  }
+
+  if (currentSnowDepth < 100) {
+    if (level !== 'HIGH') level = 'MODERATE';
+    reasons.push('積雪100cm未満・薮/地形注意');
+  }
+
+  let label = '比較的安定';
+  if (level === 'HIGH') {
+    label = `入山警戒 (${reasons[0] || '悪天候'})`;
+  } else if (level === 'MODERATE') {
+    label = `山岳注意 (${reasons[0] || '気象変化'})`;
+  }
+
+  return { level, label, reasons };
+}
+
+function evaluateSnowCondition(hourlyData, currentHourIndex, category = 'ski') {
+  const isBc = category === 'bc';
   if (!hourlyData || !hourlyData.time || currentHourIndex < 0) {
-    return { score: null, rank: '積雪なし', rankEn: 'NO SNOW', tag: '🌱 積雪なし (滑走不可)', tags: ['積雪ゼロ', '滑走不可'] };
+    return {
+      score: null,
+      rank: '積雪なし',
+      rankEn: 'NO SNOW',
+      tag: isBc ? '積雪なし (入山不可)' : '🌱 積雪なし (滑走不可)',
+      tags: ['積雪ゼロ', isBc ? '滑走不可' : '滑走不可'],
+      bcAlert: isBc ? { level: 'HIGH', label: '積雪なし・滑走不可', reasons: ['積雪ゼロ'] } : null
+    };
   }
 
   const snowDepthArr = hourlyData.snow_depth || hourlyData.snowDepth || [];
@@ -38,8 +103,9 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
       score: null,
       rank: '積雪不足',
       rankEn: 'NO SNOW',
-      tag: '滑走不可',
-      tags: ['積雪30cm未満', 'ブッシュ・石注意']
+      tag: isBc ? '積雪不足 (滑走不可)' : '滑走不可',
+      tags: ['積雪30cm未満', isBc ? '薮・岩露出注意' : 'ブッシュ・石注意'],
+      bcAlert: isBc ? { level: 'HIGH', label: '積雪不足・滑走不可', reasons: ['積雪30cm未満'] } : null
     };
   }
 
@@ -66,21 +132,28 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
     }
   }
 
-  // 直近12時間の新雪量
+  // 直近12時間・24時間の新雪量
   let recentSnowfall = 0;
   const recentStart = Math.max(0, currentHourIndex - 12);
   for (let i = recentStart; i <= currentHourIndex; i++) {
     recentSnowfall += (snowfallArr[i] || 0);
   }
+  let snow24h = 0;
+  const start24h = Math.max(0, currentHourIndex - 23);
+  for (let i = start24h; i <= currentHourIndex; i++) {
+    snow24h += (snowfallArr[i] || 0);
+  }
 
   const currentTemp = tempArr[currentHourIndex];
+  const temp24hAgo = tempArr[start24h] !== undefined ? tempArr[start24h] : currentTemp;
+  const tempRise24h = currentTemp - temp24hAgo;
   const currentWind = windArr[currentHourIndex];
   const weatherCode = weatherArr[currentHourIndex];
 
   let score = 75;
-  let rank = 'しまり雪';
+  let rank = isBc ? '安定しまり雪' : 'しまり雪';
   let rankEn = 'PACKED';
-  let mainTag = '上質バーン';
+  let mainTag = isBc ? '安定コンディション' : '上質バーン';
   const tags = [];
 
   const isRain = (weatherCode >= 51 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82);
@@ -91,29 +164,29 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
     score = 25;
     rank = '雨・融雪';
     rankEn = 'WET/RAIN';
-    mainTag = '雨天・雪面悪化';
-    tags.push('融雪注意', '防水ウェア必須');
+    mainTag = isBc ? '悪天・湿雪雪崩注意' : '雨天・雪面悪化';
+    tags.push('融雪注意', isBc ? '入山見送り検討' : '防水ウェア必須');
   }
-  // 3. 本格ディープパウダー判定（直近12h降雪 >= 30cm）底付きなし黄金ゾーン
+  // 3. 本格ディープパウダー判定（直近12h降雪 >= 30cm）
   else if (recentSnowfall >= 30) {
     if (currentTemp <= -6.0) {
       score = 95;
       rank = '神パウ';
       rankEn = 'DEEP POWDER';
-      mainTag = '底付きなし';
-      tags.push('完全リセット', '極上シルキー', '浮遊感');
+      mainTag = isBc ? '極上ドライパウダー' : '底付きなし';
+      tags.push(isBc ? 'ラッセル覚悟' : '完全リセット', '極上シルキー', '浮遊感');
     } else if (currentTemp >= -0.5) {
       score = 75;
       rank = '重パウ';
       rankEn = 'HEAVY POWDER';
-      mainTag = '水分多め';
-      tags.push('重め新雪', '浮遊感あり');
+      mainTag = isBc ? '重め新雪・雪崩注意' : '水分多め';
+      tags.push('重め新雪', isBc ? '負荷増大' : '浮遊感あり');
     } else {
       score = 90;
       rank = '極上パウ';
       rankEn = 'DEEP POWDER';
-      mainTag = '底付きなし';
-      tags.push('完全リセット', '浮遊感');
+      mainTag = isBc ? 'ノートラック期待' : '底付きなし';
+      tags.push(isBc ? '急増雪注意' : '完全リセット', '浮遊感');
     }
   }
   // 4. スネパウ / 新雪リセット判定（直近12h降雪 20〜29cm）
@@ -122,8 +195,8 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
       score = 75;
       rank = '良質パウ';
       rankEn = 'CRUST BASE';
-      mainTag = '底付き注意';
-      tags.push('下層クラスト', '下地硬め');
+      mainTag = isBc ? '弱層・クラスト警戒' : '底付き注意';
+      tags.push('下層クラスト', isBc ? '雪崩リスク留意' : '下地硬め');
     } else if (currentTemp >= -0.5) {
       score = 70;
       rank = '重パウ';
@@ -134,13 +207,13 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
       score = 90;
       rank = '極上パウ';
       rankEn = 'DRY POWDER';
-      mainTag = '面ツルリセット';
+      mainTag = isBc ? 'ドライパウダー' : '面ツルリセット';
       tags.push('極上シルキー', '浮遊感');
     } else {
       score = 85;
       rank = '良質パウ';
       rankEn = 'FRESH SNOW';
-      mainTag = '面ツルリセット';
+      mainTag = isBc ? '新雪良好' : '面ツルリセット';
       tags.push('浮遊感あり');
     }
   }
@@ -150,8 +223,8 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
       score = 68;
       rank = 'ちょいパウ';
       rankEn = 'CRUST BASE';
-      mainTag = '底付き注意';
-      tags.push('下層クラスト', '下地硬め');
+      mainTag = isBc ? 'クラスト上の新雪' : '底付き注意';
+      tags.push('下層クラスト', isBc ? '弱層注意' : '下地硬め');
     } else if (currentTemp >= -0.5) {
       score = 65;
       rank = '重パウ';
@@ -162,21 +235,21 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
       score = 78;
       rank = 'ちょいパウ';
       rankEn = 'LIGHT POWDER';
-      mainTag = '下地注意';
-      tags.push('トラック消えかけ');
+      mainTag = isBc ? 'うっすら新雪・下地注意' : '下地注意';
+      tags.push(isBc ? '面選び重要' : 'トラック消えかけ');
     }
   }
   // 6. うっすら新雪（直近12h降雪 1〜9cm）
   else if (recentSnowfall >= 1) {
     if (isMeltedAndFrozen) {
       score = 50;
-      rank = 'しまり雪';
+      rank = isBc ? '硬雪・クラスト' : 'しまり雪';
       rankEn = 'HARD BASE';
-      mainTag = 'スリップ注意';
-      tags.push('下層硬め', 'エッジ必須');
+      mainTag = isBc ? '硬雪・滑落注意' : 'スリップ注意';
+      tags.push('下層硬め', isBc ? 'クトー・アイゼン要' : 'エッジ必須');
     } else {
       score = 72;
-      rank = 'しまり雪';
+      rank = isBc ? '山岳しまり雪' : 'しまり雪';
       rankEn = 'LIGHT FRESH';
       mainTag = 'うっすら化粧雪';
       tags.push('下地パック雪');
@@ -186,40 +259,63 @@ function evaluateSnowCondition(hourlyData, currentHourIndex) {
   else {
     if (isMeltedAndFrozen && currentTemp <= 0.0) {
       score = 30;
-      rank = 'アイスバーン';
+      rank = isBc ? 'アイス・クラスト' : 'アイスバーン';
       rankEn = 'ICE/HARD';
-      mainTag = '下層ガリガリ';
-      tags.push('エッジ注意', '滑落警戒');
+      mainTag = isBc ? 'クラスト・滑落警戒' : '下層ガリガリ';
+      tags.push(isBc ? 'アイゼン推奨' : 'エッジ注意', '滑落警戒');
     } else if (currentTemp >= 2.0) {
       score = 55;
       rank = 'ザラメ雪';
       rankEn = 'SPRING/SLUSH';
-      mainTag = 'シャバ雪';
-      tags.push('春雪', 'ワックス要');
+      mainTag = isBc ? '春ザラメ・グライド注意' : 'シャバ雪';
+      tags.push('春雪', isBc ? '全層雪崩注意' : 'ワックス要');
     } else {
       score = 75;
-      rank = 'しまり雪';
+      rank = isBc ? '安定しまり雪' : 'しまり雪';
       rankEn = 'PACKED';
-      mainTag = '良好グリップ';
-      tags.push('スピード爽快');
+      mainTag = isBc ? '山岳しまり雪' : '良好グリップ';
+      tags.push(isBc ? '行動しやすい' : 'スピード爽快');
     }
   }
 
   // 6. 風速による補正
   if (currentWind >= 12) {
-    score -= 10;
-    tags.push('強風・風パック', '地吹雪注意');
+    score -= isBc ? 15 : 10;
+    tags.push(isBc ? 'ウインドパック・風成雪' : '強風・風パック', '地吹雪注意');
   }
 
-  // 7. 積雪深が浅い場合（30〜49cm）の安全注意
-  if (currentSnowDepth < 50) {
+  // 7. 積雪深が浅い場合の安全注意（BCは100cm未満、スキー場は50cm未満）
+  if (isBc && currentSnowDepth < 100) {
+    score -= 15;
+    tags.push('積雪100cm未満', '薮・地形露出注意');
+  } else if (!isBc && currentSnowDepth < 50) {
     score -= 10;
     tags.push('積雪浅め', 'ブッシュ注意');
   }
 
+  // 8. BC専用の山岳リスク判定と安全スコア上限
+  let bcAlert = null;
+  if (isBc) {
+    bcAlert = evaluateBcAlert({
+      currentSnowDepth,
+      currentTemp,
+      currentWind,
+      isRain,
+      recentSnowfall,
+      snow24h,
+      tempRise24h,
+      isMeltedAndFrozen
+    });
+    if (bcAlert.level === 'HIGH') {
+      score = Math.min(score, 45);
+    } else if (bcAlert.level === 'MODERATE') {
+      score = Math.min(score, 75);
+    }
+  }
+
   score = Math.max(10, Math.min(99, score));
 
-  return { score, rank, rankEn, tag: mainTag, tags };
+  return { score, rank, rankEn, tag: mainTag, tags, bcAlert };
 }
 
 async function fetchWithRetry(url, maxRetries = 6) {
@@ -337,7 +433,7 @@ async function run() {
           }
         }
 
-        const evaluation = evaluateSnowCondition(topData.hourly, currentIdx);
+        const evaluation = evaluateSnowCondition(topData.hourly, currentIdx, spot.category || 'ski');
 
         // 夜間降雪量 (18:00〜翌朝06:00)
         const nightSnowByDate = {};
@@ -420,6 +516,8 @@ async function run() {
             topTemp: Math.round(topData.hourly.temperature_2m[currentIdx] * 10) / 10,
             baseTemp: Math.round(baseData.hourly.temperature_2m[currentIdx] * 10) / 10,
             windSpeed: Math.round(topData.hourly.wind_speed_10m[currentIdx] * 10) / 10,
+            windDirection: topData.hourly.wind_direction_10m ? topData.hourly.wind_direction_10m[currentIdx] : null,
+            windDirText: getWindDirJa(topData.hourly.wind_direction_10m ? topData.hourly.wind_direction_10m[currentIdx] : null),
             weatherCode: topData.hourly.weather_code[currentIdx],
             weatherInfo: getWeatherInfo(topData.hourly.weather_code[currentIdx]),
             snow6h,
@@ -429,6 +527,7 @@ async function run() {
             rankEn: evaluation.rankEn,
             tag: evaluation.tag,
             tags: evaluation.tags,
+            bcAlert: evaluation.bcAlert || null,
             liveAmedas
           },
           nightSnowByDate,
