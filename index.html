@@ -424,7 +424,7 @@
       </div>
       <div class="mt-2 text-[10.5px] font-bold text-slate-600 flex items-center justify-end gap-3 px-1">
         <span><strong class="text-slate-900">❄️</strong> 1日合計 (0-24時)</span>
-        <span><strong class="text-orange-700">🌙</strong> オーバーナイト (18-06時)</span>
+        <span><strong class="text-orange-700">夜間</strong> オーバーナイト (18-06時)</span>
       </div>
     </div>
 
@@ -2018,7 +2018,7 @@
               ❄️ +${day.totalSnowfall}cm
             </div>
             <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${nightVal >= 10 ? 'bg-orange-600 text-white' : (nightVal > 0 ? 'bg-orange-50 text-orange-800 border border-orange-300' : 'bg-white text-slate-500 border border-slate-300')}">
-              🌙 +${nightVal}cm
+              夜間 +${nightVal}cm
             </div>
           </div>
         `;
@@ -2423,7 +2423,7 @@
               <div class="w-full flex items-center justify-between gap-2 pt-1.5 border-t border-slate-200 text-[11px]">
                 <div class="flex items-center gap-2 min-w-0">
                   <span class="text-slate-600 font-medium">最大積雪 <strong class="text-slate-900">${maxDepth}cm</strong></span>
-                  ${maxNight > 0 ? `<span class="px-1.5 py-0.2 rounded bg-orange-100 text-orange-900 border border-orange-300 font-black">🌙+${maxNight}cm</span>` : ''}
+                  ${maxNight > 0 ? `<span class="px-1.5 py-0.2 rounded bg-orange-100 text-orange-900 border border-orange-300 font-black">夜間 +${maxNight}cm</span>` : ''}
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
                   <span class="text-slate-600 font-medium">最高</span>
@@ -2478,7 +2478,7 @@
 
       let labelText = '降雪量';
       if (currentRankPeriod === 'night') {
-        labelText = '🌙夜間新雪';
+        labelText = '夜間新雪';
       } else if (currentRankPeriod === '6h') {
         labelText = '⚡6h降雪';
       } else {
@@ -2821,7 +2821,7 @@
                   <span>${d.weatherIcon}</span>
                 </div>
                 <div class="mt-1 text-xs font-black ${isHeavyNight ? 'text-orange-700' : (dNight > 0 ? 'text-sky-700' : 'text-slate-500')} whitespace-nowrap">
-                  🌙 +${dNight}cm
+                  夜間 +${dNight}cm
                 </div>
                 <div class="text-[10.5px] text-slate-500 font-medium whitespace-nowrap mt-0.5">
                   1日 +${d.totalSnowfall}cm
@@ -2876,7 +2876,7 @@
               <div>
                 <div class="text-[10.5px] font-bold text-slate-600 mb-1 flex items-center justify-between">
                   <span>今後3日間の降雪予報</span>
-                  <span>🌙夜間新雪 / 1日計</span>
+                  <span>夜間新雪 / 1日計</span>
                 </div>
                 <div class="grid grid-cols-3 gap-1.5">
                   ${daysGridHtml}
@@ -3318,7 +3318,7 @@
                 <span>${d.weatherIcon || '❄️'}</span>
               </div>
               <div class="mt-0.5 text-xs font-black ${isHeavyNight ? 'text-orange-700' : (dNight > 0 ? 'text-sky-700' : 'text-slate-500')} whitespace-nowrap">
-                🌙 +${dNight}cm
+                夜間 +${dNight}cm
               </div>
               <div class="text-[10px] text-slate-500 font-medium whitespace-nowrap mt-0.5">
                 1日 +${d.totalSnowfall || 0}cm
@@ -3382,7 +3382,7 @@
             <div class="pt-0.5">
               <div class="text-[10px] font-bold text-slate-600 mb-1 flex items-center justify-between">
                 <span>今後3日間の降雪予報</span>
-                <span class="text-slate-500 text-[9.5px]">🌙夜間新雪 / 1日計</span>
+                <span class="text-slate-500 text-[9.5px]">夜間新雪 / 1日計</span>
               </div>
               <div class="grid grid-cols-3 gap-1">
                 ${daysGridHtml}
