@@ -10,13 +10,13 @@
     "base": {
       "lat": 42.8617,
       "lon": 140.7003,
-      "elevation": 299,
+      "elevation": 260,
       "label": "ヒラフゴンドラ山麓駅"
     },
     "top": {
       "lat": 42.8753,
       "lon": 140.6728,
-      "elevation": 814,
+      "elevation": 1200,
       "label": "エース第4リフト終点"
     },
     "amedasId": "16217",
@@ -32,15 +32,15 @@
     "prefecture": "北海道",
     "areaName": "ニセコ・羊蹄",
     "base": {
-      "lat": 42.8785,
-      "lon": 140.7102,
-      "elevation": 370,
+      "lat": 42.893223,
+      "lon": 140.702384,
+      "elevation": 308,
       "label": "HANAZONOシンフォニーゴンドラ山麓"
     },
     "top": {
       "lat": 42.8812,
       "lon": 140.6756,
-      "elevation": 695,
+      "elevation": 1308,
       "label": "HANAZONO第3リフト終点"
     },
     "amedasId": "16217",
@@ -56,15 +56,15 @@
     "prefecture": "北海道",
     "areaName": "ニセコ・羊蹄",
     "base": {
-      "lat": 42.8447,
-      "lon": 140.6869,
-      "elevation": 268,
+      "lat": 42.845389,
+      "lon": 140.673781,
+      "elevation": 280,
       "label": "ニセコゴンドラ山麓駅"
     },
     "top": {
       "lat": 42.8622,
       "lon": 140.6628,
-      "elevation": 855,
+      "elevation": 1170,
       "label": "ワンダーランドチェア終点"
     },
     "amedasId": "16272",
@@ -80,15 +80,15 @@
     "prefecture": "北海道",
     "areaName": "ニセコ・羊蹄",
     "base": {
-      "lat": 42.8572,
-      "lon": 140.6558,
-      "elevation": 675,
+      "lat": 42.849478,
+      "lon": 140.646942,
+      "elevation": 400,
       "label": "アンヌプリゴンドラ山麓駅"
     },
     "top": {
       "lat": 42.8698,
       "lon": 140.6508,
-      "elevation": 859,
+      "elevation": 1156,
       "label": "ジャンボ第4ペア終点"
     },
     "amedasId": "16272",
@@ -106,13 +106,13 @@
     "base": {
       "lat": 42.7533,
       "lon": 140.9064,
-      "elevation": 406,
+      "elevation": 400,
       "label": "イーストセンタープラザ"
     },
     "top": {
       "lat": 42.710107,
       "lon": 140.922816,
-      "elevation": 993,
+      "elevation": 994,
       "label": "イゾラ第1ゴンドラ終点(イゾラ山頂)"
     },
     "amedasId": "16281",
@@ -128,15 +128,15 @@
     "prefecture": "北海道",
     "areaName": "小樽・余市",
     "base": {
-      "lat": 43.0766,
-      "lon": 140.9856,
-      "elevation": 507,
+      "lat": 43.061731,
+      "lon": 140.983805,
+      "elevation": 570,
       "label": "マウンテンセンター"
     },
     "top": {
       "lat": 43.0567,
       "lon": 140.9712,
-      "elevation": 969,
+      "elevation": 1180,
       "label": "キロロゴンドラ終点(朝里岳山頂)"
     },
     "amedasId": "16126",
@@ -154,13 +154,13 @@
     "base": {
       "lat": 43.3283,
       "lon": 142.3551,
-      "elevation": 304,
+      "elevation": 235,
       "label": "北の峰ゴンドラターミナル"
     },
     "top": {
       "lat": 43.3156,
       "lon": 142.3112,
-      "elevation": 1026,
+      "elevation": 1074,
       "label": "富良野ロープウェー山頂駅"
     },
     "amedasId": "12626",
@@ -176,15 +176,15 @@
     "prefecture": "北海道",
     "areaName": "富良野・トマム",
     "base": {
-      "lat": 43.0642,
-      "lon": 142.6175,
-      "elevation": 599,
+      "lat": 43.064068,
+      "lon": 142.623521,
+      "elevation": 586,
       "label": "リゾートセンター"
     },
     "top": {
       "lat": 43.0825,
       "lon": 142.5956,
-      "elevation": 1061,
+      "elevation": 1171,
       "label": "雲海ゴンドラ終点(トマム山頂)"
     },
     "amedasId": "12746",
@@ -250,13 +250,13 @@
     "base": {
       "lat": 40.0003,
       "lon": 140.9708,
-      "elevation": 633,
+      "elevation": 620,
       "label": "安比プラザベース"
     },
     "top": {
       "lat": 39.9856,
       "lon": 140.9412,
-      "elevation": 1048,
+      "elevation": 1328,
       "label": "前森山山頂ゴンドラ終点"
     },
     "amedasId": "33226",
@@ -274,13 +274,13 @@
     "base": {
       "lat": 39.237523,
       "lon": 140.905537,
-      "elevation": 634,
+      "elevation": 640,
       "label": "スキーセンター"
     },
     "top": {
       "lat": 39.241965,
       "lon": 140.889794,
-      "elevation": 1054,
+      "elevation": 1070,
       "label": "第1ゴンドラ終点(前塚見山)"
     },
     "amedasId": "33526",
@@ -296,15 +296,15 @@
     "prefecture": "青森県",
     "areaName": "八甲田",
     "base": {
-      "lat": 40.6558,
-      "lon": 140.8528,
-      "elevation": 1004,
+      "lat": 40.67904,
+      "lon": 140.83474,
+      "elevation": 660,
       "label": "八甲田ロープウェー山麓駅"
     },
     "top": {
       "lat": 40.6412,
       "lon": 140.8689,
-      "elevation": 1075,
+      "elevation": 1324,
       "label": "田茂萢岳山頂駅"
     },
     "amedasId": "31482",
@@ -320,8 +320,8 @@
     "prefecture": "山形県",
     "areaName": "山形・蔵王",
     "base": {
-      "lat": 38.1578,
-      "lon": 140.3958,
+      "lat": 38.164897,
+      "lon": 140.395918,
       "elevation": 927,
       "label": "蔵王ロープウェイ山麓駅"
     },
@@ -368,15 +368,15 @@
     "prefecture": "長野県",
     "areaName": "白馬・小谷",
     "base": {
-      "lat": 36.7025,
-      "lon": 137.8631,
-      "elevation": 706,
+      "lat": 36.701909,
+      "lon": 137.837209,
+      "elevation": 760,
       "label": "八方ゴンドラ山麓駅(アダム)"
     },
     "top": {
-      "lat": 36.7042,
-      "lon": 137.8286,
-      "elevation": 970,
+      "lat": 36.69715,
+      "lon": 137.798895,
+      "elevation": 1831,
       "label": "八方池山荘・グラートクワッド終点"
     },
     "amedasId": "48156",
@@ -392,15 +392,15 @@
     "prefecture": "長野県",
     "areaName": "白馬・小谷",
     "base": {
-      "lat": 36.6711,
-      "lon": 137.8425,
-      "elevation": 730,
+      "lat": 36.662966,
+      "lon": 137.836482,
+      "elevation": 750,
       "label": "エスカルプラザ山麓"
     },
     "top": {
       "lat": 36.6589,
       "lon": 137.8086,
-      "elevation": 1656,
+      "elevation": 1676,
       "label": "五竜アルプス平・LineE終点"
     },
     "amedasId": "48156",
@@ -416,15 +416,15 @@
     "prefecture": "長野県",
     "areaName": "白馬・小谷",
     "base": {
-      "lat": 36.7583,
-      "lon": 137.8767,
-      "elevation": 787,
+      "lat": 36.75078,
+      "lon": 137.864639,
+      "elevation": 800,
       "label": "イヴゴンドラ山麓駅"
     },
     "top": {
       "lat": 36.7625,
       "lon": 137.8412,
-      "elevation": 1614,
+      "elevation": 1704,
       "label": "つが第2ペア終点・栂池自然園"
     },
     "amedasId": "48151",
@@ -440,15 +440,15 @@
     "prefecture": "長野県",
     "areaName": "白馬・小谷",
     "base": {
-      "lat": 36.7928,
-      "lon": 137.9042,
-      "elevation": 721,
+      "lat": 36.776551,
+      "lon": 137.887938,
+      "elevation": 872,
       "label": "ホテルグリーンプラザ白馬前"
     },
     "top": {
       "lat": 36.7986,
       "lon": 137.8825,
-      "elevation": 867,
+      "elevation": 1402,
       "label": "第4ペアリフト終点(稗田山頂)"
     },
     "amedasId": "48151",
@@ -464,15 +464,15 @@
     "prefecture": "長野県",
     "areaName": "野沢・飯山",
     "base": {
-      "lat": 36.9208,
-      "lon": 138.4419,
-      "elevation": 523,
+      "lat": 36.920072,
+      "lon": 138.45203,
+      "elevation": 565,
       "label": "長坂ゴンドラ山麓駅"
     },
     "top": {
       "lat": 36.9014,
       "lon": 138.4858,
-      "elevation": 1554,
+      "elevation": 1650,
       "label": "毛無山頂・やまびこリフト終点"
     },
     "amedasId": "48181",
@@ -488,15 +488,15 @@
     "prefecture": "長野県",
     "areaName": "志賀高原",
     "base": {
-      "lat": 36.7322,
-      "lon": 138.5086,
-      "elevation": 1663,
+      "lat": 36.752799,
+      "lon": 138.525775,
+      "elevation": 1555,
       "label": "プリンスホテル西館山麓"
     },
     "top": {
       "lat": 36.7417,
       "lon": 138.5292,
-      "elevation": 1764,
+      "elevation": 2000,
       "label": "焼額山第1ゴンドラ終点(山頂)"
     },
     "amedasId": "48186",
@@ -512,15 +512,15 @@
     "prefecture": "長野県",
     "areaName": "斑尾・飯山",
     "base": {
-      "lat": 36.9367,
-      "lon": 138.2917,
-      "elevation": 358,
+      "lat": 36.851459,
+      "lon": 138.284968,
+      "elevation": 910,
       "label": "レストランハイジ前ベース"
     },
     "top": {
-      "lat": 36.9256,
-      "lon": 138.2712,
-      "elevation": 389,
+      "lat": 36.8375,
+      "lon": 138.2744,
+      "elevation": 1350,
       "label": "第13パウダーリフト終点(斑尾山頂)"
     },
     "amedasId": "48201",
@@ -536,15 +536,15 @@
     "prefecture": "新潟県",
     "areaName": "妙高・赤倉",
     "base": {
-      "lat": 36.8778,
-      "lon": 138.1633,
-      "elevation": 898,
+      "lat": 36.855474,
+      "lon": 138.156679,
+      "elevation": 731,
       "label": "杉ノ原ゴンドラ山麓駅"
     },
     "top": {
       "lat": 36.8856,
       "lon": 138.1256,
-      "elevation": 1805,
+      "elevation": 1855,
       "label": "三田原第3高速終点(標高1855m)"
     },
     "amedasId": "54201",
@@ -560,15 +560,15 @@
     "prefecture": "新潟県",
     "areaName": "妙高・新井",
     "base": {
-      "lat": 37.0319,
-      "lon": 138.1969,
-      "elevation": 561,
+      "lat": 36.990889,
+      "lon": 138.18139,
+      "elevation": 320,
       "label": "ビレッジステーション山麓"
     },
     "top": {
-      "lat": 37.0125,
-      "lon": 138.1612,
-      "elevation": 662,
+      "lat": 36.990246,
+      "lon": 138.136988,
+      "elevation": 1280,
       "label": "大毛無リフト終点(標高1429m)"
     },
     "amedasId": "54156",
@@ -584,15 +584,15 @@
     "prefecture": "新潟県",
     "areaName": "湯沢・南魚沼",
     "base": {
-      "lat": 36.7925,
-      "lon": 138.7842,
-      "elevation": 905,
+      "lat": 36.792888,
+      "lon": 138.778199,
+      "elevation": 900,
       "label": "苗場プリンスホテル前ベース"
     },
     "top": {
       "lat": 36.7812,
       "lon": 138.7556,
-      "elevation": 1569,
+      "elevation": 1789,
       "label": "笋山山頂リフト終点"
     },
     "amedasId": "54261",
@@ -608,15 +608,15 @@
     "prefecture": "新潟県",
     "areaName": "湯沢・南魚沼",
     "base": {
-      "lat": 36.8553,
-      "lon": 138.7694,
-      "elevation": 758,
+      "lat": 36.893188,
+      "lon": 138.77529,
+      "elevation": 620,
       "label": "みつまたロープウェー山麓"
     },
     "top": {
       "lat": 36.8389,
       "lon": 138.7412,
-      "elevation": 1316,
+      "elevation": 1845,
       "label": "かぐら第5ロマンスリフト終点"
     },
     "amedasId": "54261",
@@ -632,15 +632,15 @@
     "prefecture": "新潟県",
     "areaName": "湯沢・南魚沼",
     "base": {
-      "lat": 36.9536,
-      "lon": 138.7908,
-      "elevation": 555,
+      "lat": 36.95055,
+      "lon": 138.799475,
+      "elevation": 358,
       "label": "ガーラ湯沢駅・スキーセンターカワバンガ"
     },
     "top": {
       "lat": 36.9456,
       "lon": 138.7689,
-      "elevation": 1082,
+      "elevation": 1181,
       "label": "高津倉山頂・グルーバンド終点"
     },
     "amedasId": "54261",
@@ -728,15 +728,15 @@
     "prefecture": "福井県",
     "areaName": "勝山・奥越",
     "base": {
-      "lat": 36.0886,
-      "lon": 136.5517,
-      "elevation": 542,
+      "lat": 36.084196,
+      "lon": 136.56462,
+      "elevation": 610,
       "label": "リゾートセンター山麓"
     },
     "top": {
       "lat": 36.0822,
       "lon": 136.5886,
-      "elevation": 920,
+      "elevation": 1320,
       "label": "イリュージョンサイト最上部終点"
     },
     "amedasId": "57076",
@@ -752,15 +752,15 @@
     "prefecture": "石川県",
     "areaName": "白山・加賀",
     "base": {
-      "lat": 36.2658,
-      "lon": 136.6808,
-      "elevation": 702,
+      "lat": 36.268393,
+      "lon": 136.71481,
+      "elevation": 550,
       "label": "一里野ゴンドラ山麓"
     },
     "top": {
       "lat": 36.2556,
       "lon": 136.6989,
-      "elevation": 801,
+      "elevation": 1050,
       "label": "ゴンドラ山頂駅"
     },
     "amedasId": "56086",
@@ -776,15 +776,15 @@
     "prefecture": "群馬県",
     "areaName": "沼田・片品",
     "base": {
-      "lat": 36.8286,
-      "lon": 139.3375,
-      "elevation": 1533,
+      "lat": 36.814955,
+      "lon": 139.330218,
+      "elevation": 1400,
       "label": "センターステーション"
     },
     "top": {
       "lat": 36.8056,
       "lon": 139.3589,
-      "elevation": 1988,
+      "elevation": 2000,
       "label": "日光白根山ロープウェイ山頂駅"
     },
     "amedasId": "42086",
@@ -800,15 +800,15 @@
     "prefecture": "群馬県",
     "areaName": "沼田・川場",
     "base": {
-      "lat": 36.7908,
-      "lon": 139.0967,
-      "elevation": 1506,
+      "lat": 36.770744,
+      "lon": 139.111366,
+      "elevation": 1230,
       "label": "カワバシティ(立体駐車場)"
     },
     "top": {
       "lat": 36.7989,
       "lon": 139.1212,
-      "elevation": 1721,
+      "elevation": 1870,
       "label": "クリスタルエクスプレス終点"
     },
     "amedasId": "42086",
@@ -824,15 +824,15 @@
     "prefecture": "岐阜県",
     "areaName": "奥美濃・郡上",
     "base": {
-      "lat": 35.9861,
-      "lon": 136.8797,
-      "elevation": 814,
+      "lat": 35.998004,
+      "lon": 136.877263,
+      "elevation": 950,
       "label": "センターハウス山麓"
     },
     "top": {
       "lat": 35.9712,
       "lon": 136.8589,
-      "elevation": 974,
+      "elevation": 1550,
       "label": "SPゴンドラ終点(大日ヶ岳山頂下)"
     },
     "amedasId": "52046",
@@ -848,15 +848,15 @@
     "prefecture": "岐阜県",
     "areaName": "奥美濃・郡上",
     "base": {
-      "lat": 35.9767,
-      "lon": 136.8758,
-      "elevation": 849,
+      "lat": 35.990345,
+      "lon": 136.870319,
+      "elevation": 983,
       "label": "ダイナセンターハウス"
     },
     "top": {
       "lat": 35.9712,
       "lon": 136.8589,
-      "elevation": 974,
+      "elevation": 1430,
       "label": "ガンホーライナー終点"
     },
     "amedasId": "52046",
@@ -872,15 +872,15 @@
     "prefecture": "岐阜県",
     "areaName": "奥美濃・郡上",
     "base": {
-      "lat": 35.9136,
-      "lon": 137.0375,
-      "elevation": 1162,
+      "lat": 35.941793,
+      "lon": 137.042992,
+      "elevation": 900,
       "label": "センターハウス山麓"
     },
     "top": {
       "lat": 35.9322,
       "lon": 137.0112,
-      "elevation": 1258,
+      "elevation": 1600,
       "label": "第2クワッドリフト終点(烏帽子岳山頂)"
     },
     "amedasId": "52086",
@@ -896,15 +896,15 @@
     "prefecture": "滋賀県",
     "areaName": "米原・伊吹",
     "base": {
-      "lat": 35.4489,
-      "lon": 136.3612,
-      "elevation": 284,
+      "lat": 35.523806,
+      "lon": 136.388461,
+      "elevation": 700,
       "label": "センターハウス山麓"
     },
     "top": {
       "lat": 35.4389,
       "lon": 136.3769,
-      "elevation": 491,
+      "elevation": 1250,
       "label": "日本最速モンブラン終点"
     },
     "amedasId": "60061",
@@ -920,15 +920,15 @@
     "prefecture": "兵庫県",
     "areaName": "但馬・ハチ北",
     "base": {
-      "lat": 35.3812,
-      "lon": 134.5312,
-      "elevation": 771,
+      "lat": 35.404399,
+      "lon": 134.557598,
+      "elevation": 560,
       "label": "ハチ北ファミリーゲレンデ山麓"
     },
     "top": {
       "lat": 35.3964,
       "lon": 134.5458,
-      "elevation": 871,
+      "elevation": 1221,
       "label": "鉢伏山頂リフト終点"
     },
     "amedasId": "63126",
@@ -944,15 +944,15 @@
     "prefecture": "鳥取県",
     "areaName": "大山・山陰",
     "base": {
-      "lat": 35.3853,
-      "lon": 133.5358,
-      "elevation": 986,
+      "lat": 35.399425,
+      "lon": 133.537332,
+      "elevation": 655,
       "label": "国際エリアロッジ前"
     },
     "top": {
       "lat": 35.3725,
       "lon": 133.5489,
-      "elevation": 1606,
+      "elevation": 1121,
       "label": "中の原第7クワッド終点"
     },
     "amedasId": "69141",
@@ -1015,13 +1015,13 @@
     "base": {
       "lat": 45.3867,
       "lon": 141.6869,
-      "elevation": 37,
+      "elevation": 5,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 45.3709,
       "lon": 141.6869,
-      "elevation": 59,
+      "elevation": 55,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "11016",
@@ -1059,8 +1059,8 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 45.0869,
-      "lon": 141.8103,
+      "lat": 45.07353,
+      "lon": 141.84327,
       "elevation": 18,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -1128,8 +1128,8 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 45.0036,
-      "lon": 141.8539,
+      "lat": 45.019675,
+      "lon": 141.854064,
       "elevation": 1,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -1153,13 +1153,13 @@
     "base": {
       "lat": 44.977,
       "lon": 142.2878,
-      "elevation": 21,
+      "elevation": 50,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.9928,
       "lon": 142.2878,
-      "elevation": 27,
+      "elevation": 170,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "11276",
@@ -1174,15 +1174,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 44.8642,
-      "lon": 142.5481,
-      "elevation": 25,
+      "lat": 44.933233,
+      "lon": 142.565182,
+      "elevation": 40,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.8484,
       "lon": 142.5481,
-      "elevation": 280,
+      "elevation": 178,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "11316",
@@ -1197,15 +1197,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 44.7045,
-      "lon": 142.2797,
-      "elevation": 153,
+      "lat": 44.720539,
+      "lon": 142.279957,
+      "elevation": 70,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.7203,
       "lon": 142.2797,
-      "elevation": 214,
+      "elevation": 240,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12041",
@@ -1220,8 +1220,8 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 44.4798,
-      "lon": 142.4511,
+      "lat": 44.488054,
+      "lon": 142.359374,
       "elevation": 271,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -1245,13 +1245,13 @@
     "base": {
       "lat": 44.4042,
       "lon": 142.5133,
-      "elevation": 268,
+      "elevation": 193,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.3884,
       "lon": 142.5133,
-      "elevation": 304,
+      "elevation": 673,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12181",
@@ -1335,15 +1335,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.8053,
-      "lon": 141.9633,
-      "elevation": 52,
+      "lat": 43.818816,
+      "lon": 141.92135,
+      "elevation": 80,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.8211,
       "lon": 141.9633,
-      "elevation": 71,
+      "elevation": 170,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200013",
@@ -1358,15 +1358,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 44.0294,
-      "lon": 142.4131,
-      "elevation": 138,
+      "lat": 43.996162,
+      "lon": 142.428458,
+      "elevation": 130,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.0136,
       "lon": 142.4131,
-      "elevation": 142,
+      "elevation": 240,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12301",
@@ -1381,15 +1381,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.9184,
-      "lon": 142.4947,
-      "elevation": 204,
+      "lat": 43.934386,
+      "lon": 142.495674,
+      "elevation": 240,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.9342,
       "lon": 142.4947,
-      "elevation": 250,
+      "elevation": 580,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12301",
@@ -1427,15 +1427,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.8203,
-      "lon": 142.5383,
-      "elevation": 149,
+      "lat": 43.829986,
+      "lon": 142.507421,
+      "elevation": 120,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.8361,
       "lon": 142.5383,
-      "elevation": 183,
+      "elevation": 190,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12442",
@@ -1473,15 +1473,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.8359,
-      "lon": 142.7806,
-      "elevation": 345,
+      "lat": 43.851794,
+      "lon": 142.780572,
+      "elevation": 430,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.8517,
       "lon": 142.7806,
-      "elevation": 374,
+      "elevation": 500,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12411",
@@ -1496,8 +1496,8 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.9975,
-      "lon": 142.1375,
+      "lat": 44.013478,
+      "lon": 142.137524,
       "elevation": 153,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -1544,13 +1544,13 @@
     "base": {
       "lat": 43.8097,
       "lon": 141.5289,
-      "elevation": 123,
+      "elevation": 115,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.7939,
       "lon": 141.5289,
-      "elevation": 358,
+      "elevation": 322,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "13277",
@@ -1565,15 +1565,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.7664,
-      "lon": 142.2939,
-      "elevation": 109,
+      "lat": 43.760911,
+      "lon": 142.302663,
+      "elevation": 170,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.7506,
       "lon": 142.2939,
-      "elevation": 263,
+      "elevation": 330,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12442",
@@ -1611,8 +1611,8 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.6498,
-      "lon": 142.8592,
+      "lat": 43.653094,
+      "lon": 142.798235,
       "elevation": 1749,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -1680,15 +1680,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.1644,
-      "lon": 142.5658,
-      "elevation": 351,
+      "lat": 43.159474,
+      "lon": 142.559106,
+      "elevation": 385,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.1486,
       "lon": 142.5658,
-      "elevation": 390,
+      "elevation": 600,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12691",
@@ -1726,15 +1726,15 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.3975,
-      "lon": 141.9428,
-      "elevation": 171,
+      "lat": 43.730589,
+      "lon": 142.538915,
+      "elevation": 210,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.3817,
       "lon": 141.9428,
-      "elevation": 275,
+      "elevation": 456,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "15321",
@@ -1749,7 +1749,7 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.3953,
+      "lat": 43.411156,
       "lon": 142.4214,
       "elevation": 177,
       "label": "リフト最下部・ゲレンデベース"
@@ -1774,13 +1774,13 @@
     "base": {
       "lat": 43.7036,
       "lon": 142.1867,
-      "elevation": 147,
+      "elevation": 150,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.6878,
       "lon": 142.1867,
-      "elevation": 202,
+      "elevation": 751,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200012",
@@ -1795,8 +1795,8 @@
     "regionName": "北海道",
     "areaName": "道北",
     "base": {
-      "lat": 43.5048,
-      "lon": 142.0189,
+      "lat": 43.520599,
+      "lon": 142.019086,
       "elevation": 96,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -1820,13 +1820,13 @@
     "base": {
       "lat": 43.7111,
       "lon": 142.9403,
-      "elevation": 1295,
+      "elevation": 1320,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.6953,
       "lon": 142.9403,
-      "elevation": 1300,
+      "elevation": 1520,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "12471",
@@ -1872,7 +1872,7 @@
     "top": {
       "lat": 43.0231,
       "lon": 141.7456,
-      "elevation": 129,
+      "elevation": 199,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200011",
@@ -1889,13 +1889,13 @@
     "base": {
       "lat": 43.2519,
       "lon": 141.9808,
-      "elevation": 103,
+      "elevation": 104,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.2361,
       "lon": 141.9808,
-      "elevation": 377,
+      "elevation": 320,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200020",
@@ -1910,15 +1910,15 @@
     "regionName": "北海道",
     "areaName": "道東",
     "base": {
-      "lat": 44.3367,
-      "lon": 143.3444,
-      "elevation": 27,
+      "lat": 44.348668,
+      "lon": 143.335311,
+      "elevation": 30,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.3525,
       "lon": 143.3444,
-      "elevation": 40,
+      "elevation": 330,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "17112",
@@ -1958,13 +1958,13 @@
     "base": {
       "lat": 44.1836,
       "lon": 143.6094,
-      "elevation": 27,
+      "elevation": 25,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.1678,
       "lon": 143.6094,
-      "elevation": 45,
+      "elevation": 120,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "17306",
@@ -1979,15 +1979,15 @@
     "regionName": "北海道",
     "areaName": "道東",
     "base": {
-      "lat": 44.1911,
-      "lon": 143.1061,
-      "elevation": 122,
+      "lat": 44.186638,
+      "lon": 143.085461,
+      "elevation": 120,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.1753,
       "lon": 143.1061,
-      "elevation": 300,
+      "elevation": 210,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "17196",
@@ -2117,15 +2117,15 @@
     "regionName": "北海道",
     "areaName": "道東",
     "base": {
-      "lat": 44.0219,
-      "lon": 143.4969,
-      "elevation": 143,
+      "lat": 44.053124,
+      "lon": 143.518663,
+      "elevation": 100,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 44.0061,
       "lon": 143.4969,
-      "elevation": 303,
+      "elevation": 310,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "17306",
@@ -2188,13 +2188,13 @@
     "base": {
       "lat": 43.7697,
       "lon": 143.6128,
-      "elevation": 233,
+      "elevation": 230,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.7539,
       "lon": 143.6128,
-      "elevation": 344,
+      "elevation": 335,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "17596",
@@ -2209,15 +2209,15 @@
     "regionName": "北海道",
     "areaName": "道東",
     "base": {
-      "lat": 43.7197,
-      "lon": 144.5019,
-      "elevation": 151,
+      "lat": 43.714488,
+      "lon": 144.502807,
+      "elevation": 140,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.7039,
       "lon": 144.5019,
-      "elevation": 236,
+      "elevation": 240,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300116",
@@ -2416,8 +2416,8 @@
     "regionName": "北海道",
     "areaName": "道東",
     "base": {
-      "lat": 43.0886,
-      "lon": 144.1328,
+      "lat": 43.104797,
+      "lon": 144.132915,
       "elevation": 25,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -2441,13 +2441,13 @@
     "base": {
       "lat": 43.3639,
       "lon": 143.1869,
-      "elevation": 572,
+      "elevation": 570,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.3481,
       "lon": 143.1869,
-      "elevation": 682,
+      "elevation": 1230,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "20186",
@@ -2487,13 +2487,13 @@
     "base": {
       "lat": 42.8306,
       "lon": 142.9892,
-      "elevation": 167,
+      "elevation": 180,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.8148,
       "lon": 142.9892,
-      "elevation": 180,
+      "elevation": 330,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "20421",
@@ -2508,8 +2508,8 @@
     "regionName": "北海道",
     "areaName": "道東",
     "base": {
-      "lat": 42.5633,
-      "lon": 143.3097,
+      "lat": 42.561228,
+      "lon": 143.304324,
       "elevation": 91,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -2533,13 +2533,13 @@
     "base": {
       "lat": 42.8692,
       "lon": 142.4492,
-      "elevation": 279,
+      "elevation": 254,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.8534,
       "lon": 142.4492,
-      "elevation": 328,
+      "elevation": 754,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "22036",
@@ -2623,8 +2623,8 @@
     "regionName": "北海道",
     "areaName": "道東",
     "base": {
-      "lat": 43.077,
-      "lon": 142.8303,
+      "lat": 43.092926,
+      "lon": 142.831012,
       "elevation": 189,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -2646,15 +2646,15 @@
     "regionName": "北海道",
     "areaName": "道東",
     "base": {
-      "lat": 43.1592,
-      "lon": 142.8086,
-      "elevation": 346,
+      "lat": 43.175297,
+      "lon": 142.808527,
+      "elevation": 420,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.175,
       "lon": 142.8086,
-      "elevation": 417,
+      "elevation": 1030,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300138",
@@ -2715,8 +2715,8 @@
     "regionName": "北海道",
     "areaName": "道央",
     "base": {
-      "lat": 43.245,
-      "lon": 141.5075,
+      "lat": 43.262243,
+      "lon": 141.507545,
       "elevation": 18,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -2740,13 +2740,13 @@
     "base": {
       "lat": 42.8458,
       "lon": 141.4889,
-      "elevation": 115,
+      "elevation": 150,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.83,
       "lon": 141.4889,
-      "elevation": 153,
+      "elevation": 200,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "14206",
@@ -2786,13 +2786,13 @@
     "base": {
       "lat": 43.1442,
       "lon": 141.0386,
-      "elevation": 114,
+      "elevation": 140,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.1284,
       "lon": 141.0386,
-      "elevation": 223,
+      "elevation": 660,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300145",
@@ -2832,13 +2832,13 @@
     "base": {
       "lat": 43.0303,
       "lon": 141.2811,
-      "elevation": 203,
+      "elevation": 200,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.0145,
       "lon": 141.2811,
-      "elevation": 319,
+      "elevation": 482,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "14163",
@@ -2876,15 +2876,15 @@
     "regionName": "北海道",
     "areaName": "道央",
     "base": {
-      "lat": 43.0078,
-      "lon": 141.3056,
-      "elevation": 163,
+      "lat": 43.01242,
+      "lon": 141.333181,
+      "elevation": 173,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.0236,
       "lon": 141.3056,
-      "elevation": 311,
+      "elevation": 448,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "14163",
@@ -2899,15 +2899,15 @@
     "regionName": "北海道",
     "areaName": "道央",
     "base": {
-      "lat": 42.9544,
-      "lon": 141.2786,
-      "elevation": 248,
+      "lat": 42.946358,
+      "lon": 141.272187,
+      "elevation": 240,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.9386,
       "lon": 141.2786,
-      "elevation": 363,
+      "elevation": 569,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "14191",
@@ -2924,13 +2924,13 @@
     "base": {
       "lat": 43.1461,
       "lon": 141.1331,
-      "elevation": 102,
+      "elevation": 100,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.1303,
       "lon": 141.1331,
-      "elevation": 274,
+      "elevation": 380,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200009",
@@ -2947,13 +2947,13 @@
     "base": {
       "lat": 43.1778,
       "lon": 140.9731,
-      "elevation": 216,
+      "elevation": 211,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.162,
       "lon": 140.9731,
-      "elevation": 285,
+      "elevation": 532,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "16091",
@@ -2970,13 +2970,13 @@
     "base": {
       "lat": 43.0961,
       "lon": 141.2097,
-      "elevation": 419,
+      "elevation": 340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.0803,
       "lon": 141.2097,
-      "elevation": 771,
+      "elevation": 1023,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200009",
@@ -2993,13 +2993,13 @@
     "base": {
       "lat": 42.915,
       "lon": 141.3878,
-      "elevation": 263,
+      "elevation": 230,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.8992,
       "lon": 141.3878,
-      "elevation": 307,
+      "elevation": 250,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200010",
@@ -3037,15 +3037,15 @@
     "regionName": "北海道",
     "areaName": "道央",
     "base": {
-      "lat": 42.8859,
-      "lon": 140.7381,
-      "elevation": 170,
+      "lat": 42.901732,
+      "lon": 140.738233,
+      "elevation": 190,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.9017,
       "lon": 140.7381,
-      "elevation": 190,
+      "elevation": 290,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "16217",
@@ -3062,13 +3062,13 @@
     "base": {
       "lat": 43.0719,
       "lon": 141.0828,
-      "elevation": 620,
+      "elevation": 630,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 43.0561,
       "lon": 141.0828,
-      "elevation": 872,
+      "elevation": 1100,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200009",
@@ -3108,13 +3108,13 @@
     "base": {
       "lat": 42.9475,
       "lon": 140.5133,
-      "elevation": 205,
+      "elevation": 200,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.9317,
       "lon": 140.5133,
-      "elevation": 692,
+      "elevation": 370,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "16156",
@@ -3152,15 +3152,15 @@
     "regionName": "北海道",
     "areaName": "道央",
     "base": {
-      "lat": 42.832,
-      "lon": 140.6264,
-      "elevation": 220,
+      "lat": 42.848081,
+      "lon": 140.629696,
+      "elevation": 300,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.8478,
       "lon": 140.6264,
-      "elevation": 324,
+      "elevation": 839,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "16206",
@@ -3246,13 +3246,13 @@
     "base": {
       "lat": 42.0061,
       "lon": 140.5989,
-      "elevation": 266,
+      "elevation": 182,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 41.9903,
       "lon": 140.5989,
-      "elevation": 334,
+      "elevation": 442,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "23166",
@@ -3269,13 +3269,13 @@
     "base": {
       "lat": 41.9864,
       "lon": 140.7467,
-      "elevation": 256,
+      "elevation": 198,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 41.9706,
       "lon": 140.7467,
-      "elevation": 409,
+      "elevation": 943,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "23191",
@@ -3359,8 +3359,8 @@
     "regionName": "北海道",
     "areaName": "道央",
     "base": {
-      "lat": 42.5059,
-      "lon": 141.1044,
+      "lat": 42.521756,
+      "lon": 141.104642,
       "elevation": 273,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -3382,15 +3382,15 @@
     "regionName": "北海道",
     "areaName": "道南",
     "base": {
-      "lat": 42.4328,
-      "lon": 140.105,
-      "elevation": 89,
+      "lat": 42.468358,
+      "lon": 140.201514,
+      "elevation": 133,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.4486,
       "lon": 140.105,
-      "elevation": 147,
+      "elevation": 411,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "24051",
@@ -3405,15 +3405,15 @@
     "regionName": "北海道",
     "areaName": "道央",
     "base": {
-      "lat": 42.3981,
-      "lon": 141.0025,
-      "elevation": 289,
+      "lat": 42.404289,
+      "lon": 141.002237,
+      "elevation": 210,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 42.4139,
       "lon": 141.0025,
-      "elevation": 417,
+      "elevation": 310,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "21312",
@@ -3430,13 +3430,13 @@
     "base": {
       "lat": 41.2622,
       "lon": 141.1378,
-      "elevation": 102,
+      "elevation": 113,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 41.275,
       "lon": 141.125,
-      "elevation": 350,
+      "elevation": 520,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "31111",
@@ -3451,8 +3451,8 @@
     "regionName": "東北",
     "areaName": "青森",
     "base": {
-      "lat": 40.7536,
-      "lon": 140.7819,
+      "lat": 40.73789,
+      "lon": 140.793239,
       "elevation": 135,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -3476,13 +3476,13 @@
     "base": {
       "lat": 40.6983,
       "lon": 141.0994,
-      "elevation": 89,
+      "elevation": 88,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 40.6825,
       "lon": 141.0994,
-      "elevation": 95,
+      "elevation": 210,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300087",
@@ -3497,15 +3497,15 @@
     "regionName": "東北",
     "areaName": "青森",
     "base": {
-      "lat": 40.4853,
-      "lon": 140.8319,
-      "elevation": 401,
+      "lat": 40.5826,
+      "lon": 140.988283,
+      "elevation": 220,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 40.5011,
       "lon": 140.8319,
-      "elevation": 689,
+      "elevation": 485,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200024",
@@ -3520,8 +3520,8 @@
     "regionName": "東北",
     "areaName": "青森",
     "base": {
-      "lat": 40.6117,
-      "lon": 140.3311,
+      "lat": 40.627648,
+      "lon": 140.330684,
       "elevation": 251,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -3543,15 +3543,15 @@
     "regionName": "東北",
     "areaName": "青森",
     "base": {
-      "lat": 40.5139,
-      "lon": 140.5711,
-      "elevation": 115,
+      "lat": 40.50761,
+      "lon": 140.564516,
+      "elevation": 100,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 40.4981,
       "lon": 140.5711,
-      "elevation": 422,
+      "elevation": 533,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300073",
@@ -3566,15 +3566,15 @@
     "regionName": "東北",
     "areaName": "秋田",
     "base": {
-      "lat": 39.9625,
-      "lon": 140.8017,
-      "elevation": 976,
+      "lat": 39.978507,
+      "lon": 140.801702,
+      "elevation": 980,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.9783,
       "lon": 140.8017,
-      "elevation": 991,
+      "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300100",
@@ -3589,8 +3589,8 @@
     "regionName": "東北",
     "areaName": "青森",
     "base": {
-      "lat": 40.3489,
-      "lon": 141.0717,
+      "lat": 40.364819,
+      "lon": 141.071745,
       "elevation": 268,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -3635,15 +3635,15 @@
     "regionName": "東北",
     "areaName": "秋田",
     "base": {
-      "lat": 39.6808,
-      "lon": 140.3931,
-      "elevation": 176,
+      "lat": 39.638202,
+      "lon": 140.353382,
+      "elevation": 120,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.665,
       "lon": 140.3931,
-      "elevation": 213,
+      "elevation": 320,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "32466",
@@ -3658,15 +3658,15 @@
     "regionName": "東北",
     "areaName": "秋田",
     "base": {
-      "lat": 40.0925,
-      "lon": 140.7961,
-      "elevation": 304,
+      "lat": 40.187974,
+      "lon": 140.82269,
+      "elevation": 260,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 40.0767,
       "lon": 140.7961,
-      "elevation": 337,
+      "elevation": 740,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300100",
@@ -3683,13 +3683,13 @@
     "base": {
       "lat": 40.1772,
       "lon": 140.7636,
-      "elevation": 267,
+      "elevation": 265,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 40.1614,
       "lon": 140.7636,
-      "elevation": 393,
+      "elevation": 476,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "32146",
@@ -3704,15 +3704,15 @@
     "regionName": "東北",
     "areaName": "秋田",
     "base": {
-      "lat": 39.7383,
-      "lon": 140.2622,
-      "elevation": 58,
+      "lat": 39.77583,
+      "lon": 140.2311,
+      "elevation": 160,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.7225,
       "lon": 140.2622,
-      "elevation": 84,
+      "elevation": 330,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "32451",
@@ -3727,15 +3727,15 @@
     "regionName": "東北",
     "areaName": "青森",
     "base": {
-      "lat": 40.6953,
-      "lon": 140.2828,
-      "elevation": 403,
+      "lat": 40.718618,
+      "lon": 140.203674,
+      "elevation": 376,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 40.6795,
       "lon": 140.2828,
-      "elevation": 681,
+      "elevation": 921,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300070",
@@ -3750,15 +3750,15 @@
     "regionName": "東北",
     "areaName": "秋田",
     "base": {
-      "lat": 39.9392,
-      "lon": 140.4914,
-      "elevation": 439,
+      "lat": 39.955099,
+      "lon": 140.491588,
+      "elevation": 537,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.955,
       "lon": 140.4914,
-      "elevation": 533,
+      "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300105",
@@ -3775,13 +3775,13 @@
     "base": {
       "lat": 39.1592,
       "lon": 140.7264,
-      "elevation": 402,
+      "elevation": 400,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.1434,
       "lon": 140.7264,
-      "elevation": 434,
+      "elevation": 770,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300108",
@@ -3796,15 +3796,15 @@
     "regionName": "東北",
     "areaName": "秋田",
     "base": {
-      "lat": 39.5042,
-      "lon": 140.6567,
-      "elevation": 148,
+      "lat": 39.467386,
+      "lon": 140.638848,
+      "elevation": 180,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.52,
       "lon": 140.6567,
-      "elevation": 198,
+      "elevation": 456,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300106",
@@ -3821,13 +3821,13 @@
     "base": {
       "lat": 39.1911,
       "lon": 140.0925,
-      "elevation": 478,
+      "elevation": 470,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.1753,
       "lon": 140.0925,
-      "elevation": 587,
+      "elevation": 690,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "32626",
@@ -3844,13 +3844,13 @@
     "base": {
       "lat": 39.7608,
       "lon": 140.7592,
-      "elevation": 591,
+      "elevation": 578,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.745,
       "lon": 140.7592,
-      "elevation": 794,
+      "elevation": 1186,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300101",
@@ -3888,15 +3888,15 @@
     "regionName": "東北",
     "areaName": "秋田",
     "base": {
-      "lat": 39.1619,
-      "lon": 140.6211,
-      "elevation": 227,
+      "lat": 39.201634,
+      "lon": 140.609463,
+      "elevation": 180,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.1461,
       "lon": 140.6211,
-      "elevation": 348,
+      "elevation": 350,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300108",
@@ -3934,8 +3934,8 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 40.067,
-      "lon": 141.5028,
+      "lat": 40.082884,
+      "lon": 141.503057,
       "elevation": 681,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -3957,15 +3957,15 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 40.1344,
-      "lon": 140.9514,
-      "elevation": 324,
+      "lat": 40.169829,
+      "lon": 140.970281,
+      "elevation": 320,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 40.1186,
       "lon": 140.9514,
-      "elevation": 444,
+      "elevation": 490,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300190",
@@ -3980,8 +3980,8 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 39.8056,
-      "lon": 140.9358,
+      "lat": 39.821243,
+      "lon": 140.936251,
       "elevation": 503,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -4003,15 +4003,15 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 39.7981,
-      "lon": 140.9661,
-      "elevation": 470,
+      "lat": 39.814625,
+      "lon": 140.966696,
+      "elevation": 630,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.8139,
       "lon": 140.9661,
-      "elevation": 642,
+      "elevation": 1213,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200035",
@@ -4026,15 +4026,15 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 39.8883,
-      "lon": 140.95,
-      "elevation": 662,
+      "lat": 39.775725,
+      "lon": 140.930468,
+      "elevation": 426,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.8725,
       "lon": 140.95,
-      "elevation": 806,
+      "elevation": 1128,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200033",
@@ -4118,15 +4118,15 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 39.8986,
-      "lon": 140.9569,
-      "elevation": 610,
+      "lat": 39.897099,
+      "lon": 140.939224,
+      "elevation": 530,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.8828,
       "lon": 140.9569,
-      "elevation": 687,
+      "elevation": 1130,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200033",
@@ -4141,15 +4141,15 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 40.0442,
-      "lon": 141.2372,
-      "elevation": 357,
+      "lat": 40.084887,
+      "lon": 141.189903,
+      "elevation": 650,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 40.06,
       "lon": 141.2372,
-      "elevation": 412,
+      "elevation": 1018,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "33176",
@@ -4164,15 +4164,15 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 39.4273,
-      "lon": 141.0286,
-      "elevation": 285,
+      "lat": 39.431388,
+      "lon": 141.000624,
+      "elevation": 270,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.4431,
       "lon": 141.0286,
-      "elevation": 323,
+      "elevation": 480,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300214",
@@ -4210,8 +4210,8 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 39.2311,
-      "lon": 141.5933,
+      "lat": 39.248446,
+      "lon": 141.595775,
       "elevation": 433,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -4256,15 +4256,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 38.9011,
-      "lon": 140.3936,
-      "elevation": 307,
+      "lat": 38.895086,
+      "lon": 140.505036,
+      "elevation": 270,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.9169,
       "lon": 140.3936,
-      "elevation": 309,
+      "elevation": 550,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "35116",
@@ -4279,15 +4279,15 @@
     "regionName": "東北",
     "areaName": "岩手",
     "base": {
-      "lat": 39.0364,
-      "lon": 140.9686,
-      "elevation": 442,
+      "lat": 39.052,
+      "lon": 140.968,
+      "elevation": 400,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 39.0522,
       "lon": 140.9686,
-      "elevation": 590,
+      "elevation": 669,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300216",
@@ -4371,15 +4371,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 38.7967,
-      "lon": 140.3558,
-      "elevation": 221,
+      "lat": 38.786325,
+      "lon": 140.336894,
+      "elevation": 228,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.7809,
       "lon": 140.3558,
-      "elevation": 234,
+      "elevation": 337,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "35162",
@@ -4394,15 +4394,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 38.7203,
-      "lon": 140.5531,
-      "elevation": 264,
+      "lat": 38.70574,
+      "lon": 140.545498,
+      "elevation": 300,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.7045,
       "lon": 140.5531,
-      "elevation": 351,
+      "elevation": 602,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "35176",
@@ -4440,15 +4440,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 38.4595,
-      "lon": 140.0706,
-      "elevation": 513,
+      "lat": 38.523625,
+      "lon": 140.006476,
+      "elevation": 1200,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.4753,
       "lon": 140.0706,
-      "elevation": 806,
+      "elevation": 1600,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200050",
@@ -4463,15 +4463,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 38.3314,
-      "lon": 140.4822,
-      "elevation": 426,
+      "lat": 38.347266,
+      "lon": 140.482283,
+      "elevation": 600,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.3472,
       "lon": 140.4822,
-      "elevation": 600,
+      "elevation": 690,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200048",
@@ -4534,13 +4534,13 @@
     "base": {
       "lat": 38.4364,
       "lon": 140.1256,
-      "elevation": 247,
+      "elevation": 260,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.4206,
       "lon": 140.1256,
-      "elevation": 321,
+      "elevation": 320,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "35376",
@@ -4557,13 +4557,13 @@
     "base": {
       "lat": 38.5719,
       "lon": 139.9419,
-      "elevation": 543,
+      "elevation": 530,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.5561,
       "lon": 139.9419,
-      "elevation": 702,
+      "elevation": 700,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200053",
@@ -4626,13 +4626,13 @@
     "base": {
       "lat": 38.6522,
       "lon": 139.9125,
-      "elevation": 257,
+      "elevation": 260,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.6364,
       "lon": 139.9125,
-      "elevation": 383,
+      "elevation": 365,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "35201",
@@ -4647,15 +4647,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 38.2886,
-      "lon": 140.0586,
-      "elevation": 390,
+      "lat": 38.304689,
+      "lon": 140.058324,
+      "elevation": 440,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.3044,
       "lon": 140.0586,
-      "elevation": 554,
+      "elevation": 644,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200049",
@@ -4670,15 +4670,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 38.4198,
-      "lon": 140.5436,
-      "elevation": 593,
+      "lat": 38.438139,
+      "lon": 140.539212,
+      "elevation": 630,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.4356,
       "lon": 140.5436,
-      "elevation": 839,
+      "elevation": 1030,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200048",
@@ -4693,15 +4693,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 38.1081,
-      "lon": 140.4056,
-      "elevation": 1050,
+      "lat": 38.12406,
+      "lon": 140.405591,
+      "elevation": 1060,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.1239,
       "lon": 140.4056,
-      "elevation": 1098,
+      "elevation": 1446,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200045",
@@ -4741,13 +4741,13 @@
     "base": {
       "lat": 38.1281,
       "lon": 140.3744,
-      "elevation": 676,
+      "elevation": 700,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.1123,
       "lon": 140.3744,
-      "elevation": 698,
+      "elevation": 840,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200044",
@@ -4787,13 +4787,13 @@
     "base": {
       "lat": 38.7875,
       "lon": 140.6375,
-      "elevation": 363,
+      "elevation": 340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.7717,
       "lon": 140.6375,
-      "elevation": 781,
+      "elevation": 1055,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "35176",
@@ -4854,15 +4854,15 @@
     "regionName": "東北",
     "areaName": "山形",
     "base": {
-      "lat": 37.8483,
-      "lon": 140.1581,
-      "elevation": 518,
+      "lat": 37.864757,
+      "lon": 140.231322,
+      "elevation": 475,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.8325,
       "lon": 140.1581,
-      "elevation": 621,
+      "elevation": 800,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "35552",
@@ -4902,13 +4902,13 @@
     "base": {
       "lat": 37.7756,
       "lon": 140.1358,
-      "elevation": 1302,
+      "elevation": 920,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.7598,
       "lon": 140.1358,
-      "elevation": 1643,
+      "elevation": 1820,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300169",
@@ -4923,15 +4923,15 @@
     "regionName": "東北",
     "areaName": "宮城",
     "base": {
-      "lat": 38.4028,
-      "lon": 140.7231,
-      "elevation": 598,
+      "lat": 38.419007,
+      "lon": 140.723302,
+      "elevation": 687,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.4186,
       "lon": 140.7231,
-      "elevation": 683,
+      "elevation": 959,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "34311",
@@ -4969,15 +4969,15 @@
     "regionName": "東北",
     "areaName": "宮城",
     "base": {
-      "lat": 38.1131,
-      "lon": 140.5919,
-      "elevation": 321,
+      "lat": 38.127991,
+      "lon": 140.525988,
+      "elevation": 650,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.0973,
       "lon": 140.5919,
-      "elevation": 552,
+      "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "34461",
@@ -4994,13 +4994,13 @@
     "base": {
       "lat": 37.6408,
       "lon": 140.3306,
-      "elevation": 786,
+      "elevation": 709,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.625,
       "lon": 140.3306,
-      "elevation": 920,
+      "elevation": 925,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36127",
@@ -5015,8 +5015,8 @@
     "regionName": "東北",
     "areaName": "宮城",
     "base": {
-      "lat": 38.3294,
-      "lon": 140.7961,
+      "lat": 38.390593,
+      "lon": 140.720668,
       "elevation": 90,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -5040,13 +5040,13 @@
     "base": {
       "lat": 38.135,
       "lon": 140.4953,
-      "elevation": 1104,
+      "elevation": 1100,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.1192,
       "lon": 140.4953,
-      "elevation": 1378,
+      "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200042",
@@ -5061,15 +5061,15 @@
     "regionName": "東北",
     "areaName": "宮城",
     "base": {
-      "lat": 38.1006,
-      "lon": 140.5689,
-      "elevation": 348,
+      "lat": 38.067624,
+      "lon": 140.514113,
+      "elevation": 846,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.1164,
       "lon": 140.5689,
-      "elevation": 353,
+      "elevation": 1146,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200045",
@@ -5086,13 +5086,13 @@
     "base": {
       "lat": 37.9986,
       "lon": 140.3667,
-      "elevation": 534,
+      "elevation": 540,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.9828,
       "lon": 140.3667,
-      "elevation": 602,
+      "elevation": 1000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200044",
@@ -5107,15 +5107,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.5967,
-      "lon": 140.3592,
-      "elevation": 458,
+      "lat": 37.622568,
+      "lon": 140.324465,
+      "elevation": 950,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.6125,
       "lon": 140.3592,
-      "elevation": 511,
+      "elevation": 1120,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36127",
@@ -5130,15 +5130,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.5997,
-      "lon": 140.1614,
-      "elevation": 599,
+      "lat": 37.575435,
+      "lon": 140.094714,
+      "elevation": 675,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.5839,
       "lon": 140.1614,
-      "elevation": 1000,
+      "elevation": 1255,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36276",
@@ -5155,13 +5155,13 @@
     "base": {
       "lat": 37.6503,
       "lon": 140.255,
-      "elevation": 1074,
+      "elevation": 1050,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.6345,
       "lon": 140.255,
-      "elevation": 1220,
+      "elevation": 1500,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36276",
@@ -5176,15 +5176,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.6181,
-      "lon": 140.2189,
-      "elevation": 808,
+      "lat": 37.61831,
+      "lon": 140.229133,
+      "elevation": 850,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.6023,
       "lon": 140.2189,
-      "elevation": 977,
+      "elevation": 1220,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36276",
@@ -5199,15 +5199,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.5422,
-      "lon": 140.1494,
-      "elevation": 584,
+      "lat": 37.5452,
+      "lon": 140.124565,
+      "elevation": 514,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.5264,
       "lon": 140.1494,
-      "elevation": 633,
+      "elevation": 750,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36276",
@@ -5222,15 +5222,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.5698,
-      "lon": 140.0342,
-      "elevation": 605,
+      "lat": 37.586322,
+      "lon": 140.033618,
+      "elevation": 700,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.5856,
       "lon": 140.0342,
-      "elevation": 731,
+      "elevation": 1338,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36276",
@@ -5247,13 +5247,13 @@
     "base": {
       "lat": 37.6328,
       "lon": 140.0692,
-      "elevation": 908,
+      "elevation": 900,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.617,
       "lon": 140.0692,
-      "elevation": 1117,
+      "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36276",
@@ -5291,15 +5291,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.6269,
-      "lon": 140.0378,
-      "elevation": 1029,
+      "lat": 37.586322,
+      "lon": 140.033618,
+      "elevation": 700,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.6111,
       "lon": 140.0378,
-      "elevation": 1201,
+      "elevation": 1338,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36276",
@@ -5314,8 +5314,8 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.427,
-      "lon": 139.5331,
+      "lat": 37.442925,
+      "lon": 139.533198,
       "elevation": 439,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -5339,13 +5339,13 @@
     "base": {
       "lat": 37.2667,
       "lon": 139.5456,
-      "elevation": 512,
+      "elevation": 510,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.2509,
       "lon": 139.5456,
-      "elevation": 517,
+      "elevation": 1000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36536",
@@ -5360,15 +5360,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.0953,
-      "lon": 139.6089,
-      "elevation": 865,
+      "lat": 37.070624,
+      "lon": 139.638421,
+      "elevation": 943,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.1111,
       "lon": 139.6089,
-      "elevation": 902,
+      "elevation": 1650,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200057",
@@ -5383,15 +5383,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.6789,
-      "lon": 140.1328,
-      "elevation": 947,
+      "lat": 37.693668,
+      "lon": 140.132685,
+      "elevation": 1010,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.6947,
       "lon": 140.1328,
-      "elevation": 1012,
+      "elevation": 1590,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36276",
@@ -5406,8 +5406,8 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.7353,
-      "lon": 139.8664,
+      "lat": 37.651133,
+      "lon": 139.874723,
       "elevation": 406,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -5431,13 +5431,13 @@
     "base": {
       "lat": 37.1811,
       "lon": 139.6372,
-      "elevation": 834,
+      "elevation": 838,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.1653,
       "lon": 139.6372,
-      "elevation": 996,
+      "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200057",
@@ -5454,13 +5454,13 @@
     "base": {
       "lat": 37.1006,
       "lon": 139.4494,
-      "elevation": 716,
+      "elevation": 720,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.0848,
       "lon": 139.4494,
-      "elevation": 1067,
+      "elevation": 1240,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36716",
@@ -5475,15 +5475,15 @@
     "regionName": "東北",
     "areaName": "福島",
     "base": {
-      "lat": 37.0325,
-      "lon": 139.3972,
-      "elevation": 915,
+      "lat": 37.026365,
+      "lon": 139.387926,
+      "elevation": 945,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.0167,
       "lon": 139.3972,
-      "elevation": 1358,
+      "elevation": 1195,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "36716",
@@ -5500,13 +5500,13 @@
     "base": {
       "lat": 36.9389,
       "lon": 139.7531,
-      "elevation": 1128,
+      "elevation": 1138,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9231,
       "lon": 139.7531,
-      "elevation": 1291,
+      "elevation": 1638,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "41116",
@@ -5521,15 +5521,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.7961,
-      "lon": 139.2286,
-      "elevation": 901,
+      "lat": 36.812233,
+      "lon": 139.226337,
+      "elevation": 950,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8119,
       "lon": 139.2286,
-      "elevation": 952,
+      "elevation": 1270,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200063",
@@ -5544,15 +5544,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.8356,
-      "lon": 139.2392,
-      "elevation": 995,
+      "lat": 36.85077,
+      "lon": 139.238505,
+      "elevation": 1080,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8514,
       "lon": 139.2392,
-      "elevation": 1086,
+      "elevation": 1420,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200070",
@@ -5569,13 +5569,13 @@
     "base": {
       "lat": 36.8144,
       "lon": 139.2192,
-      "elevation": 1037,
+      "elevation": 1006,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7986,
       "lon": 139.2192,
-      "elevation": 1153,
+      "elevation": 1703,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200063",
@@ -5592,13 +5592,13 @@
     "base": {
       "lat": 36.9233,
       "lon": 139.7492,
-      "elevation": 1272,
+      "elevation": 1200,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9075,
       "lon": 139.7492,
-      "elevation": 1324,
+      "elevation": 1480,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "41116",
@@ -5613,15 +5613,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.8389,
-      "lon": 139.0761,
-      "elevation": 876,
+      "lat": 36.854687,
+      "lon": 139.076369,
+      "elevation": 850,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8547,
       "lon": 139.0761,
-      "elevation": 964,
+      "elevation": 1248,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "42046",
@@ -5636,15 +5636,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.762,
-      "lon": 139.1714,
-      "elevation": 1094,
+      "lat": 36.777959,
+      "lon": 139.171577,
+      "elevation": 1200,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7778,
       "lon": 139.1714,
-      "elevation": 1266,
+      "elevation": 1828,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200071",
@@ -5661,13 +5661,13 @@
     "base": {
       "lat": 36.8047,
       "lon": 139.4211,
-      "elevation": 1491,
+      "elevation": 1500,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7889,
       "lon": 139.4211,
-      "elevation": 1675,
+      "elevation": 1800,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200058",
@@ -5682,15 +5682,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.6208,
-      "lon": 139.0958,
-      "elevation": 605,
+      "lat": 36.779694,
+      "lon": 139.074601,
+      "elevation": 1250,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.605,
       "lon": 139.0958,
-      "elevation": 652,
+      "elevation": 1550,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200071",
@@ -5707,13 +5707,13 @@
     "base": {
       "lat": 36.8372,
       "lon": 139.0783,
-      "elevation": 896,
+      "elevation": 830,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8214,
       "lon": 139.0783,
-      "elevation": 901,
+      "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "42046",
@@ -5730,13 +5730,13 @@
     "base": {
       "lat": 36.7989,
       "lon": 139.0092,
-      "elevation": 712,
+      "elevation": 680,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7831,
       "lon": 139.0092,
-      "elevation": 1033,
+      "elevation": 1180,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "42091",
@@ -5751,15 +5751,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.7433,
-      "lon": 138.9422,
-      "elevation": 822,
+      "lat": 36.756188,
+      "lon": 138.983794,
+      "elevation": 870,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7275,
       "lon": 138.9422,
-      "elevation": 1011,
+      "elevation": 1220,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200073",
@@ -5797,15 +5797,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.5186,
-      "lon": 138.4931,
-      "elevation": 1072,
+      "lat": 36.556041,
+      "lon": 138.464277,
+      "elevation": 1370,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5344,
       "lon": 138.4931,
-      "elevation": 1197,
+      "elevation": 2100,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200074",
@@ -5820,15 +5820,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.6331,
-      "lon": 139.0919,
-      "elevation": 539,
+      "lat": 36.85293,
+      "lon": 139.0838,
+      "elevation": 650,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6173,
       "lon": 139.0919,
-      "elevation": 596,
+      "elevation": 860,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200071",
@@ -5843,15 +5843,15 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.8006,
-      "lon": 138.95,
-      "elevation": 995,
+      "lat": 36.837887,
+      "lon": 138.948929,
+      "elevation": 1319,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8164,
       "lon": 138.95,
-      "elevation": 1334,
+      "elevation": 1502,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "42091",
@@ -5868,13 +5868,13 @@
     "base": {
       "lat": 36.6381,
       "lon": 138.5072,
-      "elevation": 1750,
+      "elevation": 1654,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6223,
       "lon": 138.5072,
-      "elevation": 1784,
+      "elevation": 1990,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300006",
@@ -5889,8 +5889,8 @@
     "regionName": "関東",
     "areaName": "群馬",
     "base": {
-      "lat": 36.6109,
-      "lon": 138.6042,
+      "lat": 36.627006,
+      "lon": 138.606241,
       "elevation": 1069,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -5914,13 +5914,13 @@
     "base": {
       "lat": 36.6289,
       "lon": 138.5875,
-      "elevation": 1248,
+      "elevation": 1245,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6131,
       "lon": 138.5875,
-      "elevation": 1260,
+      "elevation": 1600,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "42121",
@@ -5937,13 +5937,13 @@
     "base": {
       "lat": 36.4231,
       "lon": 138.6267,
-      "elevation": 1271,
+      "elevation": 1270,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.4073,
       "lon": 138.6267,
-      "elevation": 1296,
+      "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48331",
@@ -5960,13 +5960,13 @@
     "base": {
       "lat": 36.4714,
       "lon": 138.4292,
-      "elevation": 1348,
+      "elevation": 1350,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.4556,
       "lon": 138.4292,
-      "elevation": 1415,
+      "elevation": 1850,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200075",
@@ -5981,15 +5981,15 @@
     "regionName": "信越",
     "areaName": "新潟(下越)",
     "base": {
-      "lat": 37.9925,
-      "lon": 139.5247,
-      "elevation": 266,
+      "lat": 37.926834,
+      "lon": 139.468139,
+      "elevation": 317,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.9767,
       "lon": 139.5247,
-      "elevation": 559,
+      "elevation": 533,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200090",
@@ -6006,13 +6006,13 @@
     "base": {
       "lat": 37.7203,
       "lon": 139.3894,
-      "elevation": 121,
+      "elevation": 120,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.7045,
       "lon": 139.3894,
-      "elevation": 226,
+      "elevation": 416,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54421",
@@ -6029,13 +6029,13 @@
     "base": {
       "lat": 36.9111,
       "lon": 138.8128,
-      "elevation": 466,
+      "elevation": 460,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8953,
       "lon": 138.8128,
-      "elevation": 744,
+      "elevation": 1000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200093",
@@ -6050,15 +6050,15 @@
     "regionName": "信越",
     "areaName": "新潟(下越)",
     "base": {
-      "lat": 38.0167,
-      "lon": 139.5022,
-      "elevation": 145,
+      "lat": 38.006626,
+      "lon": 139.495692,
+      "elevation": 150,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.0009,
       "lon": 139.5022,
-      "elevation": 387,
+      "elevation": 840,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200090",
@@ -6073,15 +6073,15 @@
     "regionName": "信越",
     "areaName": "新潟(下越)",
     "base": {
-      "lat": 38.2031,
-      "lon": 139.5333,
-      "elevation": 46,
+      "lat": 38.389709,
+      "lon": 139.554262,
+      "elevation": 150,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 38.1873,
       "lon": 139.5333,
-      "elevation": 107,
+      "elevation": 650,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300053",
@@ -6127,7 +6127,7 @@
     "top": {
       "lat": 36.9111,
       "lon": 138.8097,
-      "elevation": 535,
+      "elevation": 690,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200093",
@@ -6144,13 +6144,13 @@
     "base": {
       "lat": 36.9097,
       "lon": 138.8489,
-      "elevation": 470,
+      "elevation": 458,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8939,
       "lon": 138.8489,
-      "elevation": 503,
+      "elevation": 702,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200093",
@@ -6165,15 +6165,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 36.9822,
-      "lon": 138.7992,
-      "elevation": 271,
+      "lat": 36.976545,
+      "lon": 138.794387,
+      "elevation": 256,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9664,
       "lon": 138.7992,
-      "elevation": 365,
+      "elevation": 920,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54841",
@@ -6188,15 +6188,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 37.02,
-      "lon": 138.7933,
-      "elevation": 493,
+      "lat": 37.030262,
+      "lon": 138.826058,
+      "elevation": 200,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.0358,
       "lon": 138.7933,
-      "elevation": 737,
+      "elevation": 1017,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54841",
@@ -6211,15 +6211,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 36.9408,
-      "lon": 138.8014,
-      "elevation": 389,
+      "lat": 36.941374,
+      "lon": 138.794292,
+      "elevation": 370,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.925,
       "lon": 138.8014,
-      "elevation": 688,
+      "elevation": 1170,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54841",
@@ -6234,15 +6234,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 36.922,
-      "lon": 138.8419,
-      "elevation": 419,
+      "lat": 36.93318,
+      "lon": 138.840413,
+      "elevation": 400,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9378,
       "lon": 138.8419,
-      "elevation": 527,
+      "elevation": 985,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200093",
@@ -6259,13 +6259,13 @@
     "base": {
       "lat": 37.1544,
       "lon": 138.9739,
-      "elevation": 213,
+      "elevation": 210,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.1386,
       "lon": 138.9739,
-      "elevation": 441,
+      "elevation": 420,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54616",
@@ -6305,13 +6305,13 @@
     "base": {
       "lat": 36.9364,
       "lon": 138.8067,
-      "elevation": 371,
+      "elevation": 430,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9206,
       "lon": 138.8067,
-      "elevation": 513,
+      "elevation": 470,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54841",
@@ -6326,15 +6326,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 37.032,
-      "lon": 138.8289,
-      "elevation": 236,
+      "lat": 37.048216,
+      "lon": 138.829141,
+      "elevation": 210,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.0478,
       "lon": 138.8289,
-      "elevation": 328,
+      "elevation": 579,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300058",
@@ -6351,13 +6351,13 @@
     "base": {
       "lat": 36.9261,
       "lon": 138.8575,
-      "elevation": 462,
+      "elevation": 440,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9103,
       "lon": 138.8575,
-      "elevation": 564,
+      "elevation": 650,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200093",
@@ -6372,15 +6372,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 36.9703,
-      "lon": 138.8156,
-      "elevation": 444,
+      "lat": 36.982984,
+      "lon": 138.826311,
+      "elevation": 260,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9545,
       "lon": 138.8156,
-      "elevation": 526,
+      "elevation": 920,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54841",
@@ -6395,15 +6395,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 37.1078,
-      "lon": 138.9775,
+      "lat": 37.117899,
+      "lon": 138.983614,
       "elevation": 355,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.092,
       "lon": 138.9775,
-      "elevation": 388,
+      "elevation": 1175,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200094",
@@ -6418,15 +6418,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 37.2142,
-      "lon": 138.9539,
-      "elevation": 96,
+      "lat": 37.22824,
+      "lon": 138.955215,
+      "elevation": 100,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.23,
       "lon": 138.9539,
-      "elevation": 124,
+      "elevation": 262,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54616",
@@ -6443,13 +6443,13 @@
     "base": {
       "lat": 37.2347,
       "lon": 138.9914,
-      "elevation": 133,
+      "elevation": 100,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.2189,
       "lon": 138.9914,
-      "elevation": 166,
+      "elevation": 220,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54616",
@@ -6466,13 +6466,13 @@
     "base": {
       "lat": 37.3225,
       "lon": 139.0161,
-      "elevation": 203,
+      "elevation": 200,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.3067,
       "lon": 139.0161,
-      "elevation": 210,
+      "elevation": 551,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200162",
@@ -6489,13 +6489,13 @@
     "base": {
       "lat": 37.415,
       "lon": 138.8911,
-      "elevation": 109,
+      "elevation": 97,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.3992,
       "lon": 138.8911,
-      "elevation": 192,
+      "elevation": 347,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54501",
@@ -6512,13 +6512,13 @@
     "base": {
       "lat": 37.3181,
       "lon": 138.8872,
-      "elevation": 310,
+      "elevation": 309,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.3023,
       "lon": 138.8872,
-      "elevation": 332,
+      "elevation": 444,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54616",
@@ -6535,13 +6535,13 @@
     "base": {
       "lat": 37.4378,
       "lon": 139.0394,
-      "elevation": 179,
+      "elevation": 171,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.422,
       "lon": 139.0394,
-      "elevation": 418,
+      "elevation": 223,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200162",
@@ -6604,13 +6604,13 @@
     "base": {
       "lat": 37.1619,
       "lon": 139.2478,
-      "elevation": 736,
+      "elevation": 735,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.1461,
       "lon": 139.2478,
-      "elevation": 741,
+      "elevation": 1242,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300014",
@@ -6627,13 +6627,13 @@
     "base": {
       "lat": 37.0533,
       "lon": 138.5975,
-      "elevation": 383,
+      "elevation": 388,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.0375,
       "lon": 138.5975,
-      "elevation": 749,
+      "elevation": 701,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300059",
@@ -6650,13 +6650,13 @@
     "base": {
       "lat": 36.9631,
       "lon": 138.6875,
-      "elevation": 656,
+      "elevation": 650,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9473,
       "lon": 138.6875,
-      "elevation": 900,
+      "elevation": 965,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54836",
@@ -6671,15 +6671,15 @@
     "regionName": "信越",
     "areaName": "新潟(中越)",
     "base": {
-      "lat": 37.0539,
-      "lon": 138.4858,
-      "elevation": 437,
+      "lat": 37.087453,
+      "lon": 138.455208,
+      "elevation": 430,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.0381,
       "lon": 138.4858,
-      "elevation": 715,
+      "elevation": 920,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54661",
@@ -6696,13 +6696,13 @@
     "base": {
       "lat": 37.1269,
       "lon": 138.6056,
-      "elevation": 196,
+      "elevation": 195,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.1111,
       "lon": 138.6056,
-      "elevation": 299,
+      "elevation": 380,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300059",
@@ -6717,15 +6717,15 @@
     "regionName": "信越",
     "areaName": "新潟(上越)",
     "base": {
-      "lat": 36.8759,
-      "lon": 138.1767,
-      "elevation": 728,
+      "lat": 36.896849,
+      "lon": 138.175671,
+      "elevation": 750,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8917,
       "lon": 138.1767,
-      "elevation": 756,
+      "elevation": 1250,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200096",
@@ -6742,13 +6742,13 @@
     "base": {
       "lat": 37.2203,
       "lon": 138.6372,
-      "elevation": 104,
+      "elevation": 70,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.2045,
       "lon": 138.6372,
-      "elevation": 210,
+      "elevation": 150,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54676",
@@ -6765,13 +6765,13 @@
     "base": {
       "lat": 36.9125,
       "lon": 138.17,
-      "elevation": 788,
+      "elevation": 800,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8967,
       "lon": 138.17,
-      "elevation": 836,
+      "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200096",
@@ -6786,15 +6786,15 @@
     "regionName": "信越",
     "areaName": "新潟(上越)",
     "base": {
-      "lat": 36.8567,
-      "lon": 138.1717,
-      "elevation": 712,
+      "lat": 36.87232,
+      "lon": 138.172528,
+      "elevation": 759,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8725,
       "lon": 138.1717,
-      "elevation": 759,
+      "elevation": 1487,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200096",
@@ -6811,13 +6811,13 @@
     "base": {
       "lat": 36.9061,
       "lon": 138.1603,
-      "elevation": 918,
+      "elevation": 1000,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8903,
       "lon": 138.1603,
-      "elevation": 931,
+      "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200096",
@@ -6834,13 +6834,13 @@
     "base": {
       "lat": 36.8867,
       "lon": 138.1775,
-      "elevation": 728,
+      "elevation": 700,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8709,
       "lon": 138.1775,
-      "elevation": 738,
+      "elevation": 1500,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200096",
@@ -6855,15 +6855,15 @@
     "regionName": "信越",
     "areaName": "新潟(上越)",
     "base": {
-      "lat": 37.0878,
-      "lon": 138.2264,
-      "elevation": 40,
+      "lat": 37.103736,
+      "lon": 138.226614,
+      "elevation": 57,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 37.1036,
       "lon": 138.2264,
-      "elevation": 68,
+      "elevation": 132,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "54651",
@@ -6880,13 +6880,13 @@
     "base": {
       "lat": 36.9411,
       "lon": 137.8992,
-      "elevation": 243,
+      "elevation": 240,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9253,
       "lon": 137.8992,
-      "elevation": 520,
+      "elevation": 740,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300063",
@@ -6901,15 +6901,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.5192,
-      "lon": 138.3481,
-      "elevation": 1291,
+      "lat": 36.530705,
+      "lon": 138.337344,
+      "elevation": 1250,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.535,
       "lon": 138.3481,
-      "elevation": 1346,
+      "elevation": 1650,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48216",
@@ -6924,15 +6924,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.3223,
-      "lon": 138.6442,
-      "elevation": 962,
+      "lat": 36.340866,
+      "lon": 138.643481,
+      "elevation": 940,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.3381,
       "lon": 138.6442,
-      "elevation": 994,
+      "elevation": 1155,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48331",
@@ -6972,13 +6972,13 @@
     "base": {
       "lat": 36.5572,
       "lon": 138.3511,
-      "elevation": 1389,
+      "elevation": 1380,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5414,
       "lon": 138.3511,
-      "elevation": 1473,
+      "elevation": 1550,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48216",
@@ -6993,15 +6993,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.6534,
-      "lon": 138.4656,
-      "elevation": 1372,
+      "lat": 36.669555,
+      "lon": 138.4655,
+      "elevation": 1500,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6692,
       "lon": 138.4656,
-      "elevation": 1574,
+      "elevation": 1800,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200080",
@@ -7018,13 +7018,13 @@
     "base": {
       "lat": 37.0031,
       "lon": 138.0703,
-      "elevation": 517,
+      "elevation": 500,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9873,
       "lon": 138.0703,
-      "elevation": 699,
+      "elevation": 1000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300062",
@@ -7062,15 +7062,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.392,
-      "lon": 138.4678,
-      "elevation": 1636,
+      "lat": 36.40779,
+      "lon": 138.46794,
+      "elevation": 1880,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.4078,
       "lon": 138.4678,
-      "elevation": 1911,
+      "elevation": 2073,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200075",
@@ -7085,15 +7085,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.6675,
-      "lon": 138.4956,
-      "elevation": 1573,
+      "lat": 36.683309,
+      "lon": 138.495742,
+      "elevation": 1690,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6833,
       "lon": 138.4956,
-      "elevation": 1680,
+      "elevation": 1950,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300008",
@@ -7110,13 +7110,13 @@
     "base": {
       "lat": 36.7161,
       "lon": 138.4931,
-      "elevation": 1503,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7003,
       "lon": 138.4931,
-      "elevation": 1624,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7131,15 +7131,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.2628,
-      "lon": 138.5119,
-      "elevation": 700,
+      "lat": 36.279822,
+      "lon": 138.490159,
+      "elevation": 800,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.2786,
       "lon": 138.5119,
-      "elevation": 816,
+      "elevation": 1050,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300228",
@@ -7156,13 +7156,13 @@
     "base": {
       "lat": 36.715,
       "lon": 138.485,
-      "elevation": 1460,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6992,
       "lon": 138.485,
-      "elevation": 1564,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7179,13 +7179,13 @@
     "base": {
       "lat": 36.7161,
       "lon": 138.485,
-      "elevation": 1447,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7003,
       "lon": 138.485,
-      "elevation": 1562,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7202,13 +7202,13 @@
     "base": {
       "lat": 36.4275,
       "lon": 138.4203,
-      "elevation": 1729,
+      "elevation": 1700,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.4117,
       "lon": 138.4203,
-      "elevation": 1852,
+      "elevation": 1965,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200075",
@@ -7223,15 +7223,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.6511,
-      "lon": 138.5339,
-      "elevation": 2011,
+      "lat": 36.677591,
+      "lon": 138.510421,
+      "elevation": 1705,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6669,
       "lon": 138.5339,
-      "elevation": 2154,
+      "elevation": 2307,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300006",
@@ -7248,13 +7248,13 @@
     "base": {
       "lat": 36.7203,
       "lon": 138.4964,
-      "elevation": 1337,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7045,
       "lon": 138.4964,
-      "elevation": 1750,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7271,13 +7271,13 @@
     "base": {
       "lat": 36.7253,
       "lon": 138.4989,
-      "elevation": 1457,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7095,
       "lon": 138.4989,
-      "elevation": 1689,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7294,13 +7294,13 @@
     "base": {
       "lat": 36.7153,
       "lon": 138.5083,
-      "elevation": 1564,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7311,
       "lon": 138.5083,
-      "elevation": 1671,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7315,15 +7315,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.6614,
-      "lon": 138.5103,
-      "elevation": 1678,
+      "lat": 36.677591,
+      "lon": 138.510421,
+      "elevation": 1705,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6772,
       "lon": 138.5103,
-      "elevation": 1830,
+      "elevation": 2307,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300008",
@@ -7340,13 +7340,13 @@
     "base": {
       "lat": 36.7098,
       "lon": 138.5122,
-      "elevation": 1658,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7256,
       "lon": 138.5122,
-      "elevation": 1683,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7363,13 +7363,13 @@
     "base": {
       "lat": 36.7206,
       "lon": 138.5025,
-      "elevation": 1435,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7048,
       "lon": 138.5025,
-      "elevation": 1750,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7386,13 +7386,13 @@
     "base": {
       "lat": 36.7153,
       "lon": 138.5267,
-      "elevation": 1694,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7311,
       "lon": 138.5267,
-      "elevation": 1908,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300009",
@@ -7409,13 +7409,13 @@
     "base": {
       "lat": 36.7228,
       "lon": 138.5097,
-      "elevation": 1558,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7386,
       "lon": 138.5097,
-      "elevation": 1661,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7432,13 +7432,13 @@
     "base": {
       "lat": 36.7339,
       "lon": 138.515,
-      "elevation": 1705,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7181,
       "lon": 138.515,
-      "elevation": 1724,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7455,13 +7455,13 @@
     "base": {
       "lat": 36.7797,
       "lon": 138.5278,
-      "elevation": 1501,
+      "elevation": 1470,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7639,
       "lon": 138.5278,
-      "elevation": 1637,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300009",
@@ -7478,13 +7478,13 @@
     "base": {
       "lat": 36.7206,
       "lon": 138.5161,
-      "elevation": 1635,
+      "elevation": 1340,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7364,
       "lon": 138.5161,
-      "elevation": 1686,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300007",
@@ -7499,15 +7499,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.7656,
-      "lon": 138.4158,
-      "elevation": 596,
+      "lat": 36.781755,
+      "lon": 138.416509,
+      "elevation": 700,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7814,
       "lon": 138.4158,
-      "elevation": 725,
+      "elevation": 1215,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300010",
@@ -7522,15 +7522,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.8,
-      "lon": 138.4247,
-      "elevation": 740,
+      "lat": 36.781755,
+      "lon": 138.416509,
+      "elevation": 700,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7842,
       "lon": 138.4247,
-      "elevation": 998,
+      "elevation": 1215,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300010",
@@ -7568,15 +7568,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.7678,
-      "lon": 138.4653,
-      "elevation": 1182,
+      "lat": 36.783719,
+      "lon": 138.465553,
+      "elevation": 850,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7836,
       "lon": 138.4653,
-      "elevation": 1204,
+      "elevation": 1930,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300010",
@@ -7591,15 +7591,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.9164,
-      "lon": 138.3878,
-      "elevation": 311,
+      "lat": 36.9313,
+      "lon": 138.387865,
+      "elevation": 400,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9322,
       "lon": 138.3878,
-      "elevation": 386,
+      "elevation": 1030,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200079",
@@ -7614,15 +7614,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.9798,
-      "lon": 138.5647,
-      "elevation": 308,
+      "lat": 36.995554,
+      "lon": 138.565129,
+      "elevation": 400,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9956,
       "lon": 138.5647,
-      "elevation": 395,
+      "elevation": 800,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300059",
@@ -7637,15 +7637,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.7228,
-      "lon": 138.1711,
-      "elevation": 910,
+      "lat": 36.738923,
+      "lon": 138.171302,
+      "elevation": 900,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7386,
       "lon": 138.1711,
-      "elevation": 925,
+      "elevation": 1500,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300066",
@@ -7660,15 +7660,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.8356,
-      "lon": 138.2878,
-      "elevation": 950,
+      "lat": 36.851459,
+      "lon": 138.284968,
+      "elevation": 910,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8514,
       "lon": 138.2878,
-      "elevation": 957,
+      "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300011",
@@ -7683,15 +7683,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.4717,
-      "lon": 138.0731,
-      "elevation": 867,
+      "lat": 36.505703,
+      "lon": 138.077271,
+      "elevation": 1000,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.4875,
       "lon": 138.0731,
-      "elevation": 1043,
+      "elevation": 1160,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300068",
@@ -7708,13 +7708,13 @@
     "base": {
       "lat": 36.8197,
       "lon": 138.4033,
-      "elevation": 602,
+      "elevation": 476,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8039,
       "lon": 138.4033,
-      "elevation": 1166,
+      "elevation": 1270,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300010",
@@ -7731,13 +7731,13 @@
     "base": {
       "lat": 36.8519,
       "lon": 138.2631,
-      "elevation": 832,
+      "elevation": 800,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8361,
       "lon": 138.2631,
-      "elevation": 979,
+      "elevation": 1320,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300065",
@@ -7752,15 +7752,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.8061,
-      "lon": 138.1678,
-      "elevation": 773,
+      "lat": 36.826444,
+      "lon": 138.161996,
+      "elevation": 770,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.8219,
       "lon": 138.1678,
-      "elevation": 826,
+      "elevation": 1220,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48061",
@@ -7775,15 +7775,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.5423,
-      "lon": 137.8033,
-      "elevation": 863,
+      "lat": 36.529819,
+      "lon": 137.828525,
+      "elevation": 940,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5581,
       "lon": 137.8033,
-      "elevation": 919,
+      "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48191",
@@ -7798,15 +7798,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.737,
-      "lon": 138.0914,
-      "elevation": 1156,
+      "lat": 36.754387,
+      "lon": 138.094637,
+      "elevation": 1220,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7528,
       "lon": 138.0914,
-      "elevation": 1295,
+      "elevation": 1748,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300067",
@@ -7823,13 +7823,13 @@
     "base": {
       "lat": 36.5997,
       "lon": 137.8258,
-      "elevation": 1166,
+      "elevation": 830,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5839,
       "lon": 137.8258,
-      "elevation": 1271,
+      "elevation": 1320,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48191",
@@ -7846,13 +7846,13 @@
     "base": {
       "lat": 36.6292,
       "lon": 137.8417,
-      "elevation": 787,
+      "elevation": 740,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.6134,
       "lon": 137.8417,
-      "elevation": 852,
+      "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48141",
@@ -7867,15 +7867,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 35.9336,
-      "lon": 138.4914,
-      "elevation": 1366,
+      "lat": 35.98663,
+      "lon": 138.487054,
+      "elevation": 1350,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9178,
       "lon": 138.4914,
-      "elevation": 1501,
+      "elevation": 1618,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300222",
@@ -7890,15 +7890,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.75,
-      "lon": 137.8739,
-      "elevation": 821,
+      "lat": 36.766868,
+      "lon": 137.879321,
+      "elevation": 700,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7658,
       "lon": 137.8739,
-      "elevation": 903,
+      "elevation": 1300,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200081",
@@ -7913,15 +7913,15 @@
     "regionName": "信越",
     "areaName": "長野(北信)",
     "base": {
-      "lat": 36.7009,
-      "lon": 137.8539,
-      "elevation": 727,
+      "lat": 36.717002,
+      "lon": 137.858642,
+      "elevation": 750,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.7167,
       "lon": 137.8539,
-      "elevation": 823,
+      "elevation": 1289,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48141",
@@ -7938,13 +7938,13 @@
     "base": {
       "lat": 36.0553,
       "lon": 138.4106,
-      "elevation": 1441,
+      "elevation": 1400,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0395,
       "lon": 138.4106,
-      "elevation": 1488,
+      "elevation": 1780,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300223",
@@ -7961,13 +7961,13 @@
     "base": {
       "lat": 36.07,
       "lon": 138.38,
-      "elevation": 1637,
+      "elevation": 1630,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0542,
       "lon": 138.38,
-      "elevation": 1904,
+      "elevation": 1830,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300223",
@@ -7982,15 +7982,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 35.9067,
-      "lon": 138.3092,
-      "elevation": 1165,
+      "lat": 35.922511,
+      "lon": 138.309247,
+      "elevation": 1300,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9225,
       "lon": 138.3092,
-      "elevation": 1340,
+      "elevation": 1450,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300222",
@@ -8005,15 +8005,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 36.0786,
-      "lon": 138.2628,
-      "elevation": 1528,
+      "lat": 36.096263,
+      "lon": 138.260433,
+      "elevation": 1565,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0944,
       "lon": 138.2628,
-      "elevation": 1676,
+      "elevation": 1834,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8028,15 +8028,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 36.0831,
-      "lon": 138.2117,
-      "elevation": 1335,
+      "lat": 36.101614,
+      "lon": 138.212836,
+      "elevation": 1560,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0989,
       "lon": 138.2117,
-      "elevation": 1560,
+      "elevation": 1925,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8053,13 +8053,13 @@
     "base": {
       "lat": 36.1286,
       "lon": 138.2756,
-      "elevation": 1600,
+      "elevation": 1530,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.1128,
       "lon": 138.2756,
-      "elevation": 1655,
+      "elevation": 1830,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8076,13 +8076,13 @@
     "base": {
       "lat": 36.1017,
       "lon": 138.2347,
-      "elevation": 1447,
+      "elevation": 1450,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0859,
       "lon": 138.2347,
-      "elevation": 1489,
+      "elevation": 1750,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8099,13 +8099,13 @@
     "base": {
       "lat": 36.2603,
       "lon": 138.1128,
-      "elevation": 1326,
+      "elevation": 1300,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.2445,
       "lon": 138.1128,
-      "elevation": 1442,
+      "elevation": 1500,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48361",
@@ -8120,15 +8120,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 36.0539,
-      "lon": 138.2556,
-      "elevation": 1189,
+      "lat": 36.069704,
+      "lon": 138.258139,
+      "elevation": 1310,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0697,
       "lon": 138.2556,
-      "elevation": 1331,
+      "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8143,15 +8143,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 36.0542,
-      "lon": 138.3039,
-      "elevation": 1699,
+      "lat": 36.068148,
+      "lon": 138.301401,
+      "elevation": 1771,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.07,
       "lon": 138.3039,
-      "elevation": 1808,
+      "elevation": 2237,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8168,13 +8168,13 @@
     "base": {
       "lat": 35.9108,
       "lon": 138.2064,
-      "elevation": 1045,
+      "elevation": 1050,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.895,
       "lon": 138.2064,
-      "elevation": 1230,
+      "elevation": 1780,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300223",
@@ -8191,13 +8191,13 @@
     "base": {
       "lat": 36.1092,
       "lon": 138.2444,
-      "elevation": 1449,
+      "elevation": 1400,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0934,
       "lon": 138.2444,
-      "elevation": 1720,
+      "elevation": 1475,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8214,13 +8214,13 @@
     "base": {
       "lat": 36.1489,
       "lon": 138.2061,
-      "elevation": 1370,
+      "elevation": 1350,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.1331,
       "lon": 138.2061,
-      "elevation": 1494,
+      "elevation": 1807,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8235,15 +8235,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 36.0817,
-      "lon": 138.1603,
-      "elevation": 1557,
+      "lat": 36.097674,
+      "lon": 138.160542,
+      "elevation": 1600,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0975,
       "lon": 138.1603,
-      "elevation": 1637,
+      "elevation": 1650,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48491",
@@ -8258,15 +8258,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 36.1014,
-      "lon": 137.6136,
-      "elevation": 1511,
+      "lat": 36.126487,
+      "lon": 137.60946,
+      "elevation": 1500,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.1172,
       "lon": 137.6136,
-      "elevation": 1579,
+      "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300004",
@@ -8281,15 +8281,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 35.9406,
-      "lon": 137.6675,
-      "elevation": 1214,
+      "lat": 35.918519,
+      "lon": 137.636924,
+      "elevation": 1107,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9248,
       "lon": 137.6675,
-      "elevation": 1229,
+      "elevation": 1904,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48531",
@@ -8304,15 +8304,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 35.8464,
-      "lon": 137.5286,
-      "elevation": 1341,
+      "lat": 35.863338,
+      "lon": 137.52839,
+      "elevation": 1680,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.8622,
       "lon": 137.5286,
-      "elevation": 1678,
+      "elevation": 2240,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300042",
@@ -8327,15 +8327,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 36.0328,
-      "lon": 137.7108,
-      "elevation": 1419,
+      "lat": 36.037149,
+      "lon": 137.601957,
+      "elevation": 1400,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0486,
       "lon": 137.7108,
-      "elevation": 1470,
+      "elevation": 2130,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200087",
@@ -8352,13 +8352,13 @@
     "base": {
       "lat": 35.9636,
       "lon": 137.73,
-      "elevation": 1252,
+      "elevation": 1100,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9478,
       "lon": 137.73,
-      "elevation": 1485,
+      "elevation": 1689,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200087",
@@ -8375,13 +8375,13 @@
     "base": {
       "lat": 35.8153,
       "lon": 137.9164,
-      "elevation": 882,
+      "elevation": 876,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.7995,
       "lon": 137.9164,
-      "elevation": 917,
+      "elevation": 1086,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300223",
@@ -8398,13 +8398,13 @@
     "base": {
       "lat": 36.1158,
       "lon": 137.8344,
-      "elevation": 919,
+      "elevation": 900,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.1,
       "lon": 137.8344,
-      "elevation": 1175,
+      "elevation": 1110,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200087",
@@ -8421,13 +8421,13 @@
     "base": {
       "lat": 35.7403,
       "lon": 137.8894,
-      "elevation": 896,
+      "elevation": 850,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.7245,
       "lon": 137.8894,
-      "elevation": 1116,
+      "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48767",
@@ -8444,13 +8444,13 @@
     "base": {
       "lat": 35.455,
       "lon": 137.6686,
-      "elevation": 796,
+      "elevation": 1375,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.4392,
       "lon": 137.6686,
-      "elevation": 966,
+      "elevation": 1600,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48767",
@@ -8467,13 +8467,13 @@
     "base": {
       "lat": 35.355,
       "lon": 137.6711,
-      "elevation": 1157,
+      "elevation": 1158,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.3392,
       "lon": 137.6711,
-      "elevation": 1278,
+      "elevation": 1369,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48767",
@@ -8488,8 +8488,8 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 35.7617,
-      "lon": 137.8133,
+      "lat": 35.776866,
+      "lon": 137.811293,
       "elevation": 2595,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -8511,15 +8511,15 @@
     "regionName": "信越",
     "areaName": "長野(中南信)",
     "base": {
-      "lat": 35.3078,
-      "lon": 137.6242,
-      "elevation": 956,
+      "lat": 35.297444,
+      "lon": 137.606775,
+      "elevation": 1050,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.292,
       "lon": 137.6242,
-      "elevation": 1086,
+      "elevation": 1450,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48767",
@@ -8536,13 +8536,13 @@
     "base": {
       "lat": 35.4417,
       "lon": 138.6875,
-      "elevation": 1293,
+      "elevation": 1285,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.4259,
       "lon": 138.6875,
-      "elevation": 1508,
+      "elevation": 1485,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300227",
@@ -8557,15 +8557,15 @@
     "regionName": "東海",
     "areaName": "山梨",
     "base": {
-      "lat": 35.9323,
-      "lon": 138.4142,
-      "elevation": 1447,
+      "lat": 35.947667,
+      "lon": 138.414863,
+      "elevation": 1600,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9481,
       "lon": 138.4142,
-      "elevation": 1620,
+      "elevation": 1900,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300222",
@@ -8582,13 +8582,13 @@
     "base": {
       "lat": 36.1886,
       "lon": 137.5525,
-      "elevation": 1272,
+      "elevation": 1310,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.1728,
       "lon": 137.5525,
-      "elevation": 1861,
+      "elevation": 1860,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300036",
@@ -8603,15 +8603,15 @@
     "regionName": "東海",
     "areaName": "岐阜",
     "base": {
-      "lat": 36.1253,
-      "lon": 137.4294,
-      "elevation": 1140,
+      "lat": 36.141165,
+      "lon": 137.429627,
+      "elevation": 1310,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.1411,
       "lon": 137.4294,
-      "elevation": 1310,
+      "elevation": 1430,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300177",
@@ -8626,15 +8626,15 @@
     "regionName": "東海",
     "areaName": "岐阜",
     "base": {
-      "lat": 36.1598,
-      "lon": 137.4917,
-      "elevation": 1201,
+      "lat": 36.175607,
+      "lon": 137.491671,
+      "elevation": 1250,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.1756,
       "lon": 137.4917,
-      "elevation": 1235,
+      "elevation": 1550,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300036",
@@ -8651,13 +8651,13 @@
     "base": {
       "lat": 36.3075,
       "lon": 137.245,
-      "elevation": 739,
+      "elevation": 745,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.2917,
       "lon": 137.245,
-      "elevation": 807,
+      "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300174",
@@ -8672,15 +8672,15 @@
     "regionName": "東海",
     "areaName": "山梨",
     "base": {
-      "lat": 35.5822,
-      "lon": 138.7531,
-      "elevation": 880,
+      "lat": 35.58988,
+      "lon": 138.71887,
+      "elevation": 860,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.5664,
       "lon": 138.7531,
-      "elevation": 1355,
+      "elevation": 1080,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "49251",
@@ -8697,13 +8697,13 @@
     "base": {
       "lat": 36.2397,
       "lon": 137.0808,
-      "elevation": 863,
+      "elevation": 830,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.2239,
       "lon": 137.0808,
-      "elevation": 1143,
+      "elevation": 1216,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300173",
@@ -8718,15 +8718,15 @@
     "regionName": "東海",
     "areaName": "愛知",
     "base": {
-      "lat": 35.2056,
-      "lon": 137.6572,
-      "elevation": 1033,
+      "lat": 35.221367,
+      "lon": 137.656026,
+      "elevation": 1215,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.2214,
       "lon": 137.6572,
-      "elevation": 1214,
+      "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "48767",
@@ -8741,8 +8741,8 @@
     "regionName": "東海",
     "areaName": "静岡",
     "base": {
-      "lat": 35.2014,
-      "lon": 138.2786,
+      "lat": 35.217404,
+      "lon": 138.278659,
       "elevation": 1212,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -8764,15 +8764,15 @@
     "regionName": "東海",
     "areaName": "静岡",
     "base": {
-      "lat": 35.2842,
-      "lon": 138.7683,
-      "elevation": 1180,
+      "lat": 35.300636,
+      "lon": 138.768771,
+      "elevation": 1300,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.3,
       "lon": 138.7683,
-      "elevation": 1423,
+      "elevation": 1450,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300225",
@@ -8810,15 +8810,15 @@
     "regionName": "東海",
     "areaName": "岐阜",
     "base": {
-      "lat": 35.9414,
-      "lon": 136.805,
-      "elevation": 883,
+      "lat": 35.956262,
+      "lon": 136.80157,
+      "elevation": 1100,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9572,
       "lon": 136.805,
-      "elevation": 1010,
+      "elevation": 1276,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300043",
@@ -8835,13 +8835,13 @@
     "base": {
       "lat": 35.9658,
       "lon": 136.8025,
-      "elevation": 864,
+      "elevation": 870,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.95,
       "lon": 136.8025,
-      "elevation": 1129,
+      "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300043",
@@ -8856,15 +8856,15 @@
     "regionName": "東海",
     "areaName": "岐阜",
     "base": {
-      "lat": 35.94,
-      "lon": 136.9347,
-      "elevation": 1054,
+      "lat": 35.955777,
+      "lon": 136.934887,
+      "elevation": 1050,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9558,
       "lon": 136.9347,
-      "elevation": 1060,
+      "elevation": 1405,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300044",
@@ -8879,15 +8879,15 @@
     "regionName": "東海",
     "areaName": "岐阜",
     "base": {
-      "lat": 35.9264,
-      "lon": 136.9194,
-      "elevation": 843,
+      "lat": 35.942477,
+      "lon": 136.919758,
+      "elevation": 910,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9422,
       "lon": 136.9194,
-      "elevation": 905,
+      "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300044",
@@ -8925,15 +8925,15 @@
     "regionName": "東海",
     "areaName": "岐阜",
     "base": {
-      "lat": 35.99,
-      "lon": 136.9078,
-      "elevation": 838,
+      "lat": 36.005941,
+      "lon": 136.912601,
+      "elevation": 890,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.0058,
       "lon": 136.9078,
-      "elevation": 866,
+      "elevation": 1040,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300044",
@@ -8948,8 +8948,8 @@
     "regionName": "東海",
     "areaName": "三重",
     "base": {
-      "lat": 35.0042,
-      "lon": 136.4222,
+      "lat": 35.020224,
+      "lon": 136.422472,
       "elevation": 948,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -8973,13 +8973,13 @@
     "base": {
       "lat": 36.5747,
       "lon": 137.4169,
-      "elevation": 493,
+      "elevation": 450,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5589,
       "lon": 137.4169,
-      "elevation": 852,
+      "elevation": 1188,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300241",
@@ -9040,15 +9040,15 @@
     "regionName": "北陸",
     "areaName": "富山",
     "base": {
-      "lat": 36.3639,
-      "lon": 136.8669,
-      "elevation": 418,
+      "lat": 36.379806,
+      "lon": 136.867112,
+      "elevation": 326,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.3797,
       "lon": 136.8669,
-      "elevation": 431,
+      "elevation": 746,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300032",
@@ -9065,13 +9065,13 @@
     "base": {
       "lat": 36.5861,
       "lon": 137.0219,
-      "elevation": 328,
+      "elevation": 310,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5703,
       "lon": 137.0219,
-      "elevation": 374,
+      "elevation": 510,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300033",
@@ -9086,15 +9086,15 @@
     "regionName": "北陸",
     "areaName": "富山",
     "base": {
-      "lat": 36.5025,
-      "lon": 136.8258,
-      "elevation": 277,
+      "lat": 36.529813,
+      "lon": 136.837895,
+      "elevation": 390,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5183,
       "lon": 136.8258,
-      "elevation": 294,
+      "elevation": 924,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300030",
@@ -9111,13 +9111,13 @@
     "base": {
       "lat": 36.5736,
       "lon": 137.0569,
-      "elevation": 332,
+      "elevation": 330,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5578,
       "lon": 137.0569,
-      "elevation": 568,
+      "elevation": 650,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300033",
@@ -9132,15 +9132,15 @@
     "regionName": "北陸",
     "areaName": "富山",
     "base": {
-      "lat": 36.4261,
-      "lon": 136.9258,
-      "elevation": 629,
+      "lat": 36.442386,
+      "lon": 136.9272,
+      "elevation": 630,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.4419,
       "lon": 136.9258,
-      "elevation": 649,
+      "elevation": 933,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300031",
@@ -9155,15 +9155,15 @@
     "regionName": "北陸",
     "areaName": "石川",
     "base": {
-      "lat": 36.3475,
-      "lon": 136.6789,
-      "elevation": 294,
+      "lat": 36.319523,
+      "lon": 136.637505,
+      "elevation": 380,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.3317,
       "lon": 136.6789,
-      "elevation": 728,
+      "elevation": 830,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200105",
@@ -9180,13 +9180,13 @@
     "base": {
       "lat": 36.2836,
       "lon": 136.5378,
-      "elevation": 280,
+      "elevation": 275,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.2678,
       "lon": 136.5378,
-      "elevation": 447,
+      "elevation": 500,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200107",
@@ -9203,13 +9203,13 @@
     "base": {
       "lat": 36.975,
       "lon": 136.9606,
-      "elevation": 341,
+      "elevation": 326,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.9592,
       "lon": 136.9606,
-      "elevation": 445,
+      "elevation": 391,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "56146",
@@ -9224,15 +9224,15 @@
     "regionName": "北陸",
     "areaName": "福井",
     "base": {
-      "lat": 35.9236,
-      "lon": 136.6922,
-      "elevation": 558,
+      "lat": 35.939723,
+      "lon": 136.692318,
+      "elevation": 600,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.9394,
       "lon": 136.6922,
-      "elevation": 604,
+      "elevation": 901,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "57176",
@@ -9247,15 +9247,15 @@
     "regionName": "北陸",
     "areaName": "石川",
     "base": {
-      "lat": 36.5103,
-      "lon": 136.7494,
-      "elevation": 306,
+      "lat": 36.526132,
+      "lon": 136.749525,
+      "elevation": 390,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 36.5261,
       "lon": 136.7494,
-      "elevation": 386,
+      "elevation": 540,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300026",
@@ -9293,15 +9293,15 @@
     "regionName": "北陸",
     "areaName": "福井",
     "base": {
-      "lat": 35.7219,
-      "lon": 136.15,
-      "elevation": 432,
+      "lat": 35.72124,
+      "lon": 136.143918,
+      "elevation": 430,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.7061,
       "lon": 136.15,
-      "elevation": 601,
+      "elevation": 760,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300156",
@@ -9339,8 +9339,8 @@
     "regionName": "関西",
     "areaName": "滋賀",
     "base": {
-      "lat": 35.52,
-      "lon": 136.0925,
+      "lat": 35.535878,
+      "lon": 136.092613,
       "elevation": 282,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -9362,15 +9362,15 @@
     "regionName": "関西",
     "areaName": "滋賀",
     "base": {
-      "lat": 35.412,
-      "lon": 135.9958,
-      "elevation": 124,
+      "lat": 35.439339,
+      "lon": 135.987131,
+      "elevation": 540,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.4278,
       "lon": 135.9958,
-      "elevation": 187,
+      "elevation": 690,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "60051",
@@ -9385,15 +9385,15 @@
     "regionName": "関西",
     "areaName": "滋賀",
     "base": {
-      "lat": 35.3131,
-      "lon": 135.9397,
-      "elevation": 407,
+      "lat": 35.329045,
+      "lon": 135.939763,
+      "elevation": 450,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.3289,
       "lon": 135.9397,
-      "elevation": 476,
+      "elevation": 580,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300290",
@@ -9408,15 +9408,15 @@
     "regionName": "関西",
     "areaName": "滋賀",
     "base": {
-      "lat": 35.6823,
-      "lon": 136.1578,
-      "elevation": 474,
+      "lat": 35.698468,
+      "lon": 136.158313,
+      "elevation": 540,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.6981,
       "lon": 136.1578,
-      "elevation": 550,
+      "elevation": 740,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300156",
@@ -9431,15 +9431,15 @@
     "regionName": "関西",
     "areaName": "滋賀",
     "base": {
-      "lat": 35.1923,
-      "lon": 135.9011,
-      "elevation": 256,
+      "lat": 35.203227,
+      "lon": 135.907279,
+      "elevation": 950,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.2081,
       "lon": 135.9011,
-      "elevation": 673,
+      "elevation": 1174,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300290",
@@ -9454,8 +9454,8 @@
     "regionName": "関西",
     "areaName": "兵庫",
     "base": {
-      "lat": 34.7511,
-      "lon": 135.2417,
+      "lat": 34.767,
+      "lon": 135.24192,
       "elevation": 562,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -9479,13 +9479,13 @@
     "base": {
       "lat": 35.5044,
       "lon": 134.6522,
-      "elevation": 395,
+      "elevation": 380,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.4886,
       "lon": 134.6522,
-      "elevation": 557,
+      "elevation": 940,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200118",
@@ -9500,8 +9500,8 @@
     "regionName": "関西",
     "areaName": "兵庫",
     "base": {
-      "lat": 35.4748,
-      "lon": 134.6808,
+      "lat": 35.49547,
+      "lon": 134.666077,
       "elevation": 283,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -9523,15 +9523,15 @@
     "regionName": "関西",
     "areaName": "兵庫",
     "base": {
-      "lat": 35.3658,
-      "lon": 134.5325,
-      "elevation": 715,
+      "lat": 35.517824,
+      "lon": 134.486564,
+      "elevation": 360,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.35,
       "lon": 134.5325,
-      "elevation": 1015,
+      "elevation": 560,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300294",
@@ -9546,15 +9546,15 @@
     "regionName": "関西",
     "areaName": "兵庫",
     "base": {
-      "lat": 35.5019,
-      "lon": 134.665,
-      "elevation": 338,
+      "lat": 35.500807,
+      "lon": 134.678197,
+      "elevation": 280,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.4861,
       "lon": 134.665,
-      "elevation": 471,
+      "elevation": 470,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200118",
@@ -9569,15 +9569,15 @@
     "regionName": "関西",
     "areaName": "兵庫",
     "base": {
-      "lat": 35.3619,
-      "lon": 134.5281,
-      "elevation": 836,
+      "lat": 35.369871,
+      "lon": 134.53931,
+      "elevation": 560,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.3461,
       "lon": 134.5281,
-      "elevation": 1211,
+      "elevation": 1050,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300294",
@@ -9592,15 +9592,15 @@
     "regionName": "関西",
     "areaName": "兵庫",
     "base": {
-      "lat": 35.1578,
-      "lon": 134.4911,
-      "elevation": 541,
+      "lat": 35.289304,
+      "lon": 134.543738,
+      "elevation": 600,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.142,
       "lon": 134.4911,
-      "elevation": 747,
+      "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "200167",
@@ -9617,13 +9617,13 @@
     "base": {
       "lat": 35.3978,
       "lon": 134.5733,
-      "elevation": 502,
+      "elevation": 507,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.382,
       "lon": 134.5733,
-      "elevation": 598,
+      "elevation": 1007,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "63071",
@@ -9638,15 +9638,15 @@
     "regionName": "関西",
     "areaName": "兵庫",
     "base": {
-      "lat": 35.4484,
-      "lon": 134.5161,
-      "elevation": 419,
+      "lat": 35.452166,
+      "lon": 134.531272,
+      "elevation": 620,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.4642,
       "lon": 134.5161,
-      "elevation": 616,
+      "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300308",
@@ -9663,13 +9663,13 @@
     "base": {
       "lat": 35.2831,
       "lon": 134.5878,
-      "elevation": 689,
+      "elevation": 680,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.2673,
       "lon": 134.5878,
-      "elevation": 917,
+      "elevation": 830,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300297",
@@ -9684,15 +9684,15 @@
     "regionName": "関西",
     "areaName": "兵庫",
     "base": {
-      "lat": 35.37,
-      "lon": 134.5664,
-      "elevation": 394,
+      "lat": 35.385747,
+      "lon": 134.566987,
+      "elevation": 550,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.3858,
       "lon": 134.5664,
-      "elevation": 681,
+      "elevation": 1100,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300295",
@@ -9707,15 +9707,15 @@
     "regionName": "中国",
     "areaName": "岡山",
     "base": {
-      "lat": 35.2956,
-      "lon": 133.9867,
-      "elevation": 770,
+      "lat": 35.312612,
+      "lon": 133.980909,
+      "elevation": 760,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.3114,
       "lon": 133.9867,
-      "elevation": 807,
+      "elevation": 920,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300281",
@@ -9778,13 +9778,13 @@
     "base": {
       "lat": 35.2203,
       "lon": 134.39,
-      "elevation": 911,
+      "elevation": 900,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.2045,
       "lon": 134.39,
-      "elevation": 923,
+      "elevation": 1125,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300301",
@@ -9853,7 +9853,7 @@
     "top": {
       "lat": 35.2453,
       "lon": 133.5961,
-      "elevation": 1036,
+      "elevation": 727,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300276",
@@ -9870,13 +9870,13 @@
     "base": {
       "lat": 34.7853,
       "lon": 132.3175,
-      "elevation": 748,
+      "elevation": 736,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 34.7695,
       "lon": 132.3175,
-      "elevation": 913,
+      "elevation": 1150,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300261",
@@ -9893,13 +9893,13 @@
     "base": {
       "lat": 34.4981,
       "lon": 132.1439,
-      "elevation": 586,
+      "elevation": 593,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 34.4823,
       "lon": 132.1439,
-      "elevation": 613,
+      "elevation": 1066,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300368",
@@ -9914,15 +9914,15 @@
     "regionName": "中国",
     "areaName": "広島",
     "base": {
-      "lat": 34.5706,
-      "lon": 132.1867,
-      "elevation": 539,
+      "lat": 34.595594,
+      "lon": 132.146546,
+      "elevation": 860,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 34.5864,
       "lon": 132.1867,
-      "elevation": 843,
+      "elevation": 1346,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300369",
@@ -9960,15 +9960,15 @@
     "regionName": "中国",
     "areaName": "広島",
     "base": {
-      "lat": 34.7081,
-      "lon": 132.1714,
-      "elevation": 773,
+      "lat": 34.695327,
+      "lon": 132.222341,
+      "elevation": 780,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 34.6923,
       "lon": 132.1714,
-      "elevation": 775,
+      "elevation": 1111,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "67136",
@@ -9991,7 +9991,7 @@
     "top": {
       "lat": 34.437,
       "lon": 131.6967,
-      "elevation": 898,
+      "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300271",
@@ -10029,8 +10029,8 @@
     "regionName": "中国",
     "areaName": "鳥取",
     "base": {
-      "lat": 35.3284,
-      "lon": 133.5914,
+      "lat": 35.34407,
+      "lon": 133.591501,
       "elevation": 844,
       "label": "リフト最下部・ゲレンデベース"
     },
@@ -10077,13 +10077,13 @@
     "base": {
       "lat": 35.0547,
       "lon": 132.7681,
-      "elevation": 543,
+      "elevation": 540,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 35.0389,
       "lon": 132.7681,
-      "elevation": 770,
+      "elevation": 720,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "300252",
@@ -10098,15 +10098,15 @@
     "regionName": "中国",
     "areaName": "愛媛",
     "base": {
-      "lat": 33.7025,
-      "lon": 132.8744,
-      "elevation": 710,
+      "lat": 33.718494,
+      "lon": 132.874445,
+      "elevation": 900,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 33.7183,
       "lon": 132.8744,
-      "elevation": 883,
+      "elevation": 1003,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": null,
@@ -10121,15 +10121,15 @@
     "regionName": "中国",
     "areaName": "愛媛",
     "base": {
-      "lat": 33.7784,
-      "lon": 133.1311,
-      "elevation": 1181,
+      "lat": 33.803021,
+      "lon": 133.148184,
+      "elevation": 1250,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 33.7942,
       "lon": 133.1311,
-      "elevation": 1272,
+      "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": null,
@@ -10144,15 +10144,15 @@
     "regionName": "中国",
     "areaName": "愛媛",
     "base": {
-      "lat": 33.5422,
-      "lon": 132.8342,
-      "elevation": 994,
+      "lat": 33.560614,
+      "lon": 132.895318,
+      "elevation": 980,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 33.5264,
       "lon": 132.8342,
-      "elevation": 1140,
+      "elevation": 1220,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": null,
@@ -10169,13 +10169,13 @@
     "base": {
       "lat": 32.5789,
       "lon": 131.1175,
-      "elevation": 1305,
+      "elevation": 1420,
       "label": "リフト最下部・ゲレンデベース"
     },
     "top": {
       "lat": 32.5631,
       "lon": 131.1175,
-      "elevation": 1498,
+      "elevation": 1610,
       "label": "リフト最上部・ゲレンデトップ"
     },
     "amedasId": "86157",
