@@ -649,19 +649,15 @@
 
       <!-- スクロール入力ボディ -->
       <div class="p-4 overflow-y-auto space-y-3.5 text-xs">
-        <!-- 1. 滑走スポット選択（変更可能） -->
+        <!-- 1. 滑走スポット表示（ホーム選択中スポット固定表示） -->
         <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block text-slate-300 font-bold">滑走スポット</label>
-            <span class="text-[11px] text-slate-400">タップして変更可能</span>
-          </div>
-          <div class="relative">
-            <select id="reportSpotSelect" onchange="onReportSpotChange(this.value)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none focus:border-sky-500 appearance-none pr-8">
-              <!-- JSで動的生成 -->
-            </select>
-            <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-xs">
-              <i class="fa-solid fa-chevron-down"></i>
+          <label class="block text-slate-300 font-bold mb-1">滑走スポット</label>
+          <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2.5 flex items-center justify-between">
+            <div class="flex items-center gap-2 min-w-0">
+              <span id="reportSpotCategoryBadge" class="text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800 shrink-0">スキー場</span>
+              <span id="reportSpotLabel" class="font-bold text-white text-xs truncate">--</span>
             </div>
+            <span id="reportSpotAreaLabel" class="text-[11px] text-slate-400 shrink-0 ml-2">--</span>
           </div>
         </div>
 
@@ -685,33 +681,34 @@
             <button type="button" onclick="setReportRating(3)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
             <button type="button" onclick="setReportRating(4)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
             <button type="button" onclick="setReportRating(5)" class="text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-            <span id="reportRatingLabel" class="text-xs font-bold text-amber-300 ml-2">5点 (最高)</span>
+            <span id="reportRatingLabel" class="text-xs font-bold text-amber-300 ml-2">5点</span>
           </div>
         </div>
 
-        <!-- 4. 雪質・バーン状況（絵文字なしクリーン選択） -->
+        <!-- 4. 雪質・バーン状況（カッコ説明なし・クリーン選択） -->
         <div>
           <label class="block text-slate-300 font-bold mb-1">雪質・バーン状況</label>
           <select id="reportSnowType" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none focus:border-sky-500">
-            <option value="極上ドライパウダー">極上ドライパウダー (浮遊感)</option>
-            <option value="底付き注意パウダー">底付きパウダー (下層硬め)</option>
-            <option value="上質コーデュロイ圧雪">上質コーデュロイ圧雪 (カービング)</option>
-            <option value="硬め・アイスバーン">硬め・アイスバーン (エッジ注意)</option>
-            <option value="湿雪・重雪">湿雪・重雪 (重パウ)</option>
+            <option value="極上ドライパウダー">極上ドライパウダー</option>
+            <option value="底付きパウダー">底付きパウダー</option>
+            <option value="上質コーデュロイ圧雪">上質コーデュロイ圧雪</option>
+            <option value="硬め・アイスバーン">硬め・アイスバーン</option>
+            <option value="湿雪・重雪">湿雪・重雪</option>
             <option value="春ザラメ・シャバ雪">春ザラメ・シャバ雪</option>
           </select>
         </div>
 
-        <!-- 5. 新雪の深さ（絵文字なしクリーン選択） -->
+        <!-- 5. 新雪の深さ（案B：7段階・カッコ説明なし） -->
         <div>
           <label class="block text-slate-300 font-bold mb-1">新雪の深さ</label>
           <select id="reportSnowDepth" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none focus:border-sky-500">
-            <option value="なし">新雪なし (圧雪)</option>
-            <option value="くるぶし (5〜10cm)">くるぶし (5〜10cm)</option>
-            <option value="すね (10〜20cm)">すね (10〜20cm)</option>
-            <option value="ひざ (20〜40cm)">ひざ (20〜40cm)</option>
-            <option value="もも・腰 (40〜70cm)">もも・腰 (40〜70cm)</option>
-            <option value="オーバーヘッド (70cm+)">オーバーヘッド (70cm+)</option>
+            <option value="新雪なし">新雪なし</option>
+            <option value="くるぶし 5〜15cm">くるぶし 5〜15cm</option>
+            <option value="すね 15〜30cm">すね 15〜30cm</option>
+            <option value="ひざ 30〜50cm">ひざ 30〜50cm</option>
+            <option value="もも 50〜70cm">もも 50〜70cm</option>
+            <option value="腰 70〜100cm">腰 70〜100cm</option>
+            <option value="胸以上 100cm+">胸以上 100cm+</option>
           </select>
         </div>
 
@@ -2606,7 +2603,8 @@
     function updateFloatingReportFabVisibility() {
       const fab = document.getElementById('floatingReportFab');
       if (!fab) return;
-      const shouldShow = (currentTab === 'feed') || (currentTab === 'home' && !isHomeReportCardInView);
+      // フィード画面では非表示、ホーム画面かつREPORTカードが画面外の時のみ表示
+      const shouldShow = (currentTab === 'home' && !isHomeReportCardInView);
       if (shouldShow) {
         fab.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
         fab.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
@@ -2634,29 +2632,6 @@
     }
 
     // 雪レポ投稿モーダル制御
-    function populateReportSpotSelect(selectedId) {
-      const select = document.getElementById('reportSpotSelect');
-      if (!select || !appData || !appData.spots) return;
-      select.innerHTML = '';
-
-      // 現在選択中や登録スポットを優先、カテゴリ・地域ごとに整列
-      const spots = [...appData.spots].sort((a, b) => a.name.localeCompare(b.name, 'ja'));
-      spots.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s.id;
-        const catLabel = s.category === 'bc' ? '[BC]' : '[スキー場]';
-        const areaLabel = s.areaName || s.regionName || '';
-        opt.textContent = `${s.name} ${catLabel} (${areaLabel})`;
-        if (s.id === selectedId) opt.selected = true;
-        select.appendChild(opt);
-      });
-    }
-
-    function onReportSpotChange(newSpotId) {
-      // ユーザーがモーダル内でスポットを切り替えた時の同期
-      currentSpotId = newSpotId;
-    }
-
     function setReportTimeSlot(slot) {
       currentReportSlot = slot;
       const btns = document.querySelectorAll('.report-slot-btn');
@@ -2671,7 +2646,14 @@
 
     function openReportModal() {
       const spot = appData ? appData.spots.find(s => s.id === currentSpotId) : null;
-      populateReportSpotSelect(spot ? spot.id : currentSpotId);
+      if (spot) {
+        const spotLabelEl = document.getElementById('reportSpotLabel');
+        if (spotLabelEl) spotLabelEl.textContent = spot.name;
+        const catBadge = document.getElementById('reportSpotCategoryBadge');
+        if (catBadge) catBadge.textContent = spot.category === 'bc' ? '⛰️ BC山' : '🏂 スキー場';
+        const areaLabelEl = document.getElementById('reportSpotAreaLabel');
+        if (areaLabelEl) areaLabelEl.textContent = spot.areaName || spot.regionName || '';
+      }
 
       // 時間帯の初期選択（現在時刻から自動推測）
       const jstHour = (new Date(Date.now() + 9 * 3600000)).getUTCHours();
@@ -2711,21 +2693,12 @@
       });
       const label = document.getElementById('reportRatingLabel');
       if (label) {
-        const ratingTexts = {
-          1: '1点 (かなり厳しい)',
-          2: '2点 (イマイチ)',
-          3: '3点 (普通・楽しめる)',
-          4: '4点 (良いコンディション)',
-          5: '5点 (最高！浮遊感/面ツル)'
-        };
-        label.textContent = ratingTexts[stars] || `${stars}点`;
+        label.textContent = `${stars}点`;
       }
     }
 
     async function submitReport() {
-      const select = document.getElementById('reportSpotSelect');
-      const chosenSpotId = select ? select.value : currentSpotId;
-      const spot = appData ? appData.spots.find(s => s.id === chosenSpotId) : null;
+      const spot = appData ? appData.spots.find(s => s.id === currentSpotId) : null;
       const snowType = document.getElementById('reportSnowType').value;
       const snowDepth = document.getElementById('reportSnowDepth').value;
       const comment = document.getElementById('reportComment').value.trim();
@@ -2738,7 +2711,7 @@
       }
 
       const newReportData = {
-        spotId: spot ? spot.id : chosenSpotId,
+        spotId: spot ? spot.id : currentSpotId,
         spotName: spot ? spot.name : '雪山スポット',
         category: spot ? spot.category : 'ski',
         region: spot ? spot.region : '',
