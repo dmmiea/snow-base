@@ -2381,31 +2381,188 @@
       return 0;
     }
 
+    const FEED_SEEN_ITEMS_KEY = 'snow_base_feed_seen_items_v1';
+
+    function getCurrentNotifSlotInfo() {
+      const now = new Date();
+      const today6 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6, 0, 0).getTime();
+      const today1930 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 19, 30, 0).getTime();
+      const yest1930 = today1930 - 86400000;
+
+      let slotTime = yest1930;
+      if (now.getTime() >= today1930) slotTime = today1930;
+      else if (now.getTime() >= today6) slotTime = today6;
+
+      const d = new Date(slotTime);
+      const ymd = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      const hm = `${String(d.getHours()).padStart(2, '0')}${String(d.getMinutes()).padStart(2, '0')}`;
+      return { slotTime, slotKey: `${ymd}_${hm}` };
+    }
+
+    function getFeedSeenItemIds() {
+      try {
+        const raw = localStorage.getItem(FEED_SEEN_ITEMS_KEY);
+        const arr = raw ? JSON.parse(raw) : [];
+        return new Set(Array.isArray(arr) ? arr : []);
+      } catch (e) {
+        return new Set();
+      }
+    }
+
+    function saveFeedSeenItemIds(set) {
+      try {
+        const arr = Array.from(set).slice(-300);
+        localStorage.setItem(FEED_SEEN_ITEMS_KEY, JSON.stringify(arr));
+      } catch (e) {}
+    }
+
     function renderFeedTab() {
       const container = document.getElementById('feedListContainer');
       container.innerHTML = '';
 
       if (!appData || !appData.spots) return;
 
-      // 1. 登録スポット（MYスポット）の最新コンディション速報セクション
       const favSpots = appData.spots.filter(s => favorites.includes(s.id));
+      const mySpotSet = new Set(favSpots.map(s => s.id));
+      const seenItems = getFeedSeenItemIds();
+      const nextSeenItems = new Set(seenItems);
+      const { slotTime, slotKey } = getCurrentNotifSlotInfo();
+      const nowMs = Date.now();
+      const recentWindow = 12 * 3600 * 1000;
 
-      if (favSpots.length > 0) {
-        const notifSectionHeader = document.createElement('div');
-        notifSectionHeader.className = "flex items-center justify-between text-xs font-bold text-amber-300 px-1 pt-1";
-        notifSectionHeader.innerHTML = `
-          <div class="flex items-center gap-1.5">
-            <i class="fa-solid fa-bell text-amber-400"></i>
-            <span>登録スポット最新速報</span>
+      // 1. MYスポット未登録時は先頭に登録ガイドカードを表示
+      if (favSpots.length === 0) {
+        const emptyGuide = document.createElement('div');
+        emptyGuide.className = "snow-card rounded-2xl p-4 border border-amber-500/30 bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/20 text-center space-y-2.5 shadow-md";
+        emptyGuide.innerHTML = `
+          <div class="w-10 h-10 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-base border border-amber-400/30">
+            <i class="fa-solid fa-star"></i>
           </div>
-          <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 font-bold">${favSpots.length}地点登録中</span>
+          <div class="text-xs font-bold text-white">MYスポットを登録して最新速報を受け取る</div>
+          <p class="text-[11px] text-slate-400 leading-relaxed max-w-xs mx-auto">
+            よく行くスキー場や山を★お気に入り登録すると、ここに今後3日間の降雪・夜間新雪速報が定時配信（6:00 / 19:30）されます。
+          </p>
+          <button onclick="openSearchModal()" class="px-4 py-1.5 rounded-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs shadow-md active:scale-95 transition inline-flex items-center gap-1">
+            <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
+            <span>スポットを探して登録する</span>
+          </button>
         `;
-        container.appendChild(notifSectionHeader);
+        container.appendChild(emptyGuide);
+      }
 
-        favSpots.forEach(s => {
+      // 2. 登録スポット速報アイテム (spot_snapshot)
+      const spotSnapshotItems = favSpots.map(s => {
+        const snapUid = `snap_${s.id}_${slotKey}`;
+        const isSeen = seenItems.has(snapUid);
+        nextSeenItems.add(snapUid);
+        return {
+          type: 'spot_snapshot',
+          uid: snapUid,
+          spotId: s.id,
+          spot: s,
+          isMySpot: true,
+          isUnseenPriority: !isSeen,
+          sortTime: slotTime
+        };
+      });
+
+      // 3. 全国みんなの雪レポアイテム (report)
+      const rawReports = snowReports.length > 0 ? snowReports : (localReports.length > 0 ? localReports : [
+        {
+          id: "sample_happo",
+          spotId: "hakuba_happo",
+          spotName: "白馬八方尾根スキー場",
+          rating: 5,
+          timeSlot: "朝イチ",
+          snowType: "神パウ",
+          snowDepth: "すね 15〜30cm",
+          comment: "朝イチ黒菱ゲレンデ最高でした。気温-8度で完全リセット、浮遊感抜群。",
+          time: "本日 08:45",
+          createdAtMs: nowMs - 3600000
+        },
+        {
+          id: "sample_hirafu",
+          spotId: "niseko_hirafu",
+          spotName: "ニセコ東急 グラン・ヒラフ",
+          rating: 5,
+          timeSlot: "午前",
+          snowType: "極上パウ",
+          snowDepth: "もも 50〜70cm",
+          comment: "花園ツリーラン深すぎ注意。底付き一切なしの極上パウダーです。",
+          time: "本日 09:15",
+          createdAtMs: nowMs - 7200000
+        }
+      ]);
+
+      const reportItems = rawReports.map((r, idx) => {
+        const sortTime = r.createdAtMs || (nowMs - (idx + 1) * 3600000);
+        const repUid = `rep_${r.id || `${r.spotId || 'sp'}_${sortTime}_${idx}`}`;
+        const isSeen = seenItems.has(repUid);
+        const isMySpot = mySpotSet.has(r.spotId);
+        const isRecent = (nowMs - sortTime) <= recentWindow;
+        const isUnseenPriority = isMySpot && !isSeen && isRecent;
+        nextSeenItems.add(repUid);
+        return {
+          ...r,
+          type: 'report',
+          uid: repUid,
+          isMySpot,
+          isUnseenPriority,
+          sortTime
+        };
+      });
+
+      // 表示済みUIDを保存（次回以降は時系列順へ統合）
+      saveFeedSeenItemIds(nextSeenItems);
+
+      // 4. サーフベース準拠ソート（未表示の優先アイテムのみ最上部、それ以外は完全時系列順）
+      const priorityItems = [];
+      const normalItems = [];
+      [...spotSnapshotItems, ...reportItems].forEach(item => {
+        if (item.isUnseenPriority) priorityItems.push(item);
+        else normalItems.push(item);
+      });
+      priorityItems.sort((a, b) => b.sortTime - a.sortTime);
+      normalItems.sort((a, b) => b.sortTime - a.sortTime);
+      const finalFeedItems = [...priorityItems, ...normalItems];
+
+      const jstNow = new Date(Date.now() + 9 * 3600000);
+      const todayStr = jstNow.toISOString().slice(0, 10);
+      const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+
+      // 5. カード描画
+      finalFeedItems.slice(0, 50).forEach(item => {
+        if (item.type === 'spot_snapshot') {
+          const s = item.spot;
           const nightVal = getSpotNightSnow(s);
           const wInfo = s.current.weatherInfo || getWeatherInfo(s.current.weatherCode || 0);
           const isBC = s.category === 'bc';
+          const next3Days = (s.dailySummary || []).filter(d => d.date >= todayStr).slice(0, 3);
+
+          const daysGridHtml = next3Days.map((d, dIdx) => {
+            const dObj = new Date(d.date + 'T00:00:00+09:00');
+            const dow = weekdays[dObj.getDay()] || '';
+            const dayLabel = dIdx === 0 ? '今日' : (dIdx === 1 ? '明日' : `${d.date.slice(5).replace('-', '/')}(${dow})`);
+            const dNight = (s.nightSnowByDate && s.nightSnowByDate[`${d.date}T06:00`] !== undefined)
+              ? s.nightSnowByDate[`${d.date}T06:00`]
+              : 0;
+            const isHeavyNight = dNight >= 10;
+
+            return `
+              <div class="rounded-xl p-2 text-center border ${isHeavyNight ? 'bg-sky-950/60 border-sky-500/50' : 'bg-slate-950/60 border-slate-800/90'}">
+                <div class="flex items-center justify-center gap-1 text-[11px] font-bold ${dIdx === 0 ? 'text-amber-300' : 'text-slate-300'}">
+                  <span>${dayLabel}</span>
+                  <span>${d.weatherIcon}</span>
+                </div>
+                <div class="mt-1 text-xs font-black ${isHeavyNight ? 'text-cyan-300' : (dNight > 0 ? 'text-sky-300' : 'text-slate-400')} whitespace-nowrap">
+                  🌙 +${dNight}cm
+                </div>
+                <div class="text-[10.5px] text-slate-400 font-medium whitespace-nowrap mt-0.5">
+                  1日 +${d.totalSnowfall}cm
+                </div>
+              </div>
+            `;
+          }).join('');
 
           const card = document.createElement('div');
           card.onclick = () => selectSpotFromMap(s.id);
@@ -2415,14 +2572,14 @@
               <div class="min-w-0">
                 <div class="flex items-center gap-1.5 flex-wrap">
                   <span class="text-[11px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold shrink-0">
-                    <i class="fa-solid fa-star text-[11px]"></i> MY
+                    <i class="fa-solid fa-star text-[10px]"></i> MY
                   </span>
                   <span class="text-[11px] px-1.5 py-0.2 rounded ${isBC ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-sky-950 text-sky-300 border border-sky-800'} font-bold shrink-0">
-                    ${isBC ? '⛰️ BC山' : '🏂 スキー場'}
+                    ${isBC ? 'BC山' : 'スキー場'}
                   </span>
                   <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
                 </div>
-                <h3 class="text-sm font-black text-white mt-1 truncate">${s.name}</h3>
+                <h3 class="text-sm sm:text-base font-black text-white mt-1 truncate">${s.name}</h3>
               </div>
               <div class="text-right shrink-0">
                 <div class="flex items-baseline justify-end gap-0.5">
@@ -2433,139 +2590,92 @@
               </div>
             </div>
 
-            <!-- バーン状態 & 夜間新雪 -->
-            <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-800/80">
-              <span class="text-sky-300 font-bold flex items-center gap-1 text-[11.5px] truncate">
-                <span>${s.current.tag}</span>
-              </span>
-              <span class="text-[11px] font-bold text-amber-300 shrink-0 ml-2">
-                🌙 夜間新雪: +${nightVal}cm
-              </span>
-            </div>
-
-            <!-- コンディション3連グリッド -->
-            <div class="grid grid-cols-3 gap-1.5 p-2 rounded-xl bg-slate-950/60 border border-slate-800/90 text-center">
-              <div>
-                <span class="text-[11px] text-slate-400 block leading-tight">積雪 (トップ/ベース)</span>
-                <span class="font-bold text-white text-[11px]">${s.current.topSnowDepth} / ${s.current.baseSnowDepth}cm</span>
+            <!-- 夜間新雪ハイライト ＋ 基本コンディション -->
+            <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl ${nightVal >= 10 ? 'bg-gradient-to-r from-sky-500/25 to-indigo-500/25 border border-sky-400/40' : 'bg-slate-950/70 border border-slate-800'}">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🌙</span>
+                <div>
+                  <span class="text-[10.5px] text-slate-400 block leading-none">次回 夜間新雪 (18-06時)</span>
+                  <span class="text-sm font-black ${nightVal >= 10 ? 'text-cyan-300' : 'text-white'}">+${nightVal}cm</span>
+                </div>
               </div>
-              <div class="border-x border-slate-800">
-                <span class="text-[11px] text-slate-400 block leading-tight">トップ気温</span>
-                <span class="font-bold text-white text-[11px]">${s.current.topTemp}℃</span>
-              </div>
-              <div>
-                <span class="text-[11px] text-slate-400 block leading-tight">風速</span>
-                <span class="font-bold text-white text-[11px]">${s.current.windSpeed}m/s</span>
+              <div class="text-right text-[11px] text-slate-300 font-bold">
+                <div>積雪 ${s.current.topSnowDepth}/${s.current.baseSnowDepth}cm</div>
+                <div class="text-slate-400 font-normal">${wInfo.icon} ${s.current.topTemp}℃ / 風${s.current.windSpeed}m/s</div>
               </div>
             </div>
 
-            <!-- フッター情報 -->
-            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5 border-t border-slate-850">
-              <span class="flex items-center gap-1 truncate">
-                <span>${wInfo.icon}</span>
-                <span>${wInfo.label}</span>
-                <span class="text-[11px] text-slate-500 ml-1">アメダス実測連携</span>
-              </span>
-              <span class="text-sky-400 font-bold flex items-center gap-0.5 shrink-0 ml-2">
-                詳細予報を見る <i class="fa-solid fa-chevron-right text-[11px]"></i>
-              </span>
+            <!-- 今後3日間の降雪・夜間新雪予報 -->
+            ${next3Days.length > 0 ? `
+              <div>
+                <div class="text-[10.5px] font-bold text-slate-400 mb-1 flex items-center justify-between">
+                  <span>今後3日間の降雪予報</span>
+                  <span>🌙夜間新雪 / 1日計</span>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5">
+                  ${daysGridHtml}
+                </div>
+              </div>
+            ` : ''}
+
+            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
+              <span>登録スポット最新速報</span>
+              <span class="text-sky-400 font-bold flex items-center gap-0.5">詳細予報を見る <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
             </div>
           `;
           container.appendChild(card);
-        });
-      } else {
-        // MYスポット未登録時の親切ガイドカード
-        const emptyGuide = document.createElement('div');
-        emptyGuide.className = "snow-card rounded-2xl p-4 border border-amber-500/30 bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/20 text-center space-y-2.5 shadow-md";
-        emptyGuide.innerHTML = `
-          <div class="w-10 h-10 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-base border border-amber-400/30">
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <div class="text-xs font-bold text-white">MYスポットを登録して最新速報を受け取る</div>
-          <p class="text-[11px] text-slate-400 leading-relaxed max-w-xs mx-auto">
-            よく行くスキー場や山を★お気に入り登録すると、ここに毎時の最新積雪・夜間新雪・雪質スコア速報が自動配信されます。
-          </p>
-          <button onclick="openSearchModal()" class="px-4 py-1.5 rounded-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs shadow-md active:scale-95 transition inline-flex items-center gap-1">
-            <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
-            <span>スポットを探して登録する</span>
-          </button>
-        `;
-        container.appendChild(emptyGuide);
-      }
-
-      // 2. 全国みんなの雪レポタイムライン
-      const reportSectionHeader = document.createElement('div');
-      reportSectionHeader.className = "flex items-center justify-between text-xs font-bold text-sky-400 px-1 pt-2";
-      reportSectionHeader.innerHTML = `
-        <div class="flex items-center gap-1.5">
-          <i class="fa-solid fa-comments text-sky-400"></i>
-          <span>全国みんなの雪レポ</span>
-        </div>
-        <span class="text-[11px] text-slate-400 font-normal">リアルタイム</span>
-      `;
-      container.appendChild(reportSectionHeader);
-
-      const displayList = snowReports.length > 0 ? snowReports : (localReports.length > 0 ? localReports : [
-        {
-          spotId: "happo",
-          spotName: "白馬八方尾根スキー場",
-          rating: 5,
-          timeSlot: "朝イチ",
-          snowType: "極上ドライパウダー",
-          snowDepth: "すね (10〜20cm)",
-          comment: "朝イチ黒菱ゲレンデ最高でした。気温-8度で完全リセット、浮遊感抜群。",
-          time: "本日 08:45"
-        },
-        {
-          spotId: "hirafu",
-          spotName: "ニセコ東急 グラン・ヒラフ",
-          rating: 5,
-          timeSlot: "午前",
-          snowType: "極上ドライパウダー",
-          snowDepth: "もも・腰 (40〜70cm)",
-          comment: "花園ツリーラン深すぎ注意。底付き一切なしの極上パウダーです。",
-          time: "本日 09:15"
+          return;
         }
-      ]);
 
-      displayList.forEach(r => {
-        const item = document.createElement('div');
-        item.className = "snow-card rounded-2xl p-3.5 border border-slate-700/60 space-y-2 transition hover:border-slate-600 bg-slate-900/90 shadow-md";
-        
+        // 雪レポカード（新雪深さを主役に強調）
+        const r = item;
+        const card = document.createElement('div');
+        card.className = "snow-card rounded-2xl p-3.5 border border-slate-700/70 hover:border-sky-400/60 space-y-2 transition bg-slate-900/95 shadow-md";
+
         let starsHtml = '';
         for (let i = 0; i < 5; i++) {
-          starsHtml += `<i class="fa-solid fa-star ${i < r.rating ? 'text-amber-400' : 'text-slate-600'} text-xs"></i>`;
+          starsHtml += `<i class="fa-solid fa-star ${i < r.rating ? 'text-amber-400' : 'text-slate-600'} text-[11px]"></i>`;
         }
 
-        const slotHtml = r.timeSlot ? `<span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">${r.timeSlot}</span>` : '';
-        const cleanSnowType = (r.snowType || '極上パウダー').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
-        const cleanSnowDepth = (r.snowDepth || 'すね').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
+        const slotHtml = r.timeSlot ? `<span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700">${r.timeSlot}</span>` : '';
+        const cleanSnowType = (r.snowType || 'しまり雪').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
+        const cleanSnowDepth = (r.snowDepth || '新雪なし').replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\s]+/u, '').trim();
+        const isDeep = cleanSnowDepth !== '新雪なし' && cleanSnowDepth !== 'なし';
 
-        item.innerHTML = `
+        card.innerHTML = `
           <div class="flex items-start justify-between gap-2">
             <div class="min-w-0">
-              <div class="font-bold text-sm text-white flex items-center gap-1.5 truncate ${r.spotId ? 'cursor-pointer hover:text-sky-300' : ''}" ${r.spotId ? `onclick="selectSpotFromMap('${r.spotId}')"` : ''}>
-                <span class="truncate">${r.spotName}</span>
-                <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[10.5px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-700/70 font-bold shrink-0">雪レポ</span>
+                ${r.isMySpot ? '<span class="text-[10.5px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold shrink-0">MY</span>' : ''}
+                <span class="text-[11px] text-slate-400 font-medium">${r.time || '本日'}</span>
               </div>
-              <div class="flex items-center gap-1.5 mt-1 flex-wrap">
-                <div class="flex shrink-0">${starsHtml}</div>
-                ${slotHtml}
-                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700">${cleanSnowType}</span>
+              <div class="font-black text-sm text-white mt-1 truncate ${r.spotId ? 'cursor-pointer hover:text-sky-300' : ''}" ${r.spotId ? `onclick="selectSpotFromMap('${r.spotId}')"` : ''}>
+                ${r.spotName}
               </div>
             </div>
-            <span class="text-[11px] text-slate-400 shrink-0 font-medium">${r.time || '本日'}</span>
+            <!-- 新雪深さ（主役・大きく強調）＋ 雪質 -->
+            <div class="text-right shrink-0 flex flex-col items-end gap-1">
+              <span class="px-2.5 py-1 rounded-xl text-xs sm:text-sm font-black tracking-tight border ${isDeep ? 'bg-sky-500/20 text-cyan-300 border-sky-400/50 shadow-sm' : 'bg-slate-800 text-slate-300 border-slate-700'}">
+                ${cleanSnowDepth}
+              </span>
+              <span class="text-[11px] font-bold px-2 py-0.2 rounded bg-slate-800 text-sky-300 border border-slate-700">${cleanSnowType}</span>
+            </div>
           </div>
-          ${r.comment ? `<div class="text-xs text-slate-200 leading-relaxed bg-slate-950/40 p-2 rounded-xl border border-slate-800/80">${r.comment}</div>` : ''}
-          <div class="text-[11px] text-slate-400 flex items-center justify-between pt-0.5 border-t border-slate-800/60">
-            <span class="flex items-center gap-1">
-              <i class="fa-solid fa-ruler-vertical text-sky-400"></i>
-              <span>新雪深さ: <b class="text-slate-200">${cleanSnowDepth}</b></span>
-            </span>
+
+          <div class="flex items-center gap-2">
+            <div class="flex shrink-0">${starsHtml}</div>
+            ${slotHtml}
+          </div>
+
+          ${r.comment ? `<div class="text-xs text-slate-200 leading-relaxed bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/80">${r.comment}</div>` : ''}
+
+          <div class="text-[11px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/60">
+            <span>みんなの現地レポート</span>
             ${r.spotId ? `<button onclick="selectSpotFromMap('${r.spotId}')" class="text-sky-400 font-bold hover:underline flex items-center gap-0.5">詳細を見る <i class="fa-solid fa-chevron-right text-[10px]"></i></button>` : ''}
           </div>
         `;
-        container.appendChild(item);
+        container.appendChild(card);
       });
     }
 
