@@ -2611,7 +2611,7 @@
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🌙</span>
                 <div>
-                  <span class="text-[10.5px] text-slate-400 block leading-none">次回 夜間新雪 (18-06時)</span>
+                  <span class="text-[10.5px] text-slate-400 block leading-none">${jstNow.getHours() >= 12 ? '明朝 夜間新雪 (18-06時)' : '今朝 夜間新雪 (18-06時)'}</span>
                   <span class="text-sm font-black ${nightVal >= 10 ? 'text-cyan-300' : 'text-white'}">+${nightVal}cm</span>
                 </div>
               </div>
@@ -3017,7 +3017,7 @@
             </div>
             <div class="space-y-1">
               <h4 class="text-sm font-black text-white">MYスポットがまだ登録されていません</h4>
-              <p class="text-xs text-slate-400 leading-relaxed">ホーム画面のスポット名横にある「★」マークをタップするか、下のボタンからよく行くゲレンデ・BC山を登録すると、ここで一括比較できます。</p>
+              <p class="text-xs text-slate-400 leading-relaxed">ホーム画面のスポット名横にある「★」マークをタップするか、上の追加ボタンからよく行くゲレンデ・BC山を登録すると、ここで一括比較できます。</p>
             </div>
             <button type="button" onclick="openSearchModal()" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow-sm transition inline-flex items-center gap-1.5 active:scale-95">
               <i class="fa-solid fa-magnifying-glass"></i>
@@ -3030,6 +3030,8 @@
 
       const jstNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
       const todayStr = jstNow.toISOString().slice(0, 10);
+      const jstHour = jstNow.getHours();
+      const nightLabel = jstHour >= 12 ? '明朝 夜間新雪 (18-06時)' : '今朝 夜間新雪 (18-06時)';
       const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
 
       validFavSpots.forEach(s => {
@@ -3060,15 +3062,15 @@
           const isHeavyNight = dNight >= 10;
 
           return `
-            <div class="rounded-xl p-2 text-center border ${isHeavyNight ? 'bg-sky-950/60 border-sky-500/50' : 'bg-slate-950/60 border-slate-800/90'}">
-              <div class="flex items-center justify-center gap-1 text-[11px] font-bold ${dIdx === 0 ? 'text-amber-300' : 'text-slate-300'}">
+            <div class="rounded-lg p-1.5 text-center border ${isHeavyNight ? 'bg-sky-950/60 border-sky-500/50' : 'bg-slate-950/60 border-slate-800/90'}">
+              <div class="flex items-center justify-center gap-1 text-[10.5px] font-bold ${dIdx === 0 ? 'text-amber-300' : 'text-slate-300'}">
                 <span>${dayLabel}</span>
                 <span>${d.weatherIcon || '❄️'}</span>
               </div>
-              <div class="mt-1 text-xs font-black ${isHeavyNight ? 'text-cyan-300' : (dNight > 0 ? 'text-sky-300' : 'text-slate-400')} whitespace-nowrap">
+              <div class="mt-0.5 text-xs font-black ${isHeavyNight ? 'text-cyan-300' : (dNight > 0 ? 'text-sky-300' : 'text-slate-400')} whitespace-nowrap">
                 🌙 +${dNight}cm
               </div>
-              <div class="text-[10.5px] text-slate-400 font-medium whitespace-nowrap mt-0.5">
+              <div class="text-[10px] text-slate-400 font-medium whitespace-nowrap mt-0.5">
                 1日 +${d.totalSnowfall || 0}cm
               </div>
             </div>
@@ -3077,21 +3079,24 @@
 
         const card = document.createElement('div');
         card.onclick = () => selectSpotFromMap(s.id);
-        card.className = "snow-card rounded-2xl p-3.5 border border-slate-700/70 hover:border-sky-400/70 bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/30 shadow-md cursor-pointer active:scale-[0.99] transition space-y-2.5";
+        card.className = "snow-card rounded-2xl p-3 border border-sky-500/30 hover:border-sky-400/60 bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/30 shadow-md cursor-pointer active:scale-[0.99] transition space-y-2";
 
         card.innerHTML = `
-          <!-- 上段: スポット基本情報 ＋ スコア ＋ ★解除ボタン -->
+          <!-- 上段: スポット名 ＋ バッジ ＋ スコア ＋ ★解除ボタン -->
           <div class="flex items-start justify-between gap-2">
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-1.5 flex-wrap">
-                <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
+                <span class="text-[10.5px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold shrink-0">
+                  <i class="fa-solid fa-star text-[9px]"></i> MY
+                </span>
                 ${catBadge}
+                <span class="text-[11px] text-slate-400 font-bold truncate">${s.areaName || s.regionName}</span>
               </div>
-              <div class="flex items-center gap-1.5 mt-1">
+              <div class="flex items-center gap-1.5 mt-0.5">
                 <span class="text-xs shrink-0">${wInfo.icon}</span>
                 <h4 class="text-sm sm:text-base font-black text-white truncate">${s.name}</h4>
               </div>
-              ${tagStr ? `<div class="mt-1"><span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-sky-300 border border-slate-700/80 whitespace-nowrap">${tagStr}</span></div>` : ''}
+              ${tagStr ? `<div class="mt-0.5"><span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-sky-300 border border-slate-700/80 whitespace-nowrap">${tagStr}</span></div>` : ''}
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <div class="text-right flex flex-col items-end">
@@ -3099,53 +3104,37 @@
                   <span class="font-teko text-2xl font-black ${score !== null ? 'text-sky-400' : 'text-slate-500'} leading-none">${score !== null ? score : '―'}</span>
                   ${score !== null ? '<span class="text-xs font-bold text-sky-400">点</span>' : ''}
                 </div>
-                <span class="text-[10.5px] font-bold px-1.5 py-0.2 rounded mt-0.5 ${score !== null ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${scoreRank}</span>
+                <span class="text-[10px] font-bold px-1.5 py-0.2 rounded mt-0.5 ${score !== null ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}">${scoreRank}</span>
               </div>
-              <button type="button" onclick="toggleFavFromMyPoints(event, '${s.id}')" class="w-8 h-8 rounded-full bg-amber-400/10 hover:bg-amber-400/20 text-amber-400 border border-amber-400/30 flex items-center justify-center transition active:scale-90" title="MYスポット解除">
+              <button type="button" onclick="toggleFavFromMyPoints(event, '${s.id}')" class="w-7 h-7 rounded-full bg-amber-400/10 hover:bg-amber-400/20 text-amber-400 border border-amber-400/30 flex items-center justify-center transition active:scale-90" title="MYスポット解除">
                 <i class="fa-solid fa-star text-xs"></i>
               </button>
             </div>
           </div>
 
-          <!-- 中段: 2カラム主要状況比較BOX（サーフベース準拠） -->
-          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800/80 text-xs">
-            <div class="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800 flex flex-col justify-between gap-1">
-              <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold">
-                <span>🌙 夜間新雪</span>
-                <span class="text-[10px] text-slate-500">18-06時</span>
-              </div>
-              <div class="flex items-baseline gap-1.5">
-                <span class="font-teko text-2xl font-black ${nightVal > 0 ? 'text-cyan-300' : 'text-slate-400'} leading-none">+${nightVal}</span>
-                <span class="text-xs text-slate-400">cm</span>
-              </div>
-              <div class="text-[10.5px] text-slate-400 border-t border-slate-800/70 pt-1 mt-0.5">
-                積雪深: <strong class="text-slate-200">${topDepth}</strong> / ${baseDepth}cm
+          <!-- 中段: フィード準拠の薄型ハイライトバー（夜間新雪 ＋ 気象・積雪） -->
+          <div class="flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-xl ${nightVal >= 10 ? 'bg-gradient-to-r from-sky-500/25 to-indigo-500/25 border border-sky-400/40' : 'bg-slate-950/70 border border-slate-800'}">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="text-sm">🌙</span>
+              <div>
+                <span class="text-[10px] text-slate-400 block leading-tight">${nightLabel}</span>
+                <span class="text-sm font-black ${nightVal >= 10 ? 'text-cyan-300' : 'text-white'} leading-none">+${nightVal}cm</span>
               </div>
             </div>
-
-            <div class="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800 flex flex-col justify-between gap-1">
-              <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold">
-                <span>🏔️ 気象・山頂</span>
-                <span class="text-[10px] text-slate-400 font-normal">${wInfo.text || ''}</span>
-              </div>
-              <div class="flex items-baseline gap-1.5">
-                <span class="font-teko text-2xl font-black ${topTemp !== '--' && Number(topTemp) <= 0 ? 'text-sky-300' : 'text-slate-200'} leading-none">${topTemp}</span>
-                <span class="text-xs text-slate-400">℃</span>
-              </div>
-              <div class="text-[10.5px] text-slate-400 border-t border-slate-800/70 pt-1 mt-0.5">
-                風速: <strong class="text-slate-200">${windSpeed}</strong> m/s
-              </div>
+            <div class="text-right text-[10.5px] text-slate-300 font-bold shrink-0">
+              <div>積雪 ${topDepth}/${baseDepth}cm</div>
+              <div class="text-slate-400 font-normal">${wInfo.icon} ${topTemp}℃ / 風${windSpeed}m/s</div>
             </div>
           </div>
 
-          <!-- 下段: 今後3日間の降雪ミニ予報グリッド -->
+          <!-- 下段: 今後3日間の降雪ミニ予報グリッド（薄型） -->
           ${next3Days.length > 0 ? `
-            <div class="pt-1">
-              <div class="text-[10.5px] font-bold text-slate-400 mb-1 flex items-center justify-between">
-                <span>今後3日間の降雪・夜間新雪</span>
-                <span class="text-slate-500 text-[10px]">詳細 ➔</span>
+            <div class="pt-0.5">
+              <div class="text-[10px] font-bold text-slate-400 mb-1 flex items-center justify-between">
+                <span>今後3日間の降雪予報</span>
+                <span class="text-slate-500 text-[9.5px]">🌙夜間新雪 / 1日計</span>
               </div>
-              <div class="grid grid-cols-3 gap-1.5">
+              <div class="grid grid-cols-3 gap-1">
                 ${daysGridHtml}
               </div>
             </div>
