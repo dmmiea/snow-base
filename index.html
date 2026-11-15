@@ -382,6 +382,10 @@
       <div id="weeklyForecastContainer" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
         <!-- JSで動的生成 -->
       </div>
+      <div class="mt-2 text-[10px] text-slate-400 flex items-center justify-end gap-3 px-1">
+        <span><strong class="text-slate-300">❄️</strong> 1日合計 (0-24時)</span>
+        <span><strong class="text-cyan-300">🌙</strong> 朝イチ新雪 (前夜18-06時)</span>
+      </div>
     </div>
 
     <!-- ===============================
@@ -1641,6 +1645,10 @@
         const dObj = new Date(day.date + 'T00:00:00+09:00');
         const dayOfWeek = weekdays[dObj.getDay()] || '';
         const dateLabel = isToday ? '今日' : `${day.date.slice(5).replace('-', '/')}(${dayOfWeek})`;
+        const nightVal = (spot.nightSnowByDate && spot.nightSnowByDate[`${day.date}T06:00`] !== undefined)
+          ? spot.nightSnowByDate[`${day.date}T06:00`]
+          : 0;
+
         const col = document.createElement('button');
         col.type = 'button';
         col.onclick = () => scrollToTimelineDate(day.date);
@@ -1652,16 +1660,23 @@
           borderAndBg = 'bg-slate-800 border-sky-500/50 ring-1 ring-sky-500/30 hover:border-sky-400';
         }
 
-        col.className = `flex-shrink-0 w-[88px] ${borderAndBg} rounded-xl p-2.5 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none`;
+        col.className = `flex-shrink-0 w-[92px] ${borderAndBg} rounded-xl p-2 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none`;
         col.innerHTML = `
           <span class="text-[11px] font-bold ${isToday ? 'text-amber-400 font-black' : (dayOfWeek === '日' ? 'text-rose-400' : (dayOfWeek === '土' ? 'text-sky-400' : 'text-slate-400'))}">${dateLabel}</span>
-          <span class="text-2xl my-1.5 pointer-events-none">${day.weatherIcon}</span>
-          <span class="text-[11px] font-bold text-slate-300 pointer-events-none">${day.weatherLabel}</span>
-          <div class="font-teko text-sm font-bold mt-1 pointer-events-none">
+          <span class="text-2xl my-1 pointer-events-none">${day.weatherIcon}</span>
+          <span class="text-[11px] font-bold text-slate-300 pointer-events-none truncate max-w-full">${day.weatherLabel}</span>
+          <div class="font-teko text-sm font-bold mt-0.5 pointer-events-none">
             <span class="text-rose-400">${day.maxTemp}℃</span> / <span class="text-sky-400">${day.minTemp}℃</span>
           </div>
-          <div class="mt-1 text-[11px] font-black px-1.5 py-0.5 rounded pointer-events-none ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700 text-slate-300'}">
-            ❄️ +${day.totalSnowfall}cm
+          <div class="w-full mt-1.5 space-y-1 pointer-events-none">
+            <div class="text-[10px] font-black px-1 py-0.5 rounded leading-tight flex items-center justify-between ${day.totalSnowfall >= 10 ? 'bg-sky-500 text-slate-900' : 'bg-slate-700/80 text-slate-300'}">
+              <span class="opacity-80 font-normal">❄️1日</span>
+              <span>+${day.totalSnowfall}<span class="text-[9px] font-normal">cm</span></span>
+            </div>
+            <div class="text-[10px] font-black px-1 py-0.5 rounded leading-tight flex items-center justify-between ${nightVal >= 10 ? 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white' : (nightVal > 0 ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-700/60' : 'bg-slate-800 text-slate-400 border border-slate-700/60')}">
+              <span class="opacity-80 font-normal">🌙朝イチ</span>
+              <span>+${nightVal}<span class="text-[9px] font-normal">cm</span></span>
+            </div>
           </div>
         `;
         container.appendChild(col);
