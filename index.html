@@ -6,10 +6,40 @@
   <title>POWDER BASE JAPAN ｜ 全国スキー場・雪山バックカントリー雪情報・予報・積雪実測</title>
   <meta name="description" content="全国のスキー場（570+箇所）および主要バックカントリー山岳の積雪実測・7日間予報・夜間積雪(18-6時)・雪質レーティングを完全網羅した次世代パウダー＆スノーダッシュボード。">
   <meta name="keywords" content="スキー場,雪予報,積雪情報,パウダーサーチ,バックカントリー,アメダス実測,白馬,ニセコ,湯沢,志賀高原,POWDER BASE">
+  <meta name="author" content="POWDER BASE JAPAN">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://powderbase-jp.com/">
+
+  <!-- OGP / SNSシェア設定 -->
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="POWDER BASE JAPAN">
   <meta property="og:title" content="POWDER BASE JAPAN ｜ 全国スキー場・雪山バックカントリー雪情報・予報・積雪実測">
+  <meta property="og:description" content="全国のスキー場・バックカントリー山岳（全547スポット）の積雪実測・7日間予報・夜間新雪・雪質スコアを完全網羅するパウダーダッシュボード。">
   <meta property="og:url" content="https://powderbase-jp.com/">
+  <meta property="og:image" content="https://powderbase-jp.com/icons/icon-512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="POWDER BASE JAPAN ｜ 全国スキー場・バックカントリー雪予報">
+  <meta name="twitter:description" content="全国547スポットの積雪実測・7日間予報・夜間新雪・雪質レーティングを無料公開。">
+  <meta name="twitter:image" content="https://powderbase-jp.com/icons/icon-512.png">
+
+  <!-- 構造化データ (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "POWDER BASE JAPAN",
+    "url": "https://powderbase-jp.com/",
+    "description": "全国のスキー場・バックカントリー山岳の積雪実測・7日間予報・夜間新雪・雪質スコアを提供する雪情報ダッシュボード。",
+    "applicationCategory": "WeatherApplication",
+    "operatingSystem": "All",
+    "inLanguage": ["ja", "en"]
+  }
+  </script>
 
   <!-- PWA & Mobile Web App Meta -->
   <link rel="manifest" href="manifest.json">
@@ -127,8 +157,8 @@
   <header id="appHeader" class="bg-white border-b border-slate-200 px-3 sm:px-4 shadow-sm sticky top-0 z-50" style="padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-bottom: 8px;">
     <div class="max-w-md mx-auto flex items-center justify-between gap-2">
       <div onclick="resetToHomeTop()" class="flex items-center space-x-1.5 sm:space-x-2 cursor-pointer active:scale-95 transition select-none min-w-0" title="ホーム先頭へ戻る">
-        <div class="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-xl bg-sky-700 flex items-center justify-center shadow-sm text-white font-bold text-xs sm:text-sm">
-          ❄️
+        <div class="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-xl overflow-hidden shadow-sm border border-slate-200/80">
+          <img src="icons/apple-touch-icon-180.png" alt="POWDER BASE" class="w-full h-full object-cover">
         </div>
         <h1 class="flex items-center space-x-1.5 m-0 p-0 font-normal min-w-0">
           <span class="font-teko text-xl sm:text-2xl font-bold tracking-wider text-slate-900 leading-none uppercase whitespace-nowrap">POWDER BASE</span>
@@ -719,6 +749,12 @@
   <button type="button" id="floatingReportFab" onclick="openReportModal()" class="fixed right-3.5 z-40 py-2.5 px-3.5 rounded-full bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow-lg shadow-sky-900/25 border border-sky-500/40 flex items-center gap-1.5 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none active:scale-95" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 56px); -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0);">
     <i class="fa-solid fa-plus text-xs"></i>
     <span>REPORT</span>
+  </button>
+
+  <!-- 右下フロート：言語切り替えボタン (JP / EN) -->
+  <button type="button" id="floatingLangBtn" onclick="toggleLanguage()" class="fixed right-3.5 z-40 h-9 px-3 rounded-full bg-slate-900/95 hover:bg-slate-800 text-white font-black text-xs shadow-lg shadow-slate-900/25 border border-slate-600/80 flex items-center gap-1.5 transition-all duration-200 active:scale-95 backdrop-blur-sm" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 56px);" aria-label="Switch Language">
+    <i class="fa-solid fa-globe text-sky-400 text-xs"></i>
+    <span id="floatingLangLabel">EN</span>
   </button>
 
   <!-- ===============================
@@ -4516,6 +4552,195 @@
           .catch(err => console.warn('⚠️ SW registration failed:', err));
       });
     }
+  </script>
+
+  <!-- 多言語切り替え (JP / EN) ＆ 動的SEOメタ更新 -->
+  <script>
+    let currentLang = localStorage.getItem('powderbase_lang') || 'ja';
+
+    const I18N_DICT = {
+      ja: {
+        searchBtn: '検索',
+        navHome: 'ホーム',
+        navAreas: 'エリア一覧',
+        navFeed: 'フィード',
+        navMap: 'マップ',
+        navMySpots: 'MYスポット',
+        catSki: 'スキー場',
+        catBc: 'バックカントリー',
+        regionLabel: '① 地方を選択',
+        areaLabel: '② エリアを選択',
+        regions: {
+          all: '全国',
+          hokkaido: '北海道',
+          tohoku: '東北',
+          shinetsu: '信越 (長野・新潟)',
+          hokuriku: '北陸 (富山・石川・福井)',
+          kanto: '関東 (群馬・栃木他)',
+          tokai: '東海 (岐阜・奥美濃)',
+          kansai: '関西 (滋賀・兵庫・京都)',
+          chugoku: '中国・西日本 (鳥取・広島・四国他)'
+        }
+      },
+      en: {
+        searchBtn: 'Find',
+        navHome: 'Home',
+        navAreas: 'Areas',
+        navFeed: 'Reports',
+        navMap: 'Map',
+        navMySpots: 'Saved',
+        catSki: 'Ski Resorts',
+        catBc: 'Backcountry',
+        regionLabel: '1. Region',
+        areaLabel: '2. Area',
+        regions: {
+          all: 'All Japan',
+          hokkaido: 'Hokkaido',
+          tohoku: 'Tohoku',
+          shinetsu: 'Shinetsu (Nagano/Niigata)',
+          hokuriku: 'Hokuriku',
+          kanto: 'Kanto (Gunma/Tochigi)',
+          tokai: 'Tokai (Gifu)',
+          kansai: 'Kansai',
+          chugoku: 'West Japan'
+        }
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = (currentLang === 'ja') ? 'en' : 'ja';
+      localStorage.setItem('powderbase_lang', currentLang);
+      applyLanguage();
+    }
+
+    function applyLanguage() {
+      const dict = I18N_DICT[currentLang] || I18N_DICT.ja;
+      document.documentElement.lang = currentLang;
+
+      // フロートボタン表示（現在がjaなら次はEN、現在がenなら次はJP）
+      const langLabel = document.getElementById('floatingLangLabel');
+      if (langLabel) {
+        langLabel.textContent = (currentLang === 'ja') ? 'EN' : 'JP';
+      }
+
+      // ヘッダー検索ボタン（幅維持のためEN時は極短 'Find'）
+      const searchSpan = document.querySelector('#btnOpenSearch span');
+      if (searchSpan) searchSpan.textContent = dict.searchBtn;
+
+      // ボトムナビ
+      const navMap = {
+        navHome: dict.navHome,
+        navAreas: dict.navAreas,
+        navFeed: dict.navFeed,
+        navMap: dict.navMap,
+        navMySpots: dict.navMySpots
+      };
+      Object.entries(navMap).forEach(([id, text]) => {
+        const el = document.querySelector(`#${id} > span:last-child`);
+        if (el) el.textContent = text;
+      });
+
+      // カテゴリ切替
+      const skiBtn = document.getElementById('btnCategorySki');
+      if (skiBtn) {
+        const countEl = document.getElementById('countSki');
+        const countText = countEl ? countEl.textContent : '573';
+        const span = skiBtn.querySelector('span:nth-child(2)');
+        if (span) span.innerHTML = `${dict.catSki} (<span id="countSki">${countText}</span>)`;
+      }
+      const bcBtn = document.getElementById('btnCategoryBc');
+      if (bcBtn) {
+        const countEl = document.getElementById('countBc');
+        const countText = countEl ? countEl.textContent : '779';
+        const span = bcBtn.querySelector('span:nth-child(2)');
+        if (span) span.innerHTML = `${dict.catBc} (<span id="countBc">${countText}</span>)`;
+      }
+
+      // 地方・エリアラベル & 地方オプション
+      const regionSelect = document.getElementById('selectRegion');
+      if (regionSelect) {
+        const label = regionSelect.previousElementSibling;
+        if (label) label.textContent = dict.regionLabel;
+        Array.from(regionSelect.options).forEach(opt => {
+          if (dict.regions[opt.value]) {
+            opt.textContent = dict.regions[opt.value];
+          }
+        });
+      }
+      const areaSelect = document.getElementById('selectArea');
+      if (areaSelect && areaSelect.previousElementSibling) {
+        areaSelect.previousElementSibling.textContent = dict.areaLabel;
+      }
+
+      // ページ内の代表的な定型テキスト置換（EN⇄JA）
+      const phrasePairs = [
+        ['最新の全国雪データを読み込み中...', 'Loading latest Japan snow data...'],
+        ['現在の雪質スコア', 'Snow Quality Score'],
+        ['夜間新雪', 'Overnight Snow'],
+        ['積雪推移', 'Snow Trend'],
+        ['タイムライン', 'Timeline'],
+        ['週間天気予報', '7-Day Forecast'],
+        ['初めての方へ', 'First Time?'],
+        ['使い方ガイド', 'User Guide'],
+        ['雪山仲間に', 'Share with Friends'],
+        ['教える・シェア', 'Share App']
+      ];
+      document.querySelectorAll('h2, h3, p, span, div.font-bold, div.font-extrabold').forEach(el => {
+        if (el.children.length > 0) return;
+        const txt = el.textContent.trim();
+        for (const [jaStr, enStr] of phrasePairs) {
+          if (currentLang === 'en' && txt === jaStr) {
+            el.textContent = enStr;
+            break;
+          } else if (currentLang === 'ja' && txt === enStr) {
+            el.textContent = jaStr;
+            break;
+          }
+        }
+      });
+    }
+
+    // 動的SEOメタ更新
+    function updateDynamicSeoMeta(spot) {
+      if (!spot || !spot.name) return;
+      const depthText = (spot.snowDepth != null) ? `${spot.snowDepth}cm` : '--cm';
+      const newTitle = (currentLang === 'en')
+        ? `${spot.name} Snow Report & Forecast (${depthText}) | POWDER BASE JAPAN`
+        : `${spot.name}の積雪・パウダー雪予報（積雪${depthText}）｜ POWDER BASE JAPAN`;
+      document.title = newTitle;
+
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', newTitle);
+
+      const desc = (currentLang === 'en')
+        ? `Live snow depth (${depthText}), overnight snowfall, 7-day forecast, and powder quality score for ${spot.name}.`
+        : `${spot.name}の最新積雪深（${depthText}）、夜間新雪、7日間予報、雪質レーティングをリアルタイム配信。`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', desc);
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', desc);
+    }
+
+    // 既存の renderCurrentSpotDetails を安全にフック
+    (function() {
+      const origRender = window.renderCurrentSpotDetails;
+      if (typeof origRender === 'function') {
+        window.renderCurrentSpotDetails = function() {
+          const res = origRender.apply(this, arguments);
+          try {
+            if (typeof allSpots !== 'undefined' && typeof currentSpotId !== 'undefined') {
+              const sp = allSpots.find(s => s.id === currentSpotId);
+              if (sp) updateDynamicSeoMeta(sp);
+            }
+            if (currentLang === 'en') applyLanguage();
+          } catch (e) { console.warn(e); }
+          return res;
+        };
+      }
+      window.addEventListener('DOMContentLoaded', () => {
+        applyLanguage();
+      });
+    })();
   </script>
 </body>
 </html>
