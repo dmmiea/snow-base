@@ -257,7 +257,7 @@
       <div class="grid grid-cols-12 gap-2 mb-3 relative z-10">
         <!-- スコアサークル/バッジ -->
         <div class="col-span-4 bg-slate-50 rounded-xl p-2.5 flex flex-col items-center justify-center border border-slate-200 text-center">
-          <span id="heroScoreLabel" class="text-[11px] font-bold text-slate-700">雪質スコア</span>
+          <span class="flex items-center gap-1"><span id="heroScoreLabel" class="text-[11px] font-bold text-slate-700">雪質スコア</span><button type="button" onclick="openHelpModal('hero')" class="w-4 h-4 rounded-full bg-slate-200/90 hover:bg-sky-100 text-slate-500 hover:text-sky-700 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" title="雪質スコアの解説"><i class="fa-solid fa-circle-info"></i></button></span>
           <div class="flex items-baseline justify-center">
             <span id="heroScore" class="font-teko text-5xl font-black text-sky-700 leading-none">--</span>
             <span class="text-xs text-slate-600 font-bold ml-0.5">/100</span>
@@ -298,7 +298,7 @@
           <div class="flex items-center gap-2 min-w-0">
             <span class="text-base shrink-0">🌙</span>
             <div class="min-w-0">
-              <div class="text-[11px] font-black uppercase tracking-wider text-slate-950/85 truncate">OVERNIGHT SNOW (18時〜翌06時)</div>
+              <div class="flex items-center gap-1.5 min-w-0"><div class="text-[11px] font-black uppercase tracking-wider text-slate-950/85 truncate">OVERNIGHT SNOW (18時〜翌06時)</div><button type="button" onclick="openHelpModal('overnight')" class="w-4 h-4 rounded-full bg-black/10 hover:bg-black/25 text-slate-950 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" title="夜間新雪の解説"><i class="fa-solid fa-circle-info"></i></button></div>
               <div class="mt-0.5">
                 <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-white/80 text-slate-950 border border-slate-900/20">降雪なし</span>
               </div>
@@ -395,6 +395,7 @@
         <h3 class="text-sm font-black text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-chart-line text-sky-700"></i>
           <span>SNOW TREND（実測・7日予報）</span>
+          <button type="button" onclick="openHelpModal('trend')" class="w-4 h-4 rounded-full bg-slate-200/90 hover:bg-sky-100 text-slate-500 hover:text-sky-700 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" title="トレンドグラフの解説"><i class="fa-solid fa-circle-info"></i></button>
         </h3>
         <div class="flex bg-slate-100 rounded-lg p-0.5 border border-slate-300 text-[11px]">
           <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-white bg-sky-700 font-bold">7日間</button>
@@ -440,6 +441,7 @@
         <h3 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
           <i class="fa-solid fa-clock text-sky-700"></i>
           <span>TIMELINE（1時間刻み）</span>
+          <button type="button" onclick="openHelpModal('timeline')" class="w-4 h-4 rounded-full bg-slate-200/90 hover:bg-sky-100 text-slate-500 hover:text-sky-700 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" title="タイムラインの解説"><i class="fa-solid fa-circle-info"></i></button>
         </h3>
         <!-- 標高切替ピル（タイムライン表の並び順「左:ベース / 右:トップ」に完全一致） -->
         <div class="flex rounded-lg bg-slate-100 p-0.5 border border-slate-300 text-[11px] font-bold">
@@ -542,6 +544,49 @@
         </p>
       </div>
     </div>
+
+    <!-- 初めての方へ ＆ 仲間にシェアする 案内カード（サーフベース完全準拠） -->
+    <div class="grid grid-cols-2 gap-2 pt-1">
+      <button type="button" onclick="openHelpModal('guide')" class="p-3 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-sky-300 hover:shadow-md transition flex items-center gap-2.5 active:scale-95 group text-left">
+        <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center shrink-0 text-sm group-hover:bg-sky-700 group-hover:text-white transition">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="text-[11px] text-slate-500 font-bold">初めての方へ</div>
+          <div class="text-xs font-black text-slate-800 truncate">使い方ガイド</div>
+        </div>
+      </button>
+
+      <button type="button" onclick="handleSpotShareClick()" class="p-3 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-emerald-300 hover:shadow-md transition flex items-center gap-2.5 active:scale-95 group text-left">
+        <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 text-sm group-hover:bg-emerald-700 group-hover:text-white transition">
+          <i class="fa-solid fa-share-nodes"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="text-[11px] text-slate-500 font-bold">雪山仲間に</div>
+          <div class="text-xs font-black text-slate-800 truncate">教える・シェア</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- 全国エリア・スポット一覧アコーディオン（サーフベース完全準拠） -->
+    <section class="pt-2 border-t border-slate-200/80">
+      <details id="detailsAllSpotsIndex" class="group rounded-2xl bg-white border border-slate-200/90 shadow-sm p-3.5 transition">
+        <summary class="flex items-center justify-between gap-2 cursor-pointer list-none font-black text-xs text-slate-800 select-none">
+          <div class="flex items-center gap-2 min-w-0">
+            <i class="fa-solid fa-map-location-dot text-sky-700 shrink-0"></i>
+            <span class="leading-snug truncate">全国8地方・スキー場＆BC一覧（全547地点）</span>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span class="text-[11px] text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200 whitespace-nowrap group-open:hidden">一覧を見る</span>
+            <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200 group-open:rotate-180"></i>
+          </div>
+        </summary>
+        <div id="homeAllSpotsListContainer" class="mt-3 pt-3 border-t border-slate-100 space-y-4 text-xs">
+          <!-- JSで地方・エリア・スポットを動的挿入 -->
+          <div class="text-center py-4 text-slate-400 text-xs font-bold">読み込み中...</div>
+        </div>
+      </details>
+    </section>
 
   </main>
 
@@ -882,6 +927,105 @@
     </div>
   </div>
 
+
+  <!-- ===============================
+       GUIDE / HELP POPUP MODAL (各カード解説ポップアップ・サーフベース完全準拠)
+       =============================== -->
+  <div id="guideHelpModal" class="fixed inset-0 z-[70] bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-3.5 transition-opacity" onclick="if(event.target === this) closeHelpModal()">
+    <div class="bg-white rounded-3xl p-4 sm:p-5 w-full max-w-md shadow-2xl border border-slate-100 space-y-3 max-h-[85vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+        <div class="flex items-center space-x-2">
+          <div id="guideHelpIconWrap" class="w-8 h-8 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center border border-sky-200">
+            <i id="guideHelpIcon" class="fa-solid fa-circle-info text-sm"></i>
+          </div>
+          <div>
+            <h3 id="guideHelpTitle" class="font-bold text-sm text-slate-900">使い方の解説</h3>
+            <p id="guideHelpSubtitle" class="text-[11px] text-slate-500 font-medium">見方とチェックポイント</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeHelpModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition active:scale-95">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+
+      <!-- モーダル本文（動的挿入） -->
+      <div id="guideHelpBody" class="flex-1 overflow-y-auto space-y-2.5 pr-1 text-xs text-slate-700 leading-relaxed max-h-[60vh]">
+      </div>
+
+      <!-- モーダルフッター -->
+      <div class="pt-2 border-t border-slate-100 flex items-center justify-end">
+        <button type="button" onclick="closeHelpModal()" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition active:scale-95">
+          閉じる
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================
+       SHARE MODAL (サーフベース完全準拠 共有モーダル)
+       =============================== -->
+  <div id="shareModal" class="fixed inset-0 z-[70] bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-3.5" onclick="if(event.target === this) closeShareModal()">
+    <div class="bg-white rounded-3xl p-5 w-full max-w-sm shadow-2xl border border-slate-100 space-y-4 animate-in fade-in zoom-in-95 duration-200">
+      <!-- モーダルヘッダー -->
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center border border-sky-200 shrink-0">
+            <i class="fa-solid fa-share-nodes text-sm"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-slate-900">雪山情報をシェア</h3>
+            <p class="text-[11px] text-slate-500 font-medium">仲間にコンディションを教える</p>
+          </div>
+        </div>
+        <button onclick="closeShareModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition active:scale-95">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+
+      <!-- シェア対象スポットプレビュー -->
+      <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
+        <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Share Spot</div>
+        <div id="shareModalSpotTitle" class="font-black text-slate-900 text-sm">【白馬八方尾根】積雪・パウダー雪質速報</div>
+        <div id="shareModalSpotSubtitle" class="text-xs text-slate-600 font-medium">雪質スコア・トップ積雪深・夜間新雪予報</div>
+      </div>
+
+      <!-- SNSボタン一覧 -->
+      <div class="space-y-2">
+        <!-- 端末の共有メニュー（スマホ標準） -->
+        <button id="btnNativeShare" onclick="triggerNativeShare()" class="w-full py-2.5 px-4 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-2 transition active:scale-95">
+          <i class="fa-solid fa-arrow-up-from-bracket text-sm"></i>
+          <span>スマホの共有メニューで送る</span>
+        </button>
+
+        <!-- LINEで送る -->
+        <button onclick="shareViaLine()" class="w-full py-2.5 px-4 rounded-xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs shadow-sm flex items-center justify-center gap-2 transition active:scale-95">
+          <i class="fa-brands fa-line text-lg"></i>
+          <span>LINEで送る</span>
+        </button>
+
+        <!-- X (Twitter) でポスト -->
+        <button onclick="shareViaX()" class="w-full py-2.5 px-4 rounded-xl bg-black hover:bg-slate-800 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-2 transition active:scale-95">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="w-3.5 h-3.5 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          <span>X（旧Twitter）でポスト</span>
+        </button>
+
+        <!-- URLコピー -->
+        <button onclick="copyShareUrl()" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs border border-slate-300 shadow-sm flex items-center justify-center gap-2 transition active:scale-95">
+          <i class="fa-regular fa-copy text-sm"></i>
+          <span>URLリンクをコピー</span>
+        </button>
+      </div>
+
+      <!-- URL直接表示＆コピー用インプット -->
+      <div class="relative pt-1">
+        <input id="shareUrlInput" type="text" readonly class="w-full bg-slate-50 text-slate-700 text-xs px-3 py-2 pr-14 rounded-xl border border-slate-200 focus:outline-none select-all font-mono" onclick="this.select()">
+        <button onclick="copyShareUrl()" class="absolute right-1.5 top-2.5 px-2 py-1 text-[11px] font-bold text-sky-800 bg-sky-100 rounded-lg hover:bg-sky-200 transition">
+          コピー
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ===============================
        MODAL: 高速スポット検索
        =============================== -->
@@ -1200,6 +1344,7 @@
         renderCurrentSpotDetails();
         updateBottomNavBadges();
         if (currentTab === 'areas') renderAreasTab();
+        renderHomeAllSpotsIndex();
         if (loadingBanner) loadingBanner.classList.add('hidden');
       } catch (e) {
         console.error('Data load error:', e);
@@ -1418,6 +1563,402 @@
     }
 
     // スポット詳細描画
+    
+    // ==========================================
+    // GUIDE / HELP POPUP LOGIC (サーフベース準拠)
+    // ==========================================
+    const GUIDE_HELP_DATA = {
+      hero: {
+        title: '実況 ＆ 雪質スコアの見方',
+        subtitle: '雪質スコア・アメダス実測・気温・風速',
+        icon: 'fa-solid fa-snowflake',
+        iconBg: 'bg-sky-50 text-sky-700 border-sky-200',
+        html: `
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-star text-amber-500"></i>
+                <span>雪質スコア（0〜100点）</span>
+              </div>
+              <ul class="text-xs text-slate-700 space-y-1.5 pl-3.5 list-disc leading-relaxed">
+                <li><strong class="text-sky-800">80〜100点（極上パウダー）</strong>：新雪十分＆氷点下！羽毛のような極上ドライスノーが期待できる最高のコンディション。</li>
+                <li><strong class="text-teal-800">65〜79点（パウダー・良好）</strong>：適度な新雪または引き締まった圧雪バーン。快適にフリーランやターンが楽しめます。</li>
+                <li><strong class="text-slate-800">50〜64点（圧雪良好・標準）</strong>：日中の昇温やパックされたバーン。グルーミングバーンを楽しめます。</li>
+                <li><strong class="text-amber-800">30〜49点（湿雪・アイスバーン注意）</strong>：昇温によるシャバ雪、または夜間の冷え込みによる硬い再凍結クラストに注意。</li>
+                <li><strong class="text-rose-800">0〜29点（積雪不足・滑走不可）</strong>：ブッシュ露出や降雨、積雪30cm未満。板の傷や転倒に十分警戒してください。</li>
+              </ul>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-tower-broadcast text-emerald-700"></i>
+                <span>アメダス積雪実測 ＆ 鮮度</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                気象庁アメダスが毎時観測した生の積雪深・増減を表示しています。机上の計算だけでなく、近隣の山で今まさに雪が何cm積もっているかの真実が分かります。
+              </p>
+            </div>
+          </div>
+        `
+      },
+      overnight: {
+        title: 'OVERNIGHT SNOW（夜間新雪）の見方',
+        subtitle: '18:00〜翌朝06:00に降り積もる新雪リセット量',
+        icon: 'fa-solid fa-moon',
+        iconBg: 'bg-amber-50 text-amber-700 border-amber-200',
+        html: `
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded-xl bg-amber-50/60 border border-amber-200/80">
+              <div class="font-bold text-amber-950 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-sparkles text-amber-600"></i>
+                <span>朝イチパウダーの鍵「リセット雪」</span>
+              </div>
+              <p class="text-xs text-amber-950/90 leading-relaxed">
+                スキー場がクローズした夕方18:00から、翌朝ゴンドラ運行前の06:00までの12時間に山頂へ降り積もる純粋な降雪量を積算しています。
+              </p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-layer-group text-sky-700"></i>
+                <span>狙い目の新雪目安</span>
+              </div>
+              <ul class="text-xs text-slate-700 space-y-1 pl-3.5 list-disc leading-relaxed">
+                <li><strong>+15cm以上</strong>：リセット確定！ゲレンデトップや非圧雪コースで浮遊感パウダーを楽しめる絶好のサイン。</li>
+                <li><strong>+30cm以上</strong>：THE DAY級の大雪！太板（ファットスキー/パウダーボード）必須のディープパウダー。</li>
+                <li><strong>+5〜14cm</strong>：コース脇や薄パウが気持ちいいグッドコンディション。</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      trend: {
+        title: 'SNOW TREND（推移グラフ）の見方',
+        subtitle: '過去のアメダス実績 ＋ 今後7日間のシームレス予報',
+        icon: 'fa-solid fa-chart-line',
+        iconBg: 'bg-sky-50 text-sky-700 border-sky-200',
+        html: `
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <div class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                <span class="w-3 h-0.5 bg-sky-700 inline-block"></span>
+                <span>青い実線：山頂の積雪深（cm）</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                山全体のベース積雪量です。過去から未来にかけて右肩上がりならまとまった降雪期、横ばい・低下なら融解や沈降傾向です。
+              </p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <div class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                <span class="w-3 h-0.5 bg-orange-600 inline-block"></span>
+                <span>オレンジの棒：1時間あたりの降雪量（cm/h）</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                どの時間帯に最も強い雪雲が通過するかを表します。高い棒が集中している時間帯（3cm/h以上）は大雪・パウダーリセットのチャンスです。
+              </p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <div class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-sm bg-sky-600/70 border border-sky-700 inline-block"></span>
+                <span>水色の棒：雨（mm/h）</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                気温が上昇して雪ではなく雨となる時間帯です。山麓で雨、山頂で雪といった境界もタイムラインと併せてチェックできます。
+              </p>
+            </div>
+          </div>
+        `
+      },
+      timeline: {
+        title: 'TIMELINE（時間予報）の見方',
+        subtitle: '1時間ごとの天候・降雪量・気温・風速・標高切替',
+        icon: 'fa-solid fa-clock',
+        iconBg: 'bg-sky-50 text-sky-700 border-sky-200',
+        html: `
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-arrows-up-down text-sky-700"></i>
+                <span>トップ（山頂）とベース（山麓）の切替</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                上部の「ベース」「トップ」ボタンで標高を即座に切り替えられます。山麓では雨でも山頂ではパウダースノーといった標高差によるコンディションの違いを把握できます。
+              </p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-wind text-orange-600"></i>
+                <span>風速とリフト運行目安</span>
+              </div>
+              <ul class="text-xs text-slate-700 space-y-1 pl-3.5 list-disc leading-relaxed">
+                <li><strong>0〜4m/s（弱風）</strong>：穏やかで最高のクルージング日和。</li>
+                <li><strong>5〜9m/s（やや強風）</strong>：山頂リフトで体感温度低下。防寒対策を。</li>
+                <li><strong class="text-orange-700">10〜14m/s（強風）</strong>：ゴンドラ・山頂高速リフトが減速運転または一時見合わせの可能性。</li>
+                <li><strong class="text-rose-700">15m/s以上（暴風）</strong>：リフト運休警戒レベル。稜線での視界不良（ホワイトアウト）に警戒。</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      guide: {
+        title: 'POWDER BASE 使い方ガイド',
+        subtitle: '全国547スポットの雪質・予報を1秒でチェック',
+        icon: 'fa-solid fa-book-open',
+        iconBg: 'bg-sky-50 text-sky-700 border-sky-200',
+        html: `
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-sliders text-sky-700"></i>
+                <span>① エリア・スポットをワンタップ選択</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                上部の「地方」「エリア」セレクター、またはピルタブから気になるスキー場やバックカントリー山を選びます。🔍検索ボタンで全国のスポットを直接インクリメンタル検索も可能です。
+              </p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-moon text-amber-600"></i>
+                <span>② 朝イチパウダーは「夜間新雪」を確認</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                オレンジの「OVERNIGHT SNOW」カードで、昨晩から今朝にかけてどれだけ新雪がリセットされたかをチェック。+15cm以上ならパウダー狙いで早起きしましょう！
+              </p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-star text-amber-500"></i>
+                <span>③ MYスポットに登録</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                よく行くスキー場や気になる山はスポット名横の「★」をタップしてMYスポットに登録。いつでも素早く切り替えられるほか、大雪時のプッシュ通知対象にも設定できます。
+              </p>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function openHelpModal(topicKey) {
+      const data = GUIDE_HELP_DATA[topicKey];
+      if (!data) return;
+      const modal = document.getElementById('guideHelpModal');
+      if (!modal) return;
+
+      const titleEl = document.getElementById('guideHelpTitle');
+      const subEl = document.getElementById('guideHelpSubtitle');
+      const iconEl = document.getElementById('guideHelpIcon');
+      const iconWrap = document.getElementById('guideHelpIconWrap');
+      const bodyEl = document.getElementById('guideHelpBody');
+
+      if (titleEl) titleEl.textContent = data.title;
+      if (subEl) subEl.textContent = data.subtitle;
+      if (iconEl) iconEl.className = data.icon + ' text-sm';
+      if (iconWrap) iconWrap.className = 'w-8 h-8 rounded-xl flex items-center justify-center border shadow-inner ' + data.iconBg;
+      if (bodyEl) {
+        bodyEl.innerHTML = data.html;
+        bodyEl.scrollTop = 0;
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeHelpModal() {
+      const modal = document.getElementById('guideHelpModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // ==========================================
+    // SHARE MODAL LOGIC (サーフベース準拠)
+    // ==========================================
+    let currentShareData = null;
+
+    function getShareDataForSpot(spotId) {
+      const spot = appData && appData.spots ? appData.spots.find(s => s.id === spotId) : null;
+      const spotName = spot ? spot.name : '雪山スポット';
+      const score = spot && spot.current ? spot.current.score : '--';
+      const tag = spot && spot.current ? spot.current.tag : 'コンディション確認';
+      const topSnow = spot && spot.current ? spot.current.topSnowDepth : 0;
+      const nightVal = typeof getSpotNightSnow === 'function' && spot ? getSpotNightSnow(spot) : 0;
+      const topTemp = spot && spot.current ? spot.current.topTemp : '--';
+      const wind = spot && spot.current ? spot.current.windSpeed : '--';
+
+      const origin = window.location.origin;
+      const pathname = window.location.pathname;
+      const shareUrl = `${origin}${pathname}?spot=${encodeURIComponent(spotId || '')}`;
+      const title = `【${spotName}】積雪・パウダー雪質速報 ｜ POWDER BASE JAPAN`;
+      const text = `❄️【${spotName}】雪山コンディション速報\n・雪質スコア: ${score}点 (${tag})\n・山頂積雪: ${topSnow}cm / 夜間新雪: +${nightVal}cm\n・山頂気温: ${topTemp}℃ / 風速: ${wind}m/s\n#POWDERBASE #スキー #スノーボード`;
+
+      return { title, text, url: shareUrl, spotName, score, tag };
+    }
+
+    function openShareModal() {
+      const data = getShareDataForSpot(currentSpotId);
+      currentShareData = data;
+
+      const modal = document.getElementById('shareModal');
+      const titleEl = document.getElementById('shareModalSpotTitle');
+      const subEl = document.getElementById('shareModalSpotSubtitle');
+      const urlInput = document.getElementById('shareUrlInput');
+
+      if (titleEl) titleEl.textContent = `【${data.spotName}】積雪・雪質速報`;
+      if (subEl) subEl.textContent = `雪質スコア: ${data.score}点 (${data.tag})`;
+      if (urlInput) urlInput.value = data.url;
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeShareModal() {
+      const modal = document.getElementById('shareModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    async function triggerNativeShare() {
+      const data = currentShareData || getShareDataForSpot(currentSpotId);
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: data.title,
+            text: data.text,
+            url: data.url
+          });
+          closeShareModal();
+        } catch (_) {}
+      } else {
+        copyShareUrl();
+      }
+    }
+
+    function shareViaLine() {
+      const data = currentShareData || getShareDataForSpot(currentSpotId);
+      const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(data.text + '\n' + data.url)}`;
+      window.open(lineUrl, '_blank', 'noopener,noreferrer');
+      closeShareModal();
+    }
+
+    function shareViaX() {
+      const data = currentShareData || getShareDataForSpot(currentSpotId);
+      const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(data.text)}&url=${encodeURIComponent(data.url)}`;
+      window.open(xUrl, '_blank', 'noopener,noreferrer');
+      closeShareModal();
+    }
+
+    async function copyShareUrl() {
+      const data = currentShareData || getShareDataForSpot(currentSpotId);
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(data.url);
+          showToast('📋 URLをクリップボードにコピーしました！');
+        } else {
+          showToast('🔗 URL: ' + data.url);
+        }
+      } catch (err) {
+        showToast('🔗 URL: ' + data.url);
+      }
+      closeShareModal();
+    }
+
+    // handleSpotShareClick は openShareModal を呼ぶ
+    function handleSpotShareClick() {
+      openShareModal();
+    }
+
+    // ==========================================
+    // 全国8地方・全スポットインデックス生成ロジック
+    // ==========================================
+    function renderHomeAllSpotsIndex() {
+      const container = document.getElementById('homeAllSpotsListContainer');
+      if (!container || !appData || !appData.spots) return;
+
+      const REGION_LABELS = {
+        hokkaido: '北海道',
+        tohoku: '東北',
+        shinetsu: '信越（長野・新潟）',
+        hokuriku: '北陸（富山・石川・福井）',
+        kanto: '関東・群馬・栃木',
+        tokai: '東海・岐阜',
+        kansai: '関西（滋賀・兵庫・京都）',
+        chugoku: '中国・四国・九州'
+      };
+
+      // 地方ごとにスポットをグループ化
+      const regionGroups = {};
+      Object.keys(REGION_LABELS).forEach(k => { regionGroups[k] = []; });
+
+      appData.spots.forEach(spot => {
+        const r = spot.region || 'shinetsu';
+        if (!regionGroups[r]) regionGroups[r] = [];
+        regionGroups[r].push(spot);
+      });
+
+      let html = '';
+      Object.entries(REGION_LABELS).forEach(([regKey, regLabel]) => {
+        const spots = regionGroups[regKey] || [];
+        if (spots.length === 0) return;
+
+        // エリア名ごとにサブグループ化
+        const areaMap = {};
+        spots.forEach(s => {
+          const areaName = s.area || '主要エリア';
+          if (!areaMap[areaName]) areaMap[areaName] = [];
+          areaMap[areaName].push(s);
+        });
+
+        html += `
+          <div class="space-y-2">
+            <h4 class="font-black text-slate-800 text-xs flex items-center justify-between gap-1.5 border-b border-slate-100 pb-1.5">
+              <span class="flex items-center gap-1.5">
+                <i class="fa-solid fa-snowflake text-[11px] text-sky-700"></i>
+                <span>${regLabel}</span>
+              </span>
+              <span class="text-[11px] font-bold text-slate-500 font-mono">${spots.length}地点</span>
+            </h4>
+            <div class="space-y-2 pl-1">
+        `;
+
+        Object.entries(areaMap).forEach(([areaName, aSpots]) => {
+          html += `
+            <div>
+              <div class="text-[11px] font-bold text-slate-600 mb-1 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-500 inline-block"></span>
+                <span>${areaName} (${aSpots.length})</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 pt-0.5">
+          `;
+
+          aSpots.forEach(s => {
+            const isBc = s.category === 'bc';
+            const icon = isBc ? '⛰️' : '🏂';
+            html += `
+              <button type="button" onclick="selectSpotFromMap('${s.id}')" class="px-2 py-1 rounded-lg bg-slate-50 hover:bg-sky-50 hover:text-sky-800 text-slate-700 border border-slate-200/90 text-xs transition font-medium flex items-center gap-1">
+                <span class="text-[10px]">${icon}</span>
+                <span>${s.name}</span>
+              </button>
+            `;
+          });
+
+          html += `
+              </div>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+
     function renderCurrentSpotDetails() {
       const spot = appData.spots.find(s => s.id === currentSpotId);
       if (!spot) return;
