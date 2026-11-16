@@ -523,18 +523,18 @@
       <!-- 風速カラー & 風向き矢印 -->
       <div class="pt-1 border-t border-slate-200 space-y-1.5">
         <div class="text-[11px] font-bold text-slate-600">風速カラー基準 &amp; 風向き矢印</div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10.5px] font-bold">
-          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">
-            <span>弱風・快適</span><span>0~4m/s</span>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10.5px]">
+          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
+            <span class="text-slate-600 font-bold">弱風・快適</span><span class="text-slate-700 font-bold">0~4m/s</span>
           </div>
-          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200">
-            <span>やや強風</span><span>5~9m/s</span>
+          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
+            <span class="text-slate-600 font-bold">やや強風</span><span class="text-amber-600 font-bold">5~9m/s</span>
           </div>
-          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-orange-50 text-orange-800 border border-orange-200">
-            <span>強風・減速注意</span><span>10~14m/s</span>
+          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
+            <span class="text-slate-600 font-bold">強風・減速注意</span><span class="text-orange-600 font-bold">10~14m/s</span>
           </div>
-          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200">
-            <span>暴風・運休警戒</span><span>15m/s~</span>
+          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
+            <span class="text-slate-600 font-bold">暴風・運休警戒</span><span class="text-rose-600 font-black">15m/s~</span>
           </div>
         </div>
         <p class="text-[10.5px] text-slate-600 leading-relaxed">
@@ -1075,21 +1075,21 @@
       return { label: '雪', icon: '❄️' };
     }
 
-    // 風速による色分けスタイル取得
+    // 風速による色分けスタイル取得（サーフベース準拠: 文字色＆太さで表現）
     function getWindColorStyle(windSpeed) {
       if (windSpeed === null || windSpeed === undefined || isNaN(windSpeed)) {
-        return { text: 'text-slate-600', badge: 'bg-slate-100 text-slate-600 border-slate-200' };
+        return { text: 'text-slate-500 font-normal', badge: 'text-slate-500 font-normal' };
       }
       if (windSpeed < 5) {
-        return { text: 'text-emerald-700', badge: 'bg-emerald-50 text-emerald-800 border-emerald-200' };
+        return { text: 'text-slate-700 font-bold', badge: 'text-slate-700 font-bold' };
       }
       if (windSpeed < 10) {
-        return { text: 'text-amber-700', badge: 'bg-amber-50 text-amber-800 border-amber-200' };
+        return { text: 'text-amber-600 font-bold', badge: 'text-amber-600 font-bold' };
       }
       if (windSpeed < 15) {
-        return { text: 'text-orange-700', badge: 'bg-orange-50 text-orange-800 border-orange-200' };
+        return { text: 'text-orange-600 font-bold', badge: 'text-orange-600 font-bold' };
       }
-      return { text: 'text-rose-700', badge: 'bg-rose-50 text-rose-800 border-rose-200' };
+      return { text: 'text-rose-600 font-black', badge: 'text-rose-600 font-black' };
     }
 
     // Firebase 設定 & Firestore 初期化 (共通プロジェクト surf-base-133da / 雪専用コレクション snow_reports)
@@ -1611,9 +1611,11 @@
       const heroWindEl = document.getElementById('heroWind');
       if (heroWindEl) {
         const wStyle = getWindColorStyle(spot.current.windSpeed);
-        const dirPrefix = (windDirDisplay && windDirDisplay !== '--') ? `${windDirDisplay} ` : '';
-        heroWindEl.textContent = `${dirPrefix}${spot.current.windSpeed} m/s`;
-        heroWindEl.className = `inline-flex items-center justify-center px-2 py-0.5 rounded-full border text-xs sm:text-sm font-black mt-1 whitespace-nowrap ${wStyle.badge}`;
+        const dirHtml = (windDirDisplay && windDirDisplay !== '--')
+          ? `<span class="text-sky-700 font-sans text-xs font-bold mr-1">${windDirDisplay}</span>`
+          : '';
+        heroWindEl.innerHTML = `${dirHtml}<span class="${wStyle.text}">${spot.current.windSpeed} m/s</span>`;
+        heroWindEl.className = "font-teko text-base sm:text-lg font-bold block mt-0.5 whitespace-nowrap";
       }
 
       const amedasTitleEl = document.getElementById('heroAmedasTitle');
@@ -1942,9 +1944,12 @@
         const weather = getWeatherInfo(weatherH.weatherCode ? weatherH.weatherCode[i] : null, hourSnow, windSpeed);
         const windStyle = getWindColorStyle(windSpeed);
         const windDirLabel = getWindDirDisplay(windDir);
-        const windStr = (windSpeed !== null && windSpeed !== undefined)
-          ? `${windDirLabel !== '--' ? windDirLabel + ' ' : ''}${Math.round(windSpeed)}m`
-          : '--';
+        const windDirHtml = (windDirLabel && windDirLabel !== '--')
+          ? `<span class="text-sky-700 mr-0.5">${windDirLabel}</span>`
+          : '';
+        const windSpeedHtml = (windSpeed !== null && windSpeed !== undefined)
+          ? `<span class="${windStyle.text}">${Math.round(windSpeed)}m</span>`
+          : '<span class="text-slate-400">—</span>';
 
         // トップ雪/雨データ
         const topSnow = (topH && topH.snowfall && topH.snowfall[i] !== undefined) ? Math.round(topH.snowfall[i] * 10) / 10 : 0;
@@ -1983,9 +1988,11 @@
           </div>
 
           <!-- 気温 & 風 (切替対象) -->
-          <div class="flex flex-col items-center justify-center leading-tight gap-0.5">
+          <div class="flex flex-col items-center justify-center leading-tight">
             <span class="font-teko text-base font-bold ${tempColor} tracking-tight">${temp}℃</span>
-            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border whitespace-nowrap ${windStyle.badge}">${windStr}</span>
+            <div class="text-[11px] font-bold flex items-center justify-center whitespace-nowrap">
+              ${windDirHtml}${windSpeedHtml}
+            </div>
           </div>
 
           <!-- ベース 雪/雨 (降雪・降雨 / 積雪) -->
