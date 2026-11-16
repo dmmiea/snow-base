@@ -1,5 +1,5 @@
-// POWDER BASE JAPAN Service Worker (Cache & Offline Support v3)
-const CACHE_NAME = 'powder-base-v3';
+// POWDER BASE JAPAN Service Worker (Cache & Offline Support v4)
+const CACHE_NAME = 'powder-base-v4';
 
 const STATIC_ASSETS = [
   './',
