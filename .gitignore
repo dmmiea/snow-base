@@ -12,5 +12,9 @@ crawled_all_japan.json
 !.dev.vars.example
 .env*
 !.env.example
+# scratch / audit files
 scratch/
+scripts/*audit*
+scripts/portal_*
+scripts/outliers_*
 vapid_keys.json
