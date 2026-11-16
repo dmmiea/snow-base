@@ -752,7 +752,7 @@
   </button>
 
   <!-- 右下フロート：言語切り替えボタン (JP / EN) -->
-  <button type="button" id="floatingLangBtn" onclick="toggleLanguage()" class="fixed right-3.5 z-40 h-9 px-3 rounded-full bg-slate-900/95 hover:bg-slate-800 text-white font-black text-xs shadow-lg shadow-slate-900/25 border border-slate-600/80 flex items-center gap-1.5 transition-all duration-200 active:scale-95 backdrop-blur-sm" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 56px);" aria-label="Switch Language">
+  <button type="button" id="floatingLangBtn" onclick="toggleLanguage()" class="fixed right-3.5 z-40 h-9 px-3 rounded-full bg-slate-900/95 hover:bg-slate-800 text-white font-black text-xs shadow-lg shadow-slate-900/25 border border-slate-600/80 flex items-center gap-1.5 transition-all duration-200 active:scale-95 backdrop-blur-sm" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 104px);" aria-label="Switch Language">
     <i class="fa-solid fa-globe text-sky-400 text-xs"></i>
     <span id="floatingLangLabel">EN</span>
   </button>
@@ -4672,32 +4672,95 @@
         areaSelect.previousElementSibling.textContent = dict.areaLabel;
       }
 
-      // ページ内の代表的な定型テキスト置換（EN⇄JA）
-      const phrasePairs = [
+      // ページ内の定型テキストをTreeWalkerで網羅的に置換（ユーザー投稿の雪レポ本文は除外）
+      const phraseMap = [
         ['最新の全国雪データを読み込み中...', 'Loading latest Japan snow data...'],
         ['現在の雪質スコア', 'Snow Quality Score'],
+        ['雪質スコア', 'Snow Score'],
+        ['夜間新雪 (18-06時)', 'Overnight (18-06)'],
         ['夜間新雪', 'Overnight Snow'],
+        ['日中降雪 (06-18時)', 'Daytime (06-18)'],
+        ['日中降雪', 'Daytime Snow'],
+        ['積雪深', 'Snow Depth'],
+        ['現在積雪', 'Snow Depth'],
+        ['バーン状態', 'Surface'],
+        ['雪質', 'Snow Quality'],
         ['積雪推移', 'Snow Trend'],
         ['タイムライン', 'Timeline'],
         ['週間天気予報', '7-Day Forecast'],
+        ['天気アイコン・風速凡例', 'Weather & Wind Legend'],
         ['初めての方へ', 'First Time?'],
         ['使い方ガイド', 'User Guide'],
         ['雪山仲間に', 'Share with Friends'],
-        ['教える・シェア', 'Share App']
+        ['教える・シェア', 'Share App'],
+        ['全国8地方・全スポット一覧', 'All Japan 8 Regions Index'],
+        ['山頂', 'Top'],
+        ['山麓', 'Base'],
+        ['気温', 'Temp'],
+        ['風速', 'Wind'],
+        ['風向', 'Dir'],
+        ['降雪', 'Snowfall'],
+        ['天気', 'Weather'],
+        ['時刻', 'Time'],
+        ['アメダス実測', 'AMeDAS Live'],
+        ['極上パウダー', 'Epic Powder'],
+        ['パウダー', 'Powder'],
+        ['うっすら新雪', 'Light Fresh'],
+        ['新雪', 'Fresh Snow'],
+        ['圧雪', 'Groomed'],
+        ['ガリガリ', 'Icy / Firm'],
+        ['硬め', 'Firm'],
+        ['シャバ雪', 'Slushy'],
+        ['クラスト', 'Crust'],
+        ['快晴', 'Clear'],
+        ['晴れ', 'Sunny'],
+        ['曇り', 'Cloudy'],
+        ['小雪', 'Light Snow'],
+        ['大雪', 'Heavy Snow'],
+        ['吹雪', 'Blizzard'],
+        ['みぞれ', 'Sleet'],
+        ['霧', 'Fog'],
+        ['雨', 'Rain'],
+        ['雪', 'Snow'],
+        ['(月)', '(Mon)'],
+        ['(火)', '(Tue)'],
+        ['(水)', '(Wed)'],
+        ['(木)', '(Thu)'],
+        ['(金)', '(Fri)'],
+        ['(土)', '(Sat)'],
+        ['(日)', '(Sun)'],
+        ['今日', 'Today'],
+        ['明日', 'Tomorrow'],
+        ['MYスポット登録', 'Save Spot'],
+        ['MYスポット解除', 'Saved'],
+        ['雪レポ投稿', 'Post Report'],
+        ['詳細', 'Details'],
+        ['閉じる', 'Close']
       ];
-      document.querySelectorAll('h2, h3, p, span, div.font-bold, div.font-extrabold').forEach(el => {
-        if (el.children.length > 0) return;
-        const txt = el.textContent.trim();
-        for (const [jaStr, enStr] of phrasePairs) {
-          if (currentLang === 'en' && txt === jaStr) {
-            el.textContent = enStr;
-            break;
-          } else if (currentLang === 'ja' && txt === enStr) {
-            el.textContent = jaStr;
-            break;
+
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+      let node;
+      while ((node = walker.nextNode())) {
+        const parent = node.parentElement;
+        if (!parent) continue;
+        // スクリプト・スタイル・ユーザー投稿の雪レポ本文は翻訳しない
+        if (['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT'].includes(parent.tagName)) continue;
+        if (parent.closest('#feedList, #homeReportList, .report-comment-text')) continue;
+
+        let text = node.nodeValue;
+        if (!text || !text.trim()) continue;
+
+        for (const [jaStr, enStr] of phraseMap) {
+          if (currentLang === 'en' && text.includes(jaStr)) {
+            text = text.split(jaStr).join(enStr);
+          } else if (currentLang === 'ja' && text.includes(enStr)) {
+            text = text.split(enStr).join(jaStr);
           }
         }
-      });
+        if (text !== node.nodeValue) {
+          node.nodeValue = text;
+        }
+      }
     }
 
     // 動的SEOメタ更新
@@ -4721,22 +4784,33 @@
       if (ogDesc) ogDesc.setAttribute('content', desc);
     }
 
-    // 既存の renderCurrentSpotDetails を安全にフック
+    // 既存の描画関数・タブ切替を安全にフック
     (function() {
-      const origRender = window.renderCurrentSpotDetails;
-      if (typeof origRender === 'function') {
-        window.renderCurrentSpotDetails = function() {
-          const res = origRender.apply(this, arguments);
-          try {
-            if (typeof allSpots !== 'undefined' && typeof currentSpotId !== 'undefined') {
-              const sp = allSpots.find(s => s.id === currentSpotId);
-              if (sp) updateDynamicSeoMeta(sp);
-            }
-            if (currentLang === 'en') applyLanguage();
-          } catch (e) { console.warn(e); }
-          return res;
-        };
-      }
+      const hookFn = (fnName, onAfter) => {
+        const orig = window[fnName];
+        if (typeof orig === 'function') {
+          window[fnName] = function() {
+            const res = orig.apply(this, arguments);
+            try { onAfter(); } catch (e) { console.warn(e); }
+            return res;
+          };
+        }
+      };
+
+      hookFn('renderCurrentSpotDetails', () => {
+        if (typeof allSpots !== 'undefined' && typeof currentSpotId !== 'undefined') {
+          const sp = allSpots.find(s => s.id === currentSpotId);
+          if (sp) updateDynamicSeoMeta(sp);
+        }
+        if (currentLang === 'en') applyLanguage();
+      });
+
+      ['switchTab', 'renderTimeline', 'renderWeeklyForecast', 'renderAreasTab', 'renderMySpotsTab'].forEach(fn => {
+        hookFn(fn, () => {
+          if (currentLang === 'en') applyLanguage();
+        });
+      });
+
       window.addEventListener('DOMContentLoaded', () => {
         applyLanguage();
       });
