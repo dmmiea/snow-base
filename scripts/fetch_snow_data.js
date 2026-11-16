@@ -3,18 +3,43 @@ const path = require('path');
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-function getWeatherInfo(code) {
+function getWeatherInfo(code, snowfall = null, windSpeed = null) {
+  const isSnowCode = (code >= 71 && code <= 77) || code === 85 || code === 86;
+  const isRainCode = (code >= 51 && code <= 67) || (code >= 80 && code <= 82);
+  const hasSnow = snowfall !== null && snowfall !== undefined && snowfall > 0;
+  const hasWind = windSpeed !== null && windSpeed !== undefined;
+
+  // 吹雪・大雪・雪・小雪の詳細判別
+  if (code >= 95) {
+    if (hasWind && windSpeed >= 12 && (hasSnow || isSnowCode)) {
+      return { label: '吹雪', icon: '🌬️❄️' };
+    }
+    return { label: '雷雨/荒天', icon: '⛈️' };
+  }
+  if (isSnowCode || (hasSnow && !isRainCode)) {
+    if (hasWind && windSpeed >= 12 && (isSnowCode || snowfall >= 0.3)) {
+      return { label: '吹雪', icon: '🌬️❄️' };
+    }
+    if (code === 75 || code === 86 || (snowfall !== null && snowfall >= 3.0)) {
+      return { label: '大雪', icon: '❄️❄️' };
+    }
+    if (code === 73 || code === 85 || (snowfall !== null && snowfall >= 0.5)) {
+      return { label: '雪', icon: '❄️' };
+    }
+    if (code === 71 || code === 77 || hasSnow) {
+      return { label: '小雪', icon: '🌨️' };
+    }
+    return { label: '雪', icon: '❄️' };
+  }
+
   if (code === 0) return { label: '快晴', icon: '☀️' };
   if (code === 1 || code === 2) return { label: '晴れ/薄曇', icon: '🌤️' };
   if (code === 3) return { label: '曇り', icon: '☁️' };
   if (code === 45 || code === 48) return { label: '霧/濃霧', icon: '🌫️' };
   if (code >= 51 && code <= 55) return { label: '霧雨', icon: '🌦️' };
   if (code >= 61 && code <= 65) return { label: '雨', icon: '🌧️' };
-  if (code >= 71 && code <= 75) return { label: '雪', icon: '❄️' };
-  if (code === 77) return { label: '雪粒', icon: '🌨️' };
+  if (code === 66 || code === 67) return { label: 'みぞれ', icon: '🌧️' };
   if (code >= 80 && code <= 82) return { label: 'にわか雨', icon: '🌦️' };
-  if (code === 85 || code === 86) return { label: 'にわか雪', icon: '🌨️' };
-  if (code >= 95) return { label: '雷雨/吹雪', icon: '⛈️' };
   return { label: '雪', icon: '❄️' };
 }
 
@@ -22,6 +47,12 @@ function getWindDirJa(deg) {
   if (deg === undefined || deg === null || isNaN(deg)) return '--';
   const dirs = ['北', '北東', '東', '南東', '南', '南西', '西', '北西'];
   return dirs[Math.round(deg / 45) % 8];
+}
+
+function getWindDirDisplay(deg) {
+  if (deg === undefined || deg === null || isNaN(deg)) return '--';
+  const dirs = ['↓ N', '↙ NE', '← E', '↖ SE', '↑ S', '↗ SW', '→ W', '↘ NW'];
+  return dirs[Math.round(((deg % 360) + 360) % 360 / 45) % 8];
 }
 
 function evaluateBcAlert({ currentSnowDepth, currentTemp, currentWind, isRain, recentSnowfall, snow24h, tempRise24h, isMeltedAndFrozen }) {
@@ -463,20 +494,25 @@ async function run() {
           let maxTemp = -999;
           let minTemp = 999;
           let sumSnow = 0;
+          let maxHourlySnow = 0;
+          let repWind = null;
           let representativeCode = 0;
           for (let k = 0; k < times.length; k++) {
             if (times[k].startsWith(dateStr)) {
               const t = topData.hourly.temperature_2m[k];
               if (t > maxTemp) maxTemp = t;
               if (t < minTemp) minTemp = t;
-              sumSnow += (topData.hourly.snowfall[k] || 0);
+              const sf = topData.hourly.snowfall[k] || 0;
+              sumSnow += sf;
+              if (sf > maxHourlySnow) maxHourlySnow = sf;
               if (times[k].endsWith('12:00')) {
                 representativeCode = topData.hourly.weather_code[k];
+                repWind = topData.hourly.wind_speed_10m ? topData.hourly.wind_speed_10m[k] : null;
               }
             }
           }
 
-          const weather = getWeatherInfo(representativeCode);
+          const weather = getWeatherInfo(representativeCode, maxHourlySnow > 0 ? maxHourlySnow : null, repWind);
           dailySummary.push({
             date: dateStr,
             weatherCode: representativeCode,
@@ -517,9 +553,13 @@ async function run() {
             baseTemp: Math.round(baseData.hourly.temperature_2m[currentIdx] * 10) / 10,
             windSpeed: Math.round(topData.hourly.wind_speed_10m[currentIdx] * 10) / 10,
             windDirection: topData.hourly.wind_direction_10m ? topData.hourly.wind_direction_10m[currentIdx] : null,
-            windDirText: getWindDirJa(topData.hourly.wind_direction_10m ? topData.hourly.wind_direction_10m[currentIdx] : null),
+            windDirText: getWindDirDisplay(topData.hourly.wind_direction_10m ? topData.hourly.wind_direction_10m[currentIdx] : null),
             weatherCode: topData.hourly.weather_code[currentIdx],
-            weatherInfo: getWeatherInfo(topData.hourly.weather_code[currentIdx]),
+            weatherInfo: getWeatherInfo(
+              topData.hourly.weather_code[currentIdx],
+              topData.hourly.snowfall ? topData.hourly.snowfall[currentIdx] : null,
+              topData.hourly.wind_speed_10m ? topData.hourly.wind_speed_10m[currentIdx] : null
+            ),
             snow6h,
             snow24h,
             score: evaluation.score,

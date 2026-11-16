@@ -470,6 +470,79 @@
       </div>
     </div>
 
+    <!-- 天気マーク・風の見方（凡例カード） -->
+    <div id="weatherLegendCard" class="snow-card rounded-2xl p-3.5 border border-slate-200 shadow-sm space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+        <div class="flex items-center gap-1.5 text-xs font-black text-slate-900">
+          <i class="fa-solid fa-circle-info text-sky-700"></i>
+          <span>天気マーク・風の見方（凡例）</span>
+        </div>
+        <span class="text-[10.5px] font-bold text-slate-500">1時間降雪・風速連動</span>
+      </div>
+
+      <!-- 天気アイコン凡例 -->
+      <div>
+        <div class="text-[11px] font-bold text-slate-600 mb-1.5">天気マーク</div>
+        <div class="grid grid-cols-3 sm:grid-cols-4 gap-1.5 text-[11px]">
+          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+            <span class="text-sm">☀️</span><span class="font-bold text-slate-800 truncate">快晴</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+            <span class="text-sm">🌤️</span><span class="font-bold text-slate-800 truncate">晴れ/薄曇</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+            <span class="text-sm">☁️</span><span class="font-bold text-slate-800 truncate">曇り</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+            <span class="text-sm">🌫️</span><span class="font-bold text-slate-800 truncate">霧/濃霧</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+            <span class="text-sm">🌨️</span><span class="font-bold text-slate-800 truncate">小雪(&lt;0.5cm)</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+            <span class="text-sm">❄️</span><span class="font-bold text-slate-800 truncate">雪(0.5cm~)</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-sky-50 rounded-lg px-2 py-1 border border-sky-200">
+            <span class="text-xs">❄️❄️</span><span class="font-bold text-sky-900 truncate">大雪(3cm~)</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-rose-50 rounded-lg px-2 py-1 border border-rose-200">
+            <span class="text-xs">🌬️❄️</span><span class="font-bold text-rose-900 truncate">吹雪(12m~)</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+            <span class="text-sm">🌦️</span><span class="font-bold text-slate-800 truncate">霧雨/にわか雨</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+            <span class="text-sm">🌧️</span><span class="font-bold text-slate-800 truncate">雨/みぞれ</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-amber-50 rounded-lg px-2 py-1 border border-amber-200">
+            <span class="text-sm">⛈️</span><span class="font-bold text-amber-900 truncate">雷雨/荒天</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 風速カラー & 風向き矢印 -->
+      <div class="pt-1 border-t border-slate-200 space-y-1.5">
+        <div class="text-[11px] font-bold text-slate-600">風速カラー基準 &amp; 風向き矢印</div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10.5px] font-bold">
+          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">
+            <span>弱風・快適</span><span>0~4m/s</span>
+          </div>
+          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200">
+            <span>やや強風</span><span>5~9m/s</span>
+          </div>
+          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-orange-50 text-orange-800 border border-orange-200">
+            <span>強風・減速注意</span><span>10~14m/s</span>
+          </div>
+          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200">
+            <span>暴風・運休警戒</span><span>15m/s~</span>
+          </div>
+        </div>
+        <p class="text-[10.5px] text-slate-600 leading-relaxed">
+          ※風向きは<strong class="text-slate-800">「吹いてくる方角（N/NE等）」と「風が流れていく矢印」</strong>を表示しています（例：<span class="font-bold text-slate-800">↘ NW</span>＝北西から南東へ吹く風）。
+        </p>
+      </div>
+    </div>
+
   </main>
 
   <!-- TAB 2: 全マップ画面 (サーフベース準拠 独立iframe設計) -->
@@ -962,20 +1035,61 @@
     const expandedAreaKeys = new Set();
     const FEED_SEEN_KEY = 'snow_base_feed_last_seen_v1';
 
-    // WMO気象コード（0〜99）変換関数
-    function getWeatherInfo(code) {
+    // WMO気象コード（0〜99）変換関数（降雪量・風速による詳細判別対応）
+    function getWeatherInfo(code, snowfall = null, windSpeed = null) {
+      const isSnowCode = (code >= 71 && code <= 77) || code === 85 || code === 86;
+      const isRainCode = (code >= 51 && code <= 67) || (code >= 80 && code <= 82);
+      const hasSnow = snowfall !== null && snowfall !== undefined && snowfall > 0;
+      const hasWind = windSpeed !== null && windSpeed !== undefined;
+
+      if (code >= 95) {
+        if (hasWind && windSpeed >= 12 && (hasSnow || isSnowCode)) {
+          return { label: '吹雪', icon: '🌬️❄️' };
+        }
+        return { label: '雷雨/荒天', icon: '⛈️' };
+      }
+      if (isSnowCode || (hasSnow && !isRainCode)) {
+        if (hasWind && windSpeed >= 12 && (isSnowCode || snowfall >= 0.3)) {
+          return { label: '吹雪', icon: '🌬️❄️' };
+        }
+        if (code === 75 || code === 86 || (snowfall !== null && snowfall >= 3.0)) {
+          return { label: '大雪', icon: '❄️❄️' };
+        }
+        if (code === 73 || code === 85 || (snowfall !== null && snowfall >= 0.5)) {
+          return { label: '雪', icon: '❄️' };
+        }
+        if (code === 71 || code === 77 || hasSnow) {
+          return { label: '小雪', icon: '🌨️' };
+        }
+        return { label: '雪', icon: '❄️' };
+      }
+
       if (code === 0) return { label: '快晴', icon: '☀️' };
       if (code === 1 || code === 2) return { label: '晴れ/薄曇', icon: '🌤️' };
       if (code === 3) return { label: '曇り', icon: '☁️' };
       if (code === 45 || code === 48) return { label: '霧/濃霧', icon: '🌫️' };
       if (code >= 51 && code <= 55) return { label: '霧雨', icon: '🌦️' };
       if (code >= 61 && code <= 65) return { label: '雨', icon: '🌧️' };
-      if (code >= 71 && code <= 75) return { label: '雪', icon: '❄️' };
-      if (code === 77) return { label: '雪粒', icon: '🌨️' };
+      if (code === 66 || code === 67) return { label: 'みぞれ', icon: '🌧️' };
       if (code >= 80 && code <= 82) return { label: 'にわか雨', icon: '🌦️' };
-      if (code === 85 || code === 86) return { label: 'にわか雪', icon: '🌨️' };
-      if (code >= 95) return { label: '雷雨/吹雪', icon: '⛈️' };
       return { label: '雪', icon: '❄️' };
+    }
+
+    // 風速による色分けスタイル取得
+    function getWindColorStyle(windSpeed) {
+      if (windSpeed === null || windSpeed === undefined || isNaN(windSpeed)) {
+        return { text: 'text-slate-600', badge: 'bg-slate-100 text-slate-600 border-slate-200' };
+      }
+      if (windSpeed < 5) {
+        return { text: 'text-emerald-700', badge: 'bg-emerald-50 text-emerald-800 border-emerald-200' };
+      }
+      if (windSpeed < 10) {
+        return { text: 'text-amber-700', badge: 'bg-amber-50 text-amber-800 border-amber-200' };
+      }
+      if (windSpeed < 15) {
+        return { text: 'text-orange-700', badge: 'bg-orange-50 text-orange-800 border-orange-200' };
+      }
+      return { text: 'text-rose-700', badge: 'bg-rose-50 text-rose-800 border-rose-200' };
     }
 
     // Firebase 設定 & Firestore 初期化 (共通プロジェクト surf-base-133da / 雪専用コレクション snow_reports)
@@ -1467,8 +1581,15 @@
         }
       }
 
-      // 現在天気 (アイコン & ラベル)
-      const wInfo = spot.current.weatherInfo || getWeatherInfo(spot.current.weatherCode || 0);
+      // 現在天気 (アイコン & ラベル: 降雪量・風速を考慮)
+      const jstNowW = new Date(Date.now() + 9 * 3600000);
+      const curHStr = jstNowW.toISOString().slice(0, 13);
+      let curHourIdx = -1;
+      if (spot.topHourly && Array.isArray(spot.topHourly.time)) {
+        curHourIdx = spot.topHourly.time.findIndex(t => t.startsWith(curHStr));
+      }
+      const curSnowfall = (curHourIdx >= 0 && spot.topHourly.snowfall) ? spot.topHourly.snowfall[curHourIdx] : null;
+      const wInfo = getWeatherInfo(spot.current.weatherCode || 0, curSnowfall, spot.current.windSpeed);
       const heroWeatherIcon = document.getElementById('heroWeatherIcon');
       if (heroWeatherIcon) heroWeatherIcon.textContent = wInfo.icon;
       const heroWeatherLabel = document.getElementById('heroWeatherLabel');
@@ -1480,18 +1601,20 @@
       if (heroBaseTempEl) heroBaseTempEl.textContent = `${spot.current.baseTemp}℃`;
       const heroWindLabelEl = document.getElementById('heroWindLabel');
       if (heroWindLabelEl) heroWindLabelEl.textContent = isBc ? '稜線・山頂風' : 'トップ風速';
-      let windDirStr = spot.current.windDirText;
-      if (!windDirStr && spot.topHourly && Array.isArray(spot.topHourly.windDirection) && spot.topHourly.time) {
-        const jstNowW = new Date(Date.now() + 9 * 3600000);
-        const curHStr = jstNowW.toISOString().slice(0, 13);
-        const wIdx = spot.topHourly.time.findIndex(t => t.startsWith(curHStr));
-        if (wIdx >= 0 && spot.topHourly.windDirection[wIdx] !== undefined) {
-          windDirStr = getWindDirJa(spot.topHourly.windDirection[wIdx]);
-        }
+      let windDirDeg = spot.current.windDirection;
+      if ((windDirDeg === undefined || windDirDeg === null) && curHourIdx >= 0 && spot.topHourly && Array.isArray(spot.topHourly.windDirection)) {
+        windDirDeg = spot.topHourly.windDirection[curHourIdx];
       }
-      document.getElementById('heroWind').textContent = (isBc && windDirStr && windDirStr !== '--')
-        ? `${windDirStr} ${spot.current.windSpeed} m/s`
-        : `${spot.current.windSpeed} m/s`;
+      const windDirDisplay = (windDirDeg !== undefined && windDirDeg !== null)
+        ? getWindDirDisplay(windDirDeg)
+        : (spot.current.windDirText && !/[北東南西]/.test(spot.current.windDirText) ? spot.current.windDirText : '--');
+      const heroWindEl = document.getElementById('heroWind');
+      if (heroWindEl) {
+        const wStyle = getWindColorStyle(spot.current.windSpeed);
+        const dirPrefix = (windDirDisplay && windDirDisplay !== '--') ? `${windDirDisplay} ` : '';
+        heroWindEl.textContent = `${dirPrefix}${spot.current.windSpeed} m/s`;
+        heroWindEl.className = `inline-flex items-center justify-center px-2 py-0.5 rounded-full border text-xs sm:text-sm font-black mt-1 whitespace-nowrap ${wStyle.badge}`;
+      }
 
       const amedasTitleEl = document.getElementById('heroAmedasTitle');
       const stationName = (spot.current.liveAmedas && spot.current.liveAmedas.stationName) || spot.amedasName;
@@ -1531,6 +1654,13 @@
       if (deg === undefined || deg === null || isNaN(deg)) return '--';
       const dirs = ['北', '北東', '東', '南東', '南', '南西', '西', '北西'];
       return dirs[Math.round(deg / 45) % 8];
+    }
+
+    // 風向角度(0〜360)を「矢印＋英語8方位」に変換（例: ↘ NW）
+    function getWindDirDisplay(deg) {
+      if (deg === undefined || deg === null || isNaN(deg)) return '--';
+      const dirs = ['↓ N', '↙ NE', '← E', '↖ SE', '↑ S', '↗ SW', '→ W', '↘ NW'];
+      return dirs[Math.round(((deg % 360) + 360) % 360 / 45) % 8];
     }
 
     // トレンドグラフ表示期間切替（7日間 ⇄ 48h）
@@ -1675,7 +1805,7 @@
                   const ws = windSpeedData[idx];
                   const wd = windDirData[idx];
                   const tempStr = (t !== null && t !== undefined) ? `${t.toFixed(1)}℃` : '--';
-                  const windStr = (ws !== null && ws !== undefined) ? `${getWindDirJa(wd)} ${ws.toFixed(1)}m/s` : '--';
+                  const windStr = (ws !== null && ws !== undefined) ? `${getWindDirDisplay(wd)} ${ws.toFixed(1)}m/s` : '--';
                   return [`気温: ${tempStr} / 風: ${windStr}`];
                 }
               }
@@ -1805,11 +1935,16 @@
           container.appendChild(dateDivider);
         }
 
-        const weather = getWeatherInfo(weatherH.weatherCode ? weatherH.weatherCode[i] : null);
         const temp = weatherH.temperature ? Math.round(weatherH.temperature[i]) : '--';
         const windSpeed = weatherH.windSpeed ? weatherH.windSpeed[i] : null;
         const windDir = weatherH.windDirection ? weatherH.windDirection[i] : null;
-        const windStr = (windSpeed !== null && windSpeed !== undefined) ? `${getWindDirJa(windDir)} ${Math.round(windSpeed)}m` : '--';
+        const hourSnow = (weatherH.snowfall && weatherH.snowfall[i] !== undefined) ? weatherH.snowfall[i] : null;
+        const weather = getWeatherInfo(weatherH.weatherCode ? weatherH.weatherCode[i] : null, hourSnow, windSpeed);
+        const windStyle = getWindColorStyle(windSpeed);
+        const windDirLabel = getWindDirDisplay(windDir);
+        const windStr = (windSpeed !== null && windSpeed !== undefined)
+          ? `${windDirLabel !== '--' ? windDirLabel + ' ' : ''}${Math.round(windSpeed)}m`
+          : '--';
 
         // トップ雪/雨データ
         const topSnow = (topH && topH.snowfall && topH.snowfall[i] !== undefined) ? Math.round(topH.snowfall[i] * 10) / 10 : 0;
@@ -1848,9 +1983,9 @@
           </div>
 
           <!-- 気温 & 風 (切替対象) -->
-          <div class="flex flex-col items-center justify-center leading-tight">
+          <div class="flex flex-col items-center justify-center leading-tight gap-0.5">
             <span class="font-teko text-base font-bold ${tempColor} tracking-tight">${temp}℃</span>
-            <span class="text-[11px] text-slate-600 font-semibold">${windStr}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border whitespace-nowrap ${windStyle.badge}">${windStr}</span>
           </div>
 
           <!-- ベース 雪/雨 (降雪・降雨 / 積雪) -->
@@ -2009,11 +2144,16 @@
           borderAndBg = 'bg-white border-sky-600 ring-1 ring-sky-500/40 hover:border-sky-700';
         }
 
+        const estHourlySnow = day.totalSnowfall >= 20 ? 3.5 : (day.totalSnowfall >= 5 ? 1.0 : (day.totalSnowfall > 0 ? 0.2 : 0));
+        const dayWeather = (day.weatherCode !== undefined && day.weatherCode !== null)
+          ? getWeatherInfo(day.weatherCode, estHourlySnow, null)
+          : { icon: day.weatherIcon, label: day.weatherLabel };
+
         col.className = `flex-shrink-0 w-[92px] ${borderAndBg} rounded-xl p-2 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none`;
         col.innerHTML = `
           <span class="text-[11px] font-bold ${isToday ? 'text-orange-700 font-black' : (dayOfWeek === '日' ? 'text-rose-700' : (dayOfWeek === '土' ? 'text-sky-700' : 'text-slate-700'))}">${dateLabel}</span>
-          <span class="text-2xl my-1 pointer-events-none">${day.weatherIcon}</span>
-          <span class="text-[11px] font-bold text-slate-800 pointer-events-none truncate max-w-full">${day.weatherLabel}</span>
+          <span class="text-2xl my-1 pointer-events-none">${dayWeather.icon}</span>
+          <span class="text-[11px] font-bold text-slate-800 pointer-events-none truncate max-w-full">${dayWeather.label}</span>
           <div class="font-teko text-sm font-bold mt-0.5 pointer-events-none">
             <span class="text-rose-700">${day.maxTemp}℃</span> <span class="text-slate-400">/</span> <span class="text-sky-800">${day.minTemp}℃</span>
           </div>
