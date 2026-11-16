@@ -1332,7 +1332,7 @@
     async function loadData() {
       const loadingBanner = document.getElementById('dataLoadingBanner');
       try {
-        const res = await fetch('data_japan.json');
+        const res = await fetch('data_japan.json?t=' + Math.floor(Date.now() / 60000), { cache: 'no-store' });
         if (!res.ok) throw new Error('data_japan.json load failed');
         appData = await res.json();
         

@@ -1,5 +1,5 @@
 // POWDER BASE JAPAN Service Worker (Cache & Offline Support v6)
-const CACHE_NAME = 'powder-base-v10';
+const CACHE_NAME = 'powder-base-v11';
 
 const STATIC_ASSETS = [
   './',
@@ -44,8 +44,13 @@ self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (request.method !== 'GET') return;
 
-  // 1. data_japan.json や spot_rules_japan.json: Network-First (最新データを優先、圏外時は直近キャッシュ)
-  if (url.pathname.endsWith('data_japan.json') || url.pathname.endsWith('spot_rules_japan.json')) {
+  // 1. data_japan.json は大容量(~10MB)のためSWキャッシュを通さず直接ネットワークから取得（iOS容量制限・破損対策）
+  if (url.pathname.endsWith('data_japan.json')) {
+    return;
+  }
+
+  // spot_rules_japan.json: Network-First
+  if (url.pathname.endsWith('spot_rules_japan.json')) {
     event.respondWith(
       fetch(request)
         .then((networkResponse) => {
