@@ -680,9 +680,27 @@ async function run() {
     tag: s.current.tag
   }));
 
+  // 重複する time 配列を sharedTime に共通化してファイルサイズを大幅削減
+  let sharedTime = null;
+  for (const sp of processedSpots) {
+    if (sp.topHourly && Array.isArray(sp.topHourly.time)) {
+      if (!sharedTime) sharedTime = sp.topHourly.time;
+      if (JSON.stringify(sp.topHourly.time) === JSON.stringify(sharedTime)) {
+        delete sp.topHourly.time;
+      }
+    }
+    if (sp.baseHourly && Array.isArray(sp.baseHourly.time)) {
+      if (!sharedTime) sharedTime = sp.baseHourly.time;
+      if (JSON.stringify(sp.baseHourly.time) === JSON.stringify(sharedTime)) {
+        delete sp.baseHourly.time;
+      }
+    }
+  }
+
   const outputData = {
     updatedAt: new Date().toISOString(),
     spotsCount: processedSpots.length,
+    sharedTime,
     rankingNight,
     ranking6h,
     ranking24h,

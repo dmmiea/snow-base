@@ -1332,9 +1332,17 @@
     async function loadData() {
       const loadingBanner = document.getElementById('dataLoadingBanner');
       try {
-        const res = await fetch('data_japan.json?t=' + Math.floor(Date.now() / 60000), { cache: 'no-store' });
+        // 1時間単位のキャッシュキー（2回目以降の起動を高速化）
+        const res = await fetch('data_japan.json?t=' + Math.floor(Date.now() / 3600000));
         if (!res.ok) throw new Error('data_japan.json load failed');
         appData = await res.json();
+        // 共通化された sharedTime を各スポットへ高速復元（参照代入）
+        if (appData.sharedTime && Array.isArray(appData.spots)) {
+          for (const sp of appData.spots) {
+            if (sp.topHourly && !sp.topHourly.time) sp.topHourly.time = appData.sharedTime;
+            if (sp.baseHourly && !sp.baseHourly.time) sp.baseHourly.time = appData.sharedTime;
+          }
+        }
         
         // 最終更新時刻表示
         if (appData.updatedAt) {
