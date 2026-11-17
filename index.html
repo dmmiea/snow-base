@@ -4686,6 +4686,14 @@
         areaSelect.previousElementSibling.textContent = dict.areaLabel;
       }
 
+      // エリア検索プレースホルダーの言語切り替え
+      const areasSearchInput = document.getElementById('areasSearchInput');
+      if (areasSearchInput) {
+        areasSearchInput.placeholder = currentLang === 'en'
+          ? 'Filter by area, resort, mountain...'
+          : 'エリア名・スキー場・山名で絞り込み...';
+      }
+
       // 風向き凡例注釈文の直接設定（HTMLタグ分割による置換漏れを完全防止）
       const windNoteEl = document.getElementById('windLegendNote');
       if (windNoteEl) {
@@ -4716,6 +4724,17 @@
       // ※長いフレーズを先に定義し、部分一致による日英キメラを防止
       const phraseMap = [
         ['最新の全国雪データを読み込み中...', 'Loading latest Japan snow data...'],
+        ['エリア別一覧', 'By Area'],
+        ['パウダーランキング', 'Powder Ranking'],
+        ['Powderランキング', 'Powder Ranking'],
+        ['すべて閉じる', 'Collapse All'],
+        ['すべて展開', 'Expand All'],
+        ['新雪あり', 'Fresh Snow'],
+        ['滑走可能(30cm~)', 'Open (30cm+)'],
+        ['最大積雪', 'Max Depth'],
+        ['最高', 'Best'],
+        ['中国・西日本', 'West'],
+        ['西日本', 'West'],
         ['※雪/雨: 降雪(cm/h)・降雨(mm/h) / 下段=積雪深(cm)', '※Snow/Rain: Snowfall(cm/h) / Rain(mm/h) ・ Bottom = Depth(cm)'],
         ['天気マーク・風の見方（凡例）', 'Weather & Wind Legend'],
         ['1時間降雪・風速連動', 'Hourly Snow & Wind'],
@@ -4860,6 +4879,15 @@
       ];
       // 単独単語のみ一致させる辞書（部分一致による日英キメラ防止）
       const exactWordMap = [
+        ['すべて', 'All'],
+        ['全国', 'All'],
+        ['北海道', 'Hokkaido'],
+        ['東北', 'Tohoku'],
+        ['信越', 'Shinetsu'],
+        ['北陸', 'Hokuriku'],
+        ['関東', 'Kanto'],
+        ['東海', 'Tokai'],
+        ['関西', 'Kansai'],
         ['夜間', 'Night'],
         ['雪質', 'Snow Quality'],
         ['新雪', 'Fresh Snow'],
