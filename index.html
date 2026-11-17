@@ -2829,11 +2829,13 @@
             try {
               if (iframe.contentWindow) {
                 iframe.contentWindow.postMessage({ action: 'INVALIDATE_MAP' }, '*');
+                iframe.contentWindow.postMessage({ action: 'SET_LANG', lang: currentLang }, '*');
               }
             } catch (_) {}
           };
           notifyMap();
           setTimeout(notifyMap, 150);
+          setTimeout(notifyMap, 400);
         }
       } else if (tabId === 'areas') {
         renderAreasTab();
@@ -4635,6 +4637,14 @@
       const langLabel = document.getElementById('floatingLangLabel');
       if (langLabel) {
         langLabel.textContent = (currentLang === 'ja') ? 'EN' : 'JP';
+      }
+
+      // マップiframeにも言語設定を同期
+      const mapIframe = document.getElementById('inlineSnowMapFrame');
+      if (mapIframe && mapIframe.contentWindow) {
+        try {
+          mapIframe.contentWindow.postMessage({ action: 'SET_LANG', lang: currentLang }, '*');
+        } catch (_) {}
       }
 
       // ヘッダー検索ボタン（幅維持のためEN時は極短 'Find'）

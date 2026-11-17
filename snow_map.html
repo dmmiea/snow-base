@@ -77,7 +77,7 @@
       </div>
       <div>
         <h1 class="text-xs font-extrabold tracking-tight flex items-center gap-1.5 text-slate-900">
-          <span>全国雪山マップ</span>
+          <span id="mapTitleText">全国雪山マップ</span>
           <span id="mapCountBadge" class="text-[11px] bg-sky-50 text-sky-800 border border-sky-300 px-1.5 py-0.2 rounded-full font-mono font-bold">--地点</span>
         </h1>
       </div>
@@ -98,7 +98,7 @@
        2. 地域クイックジャンプバー（横スクロール）
        =============================== -->
   <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto hide-scrollbar z-10 text-xs">
-    <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider whitespace-nowrap mr-0.5">地域:</span>
+    <span id="mapRegionLabel" class="text-[11px] font-bold text-slate-700 uppercase tracking-wider whitespace-nowrap mr-0.5">地域:</span>
     <button onclick="jumpToRegion('all')" class="region-pill active px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-sky-700 text-white shadow-sm transition text-[11px]" data-region="all">全国</button>
     <button onclick="jumpToRegion('hokkaido')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="hokkaido">北海道</button>
     <button onclick="jumpToRegion('tohoku')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="tohoku">東北</button>
@@ -119,37 +119,37 @@
     <!-- 左下：凡例カード（7段階 🌙夜間新雪基準・折りたたみ対応） -->
     <div id="legendCard" class="absolute bottom-3 left-3 z-10 bg-white/95 backdrop-blur-md rounded-xl p-2.5 shadow-lg border border-slate-300 text-xs pointer-events-auto max-w-[210px] transition-all duration-200">
       <button type="button" onclick="toggleLegend()" class="w-full font-bold text-slate-900 flex items-center justify-between text-[11px] cursor-pointer hover:text-sky-700 transition gap-2 select-none">
-        <span class="flex items-center gap-1">🌙 凡例（夜間新雪）</span>
+        <span id="mapLegendTitle" class="flex items-center gap-1">🌙 凡例（夜間新雪）</span>
         <i id="legendChevron" class="fa-solid fa-chevron-down text-[11px] text-slate-600 transition-transform duration-200"></i>
       </button>
       <div id="legendContent" class="space-y-1 pt-2 border-t border-slate-200 mt-1.5 text-[10.5px]">
         <div class="flex items-center gap-1.5">
           <span class="w-3.5 h-3.5 rounded-full bg-fuchsia-600 border border-slate-900 shrink-0 shadow-sm"></span>
-          <span class="text-fuchsia-800 font-bold">腰パウ (80cm+)</span>
+          <span id="legWaist" class="text-fuchsia-800 font-bold">腰パウ (80cm+)</span>
         </div>
         <div class="flex items-center gap-1.5">
           <span class="w-3.5 h-3.5 rounded-full bg-violet-600 border border-slate-900 shrink-0 shadow-sm"></span>
-          <span class="text-violet-800 font-bold">モモパウ (50〜79cm)</span>
+          <span id="legThigh" class="text-violet-800 font-bold">モモパウ (50〜79cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
           <span class="w-3.5 h-3.5 rounded-full bg-orange-600 border border-slate-900 shrink-0"></span>
-          <span class="text-orange-800 font-bold">ヒザパウ (30〜49cm)</span>
+          <span id="legKnee" class="text-orange-800 font-bold">ヒザパウ (30〜49cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
           <span class="w-3.5 h-3.5 rounded-full bg-amber-500 border border-slate-900 shrink-0"></span>
-          <span class="text-amber-800 font-bold">スネパウ (20〜29cm)</span>
+          <span id="legShin" class="text-amber-800 font-bold">スネパウ (20〜29cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
           <span class="w-3.5 h-3.5 rounded-full bg-sky-600 border border-slate-900 shrink-0"></span>
-          <span class="text-sky-800 font-bold">くるぶし (10〜19cm)</span>
+          <span id="legAnkle" class="text-sky-800 font-bold">くるぶし (10〜19cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
           <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-slate-900 shrink-0"></span>
-          <span class="text-emerald-800 font-semibold">うっすら (1〜9cm)</span>
+          <span id="legDust" class="text-emerald-800 font-semibold">うっすら (1〜9cm)</span>
         </div>
         <div class="flex items-center gap-1.5">
           <span class="w-3.5 h-3.5 rounded-full bg-slate-500 border border-slate-700 shrink-0"></span>
-          <span class="text-slate-700 font-medium">降雪なし (0cm)</span>
+          <span id="legNone" class="text-slate-700 font-medium">降雪なし (0cm)</span>
         </div>
       </div>
     </div>
@@ -161,6 +161,173 @@
     let activeCategory = 'ski'; // デフォルトはスキー場
     let markersLayer = null;
     let legendOpen = true;
+    let currentLang = 'ja';
+    let enNamesDict = {};
+
+    // 英語辞書読み込み
+    try {
+      const storedLang = localStorage.getItem('powderbase_lang');
+      if (storedLang === 'en' || storedLang === 'ja') currentLang = storedLang;
+    } catch (_) {}
+
+    fetch('en_names.json')
+      .then(res => res.json())
+      .then(d => {
+        enNamesDict = d || {};
+        if (allSpots.length > 0) renderMarkers();
+      })
+      .catch(() => {});
+
+    function tName(name) {
+      if (!name) return '';
+      if (currentLang === 'en' && enNamesDict[name]) return enNamesDict[name];
+      return name;
+    }
+
+    const I18N_MAP = {
+      ja: {
+        title: '全国雪山マップ',
+        countSuffix: '地点',
+        catSki: '🏂 スキー場',
+        catBc: '⛰️ BC山',
+        regionLabel: '地域:',
+        regAll: '全国',
+        regHokkaido: '北海道',
+        regTohoku: '東北',
+        regShinetsu: '信越・妙高',
+        regHakuba: '❄️ 白馬エリア',
+        regYuzawa: '上越・湯沢',
+        regGunma: '群馬・尾瀬',
+        regHokuriku: '北陸',
+        regWest: '西日本・中四国',
+        legendTitle: '🌙 凡例（夜間新雪）',
+        legWaist: '腰パウ (80cm+)',
+        legThigh: 'モモパウ (50〜79cm)',
+        legKnee: 'ヒザパウ (30〜49cm)',
+        legShin: 'スネパウ (20〜29cm)',
+        legAnkle: 'くるぶし (10〜19cm)',
+        legDust: 'うっすら (1〜9cm)',
+        legNone: '降雪なし (0cm)',
+        tierWaist: '腰パウ',
+        tierThigh: 'モモパウ',
+        tierKnee: 'ヒザパウ',
+        tierShin: 'スネパウ',
+        tierAnkle: 'くるぶし',
+        tierDust: 'うっすら',
+        tierNone: '降雪なし',
+        popSki: '🏂 スキー場',
+        popBc: '⛰️ バックカントリー',
+        popNightSnow: '🌙 夜間新雪 (18-06時)',
+        popTopSnow: '山頂 積雪深',
+        popElev: '標高:',
+        popSnowQuality: '雪質:',
+        popBcQuality: '山岳:',
+        popScorePt: '点',
+        popViewForecast: 'このスポットの予報を見る',
+        tagLowSnow: '積雪不足',
+        tagClosed: '滑走不可',
+        tagStable: '雪質安定',
+        tagBcStable: '山岳安定'
+      },
+      en: {
+        title: 'Japan Snow Map',
+        countSuffix: ' Spots',
+        catSki: '🏂 Ski Resort',
+        catBc: '⛰️ Backcountry',
+        regionLabel: 'Region:',
+        regAll: 'All',
+        regHokkaido: 'Hokkaido',
+        regTohoku: 'Tohoku',
+        regShinetsu: 'Shinetsu',
+        regHakuba: '❄️ Hakuba',
+        regYuzawa: 'Yuzawa',
+        regGunma: 'Gunma',
+        regHokuriku: 'Hokuriku',
+        regWest: 'West',
+        legendTitle: '🌙 Snowfall Legend',
+        legWaist: 'Waist (80cm+)',
+        legThigh: 'Thigh (50-79cm)',
+        legKnee: 'Knee (30-49cm)',
+        legShin: 'Shin (20-29cm)',
+        legAnkle: 'Ankle (10-19cm)',
+        legDust: 'Dusting (1-9cm)',
+        legNone: 'No Snowfall (0cm)',
+        tierWaist: 'Waist Pow',
+        tierThigh: 'Thigh Pow',
+        tierKnee: 'Knee Pow',
+        tierShin: 'Shin Pow',
+        tierAnkle: 'Ankle',
+        tierDust: 'Dusting',
+        tierNone: 'No Snowfall',
+        popSki: '🏂 Ski Resort',
+        popBc: '⛰️ Backcountry',
+        popNightSnow: '🌙 Overnight Snow (18-06h)',
+        popTopSnow: 'Top Snow Depth',
+        popElev: 'Elev:',
+        popSnowQuality: 'Snow:',
+        popBcQuality: 'Mountain:',
+        popScorePt: ' pts',
+        popViewForecast: 'View Forecast',
+        tagLowSnow: 'Low Snow',
+        tagClosed: 'Closed',
+        tagStable: 'Stable Snow',
+        tagBcStable: 'Stable'
+      }
+    };
+
+    function applyMapLanguage(lang) {
+      if (lang) currentLang = lang;
+      const dict = I18N_MAP[currentLang] || I18N_MAP.ja;
+
+      const tTitle = document.getElementById('mapTitleText');
+      if (tTitle) tTitle.textContent = dict.title;
+
+      const bSki = document.getElementById('btnCatSki');
+      if (bSki) bSki.textContent = dict.catSki;
+
+      const bBc = document.getElementById('btnCatBc');
+      if (bBc) bBc.textContent = dict.catBc;
+
+      const regLbl = document.getElementById('mapRegionLabel');
+      if (regLbl) regLbl.textContent = dict.regionLabel;
+
+      const regMap = {
+        all: dict.regAll,
+        hokkaido: dict.regHokkaido,
+        tohoku: dict.regTohoku,
+        shinetsu: dict.regShinetsu,
+        hakuba: dict.regHakuba,
+        yuzawa: dict.regYuzawa,
+        gunma: dict.regGunma,
+        hokuriku: dict.regHokuriku,
+        west: dict.regWest
+      };
+      document.querySelectorAll('.region-pill').forEach(btn => {
+        const reg = btn.dataset.region;
+        if (regMap[reg]) btn.textContent = regMap[reg];
+      });
+
+      const legTitle = document.getElementById('mapLegendTitle');
+      if (legTitle) legTitle.textContent = dict.legendTitle;
+
+      const legIds = {
+        legWaist: dict.legWaist,
+        legThigh: dict.legThigh,
+        legKnee: dict.legKnee,
+        legShin: dict.legShin,
+        legAnkle: dict.legAnkle,
+        legDust: dict.legDust,
+        legNone: dict.legNone
+      };
+      Object.keys(legIds).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = legIds[id];
+      });
+
+      if (allSpots && allSpots.length > 0) {
+        renderMarkers();
+      }
+    }
 
     // 地域ごとの座標・ズーム設定
     const REGION_COORDS = {
@@ -201,10 +368,14 @@
 
       markersLayer = L.layerGroup().addTo(map);
 
-      // 親ウィンドウからのメッセージ受信（タブ切り替え時の invalidateSize 実行）
+      // 親ウィンドウからのメッセージ受信（タブ切り替え時の invalidateSize 実行 & 言語変更）
       window.addEventListener('message', (e) => {
-        if (e.data && e.data.action === 'INVALIDATE_MAP') {
+        if (!e.data) return;
+        if (e.data.action === 'INVALIDATE_MAP') {
           setTimeout(() => { if (map) map.invalidateSize(); }, 50);
+        }
+        if (e.data.action === 'SET_LANG') {
+          applyMapLanguage(e.data.lang);
         }
       });
     }
@@ -215,6 +386,7 @@
         if (!res.ok) throw new Error('data_japan.json load error');
         const data = await res.json();
         allSpots = data.spots || [];
+        applyMapLanguage();
         renderMarkers();
       } catch (err) {
         console.error('Failed to load spots data:', err);
@@ -241,18 +413,22 @@
     // ホーム画面の判定基準と完全一致する7段階新雪設定（ゴーグル耐性高コントラスト）
     function getNightSnowTier(val) {
       const v = typeof val === 'number' ? val : 0;
-      if (v >= 80) return { label: '腰パウ', bg: '#c026d3', badgeCls: 'bg-fuchsia-600', textCls: 'text-fuchsia-700', isDeep: true };
-      if (v >= 50) return { label: 'モモパウ', bg: '#7c3aed', badgeCls: 'bg-violet-600', textCls: 'text-violet-700', isDeep: true };
-      if (v >= 30) return { label: 'ヒザパウ', bg: '#ea580c', badgeCls: 'bg-orange-600', textCls: 'text-orange-700', isDeep: true };
-      if (v >= 20) return { label: 'スネパウ', bg: '#f59e0b', badgeCls: 'bg-amber-600', textCls: 'text-amber-700', isDeep: true };
-      if (v >= 10) return { label: 'くるぶし', bg: '#0284c7', badgeCls: 'bg-sky-600', textCls: 'text-sky-700', isDeep: false };
-      if (v >= 1) return { label: 'うっすら', bg: '#059669', badgeCls: 'bg-emerald-600', textCls: 'text-emerald-700', isDeep: false };
-      return { label: '降雪なし', bg: '#64748b', badgeCls: 'bg-slate-500', textCls: 'text-slate-600', isDeep: false };
+      const isEn = currentLang === 'en';
+      const dict = I18N_MAP[currentLang] || I18N_MAP.ja;
+      if (v >= 80) return { label: dict.tierWaist, bg: '#c026d3', badgeCls: 'bg-fuchsia-600', textCls: 'text-fuchsia-700', isDeep: true };
+      if (v >= 50) return { label: dict.tierThigh, bg: '#7c3aed', badgeCls: 'bg-violet-600', textCls: 'text-violet-700', isDeep: true };
+      if (v >= 30) return { label: dict.tierKnee, bg: '#ea580c', badgeCls: 'bg-orange-600', textCls: 'text-orange-700', isDeep: true };
+      if (v >= 20) return { label: dict.tierShin, bg: '#f59e0b', badgeCls: 'bg-amber-600', textCls: 'text-amber-700', isDeep: true };
+      if (v >= 10) return { label: dict.tierAnkle, bg: '#0284c7', badgeCls: 'bg-sky-600', textCls: 'text-sky-700', isDeep: false };
+      if (v >= 1) return { label: dict.tierDust, bg: '#059669', badgeCls: 'bg-emerald-600', textCls: 'text-emerald-700', isDeep: false };
+      return { label: dict.tierNone, bg: '#64748b', badgeCls: 'bg-slate-500', textCls: 'text-slate-600', isDeep: false };
     }
 
     function renderMarkers() {
       if (!markersLayer) return;
       markersLayer.clearLayers();
+
+      const dict = I18N_MAP[currentLang] || I18N_MAP.ja;
 
       const filtered = allSpots.filter(s => {
         if (activeCategory === 'ski') return s.category === 'ski';
@@ -260,7 +436,7 @@
         return true;
       });
 
-      document.getElementById('mapCountBadge').textContent = `${filtered.length}地点`;
+      document.getElementById('mapCountBadge').textContent = `${filtered.length}${dict.countSuffix}`;
 
       filtered.forEach(s => {
         if (!s.top || typeof s.top.lat !== 'number' || typeof s.top.lon !== 'number') return;
@@ -297,8 +473,15 @@
 
         const topSnow = (s.current && s.current.topSnowDepth) || 0;
         const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
-        const rank = (s.current && s.current.rank) || '積雪不足';
-        const tag = (s.current && s.current.tag) || (isBc ? '山岳安定' : '雪質安定');
+        const rawTag = (s.current && s.current.tag) || (isBc ? '山岳安定' : '雪質安定');
+        let tag = rawTag;
+        if (currentLang === 'en') {
+          if (rawTag === '積雪不足') tag = dict.tagLowSnow;
+          else if (rawTag === '滑走不可') tag = dict.tagClosed;
+          else if (rawTag === '雪質安定') tag = dict.tagStable;
+          else if (rawTag === '山岳安定') tag = dict.tagBcStable;
+        }
+
         const elev = (s.top && s.top.elevation) || 0;
         const windSpd = (s.current && typeof s.current.windSpeed === 'number') ? s.current.windSpeed : null;
         const windDir = (s.current && s.current.windDirText) ? s.current.windDirText : '';
@@ -306,40 +489,47 @@
         let bcAlertBadgeHtml = '';
         if (isBc) {
           const lvl = bcAlert ? bcAlert.level : (windSpd >= 15 ? 'HIGH' : (windSpd >= 10 || topSnow < 100 ? 'MODERATE' : 'LOW'));
-          const lbl = bcAlert ? bcAlert.label : (lvl === 'HIGH' ? '入山警戒' : (lvl === 'MODERATE' ? '山岳注意' : '比較的安定'));
+          let lbl = bcAlert ? bcAlert.label : (lvl === 'HIGH' ? '入山警戒' : (lvl === 'MODERATE' ? '山岳注意' : '比較的安定'));
+          if (currentLang === 'en') {
+            lbl = lvl === 'HIGH' ? 'High Risk' : (lvl === 'MODERATE' ? 'Caution' : 'Relatively Stable');
+          }
           const cls = lvl === 'HIGH'
             ? 'bg-rose-50 text-rose-800 border-rose-300'
             : (lvl === 'MODERATE' ? 'bg-amber-50 text-amber-800 border-amber-300' : 'bg-emerald-50 text-emerald-800 border-emerald-300');
           const icon = lvl === 'HIGH' ? '🔴' : (lvl === 'MODERATE' ? '🟡' : '🟢');
-          const windStr = windSpd !== null ? ` / 風: ${windDir ? windDir + ' ' : ''}${windSpd}m/s` : '';
+          const windLabel = currentLang === 'en' ? 'Wind' : '風';
+          const windStr = windSpd !== null ? ` / ${windLabel}: ${windDir ? windDir + ' ' : ''}${windSpd}m/s` : '';
           bcAlertBadgeHtml = `<div class="col-span-2 px-2 py-1 rounded-lg border text-[10px] font-bold ${cls}">${icon} ${lbl}${windStr}</div>`;
         }
+
+        const displayName = tName(s.name);
+        const displayArea = tName(s.areaName || s.regionName);
 
         const popupHtml = `
           <div class="p-3 text-slate-900 font-sans text-xs bg-white">
             <div class="flex items-center justify-between border-b border-slate-200 pb-1.5 mb-2">
               <span class="text-[11px] font-bold ${isBc ? 'text-emerald-800 bg-emerald-50 border-emerald-300' : 'text-sky-800 bg-sky-50 border-sky-300'} px-2 py-0.5 rounded border">
-                ${isBc ? '⛰️ バックカントリー' : '🏂 スキー場'}
+                ${isBc ? dict.popBc : dict.popSki}
               </span>
-              <span class="text-[11px] font-bold text-slate-600">${s.areaName || s.regionName}</span>
+              <span class="text-[11px] font-bold text-slate-600">${displayArea}</span>
             </div>
-            <div class="font-black text-sm text-slate-900 leading-tight mb-2">${s.name}</div>
+            <div class="font-black text-sm text-slate-900 leading-tight mb-2">${displayName}</div>
             
             <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-[11px] mb-2.5">
               <div>
-                <span class="text-slate-600 font-semibold text-[10px] block">🌙 夜間新雪 (18-06時)</span>
+                <span class="text-slate-600 font-semibold text-[10px] block">${dict.popNightSnow}</span>
                 <span class="font-black font-mono text-base ${tier.textCls}">+${nightVal}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
                 <span class="text-[10px] px-1.5 py-0.2 rounded ${tier.badgeCls} text-white font-bold ml-1 inline-block">${tier.label}</span>
               </div>
               <div>
-                <span class="text-slate-600 font-semibold text-[10px] block">山頂 積雪深</span>
+                <span class="text-slate-600 font-semibold text-[10px] block">${dict.popTopSnow}</span>
                 <span class="font-black text-slate-900 font-mono text-base">${topSnow}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
               </div>
               <div class="col-span-2 pt-1.5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[11px]">
-                <span class="text-slate-700 font-semibold whitespace-nowrap">標高: ${elev}m</span>
+                <span class="text-slate-700 font-semibold whitespace-nowrap">${dict.popElev} ${elev}m</span>
                 <div class="flex items-center gap-1.5 whitespace-nowrap">
-                  <span class="text-slate-600 font-semibold">${isBc ? '山岳:' : '雪質:'}</span>
-                  <span class="font-black ${score !== null ? (isBc ? 'text-emerald-700' : 'text-sky-700') : 'text-slate-500'}">${score !== null ? score + '点' : '―'}</span>
+                  <span class="text-slate-600 font-semibold">${isBc ? dict.popBcQuality : dict.popSnowQuality}</span>
+                  <span class="font-black ${score !== null ? (isBc ? 'text-emerald-700' : 'text-sky-700') : 'text-slate-500'}">${score !== null ? score + dict.popScorePt : '―'}</span>
                   <span class="text-[10px] text-slate-800 font-bold px-1.5 py-0.5 bg-white rounded border border-slate-300 whitespace-nowrap">${tag}</span>
                 </div>
               </div>
@@ -347,11 +537,16 @@
             </div>
 
             <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg ${isBc ? 'bg-emerald-700 hover:bg-emerald-800' : 'bg-sky-700 hover:bg-sky-800'} active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
-              <span>このスポットの予報を見る</span>
+              <span>${dict.popViewForecast}</span>
               <i class="fa-solid fa-arrow-right text-[11px]"></i>
             </button>
           </div>
         `;
+
+        marker.bindPopup(popupHtml, { autoPanPadding: [20, 25] });
+        marker.addTo(markersLayer);
+      });
+    }
 
         marker.bindPopup(popupHtml, { autoPanPadding: [20, 25] });
         marker.addTo(markersLayer);
