@@ -3676,7 +3676,7 @@
             ${slotHtml}
           </div>
 
-          ${r.comment ? `<div class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-200">${r.comment}</div>` : ''}
+          ${r.comment ? `<div class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-200 report-comment-text">${r.comment}</div>` : ''}
 
           <div class="text-[11px] text-slate-500 flex items-center justify-between pt-1 border-t border-slate-200">
             <span>みんなの現地レポート</span>
@@ -4724,6 +4724,39 @@
       // ※長いフレーズを先に定義し、部分一致による日英キメラを防止
       const phraseMap = [
         ['最新の全国雪データを読み込み中...', 'Loading latest Japan snow data...'],
+        ['全国最新雪レポフィード', 'Japan Snow Reports Feed'],
+        ['みんなの現地レポート', 'User Field Report'],
+        ['詳細予報を見る', 'View Forecast'],
+        ['詳細を見る', 'View Details'],
+        ['Detailsを見る', 'View Details'],
+        ['登録スポット最新速報', 'Saved Spot Live Update'],
+        ['今後3日間の降雪予報', '3-Day Snow Forecast'],
+        ['夜間新雪 / 1日計', 'Overnight / Daily'],
+        ['夜間新雪 / 1日合計', 'Overnight / Daily'],
+        ['くるぶし 5〜15cm', 'Ankle 5-15cm'],
+        ['すね 15〜30cm', 'Shin 15-30cm'],
+        ['ひざ 30〜50cm', 'Knee 30-50cm'],
+        ['もも 50〜70cm', 'Thigh 50-70cm'],
+        ['腰 70〜100cm', 'Waist 70-100cm'],
+        ['胸以上 100cm+', 'Chest+ 100cm+'],
+        ['神パウ', 'Epic Pow'],
+        ['極上パウ', 'Deep Pow'],
+        ['良質パウ', 'Good Pow'],
+        ['ちょいパウ', 'Light Pow'],
+        ['重パウ', 'Heavy Pow'],
+        ['しまり雪', 'Packed Snow'],
+        ['ザラメ雪', 'Spring Corn'],
+        ['アイスバーン', 'Ice / Firm'],
+        ['雨・融雪', 'Rain / Melt'],
+        ['朝イチ', 'First Chair'],
+        ['ナイター', 'Night Ski'],
+        ['午前', 'Morning'],
+        ['午後', 'Afternoon'],
+        ['明朝', 'Tomorrow AM'],
+        ['今朝', 'This AM'],
+        ['本日', 'Today'],
+        ['雪レポ', 'Report'],
+        ['1日 +', 'Daily +'],
         ['エリア別一覧', 'By Area'],
         ['パウダーランキング', 'Powder Ranking'],
         ['Powderランキング', 'Powder Ranking'],
