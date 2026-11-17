@@ -4696,12 +4696,24 @@
         areaSelect.previousElementSibling.textContent = dict.areaLabel;
       }
 
-      // エリア検索プレースホルダーの言語切り替え
+      // エリア検索・モーダル検索・レポメモプレースホルダーの言語切り替え
       const areasSearchInput = document.getElementById('areasSearchInput');
       if (areasSearchInput) {
         areasSearchInput.placeholder = currentLang === 'en'
           ? 'Filter by area, resort, mountain...'
           : 'エリア名・スキー場・山名で絞り込み...';
+      }
+      const searchInputEl = document.getElementById('searchInput');
+      if (searchInputEl) {
+        searchInputEl.placeholder = currentLang === 'en'
+          ? 'Search ski resort, mountain, or area...'
+          : 'スキー場名、山名、エリアで検索...';
+      }
+      const reportCommentEl = document.getElementById('reportComment');
+      if (reportCommentEl) {
+        reportCommentEl.placeholder = currentLang === 'en'
+          ? 'e.g. Light fresh powder on first chair, great visibility...'
+          : '例: 朝イチの非圧雪コースが軽く、視界も良好でした';
       }
 
       // 風向き凡例注釈文の直接設定（HTMLタグ分割による置換漏れを完全防止）
@@ -4940,7 +4952,113 @@
         ['今日', 'Today'],
         ['明日', 'Tomorrow'],
         ['詳細', 'Details'],
-        ['閉じる', 'Close']
+        ['閉じる', 'Close'],
+        // --- ランキング・空状態 ---
+        ['🌙 オーバーナイト', '🌙 Overnight'],
+        ['⚡ 6時間速報', '⚡ 6h Alert'],
+        ['❄️ 24時間累積', '❄️ 24h Total'],
+        ['⚡6h降雪', '⚡6h Snow'],
+        ['❄️24h降雪', '❄️24h Snow'],
+        ['リセット❄️', 'Reset❄️'],
+        ['🏂ゲレンデ', '🏂Resort'],
+        ['⛰️山', '⛰️BC'],
+        ['降雪量', 'Snowfall'],
+        ['データを読み込み中です...', 'Loading data...'],
+        ['条件に一致するエリアがありません', 'No matching areas found'],
+        ['現在ランキングデータを集計中です', 'Calculating ranking data...'],
+        ['該当カテゴリのデータがありません', 'No data for this category'],
+        // --- MYスポット未登録時 ---
+        ['MYスポットがまだ登録されていません', 'No Saved Spots yet'],
+        ['ホーム画面のスポット名横にある「★」マークをタップするか、上の追加ボタンからよく行くゲレンデ・BC山を登録すると、ここで一括比較できます。', 'Tap the ★ icon next to a spot on Home or use the Add button above to compare your favorite resorts & BC mountains here.'],
+        ['全国スポットから検索して追加', 'Search & Add Spots'],
+        ['右上の★を押してMYスポットを登録してください', 'Tap ★ at top right to save spots'],
+        // --- バックカントリー・ホーム細部 ---
+        ['山岳コンディション', 'Mountain Condition'],
+        ['山頂ピーク', 'Summit Peak'],
+        ['登山口・ベース', 'Trailhead / Base'],
+        ['ゲレンデトップ', 'Top'],
+        ['ゲレンデベース', 'Base'],
+        ['稜線・山頂風', 'Ridge / Summit Wind'],
+        ['安定しまり雪', 'Stable Packed'],
+        ['比較的安定', 'Relatively Stable'],
+        ['雪崩情報・装備を確認の上、自己責任で行動してください。', 'Check avalanche info & gear before entering backcountry.'],
+        ['🧭 北斜面', '🧭 N Aspect'],
+        ['🧭 北東斜面', '🧭 NE Aspect'],
+        ['🧭 東斜面', '🧭 E Aspect'],
+        ['🧭 南東斜面', '🧭 SE Aspect'],
+        ['🧭 南斜面', '🧭 S Aspect'],
+        ['🧭 南西斜面', '🧭 SW Aspect'],
+        ['🧭 西斜面', '🧭 W Aspect'],
+        ['🧭 北西斜面', '🧭 NW Aspect'],
+        ['🧭 全方位', '🧭 All Aspects'],
+        ['雪山スポット', 'Snow Spot'],
+        ['たった今', 'Just now'],
+        ['圧雪良好', 'Good Groomed'],
+        // --- 通知設定モーダル ---
+        ['雪予報プッシュ通知設定', 'Push Notification Settings'],
+        ['設定した新雪量以上が降る時＆週末雪予想だけ自動通知', 'Auto-alert when fresh snow exceeds threshold & on snowy weekends'],
+        ['iPhoneで通知を受け取る手順', 'How to enable notifications on iPhone'],
+        ['iOS Safariの仕様上、プッシュ通知を受信するには本アプリを', 'Due to iOS Safari limits, please'],
+        ['「ホーム画面に追加」', '"Add to Home Screen"'],
+        ['して起動する必要があります。', 'and launch from your Home Screen.'],
+        ['画面下部中央の', 'Tap the'],
+        ['共有ボタン', 'Share button'],
+        ['をタップ', 'at the bottom'],
+        ['メニュー内の', 'Select'],
+        ['を選択', 'from the menu'],
+        ['ホーム画面の', 'Launch'],
+        ['POWDER BASE アイコン', 'POWDER BASE icon'],
+        ['から起動し、ここで通知をONにする', 'and turn ON notifications here'],
+        ['通知ステータス', 'Notification Status'],
+        ['確認中...', 'Checking...'],
+        ['通知を有効にする', 'Enable Notifications'],
+        ['通知をOFFにする', 'Disable Notifications'],
+        ['通知が接続されています', 'Notifications connected'],
+        ['テスト通知を試す', 'Send Test Notification'],
+        ['通知する新雪の基準（この量以上降る時だけ通知）', 'Snowfall Alert Threshold'],
+        ['受信ルール（すべて基準以上の降雪時のみ配信）', 'Delivery Rules (Only when snowfall exceeds threshold)'],
+        ['🌨️ 夜の予報アラート（19:00台）', '🌨️ Evening Forecast Alert (~19:00)'],
+        ['明朝の新雪、または3日以内に基準以上降る予報時だけ通知', 'Notify only if fresh snow is expected tomorrow AM or within 3 days'],
+        ['週末予報（木曜夜など）', 'Weekend Forecast (Thu night, etc.)'],
+        ['土日のいずれかで基準以上の降雪予報がある週末だけ通知', 'Notify only when weekend snowfall exceeds threshold'],
+        ['通知を受け取るスポット', 'Subscribed Spots'],
+        ['MY全選択', 'Select All Saved'],
+        ['選択中のみ', 'Selected Only'],
+        ['通知設定を保存しました', 'Notification settings saved'],
+        // --- シェアモーダル ---
+        ['雪山情報をシェア', 'Share Snow Report'],
+        ['仲間にコンディションを教える', 'Share conditions with friends'],
+        ['スマホの共有メニューで送る', 'Share via Device Menu'],
+        ['LINEで送る', 'Share on LINE'],
+        ['X（旧Twitter）でポスト', 'Post on X (Twitter)'],
+        ['URLリンクをコピー', 'Copy URL Link'],
+        ['コピー', 'Copy'],
+        // --- 雪レポ投稿モーダル ---
+        ['雪レポート登録', 'Post Snow Report'],
+        ['現地のリアルな雪質・コンディションを共有', 'Share live snow quality & conditions'],
+        ['滑走スポット', 'Spot'],
+        ['滑走時間帯', 'Time Slot'],
+        ['体感満足度', 'Rating'],
+        ['雪質・バーン状況', 'Snow / Surface'],
+        ['新雪の深さ', 'Fresh Snow Depth'],
+        ['新雪なし', 'None'],
+        ['現地のひとことメモ（任意）', 'Field Notes (Optional)'],
+        ['雪レポを登録する', 'Submit Snow Report'],
+        ['送信中...', 'Submitting...'],
+        ['※全国のスキーヤー・スノーボーダーと即座にリアルタイム共有されます', '* Shared instantly in real-time with riders across Japan'],
+        // --- ヘルプモーダル見出し ---
+        ['使い方の解説', 'User Guide'],
+        ['見方とチェックポイント', 'How to Read & Tips'],
+        ['実況 ＆ 雪質スコアの見方', 'Live Data & Snow Score'],
+        ['雪質スコア・アメダス実測・気温・風速', 'Snow score, AMeDAS live data, temp & wind'],
+        ['OVERNIGHT SNOW（夜間新雪）の見方', 'Overnight Snow Guide'],
+        ['18:00〜翌朝06:00に降り積もる新雪リセット量', 'Overnight snowfall reset from 18:00 to 06:00'],
+        ['SNOW TREND（推移グラフ）の見方', 'Snow Trend Chart Guide'],
+        ['過去のアメダス実績 ＋ 今後7日間のシームレス予報', 'Past AMeDAS live data + 7-day forecast'],
+        ['TIMELINE（時間予報）の見方', 'Hourly Timeline Guide'],
+        ['1時間ごとの天候・降雪量・気温・風速・標高切替', 'Hourly weather, snowfall, temp, wind & elevation'],
+        ['POWDER BASE 使い方ガイド', 'POWDER BASE User Guide'],
+        ['全国547スポットの雪質・予報を1秒でチェック', 'Check snow quality & forecasts for 547 Japan spots']
       ];
       // 単独単語のみ一致させる辞書（部分一致による日英キメラ防止）
       const exactWordMap = [
@@ -5018,7 +5136,19 @@
             if (currentLang === 'en') {
               text = text.replace(/(\d+)件/g, '($1)');
               text = text.replace(/(\d+)地点/g, '$1 Spots');
+              text = text.replace(/(\d+)箇所/g, '$1 Spots');
+              text = text.replace(/(\d+)分前/g, '$1m ago');
+              text = text.replace(/(\d+)時間前/g, '$1h ago');
+              text = text.replace(/(\d+)日前/g, '$1d ago');
+              text = text.replace(/標高差 (\d+)m/g, 'Vert $1m');
               text = text.replace(/(\d+)月(\d+)日/g, '$1/$2');
+              text = text.replace(/入山警戒 \(([^)]+)\)/g, 'High Risk ($1)');
+              text = text.replace(/山岳注意 \(([^)]+)\)/g, 'Caution ($1)');
+              text = text.replace(/稜線暴風/g, 'Ridge Gale');
+              text = text.replace(/急増雪/g, 'Rapid Snow');
+              text = text.replace(/強風/g, 'Strong Wind');
+              text = text.replace(/積雪100cm未満/g, 'Depth < 100cm');
+              if (trimmed === '点') text = ' pts';
               if (text.endsWith('実測')) {
                 const stationJa = text.slice(0, -2).trim();
                 const stationEn = (window.enNamesDict && window.enNamesDict[stationJa]) ? window.enNamesDict[stationJa] : stationJa;
@@ -5083,6 +5213,7 @@
         'renderWeeklyForecast',
         'renderAreasTab',
         'renderMySpotsTab',
+        'renderFeedTab',
         'setAreasRegionFilter',
         'setAreasConditionFilter',
         'setAreasCategoryFilter',
@@ -5091,9 +5222,17 @@
         'toggleAllAreaAccordions',
         'switchAreasSubView',
         'renderRankingTab',
+        'selectRankingPeriod',
         'onRegionChange',
         'onAreaChange',
-        'renderSpotPills'
+        'renderSpotPills',
+        'openSearchModal',
+        'onSearchInput',
+        'openReportModal',
+        'openNotificationModal',
+        'renderNotificationSpotGrid',
+        'openHelpModal',
+        'openShareModal'
       ].forEach(fn => {
         hookFn(fn, () => {
           if (currentLang === 'en') applyLanguage();
