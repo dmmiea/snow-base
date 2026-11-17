@@ -1,8 +1,9 @@
 // POWDER BASE JAPAN Service Worker (Cache & Offline Support v6)
-const CACHE_NAME = 'powder-base-v12';
+const CACHE_NAME = 'powder-base-v13';
 
 const STATIC_ASSETS = [
   './',
+  './i18n.js',
   './manifest.json',
   './icons/apple-touch-icon-180.png',
   './icons/icon-192.png',

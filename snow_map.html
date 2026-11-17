@@ -155,19 +155,23 @@
     </div>
   </div>
 
+  <script src="i18n.js"></script>
   <script>
     let map = null;
     let allSpots = [];
     let activeCategory = 'ski'; // デフォルトはスキー場
     let markersLayer = null;
     let legendOpen = true;
-    let currentLang = 'ja';
+    let currentLang = window.currentLang || 'ja';
     let enNamesDict = {};
 
     // 英語辞書読み込み
     try {
       const storedLang = localStorage.getItem('powderbase_lang');
-      if (storedLang === 'en' || storedLang === 'ja') currentLang = storedLang;
+      if (storedLang === 'en' || storedLang === 'ja') {
+        currentLang = storedLang;
+        window.currentLang = storedLang;
+      }
     } catch (_) {}
 
     fetch('en_names.json')
@@ -277,6 +281,7 @@
 
     function applyMapLanguage(lang) {
       if (lang) currentLang = lang;
+      window.currentLang = currentLang;
       const dict = I18N_MAP[currentLang] || I18N_MAP.ja;
 
       const tTitle = document.getElementById('mapTitleText');
@@ -474,13 +479,7 @@
         const topSnow = (s.current && s.current.topSnowDepth) || 0;
         const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
         const rawTag = (s.current && s.current.tag) || (isBc ? '山岳安定' : '雪質安定');
-        let tag = rawTag;
-        if (currentLang === 'en') {
-          if (rawTag === '積雪不足') tag = dict.tagLowSnow;
-          else if (rawTag === '滑走不可') tag = dict.tagClosed;
-          else if (rawTag === '雪質安定') tag = dict.tagStable;
-          else if (rawTag === '山岳安定') tag = dict.tagBcStable;
-        }
+        let tag = (typeof window.tTag === 'function') ? window.tTag(rawTag) : rawTag;
 
         const elev = (s.top && s.top.elevation) || 0;
         const windSpd = (s.current && typeof s.current.windSpeed === 'number') ? s.current.windSpeed : null;
@@ -489,10 +488,8 @@
         let bcAlertBadgeHtml = '';
         if (isBc) {
           const lvl = bcAlert ? bcAlert.level : (windSpd >= 15 ? 'HIGH' : (windSpd >= 10 || topSnow < 100 ? 'MODERATE' : 'LOW'));
-          let lbl = bcAlert ? bcAlert.label : (lvl === 'HIGH' ? '入山警戒' : (lvl === 'MODERATE' ? '山岳注意' : '比較的安定'));
-          if (currentLang === 'en') {
-            lbl = lvl === 'HIGH' ? 'High Risk' : (lvl === 'MODERATE' ? 'Caution' : 'Relatively Stable');
-          }
+          const rawLbl = bcAlert ? bcAlert.label : (lvl === 'HIGH' ? '入山警戒' : (lvl === 'MODERATE' ? '山岳注意' : '比較的安定'));
+          const lbl = (typeof window.tTag === 'function') ? window.tTag(rawLbl) : rawLbl;
           const cls = lvl === 'HIGH'
             ? 'bg-rose-50 text-rose-800 border-rose-300'
             : (lvl === 'MODERATE' ? 'bg-amber-50 text-amber-800 border-amber-300' : 'bg-emerald-50 text-emerald-800 border-emerald-300');
