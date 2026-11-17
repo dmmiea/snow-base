@@ -569,7 +569,7 @@
             <span class="text-slate-600 font-bold">暴風・運休警戒</span><span class="text-rose-600 font-black">15m/s~</span>
           </div>
         </div>
-        <p class="text-[10.5px] text-slate-600 leading-relaxed">
+        <p id="windLegendNote" class="text-[10.5px] text-slate-600 leading-relaxed">
           ※風向きは<strong class="text-slate-800">「吹いてくる方角（N/NE等）」と「風が流れていく矢印」</strong>を表示しています（例：<span class="font-bold text-slate-800">↘ NW</span>＝北西から南東へ吹く風）。
         </p>
       </div>
@@ -1215,44 +1215,45 @@
     const expandedAreaKeys = new Set();
     const FEED_SEEN_KEY = 'snow_base_feed_last_seen_v1';
 
-    // WMO気象コード（0〜99）変換関数（降雪量・風速による詳細判別対応）
+    // WMO気象コード（0〜99）変換関数（降雪量・風速による詳細判別対応 & 多言語対応）
     function getWeatherInfo(code, snowfall = null, windSpeed = null) {
       const isSnowCode = (code >= 71 && code <= 77) || code === 85 || code === 86;
       const isRainCode = (code >= 51 && code <= 67) || (code >= 80 && code <= 82);
       const hasSnow = snowfall !== null && snowfall !== undefined && snowfall > 0;
       const hasWind = windSpeed !== null && windSpeed !== undefined;
+      const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
 
       if (code >= 95) {
         if (hasWind && windSpeed >= 12 && (hasSnow || isSnowCode)) {
-          return { label: '吹雪', icon: '🌬️❄️' };
+          return { label: isEn ? 'Blizzard' : '吹雪', icon: '🌬️❄️' };
         }
-        return { label: '雷雨/荒天', icon: '⛈️' };
+        return { label: isEn ? 'Thunderstorm' : '雷雨/荒天', icon: '⛈️' };
       }
       if (isSnowCode || (hasSnow && !isRainCode)) {
         if (hasWind && windSpeed >= 12 && (isSnowCode || snowfall >= 0.3)) {
-          return { label: '吹雪', icon: '🌬️❄️' };
+          return { label: isEn ? 'Blizzard' : '吹雪', icon: '🌬️❄️' };
         }
         if (code === 75 || code === 86 || (snowfall !== null && snowfall >= 3.0)) {
-          return { label: '大雪', icon: '❄️❄️' };
+          return { label: isEn ? 'Heavy Snow' : '大雪', icon: '❄️❄️' };
         }
         if (code === 73 || code === 85 || (snowfall !== null && snowfall >= 0.5)) {
-          return { label: '雪', icon: '❄️' };
+          return { label: isEn ? 'Snow' : '雪', icon: '❄️' };
         }
         if (code === 71 || code === 77 || hasSnow) {
-          return { label: '小雪', icon: '🌨️' };
+          return { label: isEn ? 'Light Snow' : '小雪', icon: '🌨️' };
         }
-        return { label: '雪', icon: '❄️' };
+        return { label: isEn ? 'Snow' : '雪', icon: '❄️' };
       }
 
-      if (code === 0) return { label: '快晴', icon: '☀️' };
-      if (code === 1 || code === 2) return { label: '晴れ/薄曇', icon: '🌤️' };
-      if (code === 3) return { label: '曇り', icon: '☁️' };
-      if (code === 45 || code === 48) return { label: '霧/濃霧', icon: '🌫️' };
-      if (code >= 51 && code <= 55) return { label: '霧雨', icon: '🌦️' };
-      if (code >= 61 && code <= 65) return { label: '雨', icon: '🌧️' };
-      if (code === 66 || code === 67) return { label: 'みぞれ', icon: '🌧️' };
-      if (code >= 80 && code <= 82) return { label: 'にわか雨', icon: '🌦️' };
-      return { label: '雪', icon: '❄️' };
+      if (code === 0) return { label: isEn ? 'Clear' : '快晴', icon: '☀️' };
+      if (code === 1 || code === 2) return { label: isEn ? 'Partly Cloudy' : '晴れ/薄曇', icon: '🌤️' };
+      if (code === 3) return { label: isEn ? 'Cloudy' : '曇り', icon: '☁️' };
+      if (code === 45 || code === 48) return { label: isEn ? 'Fog' : '霧/濃霧', icon: '🌫️' };
+      if (code >= 51 && code <= 55) return { label: isEn ? 'Drizzle' : '霧雨', icon: '🌦️' };
+      if (code >= 61 && code <= 65) return { label: isEn ? 'Rain' : '雨', icon: '🌧️' };
+      if (code === 66 || code === 67) return { label: isEn ? 'Sleet' : 'みぞれ', icon: '🌧️' };
+      if (code >= 80 && code <= 82) return { label: isEn ? 'Shower' : 'にわか雨', icon: '🌦️' };
+      return { label: isEn ? 'Snow' : '雪', icon: '❄️' };
     }
 
     // 風速による色分けスタイル取得（サーフベース準拠: 文字色＆太さで表現）
@@ -4685,6 +4686,16 @@
         areaSelect.previousElementSibling.textContent = dict.areaLabel;
       }
 
+      // 風向き凡例注釈文の直接設定（HTMLタグ分割による置換漏れを完全防止）
+      const windNoteEl = document.getElementById('windLegendNote');
+      if (windNoteEl) {
+        if (currentLang === 'en') {
+          windNoteEl.innerHTML = `* Direction indicates where wind blows FROM (N/NE etc.) & arrow shows wind flow (e.g. <span class="font-bold text-slate-800">↘ NW</span> = wind blowing from NW to SE).`;
+        } else {
+          windNoteEl.innerHTML = `※風向きは<strong class="text-slate-800">「吹いてくる方角（N/NE等）」と「風が流れていく矢印」</strong>を表示しています（例：<span class="font-bold text-slate-800">↘ NW</span>＝北西から南東へ吹く風）。`;
+        }
+      }
+
       // 固有名詞英語辞書の遅延ロード（初回EN切替時）
       if (currentLang === 'en' && !window.enNamesDict && !window._loadingEnNames) {
         window._loadingEnNames = true;
@@ -4776,6 +4787,10 @@
         ['評価: 未報告', 'Rating: None'],
         ['評価:', 'Rating:'],
         ['未報告', 'None'],
+        ['雪質: ―', 'Snow: ―'],
+        ['雪質:', 'Snow:'],
+        ['雪質：', 'Snow:'],
+        ['パウダー良好', 'Good Powder'],
         ['全エリア', 'All Areas'],
         ['MYスポット登録', 'Save Spot'],
         ['MYスポット解除', 'Saved'],
