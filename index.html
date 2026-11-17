@@ -2160,8 +2160,12 @@
             bcAlertBox.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-900');
             bcAlertTitle.textContent = `🟢 ${alertInfo.label}`;
           }
-          const reasonText = (alertInfo.reasons && alertInfo.reasons.length > 0) ? `【要因】${alertInfo.reasons.join(' / ')} — ` : '';
-          bcAlertDesc.textContent = `${reasonText}雪崩情報・装備を確認の上、自己責任で行動してください。`;
+          const reasonText = (alertInfo.reasons && alertInfo.reasons.length > 0)
+            ? (currentLang === 'en' ? `[Factor] ${alertInfo.reasons.join(' / ')} — ` : `【要因】${alertInfo.reasons.join(' / ')} — `)
+            : '';
+          bcAlertDesc.textContent = currentLang === 'en'
+            ? `${reasonText}Check avalanche info & gear before entering backcountry.`
+            : `${reasonText}雪崩情報・装備を確認の上、自己責任で行動してください。`;
         } else {
           bcAlertBox.classList.add('hidden');
         }
@@ -3293,7 +3297,7 @@
           <div class="text-right shrink-0">
             <div class="text-[10.5px] text-slate-600 font-bold">${labelText}</div>
             <div class="font-teko text-2xl font-black text-orange-700 leading-none">+${item.snow} <span class="text-xs">cm</span></div>
-            <div class="text-[10.5px] text-slate-600 font-bold">積雪: ${item.depth}cm</div>
+            <div class="text-[10.5px] text-slate-600 font-bold">${currentLang === 'en' ? 'Depth:' : '積雪:'} ${item.depth}cm</div>
           </div>
         `;
         container.appendChild(card);
@@ -3816,7 +3820,7 @@
       });
       const label = document.getElementById('reportRatingLabel');
       if (label) {
-        label.textContent = `${stars}点`;
+        label.textContent = currentLang === 'en' ? `${stars} pts` : `${stars}点`;
       }
     }
 
@@ -4299,7 +4303,7 @@
       const activeDot = document.getElementById('notifActiveDot');
 
       if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) {
-        if (statusText) statusText.textContent = 'このブラウザはプッシュ通知に非対応です';
+        if (statusText) statusText.textContent = currentLang === 'en' ? 'Push notifications not supported in this browser' : 'このブラウザはプッシュ通知に非対応です';
         if (btnToggle) {
           btnToggle.disabled = true;
           btnToggle.classList.add('opacity-50');
@@ -4308,9 +4312,11 @@
       }
 
       if (Notification.permission === 'denied') {
-        if (statusText) statusText.innerHTML = '<span class="text-rose-700 font-bold">通知がブロックされています（端末設定から許可してください）</span>';
+        if (statusText) statusText.innerHTML = currentLang === 'en'
+          ? '<span class="text-rose-700 font-bold">Notifications blocked (Please enable in device settings)</span>'
+          : '<span class="text-rose-700 font-bold">通知がブロックされています（端末設定から許可してください）</span>';
         if (btnToggle) {
-          btnToggle.textContent = 'ブロック中';
+          btnToggle.textContent = currentLang === 'en' ? 'Blocked' : 'ブロック中';
           btnToggle.disabled = true;
           btnToggle.classList.add('opacity-50');
         }
@@ -4323,18 +4329,22 @@
         const reg = await navigator.serviceWorker.ready;
         const sub = await reg.pushManager.getSubscription();
         if (sub) {
-          if (statusText) statusText.innerHTML = '<span class="text-emerald-700 font-bold">ON（プッシュ通知受信中）</span>';
+          if (statusText) statusText.innerHTML = currentLang === 'en'
+            ? '<span class="text-emerald-700 font-bold">ON (Push notifications active)</span>'
+            : '<span class="text-emerald-700 font-bold">ON（プッシュ通知受信中）</span>';
           if (btnToggle) {
-            btnToggle.textContent = '通知をOFFにする';
+            btnToggle.textContent = currentLang === 'en' ? 'Disable Notifications' : '通知をOFFにする';
             btnToggle.disabled = false;
             btnToggle.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-600 hover:bg-rose-600 text-white shadow-sm active:scale-95 transition flex-shrink-0';
           }
           if (testBox) testBox.classList.remove('hidden');
           if (activeDot) activeDot.classList.remove('hidden');
         } else {
-          if (statusText) statusText.innerHTML = '<span class="text-slate-700">OFF（未登録）</span>';
+          if (statusText) statusText.innerHTML = currentLang === 'en'
+            ? '<span class="text-slate-700">OFF (Not Registered)</span>'
+            : '<span class="text-slate-700">OFF（未登録）</span>';
           if (btnToggle) {
-            btnToggle.textContent = '通知を有効にする';
+            btnToggle.textContent = currentLang === 'en' ? 'Enable Notifications' : '通知を有効にする';
             btnToggle.disabled = false;
             btnToggle.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-sky-700 hover:bg-sky-800 text-white shadow-sm active:scale-95 transition flex-shrink-0';
           }
@@ -4472,7 +4482,7 @@
 
       const badge = document.getElementById('notifSelectedCountBadge');
       const selectedSet = new Set(notifSettings.favSpots || []);
-      if (badge) badge.textContent = `${selectedSet.size}箇所`;
+      if (badge) badge.textContent = currentLang === 'en' ? `${selectedSet.size} Spots` : `${selectedSet.size}箇所`;
 
       const container = document.getElementById('notifSpotList');
       if (!container || !appData || !Array.isArray(appData.spots)) return;
@@ -4488,17 +4498,21 @@
       }
 
       if (list.length === 0) {
-        container.innerHTML = `<div class="text-[11px] text-slate-600 font-bold py-3 px-2 w-full text-center">${filter === 'fav' ? 'MYスポットが未登録です。上の地方タブから直接選ぶこともできます。' : '該当するスポットがありません'}</div>`;
+        const emptyMsg = filter === 'fav'
+          ? (currentLang === 'en' ? 'No Saved Spots yet. You can also pick from region tabs above.' : 'MYスポットが未登録です。上の地方タブから直接選ぶこともできます。')
+          : (currentLang === 'en' ? 'No spots found' : '該当するスポットがありません');
+        container.innerHTML = `<div class="text-[11px] text-slate-600 font-bold py-3 px-2 w-full text-center">${emptyMsg}</div>`;
         return;
       }
 
       container.innerHTML = list.slice(0, 120).map(s => {
         const isSelected = selectedSet.has(s.id);
         const catIcon = s.category === 'bc' ? '⛰️' : '🏂';
+        const spotDisplayName = (currentLang === 'en' && window.enNamesDict && window.enNamesDict[s.name]) ? window.enNamesDict[s.name] : s.name;
         return `
           <button type="button" onclick="toggleNotifSpot('${s.id}')" class="px-2 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 border ${isSelected ? 'bg-sky-50 text-sky-900 border-sky-600' : 'bg-white text-slate-700 border-slate-300 hover:text-slate-900'}">
             <span>${catIcon}</span>
-            <span>${s.name}</span>
+            <span>${spotDisplayName}</span>
             ${isSelected ? '<i class="fa-solid fa-check text-[10px] text-sky-700 ml-0.5"></i>' : ''}
           </button>
         `;
@@ -4758,8 +4772,52 @@
       }
 
       // ページ内の定型テキストをTreeWalkerで網羅的に置換（ユーザー投稿の雪レポ本文は除外）
-      // ※長いフレーズを先に定義し、部分一致による日英キメラを防止
-      const phraseMap = [
+      const rawPhraseMap = [
+        // --- モーダル長文・タイトル（長いものを最優先） ---
+        ['パウダー・降雪プッシュ通知設定', 'Powder & Snowfall Push Alerts'],
+        ['Powder・降雪プッシュ通知設定', 'Powder & Snowfall Push Alerts'],
+        ['雪予報プッシュ通知設定', 'Push Notification Settings'],
+        ['設定した新雪量以上が降る時＆週末雪予想だけ自動通知', 'Auto-alert when fresh snow exceeds threshold & on snowy weekends'],
+        ['朝のパウダー速報（06:00台）', 'Morning Powder Alert (~06:00)'],
+        ['朝のPowder速報（06:00台）', 'Morning Powder Alert (~06:00)'],
+        ['今朝の夜間新雪が基準以上積もった朝だけ通知', 'Notify only when fresh snow exceeds threshold this AM'],
+        ['This AMのOvernight Snowが基準以上積もった朝だけ通知', 'Notify only when fresh snow exceeds threshold this AM'],
+        ['夜の予報アラート（19:00台）', 'Evening Forecast Alert (~19:00)'],
+        ['明朝の新雪、または3日以内に基準以上降る予報時だけ通知', 'Notify only if fresh snow is expected tomorrow AM or within 3 days'],
+        ['Tomorrow AMの新雪、または3日以内に基準以上降る予報時だけ通知', 'Notify only if fresh snow is expected tomorrow AM or within 3 days'],
+        ['週末パウダー予想（木・金 19:00台）', 'Weekend Powder Forecast (Thu/Fri ~19:00)'],
+        ['週末Powder予想（木・金 19:00台）', 'Weekend Powder Forecast (Thu/Fri ~19:00)'],
+        ['土日のいずれかで基準以上の降雪予報がある週末だけ通知', 'Notify only when weekend snowfall exceeds threshold'],
+        ['AI全国パウダー大賞', 'AI Japan Powder Award'],
+        ['AI全国Powder大賞', 'AI Japan Powder Award'],
+        ['MYスポット以外でも全国トップ級（+20cm以上）出現時にお知らせ', 'Alert when spots across Japan get +20cm+ fresh snow even outside Saved'],
+        ['Saved以外でも全国Top級（+20cm以上）出現時にお知らせ', 'Alert when spots across Japan get +20cm+ fresh snow even outside Saved'],
+        ['雪レポート登録', 'Post Snow Report'],
+        ['Reportート登録', 'Post Snow Report'],
+        ['雪レポを登録する', 'Submit Snow Report'],
+        ['Reportを登録する', 'Submit Snow Report'],
+        ['現地のリアルな雪質・コンディションを共有', 'Share live snow quality & conditions'],
+        ['※全国のスキーヤー・スノーボーダーと即座にリアルタイム共有されます', '* Shared instantly in real-time with riders across Japan'],
+        ['現地のひとことメモ（任意）', 'Field Notes (Optional)'],
+        ['雪質・バーン状況', 'Snow / Surface'],
+        ['新雪の深さ', 'Fresh Snow Depth'],
+        ['滑走時間帯', 'Time Slot'],
+        ['体感満足度', 'Rating'],
+        ['滑走スポット', 'Spot'],
+        ['通知する新雪の基準（この量以上降る時だけ通知）', 'Snowfall Alert Threshold'],
+        ['受信ルール（すべて基準以上の降雪時のみ配信）', 'Delivery Rules (Only when snowfall exceeds threshold)'],
+        ['通知を受け取るスポット', 'Subscribed Spots'],
+        ['通知がブロックされています（端末設定から許可してください）', 'Notifications blocked (Please enable in device settings)'],
+        ['ON（プッシュ通知受信中）', 'ON (Push active)'],
+        ['OFF（未登録）', 'OFF (Not Registered)'],
+        ['通知を有効にする', 'Enable Notifications'],
+        ['通知をOFFにする', 'Disable Notifications'],
+        ['通知ステータス', 'Notification Status'],
+        ['通知が接続されています', 'Notifications connected'],
+        ['テスト通知を試す', 'Send Test Notification'],
+        ['通知設定を保存しました', 'Notification settings saved'],
+        ['MY全選択', 'Select All Saved'],
+        ['選択中のみ', 'Selected Only'],
         ['最新の全国雪データを読み込み中...', 'Loading latest Japan snow data...'],
         ['全国最新雪レポフィード', 'Japan Snow Reports Feed'],
         ['みんなの現地レポート', 'User Field Report'],
@@ -4770,29 +4828,46 @@
         ['今後3日間の降雪予報', '3-Day Snow Forecast'],
         ['夜間新雪 / 1日計', 'Overnight / Daily'],
         ['夜間新雪 / 1日合計', 'Overnight / Daily'],
-        ['くるぶし 5〜15cm', 'Ankle 5-15cm'],
-        ['すね 15〜30cm', 'Shin 15-30cm'],
-        ['ひざ 30〜50cm', 'Knee 30-50cm'],
-        ['もも 50〜70cm', 'Thigh 50-70cm'],
-        ['腰 70〜100cm', 'Waist 70-100cm'],
-        ['胸以上 100cm+', 'Chest+ 100cm+'],
-        ['神パウ', 'Epic Pow'],
-        ['極上パウ', 'Deep Pow'],
-        ['良質パウ', 'Good Pow'],
-        ['ちょいパウ', 'Light Pow'],
-        ['重パウ', 'Heavy Pow'],
-        ['しまり雪', 'Packed Snow'],
-        ['ザラメ雪', 'Spring Corn'],
-        ['アイスバーン', 'Ice / Firm'],
-        ['雨・融雪', 'Rain / Melt'],
-        ['朝イチ', 'First Chair'],
-        ['ナイター', 'Night Ski'],
-        ['午前', 'Morning'],
-        ['午後', 'Afternoon'],
-        ['明朝', 'Tomorrow AM'],
-        ['今朝', 'This AM'],
-        ['本日', 'Today'],
-        ['雪レポ', 'Report'],
+        ['登録スポットの夜間新雪・積雪・雪質を一目で比較', 'Compare live overnight snow & depth'],
+        ['登録スポットのOvernight Snow・積雪・雪質を...', 'Compare live overnight snow & depth...'],
+        ['登録スポットのOvernight Snow・積雪・雪質を一目で比較', 'Compare live overnight snow & depth'],
+        ['登録スポットのOvernight Snow・Depth・Snow Qualityを一目で比較', 'Compare live overnight snow & depth'],
+        ['MYスポット一覧', 'Saved Spots'],
+        ['Saved一覧', 'Saved Spots'],
+        ['MYスポットがまだ登録されていません', 'No Saved Spots yet'],
+        ['ホーム画面のスポット名横にある「★」マークをタップするか、上の追加ボタンからよく行くゲレンデ・BC山を登録すると、ここで一括比較できます。', 'Tap the ★ icon next to a spot on Home or use the Add button above to compare your favorite resorts & BC mountains here.'],
+        ['全国スポットから検索して追加', 'Search & Add Spots'],
+        ['右上の★を押してMYスポットを登録してください', 'Tap ★ at top right to save spots'],
+        // --- バックカントリー・ホーム画面 ---
+        ['藪・岩露出注意', 'Brush / Rocks Exposed'],
+        ['薮・岩露出注意', 'Brush / Rocks Exposed'],
+        ['薮・地形露出注意', 'Brush / Terrain Exposed'],
+        ['ブッシュ・石注意', 'Thin Cover / Rocks'],
+        ['山岳気象目安', 'Mountain Weather Guide'],
+        ['稜線・山頂風', 'Ridge / Summit Wind'],
+        ['稜線・Top風', 'Ridge / Top Wind'],
+        ['山岳コンディション', 'Mountain Condition'],
+        ['山頂ピーク', 'Summit Peak'],
+        ['登山口・ベース', 'Trailhead / Base'],
+        ['ゲレンデトップ', 'Top'],
+        ['ゲレンデベース', 'Base'],
+        ['安定しまり雪', 'Stable Packed'],
+        ['比較的安定', 'Relatively Stable'],
+        ['雪崩情報・装備を確認の上、自己責任で行動してください。', 'Check avalanche info & gear before entering backcountry.'],
+        ['【要因】', '[Factor] '],
+        ['🧭 北斜面', '🧭 N Aspect'],
+        ['🧭 北東斜面', '🧭 NE Aspect'],
+        ['🧭 東斜面', '🧭 E Aspect'],
+        ['🧭 南東斜面', '🧭 SE Aspect'],
+        ['🧭 南斜面', '🧭 S Aspect'],
+        ['🧭 南西斜面', '🧭 SW Aspect'],
+        ['🧭 西斜面', '🧭 W Aspect'],
+        ['🧭 北西斜面', '🧭 NW Aspect'],
+        ['🧭 全方位', '🧭 All Aspects'],
+        ['雪山スポット', 'Snow Spot'],
+        ['たった今', 'Just now'],
+        ['圧雪良好', 'Good Groomed'],
+        ['積雪: ', 'Depth: '],
         ['1日 +', 'Daily +'],
         ['エリア別一覧', 'By Area'],
         ['パウダーランキング', 'Powder Ranking'],
@@ -5060,6 +5135,10 @@
         ['POWDER BASE 使い方ガイド', 'POWDER BASE User Guide'],
         ['全国547スポットの雪質・予報を1秒でチェック', 'Check snow quality & forecasts for 547 Japan spots']
       ];
+
+      // キーの文字列長で降順ソート（長いフレーズから確実に優先置換し、キメラ化を完全防止）
+      const phraseMap = [...rawPhraseMap].sort((a, b) => b[0].length - a[0].length);
+
       // 単独単語のみ一致させる辞書（部分一致による日英キメラ防止）
       const exactWordMap = [
         ['すべて', 'All'],
