@@ -4700,6 +4700,9 @@
       // ※長いフレーズを先に定義し、部分一致による日英キメラを防止
       const phraseMap = [
         ['最新の全国雪データを読み込み中...', 'Loading latest Japan snow data...'],
+        ['SNOW TREND（実測・7日予報）', 'SNOW TREND (Live & 7-Day)'],
+        ['WEEKLY FORECAST（7日間）', 'WEEKLY FORECAST (7 Days)'],
+        ['※タップで該当日の詳細へ', 'Tap day for details'],
         ['OVERNIGHT SNOW (18時〜翌06時)', 'OVERNIGHT SNOW (18:00-06:00)'],
         ['現在の雪質スコア', 'Snow Quality Score'],
         ['積雪不足・滑走不可', 'Low Snow / Closed'],
@@ -4718,7 +4721,12 @@
         ['トップ風速', 'Top Wind'],
         ['アメダス実測', 'AMeDAS Live'],
         ['実測無し', 'No Live Data'],
+        ['晴れ/薄曇', 'Partly Cloudy'],
         ['晴/薄曇', 'Partly Cloudy'],
+        ['Sunny/薄曇', 'Partly Cloudy'],
+        ['評価: 未報告', 'Rating: None'],
+        ['評価:', 'Rating:'],
+        ['未報告', 'None'],
         ['全エリア', 'All Areas'],
         ['MYスポット登録', 'Save Spot'],
         ['MYスポット解除', 'Saved'],
@@ -4750,9 +4758,15 @@
         ['シャバ雪', 'Slushy'],
         ['ガリガリ', 'Icy / Firm'],
         ['クラスト', 'Crust'],
+        ['積雪深(cm)', 'Snow Depth (cm)'],
+        ['降雪量(cm/h)', 'Snowfall (cm/h)'],
+        ['降雨量(mm/h)', 'Rainfall (mm/h)'],
+        ['現在時刻', 'Now'],
+        ['現在Time', 'Now'],
         ['積雪深', 'Snow Depth'],
         ['現在積雪', 'Snow Depth'],
         ['バーン状態', 'Surface'],
+        ['7日間', '7 Days'],
         ['トップ', 'Top'],
         ['ベース', 'Base'],
         ['山頂', 'Top'],
@@ -4812,6 +4826,13 @@
         } else if (currentLang === 'ja' && window.jaNamesDict && window.jaNamesDict[trimmed]) {
           text = text.replace(trimmed, window.jaNamesDict[trimmed]);
         } else {
+          // 括弧内のエリア名等の部分置換（例: (🏂 米原・伊吹) => (🏂 Maibara / Ibuki)）
+          if (currentLang === 'en' && window.enNamesDict) {
+            const m = text.match(/\(([🏂⛰️])\s*([^\)]+)\)/);
+            if (m && window.enNamesDict[m[2].trim()]) {
+              text = text.replace(m[0], `(${m[1]} ${window.enNamesDict[m[2].trim()]})`);
+            }
+          }
           // 2. 単独単語の完全一致
           let matchedExact = false;
           for (const [jaStr, enStr] of exactWordMap) {
