@@ -483,7 +483,7 @@
       <!-- 縦スクロールテーブルコンテナ -->
       <div class="rounded-xl border border-slate-300 overflow-hidden bg-white shadow-inner">
         <!-- 固定ヘッダー（5列: 時刻 / 天気 / 気温・風 / ベース雪/雨 / トップ雪/雨） -->
-        <div class="grid grid-cols-[52px_38px_1.15fr_1fr_1fr] text-center text-[11px] font-bold text-slate-700 bg-slate-100 py-2 px-1.5 border-b border-slate-300 tracking-wide select-none">
+        <div class="grid grid-cols-[48px_44px_1.15fr_1fr_1fr] text-center text-[11px] font-bold text-slate-700 bg-slate-100 py-2 px-1 border-b border-slate-300 tracking-wide select-none">
           <div>時刻</div>
           <div>天気</div>
           <div id="tlWeatherHeader" class="text-sky-800">気温・風(トップ)</div>
@@ -2436,7 +2436,11 @@
       
       const headerEl = document.getElementById('tlWeatherHeader');
       if (headerEl) {
-        headerEl.textContent = level === 'top' ? '気温・風(トップ)' : '気温・風(ベース)';
+        if (currentLang === 'en') {
+          headerEl.textContent = level === 'top' ? 'Temp / Wind (Top)' : 'Temp / Wind (Base)';
+        } else {
+          headerEl.textContent = level === 'top' ? '気温・風(トップ)' : '気温・風(ベース)';
+        }
       }
 
       const spot = appData.spots.find(s => s.id === currentSpotId);
@@ -4704,6 +4708,24 @@
         ['WEEKLY FORECAST（7日間）', 'WEEKLY FORECAST (7 Days)'],
         ['※タップで該当日の詳細へ', 'Tap day for details'],
         ['OVERNIGHT SNOW (18時〜翌06時)', 'OVERNIGHT SNOW (18:00-06:00)'],
+        ['TIMELINE（1時間刻み）', 'TIMELINE (Hourly)'],
+        ['TIMELINE (1時間刻み)', 'TIMELINE (Hourly)'],
+        ['1日合計 (0-24時)', 'Daily Total (0-24h)'],
+        ['夜間 オーバーナイト (18-06時)', 'Overnight (18-06h)'],
+        ['オーバーナイト (18-06時)', 'Overnight (18-06h)'],
+        ['日中降雪合計 (06-18時)', 'Daytime Total (06-18h)'],
+        ['夜間新雪合計 (18-06時)', 'Overnight Total (18-06h)'],
+        ['日中降雪合計', 'Daytime Total'],
+        ['夜間新雪合計', 'Overnight Total'],
+        ['Daytime Snow合計 (06-18時)', 'Daytime Total (06-18h)'],
+        ['Overnight Snow合計 (18-06時)', 'Overnight Total (18-06h)'],
+        ['Daytime Snow合計', 'Daytime Total'],
+        ['Overnight Snow合計', 'Overnight Total'],
+        ['気温・風(トップ)', 'Temp / Wind (Top)'],
+        ['気温・風(ベース)', 'Temp / Wind (Base)'],
+        ['ベース 雪/雨', 'Base Snow/Rain'],
+        ['トップ 雪/雨', 'Top Snow/Rain'],
+        ['雪/雨', 'Snow/Rain'],
         ['現在の雪質スコア', 'Snow Quality Score'],
         ['積雪不足・滑走不可', 'Low Snow / Closed'],
         ['積雪30cm未満', 'Snow < 30cm'],
@@ -4714,6 +4736,7 @@
         ['トップ新雪', 'Top Fresh Snow'],
         ['夜間新雪', 'Overnight Snow'],
         ['日中降雪', 'Daytime Snow'],
+        ['夜間 +', 'Night +'],
         ['積雪不足', 'Low Snow'],
         ['滑走不可', 'Closed'],
         ['降雪なし', 'No Snowfall'],
@@ -4855,14 +4878,17 @@
                 text = text.split(enStr).join(jaStr);
               }
             }
-            // 4. 「〇〇実測」「0件」などのパターン置換
+            // 4. 「〇〇実測」「0件」「〇月〇日」などのパターン置換
             if (currentLang === 'en') {
               text = text.replace(/(\d+)件/g, '($1)');
+              text = text.replace(/(\d+)月(\d+)日/g, '$1/$2');
               if (text.endsWith('実測')) {
                 const stationJa = text.slice(0, -2).trim();
                 const stationEn = (window.enNamesDict && window.enNamesDict[stationJa]) ? window.enNamesDict[stationJa] : stationJa;
                 text = `${stationEn} AMeDAS`;
               }
+            } else if (currentLang === 'ja') {
+              text = text.replace(/(\d+)\/(\d+)/g, '$1月$2日');
             }
           }
         }
