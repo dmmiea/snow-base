@@ -726,13 +726,13 @@
         </div>
         <div class="min-w-0">
           <div class="flex items-center gap-1.5 flex-wrap">
-            <h3 class="text-sm font-black text-slate-900">MYスポット一覧</h3>
+            <h3 id="mySpotsHeaderTitle" class="text-sm font-black text-slate-900">MYスポット一覧</h3>
             <span id="mySpotsViewCountBadge" class="text-[11px] px-2 py-0.2 rounded-full bg-amber-100 text-amber-900 font-bold border border-amber-300">0地点</span>
           </div>
-          <p class="text-[11px] text-slate-600 font-medium mt-0.5 truncate">登録スポットの夜間新雪・積雪・雪質を一目で比較</p>
+          <p id="mySpotsHeaderDesc" class="text-[11px] text-slate-600 font-medium mt-0.5 truncate">登録スポットの夜間新雪・積雪・雪質を一目で比較</p>
         </div>
       </div>
-      <button type="button" onclick="openSearchModal()" class="px-2.5 py-1.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white text-xs font-bold shadow-sm transition active:scale-95 flex items-center gap-1 shrink-0">
+      <button type="button" onclick="openSearchModal()" id="btnMySpotsAdd" class="px-2.5 py-1.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white text-xs font-bold shadow-sm transition active:scale-95 flex items-center gap-1 shrink-0">
         <i class="fa-solid fa-plus text-[11px]"></i>
         <span>追加</span>
       </button>
@@ -4000,7 +4000,7 @@
 
       const validFavSpots = appData.spots.filter(s => favorites.includes(s.id));
       if (countBadge) {
-        countBadge.textContent = `${validFavSpots.length}地点`;
+        countBadge.textContent = (currentLang === 'en') ? `${validFavSpots.length} Spots` : `${validFavSpots.length}地点`;
       }
 
       if (validFavSpots.length === 0) {
@@ -4116,8 +4116,8 @@
               </div>
             </div>
             <div class="text-right text-[10.5px] text-slate-800 font-bold shrink-0">
-              <div>積雪 ${topDepth}/${baseDepth}cm</div>
-              <div class="text-slate-600 font-normal">${wInfo.icon} ${topTemp}℃ / 風${windSpeed}m/s</div>
+              <div>${currentLang === 'en' ? 'Depth' : '積雪'} ${topDepth}/${baseDepth}cm</div>
+              <div class="text-slate-600 font-normal">${wInfo.icon} ${topTemp}℃ / ${currentLang === 'en' ? 'Wind ' : '風'}${windSpeed}m/s</div>
             </div>
           </div>
 
@@ -4714,6 +4714,21 @@
         }
       }
 
+      // MYスポットタブヘッダーの直接設定
+      const mySpotsTitleEl = document.getElementById('mySpotsHeaderTitle');
+      if (mySpotsTitleEl) {
+        mySpotsTitleEl.textContent = (currentLang === 'en') ? 'Saved Spots' : 'MYスポット一覧';
+      }
+      const mySpotsDescEl = document.getElementById('mySpotsHeaderDesc');
+      if (mySpotsDescEl) {
+        mySpotsDescEl.textContent = (currentLang === 'en') ? 'Compare live overnight snow & depth' : '登録スポットの夜間新雪・積雪・雪質を一目で比較';
+      }
+      const mySpotsAddBtn = document.getElementById('btnMySpotsAdd');
+      if (mySpotsAddBtn) {
+        const span = mySpotsAddBtn.querySelector('span');
+        if (span) span.textContent = (currentLang === 'en') ? 'Add' : '追加';
+      }
+
       // 固有名詞英語辞書の遅延ロード（初回EN切替時）
       if (currentLang === 'en' && !window.enNamesDict && !window._loadingEnNames) {
         window._loadingEnNames = true;
@@ -4849,6 +4864,12 @@
         ['評価: 未報告', 'Rating: None'],
         ['評価:', 'Rating:'],
         ['未報告', 'None'],
+        ['登録スポットの夜間新雪・積雪・雪質を一目で比較', 'Compare live overnight snow & depth'],
+        ['登録スポットのOvernight Snow・積雪・雪質を...', 'Compare live overnight snow & depth...'],
+        ['登録スポットのOvernight Snow・積雪・雪質を一目で比較', 'Compare live overnight snow & depth'],
+        ['登録スポットのOvernight Snow・Depth・Snow Qualityを一目で比較', 'Compare live overnight snow & depth'],
+        ['MYスポット一覧', 'Saved Spots'],
+        ['Saved一覧', 'Saved Spots'],
         ['雪質: ―', 'Snow: ―'],
         ['雪質:', 'Snow:'],
         ['雪質：', 'Snow:'],
@@ -4996,6 +5017,7 @@
             // 4. 「〇〇実測」「0件」「〇月〇日」などのパターン置換
             if (currentLang === 'en') {
               text = text.replace(/(\d+)件/g, '($1)');
+              text = text.replace(/(\d+)地点/g, '$1 Spots');
               text = text.replace(/(\d+)月(\d+)日/g, '$1/$2');
               if (text.endsWith('実測')) {
                 const stationJa = text.slice(0, -2).trim();
