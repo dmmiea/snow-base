@@ -4810,6 +4810,7 @@
         ['雪質:', 'Snow:'],
         ['雪質：', 'Snow:'],
         ['パウダー良好', 'Good Powder'],
+        ['スコア', 'Score'],
         ['全エリア', 'All Areas'],
         ['MYスポット登録', 'Save Spot'],
         ['MYスポット解除', 'Saved'],
@@ -4888,6 +4889,7 @@
         ['関東', 'Kanto'],
         ['東海', 'Tokai'],
         ['関西', 'Kansai'],
+        ['積雪', 'Depth'],
         ['夜間', 'Night'],
         ['雪質', 'Snow Quality'],
         ['新雪', 'Fresh Snow'],
@@ -5010,7 +5012,24 @@
         if (currentLang === 'en') applyLanguage();
       });
 
-      ['switchTab', 'renderTimeline', 'renderWeeklyForecast', 'renderAreasTab', 'renderMySpotsTab'].forEach(fn => {
+      [
+        'switchTab',
+        'renderTimeline',
+        'renderWeeklyForecast',
+        'renderAreasTab',
+        'renderMySpotsTab',
+        'setAreasRegionFilter',
+        'setAreasConditionFilter',
+        'setAreasCategoryFilter',
+        'setAreasSearchQuery',
+        'toggleAreaAccordion',
+        'toggleAllAreaAccordions',
+        'switchAreasSubView',
+        'renderRankingTab',
+        'onRegionChange',
+        'onAreaChange',
+        'renderSpotPills'
+      ].forEach(fn => {
         hookFn(fn, () => {
           if (currentLang === 'en') applyLanguage();
         });
