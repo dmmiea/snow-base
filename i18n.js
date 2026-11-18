@@ -1243,7 +1243,8 @@
     if (jaName === '関東') return window.t('regKanto');
     if (jaName === '東海') return window.t('regTokai');
     if (jaName === '関西') return window.t('regKansai');
-    if (jaName === '西日本' || jaName === '中国・西日本') return window.t('regWest');
+    if (jaName === '中国' || jaName === '西日本' || jaName === '中国・西日本') return window.t('regWest');
+    if (jaName === '四国' || jaName === '四国他') return 'Shikoku';
     if (jaName === '全国') return window.t('regAll');
     if (jaName === '主要エリア') return window.t('mainAreaFallback');
     if (jaName === 'その他エリア') return window.t('otherAreaFallback');
