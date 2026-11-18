@@ -445,7 +445,7 @@
       defaultTrailheadBase: 'Trailhead / Base',
       defaultResortBase: 'Base',
       elevDiffFormat: '↕ Vert {diff}m',
-      overnightHeader: 'OVERNIGHT SNOW (18:00-06:00)',
+      overnightHeader: 'OVERNIGHT (18-06h)',
       overnightHelpTitle: 'About Overnight Snow',
       topFreshSnow: 'Top Fresh Snow',
       bcWeatherGuide: 'Mountain Weather Guide',
