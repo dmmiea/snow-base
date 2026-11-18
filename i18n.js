@@ -506,7 +506,7 @@
       tlColTempWindBase: 'Temp / Wind (Base)',
       tlColBasePrecip: 'Base Snow/Rain',
       tlColTopPrecip: 'Top Snow/Rain',
-      tlFooterNote: '* Snow/Rain: Snowfall(cm/h) / Rain(mm/h) ・ Bottom = Depth(cm)',
+      tlFooterNote: '* Snow/Rain: Snowfall(cm/h) / Rain(mm/h) • Bottom = Depth(cm)',
       tlNightSumLabel: '🌙 Overnight Total (18-06h)',
       tlDaySumLabel: '☀️ Daytime Total (06-18h)',
       dateFormatMD: '{m}/{d}',
@@ -1236,6 +1236,15 @@
   window.tName = function (jaName) {
     if (!jaName) return '';
     if (window.currentLang !== 'en') return jaName;
+    if (jaName === '北海道') return window.t('regHokkaido');
+    if (jaName === '東北') return window.t('regTohoku');
+    if (jaName === '信越') return window.t('regShinetsu');
+    if (jaName === '北陸') return window.t('regHokuriku');
+    if (jaName === '関東') return window.t('regKanto');
+    if (jaName === '東海') return window.t('regTokai');
+    if (jaName === '関西') return window.t('regKansai');
+    if (jaName === '西日本' || jaName === '中国・西日本') return window.t('regWest');
+    if (jaName === '全国') return window.t('regAll');
     if (jaName === '主要エリア') return window.t('mainAreaFallback');
     if (jaName === 'その他エリア') return window.t('otherAreaFallback');
     if (jaName === '山頂ピーク') return window.t('defaultSummitPeak');

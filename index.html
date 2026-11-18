@@ -1349,7 +1349,11 @@
         // 最終更新時刻表示
         if (appData.updatedAt) {
           const d = new Date(appData.updatedAt);
-          document.getElementById('lastUpdated').textContent = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+          const lastUpdatedEl = document.getElementById('lastUpdated');
+          if (lastUpdatedEl) {
+            lastUpdatedEl.removeAttribute('data-i18n');
+            lastUpdatedEl.textContent = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+          }
         }
 
         // スキー場・BC山 カウント
