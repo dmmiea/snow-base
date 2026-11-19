@@ -68,64 +68,49 @@
 <body class="bg-slate-100 text-slate-900 flex flex-col h-full overflow-hidden select-none">
 
   <!-- ===============================
-       1. マップヘッダー（省スペーススリム設計）
+       1. マップヘッダー（1行スリム設計・折り返し防止）
        =============================== -->
-  <header class="bg-white text-slate-900 px-3 py-1.5 shadow-sm z-20 border-b border-slate-200 flex items-center justify-between">
-    <div class="flex items-center space-x-2">
-      <div class="w-6 h-6 rounded-lg bg-sky-700 flex items-center justify-center font-black text-white shadow text-xs">
-        ❄️
-      </div>
-      <div>
-        <h1 class="text-xs font-extrabold tracking-tight flex items-center gap-1.5 text-slate-900">
-          <span id="mapTitleText">全国雪山マップ</span>
-          <span id="mapCountBadge" class="text-[11px] bg-sky-50 text-sky-800 border border-sky-300 px-1.5 py-0.2 rounded-full font-mono font-bold">--地点</span>
-        </h1>
-      </div>
+  <header class="bg-white text-slate-900 px-3 py-1.5 shadow-sm z-20 border-b border-slate-200 flex items-center justify-between shrink-0 gap-2">
+    <!-- 予報 / 実測 トグル（左側） -->
+    <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold shrink-0">
+      <button type="button" onclick="setMapSource('forecast')" id="btnSourceForecast" class="px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition whitespace-nowrap">
+        🔮 予報
+      </button>
+      <button type="button" onclick="setMapSource('live')" id="btnSourceLive" class="px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
+        📡 実測
+      </button>
     </div>
 
-    <!-- モード切替（📡 実測 / 🔮 予報） & 種別フィルター（🏂 スキー場 / ⛰️ BC山） -->
-    <div class="flex items-center gap-1.5 flex-wrap justify-end">
-      <!-- 予報 / 実測 トグル -->
-      <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold">
-        <button type="button" onclick="setMapSource('forecast')" id="btnSourceForecast" class="px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-sm transition">
-          🔮 予報
-        </button>
-        <button type="button" onclick="setMapSource('live')" id="btnSourceLive" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
-          📡 実測
-        </button>
-      </div>
-
-      <!-- スキー場 / BC山 トグル -->
-      <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold">
-        <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2.5 py-0.5 rounded bg-sky-700 text-white font-black shadow-sm transition">
-          🏂 スキー場
-        </button>
-        <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2.5 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
-          ⛰️ BC山
-        </button>
-      </div>
+    <!-- スキー場 / BC山 トグル（右側） -->
+    <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold shrink-0">
+      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition whitespace-nowrap">
+        🏂 スキー場
+      </button>
+      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
+        ⛰️ BC山
+      </button>
     </div>
   </header>
 
   <!-- ===============================
        1.5 実測期間セレクターバー（実測モード時のみ表示）
        =============================== -->
-  <div id="mapLivePeriodBar" class="hidden bg-sky-50/95 border-b border-sky-200 px-3 py-1 flex items-center justify-between gap-1 text-xs z-15">
-    <div class="flex items-center gap-1 text-[11px] font-bold text-sky-950">
+  <div id="mapLivePeriodBar" class="hidden bg-sky-50/95 border-b border-sky-200 px-3 py-1.5 flex items-center justify-between gap-2 text-xs z-15 shrink-0">
+    <div class="flex items-center gap-1.5 text-[11px] font-bold text-sky-950 shrink-0">
       <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-      <span id="mapLiveBarLabel">公的観測所 実測降雪:</span>
+      <span id="mapLiveBarLabel">実測降雪:</span>
     </div>
-    <div class="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-sky-300 text-[10.5px] font-bold shadow-sm">
-      <button type="button" onclick="setMapLivePeriod('night')" id="btnMapLiveNight" class="px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-xs transition">
+    <div class="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-sky-300 text-[10.5px] font-bold shadow-sm shrink-0">
+      <button type="button" onclick="setMapLivePeriod('night')" id="btnMapLiveNight" class="px-2.5 py-0.5 rounded bg-sky-700 text-white font-black shadow-xs transition whitespace-nowrap">
         🌙 夜間
       </button>
-      <button type="button" onclick="setMapLivePeriod('6h')" id="btnMapLive6h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
+      <button type="button" onclick="setMapLivePeriod('6h')" id="btnMapLive6h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
         6h
       </button>
-      <button type="button" onclick="setMapLivePeriod('12h')" id="btnMapLive12h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
+      <button type="button" onclick="setMapLivePeriod('12h')" id="btnMapLive12h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
         12h
       </button>
-      <button type="button" onclick="setMapLivePeriod('24h')" id="btnMapLive24h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
+      <button type="button" onclick="setMapLivePeriod('24h')" id="btnMapLive24h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
         24h
       </button>
     </div>
@@ -134,7 +119,7 @@
   <!-- ===============================
        2. 地域クイックジャンプバー（横スクロール）
        =============================== -->
-  <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto hide-scrollbar z-10 text-xs">
+  <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto hide-scrollbar z-10 text-xs shrink-0">
     <span id="mapRegionLabel" class="text-[11px] font-bold text-slate-700 uppercase tracking-wider whitespace-nowrap mr-0.5">地域:</span>
     <button onclick="jumpToRegion('all')" class="region-pill active px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-sky-700 text-white shadow-sm transition text-[11px]" data-region="all">全国</button>
     <button onclick="jumpToRegion('hokkaido')" class="region-pill px-2.5 py-1 rounded-full font-bold whitespace-nowrap bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 transition text-[11px]" data-region="hokkaido">北海道</button>
@@ -235,7 +220,7 @@
         catBc: '⛰️ BC山',
         sourceForecast: '🔮 予報',
         sourceLive: '📡 実測',
-        liveBarLabel: '公的観測所 実測降雪:',
+        liveBarLabel: '実測降雪:',
         livePeriodNight: '🌙 夜間',
         livePeriod6h: '6h',
         livePeriod12h: '12h',
@@ -295,7 +280,7 @@
         catBc: '⛰️ Backcountry',
         sourceForecast: '🔮 Forecast',
         sourceLive: '📡 Observed',
-        liveBarLabel: 'Live Gauges Snowfall:',
+        liveBarLabel: 'Observed:',
         livePeriodNight: '🌙 Night',
         livePeriod6h: '6h',
         livePeriod12h: '12h',
@@ -594,7 +579,8 @@
         return true;
       });
 
-      document.getElementById('mapCountBadge').textContent = `${filtered.length}${dict.countSuffix}`;
+      const countEl = document.getElementById('mapCountBadge');
+      if (countEl) countEl.textContent = `${filtered.length}${dict.countSuffix}`;
 
       filtered.forEach(s => {
         if (!s.top || typeof s.top.lat !== 'number' || typeof s.top.lon !== 'number') return;
