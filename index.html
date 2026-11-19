@@ -2196,7 +2196,6 @@
       const dayNamesJa = ['日', '月', '火', '水', '木', '金', '土'];
       const dayNamesEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const isJa = currentLang !== 'en';
-      const maxFutureOffset = (endIdx - 1) - currentIdx;
 
       for (let i = startIdx; i < endIdx; i++) {
         const tStr = hourly.time[i]; // 2026-11-10T06:00
@@ -2217,17 +2216,13 @@
         // ツールチップタイトル用の完全表記
         labels.push(`${datePart} ${hour}`);
 
-        // X軸の相対ラベル（サーフベース準拠）
+        // X軸の相対ラベル（サーフベース準拠・毎日等間隔）
         let axisLabel = null;
         if (currentTrendRange === '7d') {
           if (offset === -24) axisLabel = isJa ? '24h前' : '-24h';
           else if (offset === 0) axisLabel = 'NOW';
-          else if (offset === 24) axisLabel = isJa ? '1日後' : '+1d';
-          else if (offset === 48) axisLabel = isJa ? '2日後' : '+2d';
-          else if (offset === 72) axisLabel = isJa ? '3日後' : '+3d';
-          else if (offset === 120) axisLabel = isJa ? '5日後' : '+5d';
-          else if (offset === 168 || (offset === 144 && maxFutureOffset < 168)) {
-            const dNum = Math.round(offset / 24);
+          else if (offset > 0 && offset % 24 === 0) {
+            const dNum = offset / 24;
             axisLabel = isJa ? `${dNum}日後` : `+${dNum}d`;
           }
         } else {
@@ -2374,7 +2369,7 @@
                   const idx = ctx.index;
                   return (tickColors && tickColors[idx]) ? tickColors[idx] : '#64748b';
                 },
-                font: { size: 10, weight: 'bold' }
+                font: { size: 9, weight: 'bold' }
               }
             },
             yDepth: {
