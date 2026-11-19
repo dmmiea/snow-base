@@ -250,6 +250,12 @@
       rankLiveLegend: '沈降: 圧密・融解による減少量 / 最終降雪: 0h=直近1hに降雪',
       snowNow: '降雪中',
       hoursAgo: '{h}h前',
+      heroLiveBarTitle: '公的積雪実測フル検証',
+      heroLiveNightShort: '夜間',
+      heroLive6hShort: '6h',
+      heroLive24hShort: '24h',
+      heroLiveNoChange: '増減なし',
+      legendOpenHint: '開く',
 
       // Feed Tab
       feedHeaderTitle: '全国最新雪レポフィード',
@@ -613,6 +619,12 @@
       rankLiveLegend: 'Settling: Compaction/melt loss / Last Snow: 0h = within 1h',
       snowNow: 'Snowing',
       hoursAgo: '{h}h ago',
+      heroLiveBarTitle: 'Official Live Observation',
+      heroLiveNightShort: 'Night',
+      heroLive6hShort: '6h',
+      heroLive24hShort: '24h',
+      heroLiveNoChange: 'No change',
+      legendOpenHint: 'Show',
 
       // Feed Tab
       feedHeaderTitle: 'Japan Snow Reports Feed',

@@ -251,7 +251,7 @@
       <div class="absolute -right-12 -top-12 w-40 h-40 bg-sky-500/5 rounded-full blur-2xl pointer-events-none"></div>
 
       <!-- スポットヘッダー -->
-      <div class="mb-3 relative z-10">
+      <div class="mb-2 relative z-10">
         <!-- 1段目：スポット名 ＆ 3点ボタン（サーフベース完全準拠・インライン配置） -->
         <div class="flex items-center gap-2 flex-wrap mb-1.5">
           <h2 id="heroSpotName" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">
@@ -277,6 +277,15 @@
           <span id="heroSlopeBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-300">🧭 北斜面</span>
           <span id="heroElevDiffBadge" class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-300">↕ 標高差 --m</span>
         </div>
+      </div>
+
+      <!-- BC専用 山岳警戒バナー（BC選択時のみ表示：ヒーロー最上段へ昇格） -->
+      <div id="heroBcAlertBox" class="hidden mb-2.5 rounded-xl px-3 py-2 border text-xs relative z-10 shadow-sm">
+        <div class="flex items-center justify-between gap-2">
+          <span id="heroBcAlertTitle" class="font-black flex items-center gap-1.5 text-xs sm:text-sm"></span>
+          <span class="text-[10px] font-bold opacity-80 shrink-0" data-i18n="bcWeatherGuide">山岳気象目安</span>
+        </div>
+        <p id="heroBcAlertDesc" class="text-[11px] mt-0.5 leading-snug font-medium"></p>
       </div>
 
       <!-- メイン指標: スコア & 積雪深 & バーンタグ -->
@@ -348,15 +357,6 @@
             <!-- JSで動的挿入 -->
           </div>
         </div>
-
-        <!-- BC専用 山岳警戒バナー（BC選択時のみ表示） -->
-        <div id="heroBcAlertBox" class="hidden mt-2 rounded-xl px-3 py-2 border text-xs">
-          <div class="flex items-center justify-between gap-2">
-            <span id="heroBcAlertTitle" class="font-black flex items-center gap-1.5"></span>
-            <span class="text-[10px] font-bold opacity-80 shrink-0" data-i18n="bcWeatherGuide">山岳気象目安</span>
-          </div>
-          <p id="heroBcAlertDesc" class="text-[11px] mt-0.5 leading-snug font-medium"></p>
-        </div>
       </div>
 
       <!-- 気温 & 風速 & 現在天気 & アメダス実況（スマホ2列x2段 / PC4列） -->
@@ -383,6 +383,46 @@
         <div class="shrink-0 flex flex-col items-center min-w-0 w-full px-1">
           <span id="heroAmedasTitle" class="text-[11px] text-slate-600 font-bold block max-w-full truncate whitespace-nowrap" data-i18n="amedasLiveDefault">アメダス実測</span>
           <span id="heroAmedasDepth" class="font-teko text-base sm:text-lg font-bold text-emerald-700 block mt-0.5 whitespace-nowrap">-- cm</span>
+          <span id="heroAmedasSub" class="text-[10px] font-bold text-slate-500 block max-w-full truncate whitespace-nowrap"></span>
+        </div>
+      </div>
+
+      <!-- BC専用 公的積雪実測フル検証バー（BC選択時のみ表示） -->
+      <div id="heroBcLiveBar" class="hidden mt-3 pt-3 border-t border-slate-200 relative z-10">
+        <div class="bg-slate-50/90 rounded-xl p-2.5 border border-slate-200">
+          <div class="flex items-center justify-between gap-2 border-b border-slate-200/80 pb-1.5 mb-2">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span id="heroBcLiveBadge" class="text-[10px] font-black px-1.5 py-0.2 rounded bg-sky-100 text-sky-800 border border-sky-300 shrink-0">アメダス</span>
+              <span id="heroBcLiveStation" class="text-xs font-bold text-slate-800 truncate">--</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0 text-xs">
+              <span class="text-[11px] text-slate-500 font-bold" data-i18n="rankLiveDepthLabel">積雪</span>
+              <span id="heroBcLiveDepth" class="font-teko text-lg font-bold text-emerald-700 leading-none">-- cm</span>
+              <span id="heroBcLiveFresh" class="text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700">--</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-5 gap-1 text-center">
+            <div class="bg-white rounded-lg p-1 border border-slate-200/70">
+              <span class="text-[10px] text-slate-500 font-bold block leading-tight" data-i18n="heroLiveNightShort">夜間</span>
+              <span id="heroBcStatNight" class="font-teko text-sm sm:text-base font-bold text-orange-700 block mt-0.5">--</span>
+            </div>
+            <div class="bg-white rounded-lg p-1 border border-slate-200/70">
+              <span class="text-[10px] text-slate-500 font-bold block leading-tight" data-i18n="heroLive6hShort">6h</span>
+              <span id="heroBcStat6h" class="font-teko text-sm sm:text-base font-bold text-slate-800 block mt-0.5">--</span>
+            </div>
+            <div class="bg-white rounded-lg p-1 border border-slate-200/70">
+              <span class="text-[10px] text-slate-500 font-bold block leading-tight" data-i18n="heroLive24hShort">24h</span>
+              <span id="heroBcStat24h" class="font-teko text-sm sm:text-base font-bold text-slate-800 block mt-0.5">--</span>
+            </div>
+            <div class="bg-white rounded-lg p-1 border border-slate-200/70">
+              <span class="text-[10px] text-slate-500 font-bold block leading-tight" data-i18n="rankLiveSubsidenceLabel">沈降</span>
+              <span id="heroBcStatSub" class="font-teko text-sm sm:text-base font-bold text-rose-700 block mt-0.5">--</span>
+            </div>
+            <div class="bg-white rounded-lg p-1 border border-slate-200/70">
+              <span class="text-[10px] text-slate-500 font-bold block leading-tight" data-i18n="rankLiveTempLabel">気温</span>
+              <span id="heroBcStatTemp" class="font-teko text-xs sm:text-sm font-bold text-sky-800 block mt-0.5 truncate">--</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -498,78 +538,84 @@
       </div>
     </div>
 
-    <!-- 天気マーク・風の見方（凡例カード） -->
-    <div id="weatherLegendCard" class="snow-card rounded-2xl p-3.5 border border-slate-200 shadow-sm space-y-3">
-      <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-        <div class="flex items-center gap-1.5 text-xs font-black text-slate-900">
-          <i class="fa-solid fa-circle-info text-sky-700"></i>
-          <span data-i18n="weatherLegendTitle">天気マーク・風の見方（凡例）</span>
+    <!-- 天気マーク・風の見方（凡例カード・開閉式） -->
+    <details id="weatherLegendCard" class="group snow-card rounded-2xl p-3.5 border border-slate-200 shadow-sm transition">
+      <summary class="flex items-center justify-between gap-2 cursor-pointer list-none select-none">
+        <div class="flex items-center gap-1.5 text-xs font-black text-slate-900 min-w-0">
+          <i class="fa-solid fa-circle-info text-sky-700 shrink-0"></i>
+          <span data-i18n="weatherLegendTitle" class="truncate">天気マーク・風の見方（凡例）</span>
         </div>
-        <span class="text-[10.5px] font-bold text-slate-500" data-i18n="weatherLegendSub">1時間降雪・風速連動</span>
-      </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <span class="text-[10.5px] font-bold text-slate-500 hidden sm:inline" data-i18n="weatherLegendSub">1時間降雪・風速連動</span>
+          <span class="text-[10.5px] text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200 font-bold group-open:hidden" data-i18n="legendOpenHint">開く</span>
+          <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200 group-open:rotate-180"></i>
+        </div>
+      </summary>
 
-      <!-- 天気アイコン凡例 -->
-      <div>
-        <div class="text-[11px] font-bold text-slate-600 mb-1.5" data-i18n="weatherIconsHeading">天気マーク</div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[11px]">
-          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
-            <span class="text-sm">☀️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconClear">快晴</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
-            <span class="text-sm">🌤️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconPartly">晴れ/薄曇</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
-            <span class="text-sm">☁️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconCloudy">曇り</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
-            <span class="text-sm">🌫️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconFog">霧/濃霧</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
-            <span class="text-sm">🌨️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconLightSnow">小雪(&lt;0.5cm)</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
-            <span class="text-sm">❄️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconSnow">雪(0.5cm~)</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-sky-50 rounded-lg px-2 py-1 border border-sky-200">
-            <span class="text-xs">❄️❄️</span><span class="font-bold text-sky-900 truncate" data-i18n="wIconHeavySnow">大雪(3cm~)</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-rose-50 rounded-lg px-2 py-1 border border-rose-200">
-            <span class="text-xs">🌬️❄️</span><span class="font-bold text-rose-900 truncate" data-i18n="wIconBlizzard">吹雪(12m~)</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
-            <span class="text-sm">🌦️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconDrizzle">霧雨/にわか雨</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
-            <span class="text-sm">🌧️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconRainSleet">雨/みぞれ</span>
-          </div>
-          <div class="flex items-center gap-1.5 bg-amber-50 rounded-lg px-2 py-1 border border-amber-200">
-            <span class="text-sm">⛈️</span><span class="font-bold text-amber-900 truncate" data-i18n="wIconThunder">雷雨/荒天</span>
+      <div class="pt-3 border-t border-slate-200 mt-2 space-y-3">
+        <!-- 天気アイコン凡例 -->
+        <div>
+          <div class="text-[11px] font-bold text-slate-600 mb-1.5" data-i18n="weatherIconsHeading">天気マーク</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[11px]">
+            <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+              <span class="text-sm">☀️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconClear">快晴</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+              <span class="text-sm">🌤️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconPartly">晴れ/薄曇</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+              <span class="text-sm">☁️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconCloudy">曇り</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+              <span class="text-sm">🌫️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconFog">霧/濃霧</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+              <span class="text-sm">🌨️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconLightSnow">小雪(&lt;0.5cm)</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+              <span class="text-sm">❄️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconSnow">雪(0.5cm~)</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-sky-50 rounded-lg px-2 py-1 border border-sky-200">
+              <span class="text-xs">❄️❄️</span><span class="font-bold text-sky-900 truncate" data-i18n="wIconHeavySnow">大雪(3cm~)</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-rose-50 rounded-lg px-2 py-1 border border-rose-200">
+              <span class="text-xs">🌬️❄️</span><span class="font-bold text-rose-900 truncate" data-i18n="wIconBlizzard">吹雪(12m~)</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+              <span class="text-sm">🌦️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconDrizzle">霧雨/にわか雨</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-slate-50 rounded-lg px-2 py-1 border border-slate-200">
+              <span class="text-sm">🌧️</span><span class="font-bold text-slate-800 truncate" data-i18n="wIconRainSleet">雨/みぞれ</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-amber-50 rounded-lg px-2 py-1 border border-amber-200">
+              <span class="text-sm">⛈️</span><span class="font-bold text-amber-900 truncate" data-i18n="wIconThunder">雷雨/荒天</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 風速カラー & 風向き矢印 -->
-      <div class="pt-1 border-t border-slate-200 space-y-1.5">
-        <div class="text-[11px] font-bold text-slate-600" data-i18n="windLegendHeading">風速カラー基準 &amp; 風向き矢印</div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10.5px]">
-          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
-            <span class="text-slate-600 font-bold" data-i18n="windCalm">弱風・快適</span><span class="text-slate-700 font-bold">0~4m/s</span>
+        <!-- 風速カラー & 風向き矢印 -->
+        <div class="pt-1 border-t border-slate-200 space-y-1.5">
+          <div class="text-[11px] font-bold text-slate-600" data-i18n="windLegendHeading">風速カラー基準 &amp; 風向き矢印</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10.5px]">
+            <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
+              <span class="text-slate-600 font-bold" data-i18n="windCalm">弱風・快適</span><span class="text-slate-700 font-bold">0~4m/s</span>
+            </div>
+            <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
+              <span class="text-slate-600 font-bold" data-i18n="windMod">やや強風</span><span class="text-amber-600 font-bold">5~9m/s</span>
+            </div>
+            <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
+              <span class="text-slate-600 font-bold" data-i18n="windStrong">強風・減速注意</span><span class="text-orange-600 font-bold">10~14m/s</span>
+            </div>
+            <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
+              <span class="text-slate-600 font-bold" data-i18n="windGale">暴風・運休警戒</span><span class="text-rose-600 font-black">15m/s~</span>
+            </div>
           </div>
-          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
-            <span class="text-slate-600 font-bold" data-i18n="windMod">やや強風</span><span class="text-amber-600 font-bold">5~9m/s</span>
-          </div>
-          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
-            <span class="text-slate-600 font-bold" data-i18n="windStrong">強風・減速注意</span><span class="text-orange-600 font-bold">10~14m/s</span>
-          </div>
-          <div class="flex items-center justify-between px-2 py-1 rounded-lg bg-slate-50 border border-slate-200">
-            <span class="text-slate-600 font-bold" data-i18n="windGale">暴風・運休警戒</span><span class="text-rose-600 font-black">15m/s~</span>
-          </div>
+          <p id="windLegendNote" class="text-[10.5px] text-slate-600 leading-relaxed" data-i18n-html="windLegendNoteHtml">
+            ※風向きは<strong class="text-slate-800">「吹いてくる方角（N/NE等）」と「風が流れていく矢印」</strong>を表示しています（例：<span class="font-bold text-slate-800">↘ NW</span>＝北西から南東へ吹く風）。
+          </p>
         </div>
-        <p id="windLegendNote" class="text-[10.5px] text-slate-600 leading-relaxed" data-i18n-html="windLegendNoteHtml">
-          ※風向きは<strong class="text-slate-800">「吹いてくる方角（N/NE等）」と「風が流れていく矢印」</strong>を表示しています（例：<span class="font-bold text-slate-800">↘ NW</span>＝北西から南東へ吹く風）。
-        </p>
       </div>
-    </div>
+    </details>
 
     <!-- 初めての方へ ＆ 仲間にシェアする 案内カード（サーフベース完全準拠） -->
     <div class="grid grid-cols-2 gap-2 pt-1">
@@ -1468,6 +1514,9 @@
       currentCategory = cat;
       updateCategoryUI();
       
+      // トレンドグラフ表示期間の自動最適化 (BCは直近48h、スキー場は7日間)
+      setTrendRange(cat === 'bc' ? '48h' : '7d');
+      
       // 切り替えたカテゴリのスポットを選択
       let filtered = appData.spots.filter(s => s.category === currentCategory && (currentRegion === 'all' || s.region === currentRegion));
       if (filtered.length === 0) {
@@ -2106,6 +2155,7 @@
         }
       }
       const amedasDepthEl = document.getElementById('heroAmedasDepth');
+      const amedasSubEl = document.getElementById('heroAmedasSub');
       if (amedasDepthEl) {
         const dVal = spot.current.liveAmedas ? spot.current.liveAmedas.snowDepth : null;
         if (dVal !== null && dVal !== undefined && !isNaN(dVal)) {
@@ -2116,6 +2166,118 @@
           amedasDepthEl.setAttribute('data-i18n', 'amedasNoData');
           amedasDepthEl.textContent = t('amedasNoData');
           amedasDepthEl.className = "text-[11px] font-bold text-slate-600 block mt-1.5 whitespace-nowrap";
+        }
+      }
+
+      // スキー場向け・公的実測サブ行 (直近実測の増減＋降雪状況)
+      if (amedasSubEl) {
+        if (live && live.stats) {
+          const stNight = live.stats.night;
+          const st6h = live.stats.h6;
+          const nightVal = (stNight && typeof stNight.snowfall === 'number') ? stNight.snowfall : null;
+          const h6Val = (st6h && typeof st6h.snowfall === 'number') ? st6h.snowfall : (typeof live.snow6h === 'number' ? live.snow6h : null);
+          const freshVal = (st6h && typeof st6h.freshness === 'number') ? st6h.freshness : (typeof live.freshness === 'number' ? live.freshness : null);
+          
+          const parts = [];
+          if (nightVal !== null && nightVal > 0) {
+            parts.push(`${t('heroLiveNightShort')}+${nightVal}cm`);
+          }
+          if (h6Val !== null && h6Val > 0) {
+            parts.push(`${t('heroLive6hShort')}+${h6Val}cm`);
+          } else if (parts.length === 0 && h6Val !== null && h6Val === 0) {
+            parts.push(`${t('heroLive6hShort')}${t('heroLiveNoChange')}`);
+          }
+          if (freshVal === 0) {
+            parts.push(t('snowNow'));
+          }
+          amedasSubEl.textContent = parts.join(' / ');
+          amedasSubEl.className = "text-[10px] font-bold text-slate-500 block max-w-full truncate whitespace-nowrap";
+        } else {
+          amedasSubEl.textContent = '';
+        }
+      }
+
+      // BC専用 公的積雪実測フル検証バー
+      const heroBcLiveBar = document.getElementById('heroBcLiveBar');
+      if (heroBcLiveBar) {
+        if (isBc) {
+          heroBcLiveBar.classList.remove('hidden');
+          const badgeEl = document.getElementById('heroBcLiveBadge');
+          const stEl = document.getElementById('heroBcLiveStation');
+          const dEl = document.getElementById('heroBcLiveDepth');
+          const freshEl = document.getElementById('heroBcLiveFresh');
+          const statNight = document.getElementById('heroBcStatNight');
+          const stat6h = document.getElementById('heroBcStat6h');
+          const stat24h = document.getElementById('heroBcStat24h');
+          const statSub = document.getElementById('heroBcStatSub');
+          const statTemp = document.getElementById('heroBcStatTemp');
+
+          if (badgeEl) badgeEl.textContent = isRoad ? t('rankLiveStationRoad') : t('rankLiveStationAmedas');
+          if (stEl) stEl.textContent = stationName ? tName(stationName) : '--';
+          
+          const depthVal = (live && typeof live.snowDepth === 'number') ? live.snowDepth : null;
+          if (dEl) dEl.textContent = depthVal !== null ? `${depthVal} cm` : '--';
+
+          const stats = (live && live.stats) || {};
+          const s6 = stats.h6 || {};
+          const sNight = stats.night || {};
+          const s24 = stats.h24 || {};
+
+          // 最終降雪 (freshness)
+          const fVal = typeof s6.freshness === 'number' ? s6.freshness : (live && typeof live.freshness === 'number' ? live.freshness : null);
+          if (freshEl) {
+            if (fVal === 0) {
+              freshEl.textContent = t('snowNow');
+              freshEl.className = "text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-sky-100 text-sky-800";
+            } else if (fVal !== null && !isNaN(fVal)) {
+              freshEl.textContent = t('hoursAgo', { h: fVal });
+              freshEl.className = "text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700";
+            } else {
+              freshEl.textContent = '―';
+              freshEl.className = "text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-slate-100 text-slate-400";
+            }
+          }
+
+          // 夜間増減
+          const nSnow = typeof sNight.snowfall === 'number' ? sNight.snowfall : null;
+          if (statNight) statNight.textContent = nSnow !== null ? `+${nSnow}cm` : '--';
+
+          // 6h増減
+          const h6Snow = typeof s6.snowfall === 'number' ? s6.snowfall : (live && typeof live.snow6h === 'number' ? live.snow6h : null);
+          if (stat6h) stat6h.textContent = h6Snow !== null ? `+${h6Snow}cm` : '--';
+
+          // 24h増減
+          const h24Snow = typeof s24.snowfall === 'number' ? s24.snowfall : (live && typeof live.snow24h === 'number' ? live.snow24h : null);
+          if (stat24h) stat24h.textContent = h24Snow !== null ? `+${h24Snow}cm` : '--';
+
+          // 沈降 (24h)
+          const subVal = typeof s24.subsidence === 'number' ? s24.subsidence : null;
+          if (statSub) {
+            if (subVal !== null && subVal < 0) {
+              statSub.textContent = `${subVal}cm`;
+            } else if (subVal !== null && subVal > 0) {
+              statSub.textContent = `-${subVal}cm`;
+            } else if (subVal === 0) {
+              statSub.textContent = '0cm';
+            } else {
+              statSub.textContent = '--';
+            }
+          }
+
+          // 気温 Max/Min (24h)
+          const tMax = typeof s24.tempMax === 'number' ? s24.tempMax : (live && typeof live.temp === 'number' ? live.temp : null);
+          const tMin = typeof s24.tempMin === 'number' ? s24.tempMin : (live && typeof live.temp === 'number' ? live.temp : null);
+          if (statTemp) {
+            if (tMax !== null && tMin !== null) {
+              statTemp.textContent = `${tMax}/${tMin}℃`;
+            } else if (tMax !== null) {
+              statTemp.textContent = `${tMax}℃`;
+            } else {
+              statTemp.textContent = '--';
+            }
+          }
+        } else {
+          heroBcLiveBar.classList.add('hidden');
         }
       }
 
@@ -3154,10 +3316,14 @@
       const spot = appData.spots.find(s => s.id === id);
       if (spot) {
         isFavMode = false;
+        const prevCategory = currentCategory;
         currentCategory = spot.category;
         currentRegion = spot.region;
         currentArea = spot.areaName || 'all';
         updateCategoryUI();
+        if (prevCategory !== spot.category) {
+          setTrendRange(spot.category === 'bc' ? '48h' : '7d');
+        }
         populateRegionsAndAreas();
         renderSpotPills();
         renderCurrentSpotDetails();
