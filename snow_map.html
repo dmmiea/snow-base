@@ -558,11 +558,18 @@
       renderMarkers();
     }
 
+    // スポットの実測stats（選択期間: night, 6h->h6, 12h->h12, 24h->h24）を取得
+    function getSpotLiveStat(s) {
+      const stats = s && s.current && s.current.liveAmedas && s.current.liveAmedas.stats;
+      if (!stats) return null;
+      const keyMap = { night: 'night', '6h': 'h6', '12h': 'h12', '24h': 'h24' };
+      const dataKey = keyMap[activeLivePeriod] || 'night';
+      return stats[dataKey] || null;
+    }
+
     // スポットの実測降雪量（選択期間）を取得
     function getSpotLiveSnowfall(s) {
-      const stats = s && s.current && s.current.liveAmedas && s.current.liveAmedas.stats;
-      if (!stats) return 0;
-      const periodStat = stats[activeLivePeriod];
+      const periodStat = getSpotLiveStat(s);
       if (!periodStat || typeof periodStat.snowfall !== 'number') return 0;
       return periodStat.snowfall;
     }
@@ -657,7 +664,7 @@
           const stationName = live ? tName(live.stationName || '') : '―';
           const liveDepth = (live && typeof live.snowDepth === 'number') ? live.snowDepth : 0;
           
-          const stats = live && live.stats && live.stats[activeLivePeriod];
+          const stats = getSpotLiveStat(s);
           const subsidence = (stats && typeof stats.subsidence === 'number') ? stats.subsidence : 0;
           const freshness = stats && stats.freshness !== null && stats.freshness !== undefined ? `${stats.freshness}h` : '―';
           let tempStr = '―';
