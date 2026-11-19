@@ -138,7 +138,7 @@
       snowPrefix: '雪質:',
 
       // Trend Chart
-      trendTitle: 'SNOW TREND（実測・7日予報）',
+      trendTitle: 'SNOW TREND（過去24h・7日予報）',
       trendHelpTitle: 'トレンドグラフの解説',
       trend7dBtn: '7日間',
       legendSnowDepth: '積雪深(cm)',
@@ -241,13 +241,15 @@
       rankLive24hLabel: '24h実測',
       rankLiveDepthLabel: '積雪',
       rankLiveSubsidenceLabel: '沈降',
-      rankLiveFreshnessLabel: '鮮度',
+      rankLiveFreshnessLabel: '最終降雪',
       rankLiveTempLabel: '気温',
       rankLiveStationAmedas: 'アメダス',
       rankLiveStationRoad: '道路雪量計',
       rankLiveMoreSpots: '＋他{count}件',
       rankLiveCollapseSpots: '閉じる',
-      rankLiveLegend: '沈降: 圧密・融解による減少量 / 鮮度: 最終降雪からの経過時間（0h＝直近1hに降雪）',
+      rankLiveLegend: '沈降: 圧密・融解による減少量 / 最終降雪: 0h=直近1hに降雪',
+      snowNow: '降雪中',
+      hoursAgo: '{h}h前',
 
       // Feed Tab
       feedHeaderTitle: '全国最新雪レポフィード',
@@ -499,7 +501,7 @@
       snowPrefix: 'Snow:',
 
       // Trend Chart
-      trendTitle: 'SNOW TREND (Live & 7-Day)',
+      trendTitle: 'SNOW TREND (Past 24h & 7-Day)',
       trendHelpTitle: 'About Snow Trend Chart',
       trend7dBtn: '7 Days',
       legendSnowDepth: 'Snow Depth (cm)',
@@ -602,13 +604,15 @@
       rankLive24hLabel: '24h Live',
       rankLiveDepthLabel: 'Depth',
       rankLiveSubsidenceLabel: 'Settling',
-      rankLiveFreshnessLabel: 'Fresh',
+      rankLiveFreshnessLabel: 'Last Snow',
       rankLiveTempLabel: 'Temp',
       rankLiveStationAmedas: 'AMeDAS',
       rankLiveStationRoad: 'Road Gauge',
       rankLiveMoreSpots: '+{count} more',
       rankLiveCollapseSpots: 'Close',
-      rankLiveLegend: 'Settling: Compaction/melt loss / Fresh: Hours since last snowfall (0h = within 1h)',
+      rankLiveLegend: 'Settling: Compaction/melt loss / Last Snow: 0h = within 1h',
+      snowNow: 'Snowing',
+      hoursAgo: '{h}h ago',
 
       // Feed Tab
       feedHeaderTitle: 'Japan Snow Reports Feed',

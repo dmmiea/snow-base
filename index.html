@@ -143,10 +143,6 @@
       <div class="text-center">
         <span class="font-teko text-4xl font-extrabold tracking-widest text-slate-900 leading-none uppercase block">POWDER BASE</span>
         <span class="text-[11px] tracking-wider text-sky-700 font-bold uppercase mt-1.5 block">JAPAN - NATIONWIDE POWDER DASHBOARD</span>
-        <div class="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-600 font-bold">
-          <i class="fa-solid fa-circle-notch fa-spin text-sky-700 text-[11px]"></i>
-          <span data-i18n="splashLoading">最新データを取得中...</span>
-        </div>
       </div>
     </div>
   </div>
@@ -424,7 +420,7 @@
       <div class="flex items-center justify-between mb-2">
         <h3 class="text-sm font-black text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-chart-line text-sky-700"></i>
-          <span data-i18n="trendTitle">SNOW TREND（実測・7日予報）</span>
+          <span data-i18n="trendTitle">SNOW TREND（過去24h・7日予報）</span>
           <button type="button" onclick="openHelpModal('trend')" class="w-4 h-4 rounded-full bg-slate-200/90 hover:bg-sky-100 text-slate-500 hover:text-sky-700 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" data-i18n-title="trendHelpTitle" title="トレンドグラフの解説"><i class="fa-solid fa-circle-info"></i></button>
         </h3>
         <div class="flex bg-slate-100 rounded-lg p-0.5 border border-slate-300 text-[11px]">
@@ -2187,21 +2183,52 @@
       const nowHighlightIdx = currentIdx - startIdx;
 
       const labels = [];
+      const tickColors = [];
       const depthData = [];
       const snowData = [];
       const rainData = [];
       const tempData = [];
       const windSpeedData = [];
       const windDirData = [];
+      const midnightsIndices = [];
+
+      const dayNamesJa = ['日', '月', '火', '水', '木', '金', '土'];
+      const dayNamesEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
       for (let i = startIdx; i < endIdx; i++) {
         const tStr = hourly.time[i]; // 2026-11-10T06:00
         const hour = tStr.slice(11, 16);
-        const datePart = tStr.slice(5, 10).replace('-', '/');
-        const label = currentTrendRange === '7d'
-          ? ((hour === '00:00' || i === startIdx) ? datePart : `${datePart} ${hour}`)
-          : ((hour === '00:00' || i === startIdx) ? `${datePart} ${hour}` : hour);
+        const relIdx = i - startIdx;
+        
+        // 日付・曜日取得
+        const dObj = new Date(tStr + ':00+09:00');
+        const dayOfWeek = dObj.getDay(); // 0: 日, 6: 土
+        const isJa = currentLang !== 'en';
+        const dayStr = isJa ? `(${dayNamesJa[dayOfWeek]})` : `(${dayNamesEn[dayOfWeek]})`;
+        const datePart = `${tStr.slice(5, 7)}/${tStr.slice(8, 10)}${dayStr}`;
+
+        if (hour === '00:00') {
+          midnightsIndices.push(relIdx);
+        }
+
+        let label = '';
+        if (currentTrendRange === '7d') {
+          label = (hour === '00:00' || i === startIdx) ? datePart : `${datePart} ${hour}`;
+        } else {
+          // 48hレンジ: 00:00や端点では日付+時、それ以外は時のみ
+          label = (hour === '00:00' || i === startIdx) ? `${datePart} ${hour}` : hour;
+        }
         labels.push(label);
+
+        // 土日は目盛り色を分ける（土: スカイブルー #0284c7, 日: ローズレッド #e11d48, 平日: #334155）
+        if (dayOfWeek === 6) {
+          tickColors.push('#0284c7');
+        } else if (dayOfWeek === 0) {
+          tickColors.push('#e11d48');
+        } else {
+          tickColors.push('#334155');
+        }
+
         depthData.push(hourly.snowDepth[i]);
         snowData.push(hourly.snowfall[i] || 0);
         rainData.push(hourly.rain ? (hourly.rain[i] || 0) : 0);
@@ -2210,24 +2237,43 @@
         windDirData.push(hourly.windDirection ? hourly.windDirection[i] : null);
       }
 
-      // 現在時刻の縦破線プラグイン
+      // 現在時刻の縦破線プラグイン & 日付境界線（00:00）強調プラグイン
       const nowLinePlugin = {
         id: 'nowLine',
         afterDatasetsDraw(chart) {
           const meta = chart.getDatasetMeta(0);
-          if (!meta || !meta.data || !meta.data[nowHighlightIdx]) return;
-          const x = meta.data[nowHighlightIdx].x;
+          if (!meta || !meta.data) return;
           const { top, bottom } = chart.chartArea;
           const c = chart.ctx;
-          c.save();
-          c.beginPath();
-          c.setLineDash([4, 3]);
-          c.strokeStyle = 'rgba(251, 191, 36, 0.75)';
-          c.lineWidth = 1.5;
-          c.moveTo(x, top);
-          c.lineTo(x, bottom);
-          c.stroke();
-          c.restore();
+
+          // 00:00 日付境界線
+          midnightsIndices.forEach(idx => {
+            if (meta.data[idx]) {
+              const mx = meta.data[idx].x;
+              c.save();
+              c.beginPath();
+              c.strokeStyle = 'rgba(100, 116, 139, 0.45)';
+              c.lineWidth = 1.2;
+              c.moveTo(mx, top);
+              c.lineTo(mx, bottom);
+              c.stroke();
+              c.restore();
+            }
+          });
+
+          // 現在時刻縦破線
+          if (meta.data[nowHighlightIdx]) {
+            const x = meta.data[nowHighlightIdx].x;
+            c.save();
+            c.beginPath();
+            c.setLineDash([4, 3]);
+            c.strokeStyle = 'rgba(251, 191, 36, 0.85)';
+            c.lineWidth = 1.5;
+            c.moveTo(x, top);
+            c.lineTo(x, bottom);
+            c.stroke();
+            c.restore();
+          }
         }
       };
 
@@ -2305,9 +2351,12 @@
             x: {
               grid: { color: 'rgba(148, 163, 184, 0.25)' },
               ticks: {
-                color: '#334155',
+                color: (ctx) => {
+                  const idx = ctx.index;
+                  return (tickColors && tickColors[idx]) ? tickColors[idx] : '#334155';
+                },
                 font: { size: 9, weight: 'bold' },
-                maxTicksLimit: currentTrendRange === '7d' ? 8 : 12
+                maxTicksLimit: currentTrendRange === '7d' ? 8 : 13
               }
             },
             yDepth: {
@@ -3356,7 +3405,9 @@
         const subText = item.subsidence < 0 ? `${item.subsidence}cm` : '0cm';
         const subColor = item.subsidence < 0 ? 'text-blue-700' : 'text-slate-700';
 
-        const freshText = item.freshness !== null ? `${item.freshness}h` : '--';
+        const freshText = item.freshness !== null
+          ? (item.freshness === 0 ? t('snowNow') : t('hoursAgo', { h: item.freshness }))
+          : '--';
         const freshColor = item.freshness === 0
           ? 'text-emerald-700'
           : (item.freshness !== null && item.freshness <= 2 ? 'text-sky-700' : 'text-slate-700');

@@ -261,13 +261,15 @@
         popLiveStationAmedas: 'アメダス',
         popLiveStationRoad: '道路雪量計',
         popLiveSubsidence: '沈降',
-        popLiveFreshness: '鮮度',
+        popLiveFreshness: '最終降雪',
         popLiveTemp: '気温',
         popElev: '標高:',
         popSnowQuality: '雪質:',
         popBcQuality: '山岳:',
         popScorePt: '点',
         popViewForecast: 'このスポットの予報を見る',
+        snowNow: '降雪中',
+        hoursAgo: '{h}h前',
         tagLowSnow: '積雪不足',
         tagClosed: '滑走不可',
         tagStable: '雪質安定',
@@ -321,13 +323,15 @@
         popLiveStationAmedas: 'AMeDAS',
         popLiveStationRoad: 'Road Gauge',
         popLiveSubsidence: 'Settling',
-        popLiveFreshness: 'Freshness',
+        popLiveFreshness: 'Last Snow',
         popLiveTemp: 'Temp',
         popElev: 'Elev:',
         popSnowQuality: 'Snow:',
         popBcQuality: 'Mountain:',
         popScorePt: ' pts',
         popViewForecast: 'View Forecast',
+        snowNow: 'Snowing',
+        hoursAgo: '{h}h ago',
         tagLowSnow: 'Low Snow',
         tagClosed: 'Closed',
         tagStable: 'Stable Snow',
@@ -665,8 +669,12 @@
           const liveDepth = (live && typeof live.snowDepth === 'number') ? live.snowDepth : 0;
           
           const stats = getSpotLiveStat(s);
-          const subsidence = (stats && typeof stats.subsidence === 'number') ? stats.subsidence : 0;
-          const freshness = stats && stats.freshness !== null && stats.freshness !== undefined ? `${stats.freshness}h` : '―';
+          const rawSub = (stats && typeof stats.subsidence === 'number') ? stats.subsidence : 0;
+          const subsidenceText = rawSub < 0 ? `${rawSub}cm` : (rawSub > 0 ? `-${rawSub}cm` : '0cm');
+          let freshnessText = '―';
+          if (stats && stats.freshness !== null && stats.freshness !== undefined) {
+            freshnessText = stats.freshness === 0 ? dict.snowNow : dict.hoursAgo.replace('{h}', stats.freshness);
+          }
           let tempStr = '―';
           if (stats && (stats.tempMax !== null || stats.tempMin !== null)) {
             const tMax = stats.tempMax !== null ? `${stats.tempMax}°` : '―';
@@ -704,15 +712,15 @@
                 <span class="font-black text-slate-900 font-mono text-base">${liveDepth}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
               </div>
 
-              <!-- 実測指標 補助バー（沈降・鮮度・気温） -->
+              <!-- 実測指標 補助バー（沈降・最終降雪・気温） -->
               <div class="col-span-2 pt-1.5 border-t border-slate-200 grid grid-cols-3 gap-1 text-[10.5px] text-center">
                 <div class="bg-white p-1 rounded border border-slate-200">
                   <span class="text-[9.5px] text-slate-600 font-semibold block">${dict.popLiveSubsidence}</span>
-                  <span class="font-mono font-bold text-slate-800">${subsidence > 0 ? '-' + subsidence + 'cm' : '0cm'}</span>
+                  <span class="font-mono font-bold ${rawSub !== 0 ? 'text-blue-700' : 'text-slate-800'}">${subsidenceText}</span>
                 </div>
                 <div class="bg-white p-1 rounded border border-slate-200">
                   <span class="text-[9.5px] text-slate-600 font-semibold block">${dict.popLiveFreshness}</span>
-                  <span class="font-mono font-bold text-sky-700">${freshness}</span>
+                  <span class="font-mono font-bold ${stats && stats.freshness === 0 ? 'text-emerald-700' : (stats && stats.freshness <= 2 ? 'text-sky-700' : 'text-slate-700')}">${freshnessText}</span>
                 </div>
                 <div class="bg-white p-1 rounded border border-slate-200">
                   <span class="text-[9.5px] text-slate-600 font-semibold block">${dict.popLiveTemp}</span>
