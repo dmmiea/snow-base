@@ -257,6 +257,20 @@
       heroLiveNoChange: '増減なし',
       legendOpenHint: '開く',
 
+      // Phase 3: THE DAY & BC Zero Degree & Slope Hazard
+      theDayBadge: '🌟 THE DAY',
+      theDayWeekLabel: '今週のTHE DAY',
+      theDayCardNotice: '今週のベスト狙い目',
+      zeroDegreeLabel: '0℃標高',
+      zeroDegreeSubZeroAll: '全標高0℃以下 (氷点下維持)',
+      zeroDegreeAboveSummit: '山頂以上 (融解・雨注意)',
+      zeroDegreeMeters: '約{elev}m',
+      windSlabWarning: '風下スラブ警戒',
+      windSlabSlopeDesc: '{aspect}斜面に吹き溜まり形成の危険',
+      ridgeWindShort: '稜線',
+      liveAmedasShort: '実測',
+      tlZeroDegreeNotice: '0℃境界',
+
       // Feed Tab
       feedHeaderTitle: '全国最新雪レポフィード',
       feedEmptyFavTitle: 'MYスポットを登録して最新速報を受け取る',
@@ -625,6 +639,20 @@
       heroLive24hShort: '24h',
       heroLiveNoChange: 'No change',
       legendOpenHint: 'Show',
+
+      // Phase 3: THE DAY & BC Zero Degree & Slope Hazard
+      theDayBadge: '🌟 THE DAY',
+      theDayWeekLabel: 'Best Day This Week',
+      theDayCardNotice: 'Best Powder Day',
+      zeroDegreeLabel: 'Freezing Level',
+      zeroDegreeSubZeroAll: 'Sub-zero at all elevs',
+      zeroDegreeAboveSummit: 'Above summit (Melt/Rain hazard)',
+      zeroDegreeMeters: '~{elev}m',
+      windSlabWarning: 'Leeward Slab Hazard',
+      windSlabSlopeDesc: 'Wind slab formation on {aspect} slopes',
+      ridgeWindShort: 'Ridge',
+      liveAmedasShort: 'Live',
+      tlZeroDegreeNotice: '0℃ Line',
 
       // Feed Tab
       feedHeaderTitle: 'Japan Snow Reports Feed',

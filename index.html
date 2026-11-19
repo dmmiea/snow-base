@@ -423,6 +423,23 @@
               <span id="heroBcStatTemp" class="font-teko text-xs sm:text-sm font-bold text-sky-800 block mt-0.5 truncate">--</span>
             </div>
           </div>
+          <!-- BC山岳リスク指標（0℃標高ライン ＆ 風下スラブ警戒斜面） -->
+          <div class="mt-2 pt-2 border-t border-slate-200/80 grid grid-cols-2 gap-1.5 text-left">
+            <div class="bg-white rounded-lg p-1.5 border border-slate-200/70">
+              <div class="flex items-center gap-1 text-[10px] text-slate-500 font-bold leading-tight">
+                <i class="fa-solid fa-temperature-arrow-down text-sky-600"></i>
+                <span data-i18n="zeroDegreeLabel">0℃標高</span>
+              </div>
+              <div id="heroBcZeroDegree" class="text-xs font-black text-slate-800 mt-0.5 truncate">--</div>
+            </div>
+            <div class="bg-white rounded-lg p-1.5 border border-slate-200/70">
+              <div class="flex items-center gap-1 text-[10px] text-slate-500 font-bold leading-tight">
+                <i class="fa-solid fa-wind text-amber-600"></i>
+                <span data-i18n="windSlabWarning">風下スラブ警戒</span>
+              </div>
+              <div id="heroBcWindSlab" class="text-xs font-black text-slate-800 mt-0.5 truncate">--</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2276,6 +2293,45 @@
               statTemp.textContent = '--';
             }
           }
+
+          // 0℃標高ライン & 風下スラブ警戒斜面の算出
+          const zeroEl = document.getElementById('heroBcZeroDegree');
+          const slabEl = document.getElementById('heroBcWindSlab');
+          if (zeroEl && slabEl) {
+            const topElev = (spot.top && spot.top.elevation) || 1500;
+            const baseElev = (spot.base && spot.base.elevation) || 500;
+            const topT = (spot.current && typeof spot.current.topTemp === 'number') ? spot.current.topTemp : null;
+            const baseT = (spot.current && typeof spot.current.baseTemp === 'number') ? spot.current.baseTemp : null;
+
+            if (topT !== null && baseT !== null) {
+              if (baseT <= 0 && topT <= 0) {
+                zeroEl.innerHTML = `<span class="text-sky-700 font-bold">${t('zeroDegreeSubZeroAll')}</span>`;
+              } else if (baseT > 0 && topT > 0) {
+                zeroEl.innerHTML = `<span class="text-rose-700 font-bold">${t('zeroDegreeAboveSummit')}</span>`;
+              } else if (baseT > 0 && topT <= 0) {
+                const zeroH = Math.round(baseElev + (topElev - baseElev) * (baseT / (baseT - topT)));
+                zeroEl.innerHTML = `<span class="text-slate-900 font-black">${t('zeroDegreeMeters', { elev: zeroH.toLocaleString() })}</span>`;
+              } else {
+                zeroEl.textContent = '--';
+              }
+            } else {
+              zeroEl.textContent = '--';
+            }
+
+            // 風下ウインドスラブ警戒斜面（吹いてくる風向の180度反対側が風下堆積斜面）
+            const windSpd = (spot.current && typeof spot.current.windSpeed === 'number') ? spot.current.windSpeed : null;
+            const windDirDeg = (spot.current && typeof spot.current.windDirection === 'number') ? spot.current.windDirection : null;
+            if (windSpd !== null && windDirDeg !== null && windSpd >= 6) {
+              const leewardDeg = (windDirDeg + 180) % 360;
+              const dirs = ['北', '北東', '東', '南東', '南', '南西', '西', '北西'];
+              const dirsEn = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+              const dirIdx = Math.round(leewardDeg / 45) % 8;
+              const aspectText = currentLang === 'en' ? dirsEn[dirIdx] : dirs[dirIdx];
+              slabEl.innerHTML = `<span class="text-orange-700 font-black">${t('windSlabSlopeDesc', { aspect: aspectText })}</span>`;
+            } else {
+              slabEl.innerHTML = `<span class="text-slate-500 font-bold">${t('statusSafe')}</span>`;
+            }
+          }
         } else {
           heroBcLiveBar.classList.add('hidden');
         }
@@ -2703,7 +2759,7 @@
 
           <!-- 気温 & 風 (切替対象) -->
           <div class="flex flex-col items-center justify-center leading-tight">
-            <span class="font-teko text-base font-bold ${tempColor} tracking-tight">${temp}℃</span>
+            <span class="font-teko text-base font-bold ${tempColor} tracking-tight ${(temp !== '--' && Math.abs(temp) <= 1) ? 'border-b border-dashed border-amber-500' : ''}" title="${t('tlZeroDegreeNotice')}">${temp}℃</span>
             <div class="text-[11px] font-bold flex items-center justify-center whitespace-nowrap">
               ${windDirHtml}${windSpeedHtml}
             </div>
@@ -2843,10 +2899,28 @@
       const todayStr = jstNow.toISOString().slice(0, 10);
       const daysList = spot.dailySummary.filter(d => d.date >= todayStr).slice(0, 7);
 
+      // 今週の「THE DAY」候補日の自動検出（夜間新雪10cm以上または日降雪15cm以上のうち最大日）
+      let theDayDate = null;
+      let maxTheDayScore = 0;
+      daysList.forEach(day => {
+        const nVal = (spot.nightSnowByDate && spot.nightSnowByDate[`${day.date}T06:00`] !== undefined)
+          ? spot.nightSnowByDate[`${day.date}T06:00`]
+          : 0;
+        const totalSnow = day.totalSnowfall || 0;
+        if (nVal >= 10 || totalSnow >= 15) {
+          const score = (nVal * 1.5) + totalSnow;
+          if (score > maxTheDayScore) {
+            maxTheDayScore = score;
+            theDayDate = day.date;
+          }
+        }
+      });
+
       const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
       daysList.forEach(day => {
         const isToday = day.date === todayStr;
         const isSelected = selectedWeeklyDate === day.date;
+        const isTheDay = day.date === theDayDate;
         const dObj = new Date(day.date + 'T00:00:00+09:00');
         const rawDow = weekdays[dObj.getDay()] || '';
         const dayOfWeek = tTag(rawDow);
@@ -2862,6 +2936,8 @@
         let borderAndBg = 'bg-slate-50 border-slate-300 hover:border-sky-600';
         if (isSelected) {
           borderAndBg = 'bg-sky-50 border-sky-700 ring-2 ring-sky-600/40';
+        } else if (isTheDay) {
+          borderAndBg = 'bg-amber-50/70 border-amber-400 ring-2 ring-amber-400/40 hover:border-amber-500';
         } else if (isToday) {
           borderAndBg = 'bg-white border-sky-600 ring-1 ring-sky-500/40 hover:border-sky-700';
         }
@@ -2871,9 +2947,10 @@
           ? getWeatherInfo(day.weatherCode, estHourlySnow, null)
           : { icon: day.weatherIcon, label: tTag(day.weatherLabel) };
 
-        col.className = `flex-shrink-0 w-[92px] ${borderAndBg} rounded-xl p-2 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none`;
+        col.className = `flex-shrink-0 w-[92px] ${borderAndBg} rounded-xl p-2 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none relative`;
         const nightLabel = t('nightShort');
         col.innerHTML = `
+          ${isTheDay ? `<div class="w-full flex items-center justify-center mb-0.5"><span class="text-[9px] font-black px-1.5 py-0.2 rounded-full bg-amber-500 text-white shadow-sm flex items-center gap-0.5 whitespace-nowrap"><i class="fa-solid fa-star text-[7px]"></i> THE DAY</span></div>` : ''}
           <span class="text-[11px] font-bold ${isToday ? 'text-orange-700 font-black' : (rawDow === '日' ? 'text-rose-700' : (rawDow === '土' ? 'text-sky-700' : 'text-slate-700'))}">${dateLabel}</span>
           <span class="text-2xl my-1 pointer-events-none">${dayWeather.icon}</span>
           <span class="text-[11px] font-bold text-slate-800 pointer-events-none truncate max-w-full">${dayWeather.label}</span>
@@ -3255,6 +3332,20 @@
           const isFav = favorites.includes(s.id);
           const favStar = isFav ? '<i class="fa-solid fa-star text-amber-500 text-[11px] shrink-0"></i>' : '';
 
+          const isBcSpot = s.category === 'bc';
+          let bcExtraHtml = '';
+          if (isBcSpot) {
+            const bca = s.current && s.current.bcAlert;
+            if (bca) {
+              const bgCls = bca.level === 'HIGH' ? 'bg-rose-100 text-rose-800 border-rose-300' : (bca.level === 'MEDIUM' ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-100 text-emerald-800 border-emerald-300');
+              const bIcon = bca.level === 'HIGH' ? '🔴' : (bca.level === 'MEDIUM' ? '🟡' : '🟢');
+              bcExtraHtml += `<span class="text-[10px] px-1.5 py-0.2 rounded font-black border ${bgCls}">${bIcon} ${tTag(bca.label)}</span>`;
+            }
+            if (s.current && typeof s.current.windSpeed === 'number') {
+              bcExtraHtml += `<span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-50 text-sky-800 font-bold border border-sky-300">💨 ${t('ridgeWindShort')} ${Math.round(s.current.windSpeed)}m/s</span>`;
+            }
+          }
+
           return `
             <button type="button" onclick="selectSpotFromMap('${s.id}')" class="w-full text-left px-3 py-2.5 flex items-center justify-between gap-2 hover:bg-slate-100 active:bg-slate-200 transition border-t border-slate-200">
               <div class="min-w-0 flex-1">
@@ -3264,6 +3355,7 @@
                   <span class="text-sm font-black text-slate-900 truncate">${tName(s.name)}</span>
                 </div>
                 <div class="text-[11px] text-slate-600 mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5">
+                  ${bcExtraHtml}
                   <span>${t('spotDepthPrefix')} <strong class="text-slate-900">${depth}cm</strong></span>
                   <span>${t('spotScorePrefix')} <strong class="${score !== null ? 'text-sky-800' : 'text-slate-500'}">${score !== null ? score + t('scorePtUnit') : '―'}</strong></span>
                   ${tagStr ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-white text-slate-800 font-bold border border-slate-300">${tagStr}</span>` : ''}
@@ -4382,6 +4474,68 @@
         const windSpeed = (s.current && typeof s.current.windSpeed === 'number') ? s.current.windSpeed : '--';
         const tagStr = (s.current && s.current.tag) ? tTag(s.current.tag) : '';
 
+        // 今週7日間のTHE DAY検出（夜間10cm以上または日15cm以上のうち最大日）
+        let spotTheDay = null;
+        let spotTheDayScore = 0;
+        (s.dailySummary || []).filter(d => d.date >= todayStr).slice(0, 7).forEach(d => {
+          const nVal = (s.nightSnowByDate && s.nightSnowByDate[`${d.date}T06:00`] !== undefined) ? s.nightSnowByDate[`${d.date}T06:00`] : 0;
+          const tot = d.totalSnowfall || 0;
+          if (nVal >= 10 || tot >= 15) {
+            const sc = (nVal * 1.5) + tot;
+            if (sc > spotTheDayScore) {
+              spotTheDayScore = sc;
+              const dObj = new Date(d.date + 'T00:00:00+09:00');
+              const dow = tTag(weekdays[dObj.getDay()] || '');
+              spotTheDay = `${d.date.slice(5).replace('-', '/')}(${dow})`;
+            }
+          }
+        });
+
+        // 公的実測ライン（スキー場 / BC別）
+        let liveLineHtml = '';
+        const live = s.current && s.current.liveAmedas;
+        if (isBC) {
+          const alert = s.current && s.current.bcAlert;
+          const alertBadge = alert ? (alert.level === 'HIGH' ? '🔴' : (alert.level === 'MEDIUM' ? '🟡' : '🟢')) : '🟢';
+          const alertText = alert ? tTag(alert.label) : t('statusSafe');
+          const stName = live ? tName(live.stationName) : '';
+          const stDepth = (live && typeof live.snowDepth === 'number') ? `${live.snowDepth}cm` : '--';
+          const sub = (live && live.stats && live.stats.h24 && typeof live.stats.h24.subsidence === 'number') ? live.stats.h24.subsidence : null;
+          const subText = sub !== null ? (sub < 0 ? `${sub}cm` : `-${sub}cm`) : '--';
+          liveLineHtml = `
+            <div class="flex items-center justify-between gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50/70 border border-emerald-200/80 text-[10.5px]">
+              <div class="flex items-center gap-1 font-bold text-slate-800 truncate">
+                <span>${alertBadge}</span>
+                <span class="truncate">${alertText}</span>
+              </div>
+              <div class="text-slate-600 font-bold shrink-0 text-right">
+                <span>📡 ${stName} ${stDepth}</span>
+                <span class="text-rose-700 ml-1">(${t('rankLiveSubsidenceLabel')}${subText})</span>
+              </div>
+            </div>
+          `;
+        } else if (live) {
+          const isRoad = live.source === 'mlit_road';
+          const stBadge = isRoad ? t('rankLiveStationRoad') : t('rankLiveStationAmedas');
+          const stName = tName(live.stationName);
+          const stDepth = typeof live.snowDepth === 'number' ? `${live.snowDepth}cm` : '--';
+          const sNight = (live.stats && live.stats.night && typeof live.stats.night.snowfall === 'number') ? live.stats.night.snowfall : (typeof live.snow1h === 'number' ? live.snow1h : 0);
+          const fresh = (live.stats && live.stats.h6 && typeof live.stats.h6.freshness === 'number') ? live.stats.h6.freshness : null;
+          const freshText = fresh === 0 ? t('rankLiveFreshSnowing') : (fresh !== null ? t('rankLiveFreshHours', { h: fresh }) : '');
+          liveLineHtml = `
+            <div class="flex items-center justify-between gap-1.5 px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-[10.5px]">
+              <div class="flex items-center gap-1 font-bold text-slate-700 truncate">
+                <span class="text-[9.5px] px-1 py-0.2 rounded bg-sky-100 text-sky-800 font-black shrink-0">${stBadge}</span>
+                <span class="truncate">${stName} <strong class="text-slate-900">${stDepth}</strong></span>
+              </div>
+              <div class="text-slate-600 font-bold shrink-0 text-right">
+                <span class="${sNight > 0 ? 'text-orange-700 font-black' : ''}">夜間+${sNight}cm</span>
+                ${freshText ? `<span class="text-slate-500 ml-1">/ ${freshText}</span>` : ''}
+              </div>
+            </div>
+          `;
+        }
+
         // 今後3日間の降雪ミニ予報
         const next3Days = (s.dailySummary || []).filter(d => d.date >= todayStr).slice(0, 3);
         const daysGridHtml = next3Days.map((d, dIdx) => {
@@ -4427,6 +4581,7 @@
               <div class="flex items-center gap-1.5 mt-0.5">
                 <span class="text-xs shrink-0">${wInfo.icon}</span>
                 <h4 class="text-sm sm:text-base font-black text-slate-900 truncate">${tName(s.name)}</h4>
+                ${spotTheDay ? `<span class="text-[9px] font-black px-1.5 py-0.2 rounded-full bg-amber-500 text-white shadow-sm flex items-center gap-0.5 shrink-0 whitespace-nowrap"><i class="fa-solid fa-star text-[7px]"></i> THE DAY ${spotTheDay}</span>` : ''}
               </div>
               ${tagStr ? `<div class="mt-0.5"><span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 text-sky-800 border border-slate-300 whitespace-nowrap font-bold">${tagStr}</span></div>` : ''}
             </div>
@@ -4443,6 +4598,9 @@
               </button>
             </div>
           </div>
+
+          <!-- 公的実測ライン（スキー場 / BC別） -->
+          ${liveLineHtml}
 
           <!-- 中段: フィード準拠の薄型ハイライトバー（夜間新雪 ＋ 気象・積雪） -->
           <div class="flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-xl ${nightVal >= 10 ? 'bg-orange-50 border border-orange-300' : 'bg-slate-50 border border-slate-200'}">
