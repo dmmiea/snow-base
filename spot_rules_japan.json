@@ -141,7 +141,10 @@
     },
     "amedasId": "16126",
     "amedasName": "赤井川",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "816520043",
+    "roadStationName": "毛無峠",
+    "roadStationRoute": "国道393号"
   },
   {
     "id": "furano",
@@ -187,9 +190,12 @@
       "elevation": 1171,
       "label": "雲海ゴンドラ終点(トマム山頂)"
     },
-    "amedasId": "12746",
-    "amedasName": "占冠",
-    "slopeOrientation": "E"
+    "amedasId": "12691",
+    "amedasName": "幾寅",
+    "slopeOrientation": "E",
+    "roadStationId": "816840399",
+    "roadStationName": "日勝峠５合目",
+    "roadStationRoute": "国道274号"
   },
   {
     "id": "appi",
@@ -307,7 +313,7 @@
       "elevation": 1831,
       "label": "八方池山荘・グラートクワッド終点"
     },
-    "amedasId": "48156",
+    "amedasId": "48141",
     "amedasName": "白馬",
     "slopeOrientation": "E"
   },
@@ -331,7 +337,7 @@
       "elevation": 1676,
       "label": "五竜アルプス平・LineE終点"
     },
-    "amedasId": "48156",
+    "amedasId": "48141",
     "amedasName": "白馬",
     "slopeOrientation": "NE"
   },
@@ -453,7 +459,10 @@
     },
     "amedasId": "48066",
     "amedasName": "飯山",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "837000014",
+    "roadStationName": "野尻",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "myoko_suginohara",
@@ -477,7 +486,10 @@
     },
     "amedasId": "48061",
     "amedasName": "信濃町",
-    "slopeOrientation": "SE"
+    "slopeOrientation": "SE",
+    "roadStationId": "837000014",
+    "roadStationName": "野尻",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "lotte_arai",
@@ -501,7 +513,10 @@
     },
     "amedasId": "54816",
     "amedasName": "関山",
-    "slopeOrientation": "NE"
+    "slopeOrientation": "NE",
+    "roadStationId": "843900028",
+    "roadStationName": "藤沢",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "naeba",
@@ -525,7 +540,10 @@
     },
     "amedasId": "42091",
     "amedasName": "みなかみ",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "843400019",
+    "roadStationName": "火打",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "kagura",
@@ -549,7 +567,10 @@
     },
     "amedasId": "54841",
     "amedasName": "湯沢",
-    "slopeOrientation": "NE"
+    "slopeOrientation": "NE",
+    "roadStationId": "843400023",
+    "roadStationName": "三俣",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "gala_yuzawa",
@@ -573,7 +594,10 @@
     },
     "amedasId": "54841",
     "amedasName": "湯沢",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "843400028",
+    "roadStationName": "湯沢",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "skijam_katsuyama",
@@ -597,7 +621,10 @@
     },
     "amedasId": "57121",
     "amedasName": "大野",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "865100010",
+    "roadStationName": "勝山",
+    "roadStationRoute": "E67 中部縦貫自動車道"
   },
   {
     "id": "ichirino",
@@ -741,7 +768,10 @@
     },
     "amedasId": "52221",
     "amedasName": "長滝",
-    "slopeOrientation": "NW"
+    "slopeOrientation": "NW",
+    "roadStationId": "853400030",
+    "roadStationName": "上呂",
+    "roadStationRoute": "国道41号"
   },
   {
     "id": "okuibuki",
@@ -933,7 +963,10 @@
     "amedasId": "11176",
     "amedasName": "豊富",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817320189",
+    "roadStationName": "新生",
+    "roadStationRoute": "国道40号"
   },
   {
     "id": "ski_ski13",
@@ -978,8 +1011,8 @@
       "elevation": 178,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "11316",
-    "amedasName": "歌登",
+    "amedasId": "11291",
+    "amedasName": "北見枝幸",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1149,7 +1182,10 @@
     "amedasId": "12301",
     "amedasName": "和寒",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817050136",
+    "roadStationName": "塩狩峠",
+    "roadStationRoute": "国道40号"
   },
   {
     "id": "ski_ski21",
@@ -1173,7 +1209,10 @@
     "amedasId": "15041",
     "amedasName": "朱鞠内",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817050121",
+    "roadStationName": "士別峠",
+    "roadStationRoute": "国道239号"
   },
   {
     "id": "ski_ski29",
@@ -1293,7 +1332,10 @@
     "amedasId": "13277",
     "amedasName": "留萌",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817220158",
+    "roadStationName": "岩老",
+    "roadStationRoute": "国道231号"
   },
   {
     "id": "ski_ski38",
@@ -1365,7 +1407,10 @@
     "amedasId": "12551",
     "amedasName": "美瑛",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817070135",
+    "roadStationName": "美馬牛",
+    "roadStationRoute": "国道237号"
   },
   {
     "id": "ski_ski52",
@@ -1410,8 +1455,8 @@
       "elevation": 456,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "15321",
-    "amedasName": "美唄",
+    "amedasId": "12501",
+    "amedasName": "東神楽",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1461,7 +1506,10 @@
     "amedasId": "15161",
     "amedasName": "深川",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817020124",
+    "roadStationName": "神居古潭",
+    "roadStationRoute": "国道12号"
   },
   {
     "id": "ski_ski57",
@@ -1533,7 +1581,10 @@
     "amedasId": "15321",
     "amedasName": "美唄",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816030029",
+    "roadStationName": "三芦",
+    "roadStationRoute": "国道452号"
   },
   {
     "id": "ski_ski70",
@@ -1557,7 +1608,10 @@
     "amedasId": "15442",
     "amedasName": "夕張",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816030018",
+    "roadStationName": "三川",
+    "roadStationRoute": "国道274号"
   },
   {
     "id": "ski_ski65",
@@ -1581,7 +1635,10 @@
     "amedasId": "15356",
     "amedasName": "岩見沢",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816030029",
+    "roadStationName": "三芦",
+    "roadStationRoute": "国道452号"
   },
   {
     "id": "ski_ski75",
@@ -1605,7 +1662,10 @@
     "amedasId": "17112",
     "amedasName": "紋別",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817470231",
+    "roadStationName": "大山町",
+    "roadStationRoute": "国道238号"
   },
   {
     "id": "ski_ski78",
@@ -1629,7 +1689,10 @@
     "amedasId": "17306",
     "amedasName": "遠軽",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817470228",
+    "roadStationName": "沼の上",
+    "roadStationRoute": "国道238号"
   },
   {
     "id": "ski_ski77",
@@ -1653,7 +1716,10 @@
     "amedasId": "17196",
     "amedasName": "滝上",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817470229",
+    "roadStationName": "滝美",
+    "roadStationRoute": "国道273号"
   },
   {
     "id": "ski_ski73",
@@ -1773,7 +1839,10 @@
     "amedasId": "17596",
     "amedasName": "留辺蘂",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817430230",
+    "roadStationName": "栄町",
+    "roadStationRoute": "国道39号"
   },
   {
     "id": "ski_ski96",
@@ -1797,7 +1866,10 @@
     "amedasId": "19021",
     "amedasName": "川湯",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817420212",
+    "roadStationName": "野上峠",
+    "roadStationRoute": "国道391号"
   },
   {
     "id": "ski_ski83",
@@ -1845,7 +1917,10 @@
     "amedasId": "17596",
     "amedasName": "留辺蘂",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817670241",
+    "roadStationName": "池北峠",
+    "roadStationRoute": "国道242号"
   },
   {
     "id": "ski_ski84",
@@ -2085,7 +2160,10 @@
     "amedasId": "19076",
     "amedasName": "阿寒湖畔",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817830296",
+    "roadStationName": "阿寒湖温泉除雪ＳＴ",
+    "roadStationRoute": "国道240号"
   },
   {
     "id": "ski_ski104",
@@ -2133,7 +2211,10 @@
     "amedasId": "20356",
     "amedasName": "新得",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "817070125",
+    "roadStationName": "狩勝峠",
+    "roadStationRoute": "国道38号"
   },
   {
     "id": "ski_ski118",
@@ -2229,7 +2310,10 @@
     "amedasId": "16286",
     "amedasName": "喜茂別",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816020004",
+    "roadStationName": "東中山",
+    "roadStationRoute": "国道230号"
   },
   {
     "id": "ski_ski133",
@@ -2253,7 +2337,10 @@
     "amedasId": "16091",
     "amedasName": "小樽",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816520043",
+    "roadStationName": "毛無峠",
+    "roadStationRoute": "国道393号"
   },
   {
     "id": "ski_ski130",
@@ -2301,7 +2388,10 @@
     "amedasId": "14206",
     "amedasName": "恵庭島松",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816090023",
+    "roadStationName": "大曲中央",
+    "roadStationRoute": "国道36号"
   },
   {
     "id": "ski_ski127",
@@ -2373,7 +2463,10 @@
     "amedasId": "16091",
     "amedasName": "小樽",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816520046",
+    "roadStationName": "張碓峠",
+    "roadStationRoute": "国道5号"
   },
   {
     "id": "ski_ski134",
@@ -2421,7 +2514,10 @@
     "amedasId": "14163",
     "amedasName": "札幌",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816520046",
+    "roadStationName": "張碓峠",
+    "roadStationRoute": "国道5号"
   },
   {
     "id": "ski_ski123",
@@ -2445,7 +2541,10 @@
     "amedasId": "14206",
     "amedasName": "恵庭島松",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816090023",
+    "roadStationName": "大曲中央",
+    "roadStationRoute": "国道36号"
   },
   {
     "id": "ski_ski137",
@@ -2469,7 +2568,10 @@
     "amedasId": "16076",
     "amedasName": "余市",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816530031",
+    "roadStationName": "稲穂峠",
+    "roadStationRoute": "国道5号"
   },
   {
     "id": "ski_ski141",
@@ -2517,7 +2619,10 @@
     "amedasId": "16091",
     "amedasName": "小樽",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816520043",
+    "roadStationName": "毛無峠",
+    "roadStationRoute": "国道393号"
   },
   {
     "id": "ski_ski140",
@@ -2589,7 +2694,10 @@
     "amedasId": "21161",
     "amedasName": "大滝",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816850102",
+    "roadStationName": "優徳",
+    "roadStationRoute": "国道453号"
   },
   {
     "id": "ski_ski157",
@@ -2637,7 +2745,10 @@
     "amedasId": "23166",
     "amedasName": "森",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816620078",
+    "roadStationName": "西大沼",
+    "roadStationRoute": "国道5号"
   },
   {
     "id": "ski_ski160",
@@ -2685,7 +2796,10 @@
     "amedasId": "23356",
     "amedasName": "千軒",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816620083",
+    "roadStationName": "新道",
+    "roadStationRoute": "国道228号"
   },
   {
     "id": "ski_ski166",
@@ -2709,7 +2823,10 @@
     "amedasId": "31332",
     "amedasName": "野辺地",
     "slopeOrientation": "N",
-    "prefecture": "青森県"
+    "prefecture": "青森県",
+    "roadStationId": "823000010",
+    "roadStationName": "小湊",
+    "roadStationRoute": "国道4号"
   },
   {
     "id": "ski_ski154",
@@ -2754,10 +2871,13 @@
       "elevation": 411,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "24051",
-    "amedasName": "今金",
+    "amedasId": "23031",
+    "amedasName": "長万部",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816660062",
+    "roadStationName": "美利河峠",
+    "roadStationRoute": "国道230号"
   },
   {
     "id": "ski_ski155",
@@ -2778,10 +2898,13 @@
       "elevation": 310,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "21312",
-    "amedasName": "登別",
+    "amedasId": "21323",
+    "amedasName": "室蘭",
     "slopeOrientation": "N",
-    "prefecture": "北海道"
+    "prefecture": "北海道",
+    "roadStationId": "816820108",
+    "roadStationName": "白鳥大橋",
+    "roadStationRoute": "国道37号"
   },
   {
     "id": "ski_ski164",
@@ -2826,8 +2949,8 @@
       "elevation": 520,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "31312",
-    "amedasName": "青森",
+    "amedasId": "31386",
+    "amedasName": "青森大谷",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -2853,7 +2976,10 @@
     "amedasId": "31586",
     "amedasName": "十和田",
     "slopeOrientation": "N",
-    "prefecture": "青森県"
+    "prefecture": "青森県",
+    "roadStationId": "823000002",
+    "roadStationName": "坪",
+    "roadStationRoute": "国道4号"
   },
   {
     "id": "ski_ski171",
@@ -2925,7 +3051,10 @@
     "amedasId": "31646",
     "amedasName": "碇ケ関",
     "slopeOrientation": "N",
-    "prefecture": "青森県"
+    "prefecture": "青森県",
+    "roadStationId": "823000007",
+    "roadStationName": "大鰐",
+    "roadStationRoute": "国道7号"
   },
   {
     "id": "ski_ski180",
@@ -3018,10 +3147,13 @@
       "elevation": 320,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "32466",
-    "amedasName": "角館",
+    "amedasId": "32451",
+    "amedasName": "雄和",
     "slopeOrientation": "N",
-    "prefecture": "秋田県"
+    "prefecture": "秋田県",
+    "roadStationId": "824500009",
+    "roadStationName": "荒川",
+    "roadStationRoute": "国道46号"
   },
   {
     "id": "ski_ski178",
@@ -3090,8 +3222,8 @@
       "elevation": 330,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "32451",
-    "amedasName": "雄和",
+    "amedasId": "32402",
+    "amedasName": "秋田",
     "slopeOrientation": "N",
     "prefecture": "秋田県"
   },
@@ -3189,7 +3321,10 @@
     "amedasId": "32466",
     "amedasName": "角館",
     "slopeOrientation": "N",
-    "prefecture": "秋田県"
+    "prefecture": "秋田県",
+    "roadStationId": "824600029",
+    "roadStationName": "大曲国道",
+    "roadStationRoute": "国道13号"
   },
   {
     "id": "ski_ski199",
@@ -3237,7 +3372,10 @@
     "amedasId": "33421",
     "amedasName": "雫石",
     "slopeOrientation": "N",
-    "prefecture": "秋田県"
+    "prefecture": "秋田県",
+    "roadStationId": "823500061",
+    "roadStationName": "橋場",
+    "roadStationRoute": "国道46号"
   },
   {
     "id": "ski_ski194",
@@ -3261,7 +3399,10 @@
     "amedasId": "32691",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "秋田県"
+    "prefecture": "秋田県",
+    "roadStationId": "824600051",
+    "roadStationName": "横手防災ST",
+    "roadStationRoute": "国道13号"
   },
   {
     "id": "ski_ski205",
@@ -3333,7 +3474,10 @@
     "amedasId": "33421",
     "amedasName": "雫石",
     "slopeOrientation": "N",
-    "prefecture": "岩手県"
+    "prefecture": "岩手県",
+    "roadStationId": "823500011",
+    "roadStationName": "橋場ＳＴ",
+    "roadStationRoute": "国道46号"
   },
   {
     "id": "ski_ski212",
@@ -3381,7 +3525,10 @@
     "amedasId": "33421",
     "amedasName": "雫石",
     "slopeOrientation": "N",
-    "prefecture": "岩手県"
+    "prefecture": "岩手県",
+    "roadStationId": "823500011",
+    "roadStationName": "橋場ＳＴ",
+    "roadStationRoute": "国道46号"
   },
   {
     "id": "ski_ski204",
@@ -3405,7 +3552,10 @@
     "amedasId": "33071",
     "amedasName": "二戸",
     "slopeOrientation": "N",
-    "prefecture": "岩手県"
+    "prefecture": "岩手県",
+    "roadStationId": "823500057",
+    "roadStationName": "小鳥谷ＢＰ",
+    "roadStationRoute": "国道4号"
   },
   {
     "id": "ski_ski211",
@@ -3453,7 +3603,10 @@
     "amedasId": "33176",
     "amedasName": "奥中山",
     "slopeOrientation": "N",
-    "prefecture": "岩手県"
+    "prefecture": "岩手県",
+    "roadStationId": "823500060",
+    "roadStationName": "奥中山（積雪）",
+    "roadStationRoute": "国道4号"
   },
   {
     "id": "ski_ski218",
@@ -3477,7 +3630,10 @@
     "amedasId": "33576",
     "amedasName": "花巻",
     "slopeOrientation": "N",
-    "prefecture": "岩手県"
+    "prefecture": "岩手県",
+    "roadStationId": "823500056",
+    "roadStationName": "銀河大橋",
+    "roadStationRoute": "国道4号"
   },
   {
     "id": "ski_ski220",
@@ -3525,7 +3681,10 @@
     "amedasId": "33671",
     "amedasName": "遠野",
     "slopeOrientation": "N",
-    "prefecture": "岩手県"
+    "prefecture": "岩手県",
+    "roadStationId": "823800012",
+    "roadStationName": "上有住",
+    "roadStationRoute": "国道283号"
   },
   {
     "id": "ski_ski233",
@@ -3549,7 +3708,10 @@
     "amedasId": "35146",
     "amedasName": "狩川",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825600011",
+    "roadStationName": "余目除雪ST",
+    "roadStationRoute": "国道47号"
   },
   {
     "id": "ski_ski229",
@@ -3570,8 +3732,8 @@
       "elevation": 550,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "35116",
-    "amedasName": "金山",
+    "amedasId": "32771",
+    "amedasName": "湯の岱",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -3645,7 +3807,10 @@
     "amedasId": "35162",
     "amedasName": "新庄",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825500045",
+    "roadStationName": "柳原",
+    "roadStationRoute": "国道13号"
   },
   {
     "id": "ski_ski238",
@@ -3693,7 +3858,10 @@
     "amedasId": "35361",
     "amedasName": "大井沢",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825500061",
+    "roadStationName": "上楓沢橋",
+    "roadStationRoute": "国道112号"
   },
   {
     "id": "ski_ski255",
@@ -3717,7 +3885,10 @@
     "amedasId": "34311",
     "amedasName": "新川",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825500034",
+    "roadStationName": "入間向観測所",
+    "roadStationRoute": "国道48号"
   },
   {
     "id": "ski_ski252",
@@ -3765,7 +3936,10 @@
     "amedasId": "35376",
     "amedasName": "左沢",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825500057",
+    "roadStationName": "横岫",
+    "roadStationRoute": "国道112号"
   },
   {
     "id": "ski_ski246",
@@ -3789,7 +3963,10 @@
     "amedasId": "35201",
     "amedasName": "櫛引",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825600020",
+    "roadStationName": "大網",
+    "roadStationRoute": "国道112号"
   },
   {
     "id": "ski_ski239",
@@ -3885,7 +4062,10 @@
     "amedasId": "34311",
     "amedasName": "新川",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825500034",
+    "roadStationName": "入間向観測所",
+    "roadStationRoute": "国道48号"
   },
   {
     "id": "ski_ski258",
@@ -3957,7 +4137,10 @@
     "amedasId": "35176",
     "amedasName": "向町",
     "slopeOrientation": "N",
-    "prefecture": "宮城県"
+    "prefecture": "宮城県",
+    "roadStationId": "825500040",
+    "roadStationName": "堺田",
+    "roadStationRoute": "国道47号"
   },
   {
     "id": "ski_ski264",
@@ -3981,7 +4164,10 @@
     "amedasId": "35486",
     "amedasName": "小国",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825500032",
+    "roadStationName": "横根観測所",
+    "roadStationRoute": "国道113号"
   },
   {
     "id": "ski_ski269",
@@ -4005,7 +4191,10 @@
     "amedasId": "35456",
     "amedasName": "長井",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825500044",
+    "roadStationName": "飯豊",
+    "roadStationRoute": "国道113号"
   },
   {
     "id": "ski_ski266",
@@ -4029,7 +4218,10 @@
     "amedasId": "35552",
     "amedasName": "米沢",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "825500043",
+    "roadStationName": "刈安ST",
+    "roadStationRoute": "国道13号"
   },
   {
     "id": "ski_ski265",
@@ -4077,7 +4269,10 @@
     "amedasId": "35552",
     "amedasName": "米沢",
     "slopeOrientation": "N",
-    "prefecture": "山形県"
+    "prefecture": "山形県",
+    "roadStationId": "826500037",
+    "roadStationName": "水窪第一トンネル",
+    "roadStationRoute": "E13東北中央自動車道"
   },
   {
     "id": "ski_ski273",
@@ -4101,7 +4296,10 @@
     "amedasId": "34311",
     "amedasName": "新川",
     "slopeOrientation": "N",
-    "prefecture": "宮城県"
+    "prefecture": "宮城県",
+    "roadStationId": "824000027",
+    "roadStationName": "作並除雪ST",
+    "roadStationRoute": "国道48号"
   },
   {
     "id": "ski_ski271",
@@ -4125,7 +4323,10 @@
     "amedasId": "34096",
     "amedasName": "川渡",
     "slopeOrientation": "N",
-    "prefecture": "宮城県"
+    "prefecture": "宮城県",
+    "roadStationId": "824000033",
+    "roadStationName": "大谷橋",
+    "roadStationRoute": "国道47号"
   },
   {
     "id": "ski_ski276",
@@ -4194,10 +4395,13 @@
       "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "34392",
-    "amedasName": "仙台",
+    "amedasId": "34311",
+    "amedasName": "新川",
     "slopeOrientation": "N",
-    "prefecture": "宮城県"
+    "prefecture": "宮城県",
+    "roadStationId": "824000058",
+    "roadStationName": "熊ヶ根",
+    "roadStationRoute": "国道48号"
   },
   {
     "id": "ski_ski277",
@@ -4293,7 +4497,10 @@
     "amedasId": "36127",
     "amedasName": "福島",
     "slopeOrientation": "N",
-    "prefecture": "福島県"
+    "prefecture": "福島県",
+    "roadStationId": "826700035",
+    "roadStationName": "熱海高玉",
+    "roadStationRoute": "国道49号"
   },
   {
     "id": "ski_ski287",
@@ -4413,7 +4620,10 @@
     "amedasId": "36276",
     "amedasName": "猪苗代",
     "slopeOrientation": "N",
-    "prefecture": "福島県"
+    "prefecture": "福島県",
+    "roadStationId": "826700031",
+    "roadStationName": "猪苗代(長浜）",
+    "roadStationRoute": "国道49号"
   },
   {
     "id": "ski_ski291",
@@ -4485,7 +4695,10 @@
     "amedasId": "36276",
     "amedasName": "猪苗代",
     "slopeOrientation": "N",
-    "prefecture": "福島県"
+    "prefecture": "福島県",
+    "roadStationId": "826700031",
+    "roadStationName": "猪苗代(長浜）",
+    "roadStationRoute": "国道49号"
   },
   {
     "id": "ski_ski298",
@@ -4605,7 +4818,10 @@
     "amedasId": "36251",
     "amedasName": "西会津",
     "slopeOrientation": "N",
-    "prefecture": "福島県"
+    "prefecture": "福島県",
+    "roadStationId": "826700025",
+    "roadStationName": "七折峠TN新潟",
+    "roadStationRoute": "国道49号"
   },
   {
     "id": "ski_ski303",
@@ -4989,7 +5205,10 @@
     "amedasId": "42251",
     "amedasName": "前橋",
     "slopeOrientation": "N",
-    "prefecture": "群馬県"
+    "prefecture": "群馬県",
+    "roadStationId": "834000003",
+    "roadStationName": "上白井",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski339",
@@ -5205,7 +5424,10 @@
     "amedasId": "54191",
     "amedasName": "下関",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843200009",
+    "roadStationName": "新発田",
+    "roadStationRoute": "国道7号"
   },
   {
     "id": "ski_ski348",
@@ -5229,7 +5451,10 @@
     "amedasId": "54421",
     "amedasName": "津川",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843200034",
+    "roadStationName": "赤岩",
+    "roadStationRoute": "国道49号"
   },
   {
     "id": "ski_ski354",
@@ -5253,7 +5478,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400026",
+    "roadStationName": "七谷切",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski346",
@@ -5277,7 +5505,10 @@
     "amedasId": "54191",
     "amedasName": "下関",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843200052",
+    "roadStationName": "関川",
+    "roadStationRoute": "国道113号"
   },
   {
     "id": "ski_ski344",
@@ -5301,7 +5532,10 @@
     "amedasId": "54191",
     "amedasName": "下関",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843200020",
+    "roadStationName": "蒲萄",
+    "roadStationRoute": "国道7号"
   },
   {
     "id": "ski_ski355",
@@ -5325,7 +5559,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400026",
+    "roadStationName": "七谷切",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski359",
@@ -5349,7 +5586,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400027",
+    "roadStationName": "神立",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski366",
@@ -5373,7 +5613,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400029",
+    "roadStationName": "関山",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski371",
@@ -5397,7 +5640,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400031",
+    "roadStationName": "塩沢",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski364",
@@ -5445,7 +5691,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400027",
+    "roadStationName": "神立",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski376",
@@ -5469,7 +5718,10 @@
     "amedasId": "54616",
     "amedasName": "小出",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400034",
+    "roadStationName": "大和",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski358",
@@ -5493,7 +5745,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400027",
+    "roadStationName": "神立",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski363",
@@ -5541,7 +5796,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400033",
+    "roadStationName": "六日町跨線橋",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski361",
@@ -5565,7 +5823,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400027",
+    "roadStationName": "神立",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski370",
@@ -5589,7 +5850,10 @@
     "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400031",
+    "roadStationName": "塩沢",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski375",
@@ -5613,7 +5877,10 @@
     "amedasId": "54616",
     "amedasName": "小出",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400034",
+    "roadStationName": "大和",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski380",
@@ -5661,7 +5928,10 @@
     "amedasId": "54616",
     "amedasName": "小出",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400036",
+    "roadStationName": "小出",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski385",
@@ -5709,7 +5979,10 @@
     "amedasId": "54501",
     "amedasName": "長岡",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400045",
+    "roadStationName": "長岡",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski388",
@@ -5733,7 +6006,10 @@
     "amedasId": "54616",
     "amedasName": "小出",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843400039",
+    "roadStationName": "坂塚",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "ski_ski389",
@@ -5901,7 +6177,10 @@
     "amedasId": "54816",
     "amedasName": "関山",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843900026",
+    "roadStationName": "妙高",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski401",
@@ -5949,7 +6228,10 @@
     "amedasId": "54816",
     "amedasName": "関山",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843900026",
+    "roadStationName": "妙高",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski403",
@@ -5973,7 +6255,10 @@
     "amedasId": "48061",
     "amedasName": "信濃町",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843900026",
+    "roadStationName": "妙高",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski407",
@@ -5997,7 +6282,10 @@
     "amedasId": "54816",
     "amedasName": "関山",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843900026",
+    "roadStationName": "妙高",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski405",
@@ -6021,7 +6309,10 @@
     "amedasId": "54816",
     "amedasName": "関山",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843900026",
+    "roadStationName": "妙高",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski413",
@@ -6069,7 +6360,10 @@
     "amedasId": "48097",
     "amedasName": "小谷",
     "slopeOrientation": "N",
-    "prefecture": "新潟県"
+    "prefecture": "新潟県",
+    "roadStationId": "843900015",
+    "roadStationName": "糸魚川",
+    "roadStationRoute": "国道8号"
   },
   {
     "id": "ski_ski421",
@@ -6117,7 +6411,10 @@
     "amedasId": "48331",
     "amedasName": "軽井沢",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "834000011",
+    "roadStationName": "ワサビ沢橋",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski423",
@@ -6141,7 +6438,10 @@
     "amedasId": "42121",
     "amedasName": "草津",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000008",
+    "roadStationName": "川谷",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski422",
@@ -6309,7 +6609,10 @@
     "amedasId": "48331",
     "amedasName": "軽井沢",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000007",
+    "roadStationName": "軽井沢",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski427",
@@ -6381,7 +6684,10 @@
     "amedasId": "48216",
     "amedasName": "菅平",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000023",
+    "roadStationName": "上田",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski435",
@@ -6837,7 +7143,10 @@
     "amedasId": "48061",
     "amedasName": "信濃町",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000010",
+    "roadStationName": "牟礼",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski460",
@@ -6861,7 +7170,10 @@
     "amedasId": "48066",
     "amedasName": "飯山",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000014",
+    "roadStationName": "野尻",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski463",
@@ -6885,7 +7197,10 @@
     "amedasId": "48156",
     "amedasName": "長野",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000004",
+    "roadStationName": "信州新町",
+    "roadStationRoute": "国道19号"
   },
   {
     "id": "ski_ski453",
@@ -6933,7 +7248,10 @@
     "amedasId": "48061",
     "amedasName": "信濃町",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000014",
+    "roadStationName": "野尻",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "ski_ski468",
@@ -7077,7 +7395,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "836500013",
+    "roadStationName": "山口",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "ski_ski482",
@@ -7149,7 +7470,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000002",
+    "roadStationName": "富士見久保",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "ski_ski487",
@@ -7173,7 +7497,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000038",
+    "roadStationName": "坂室",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "ski_ski488",
@@ -7197,7 +7524,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000031",
+    "roadStationName": "下蔦木",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "ski_ski494",
@@ -7341,7 +7671,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000038",
+    "roadStationName": "坂室",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "ski_ski490",
@@ -7365,7 +7698,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000038",
+    "roadStationName": "坂室",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "ski_ski489",
@@ -7389,7 +7725,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "837000002",
+    "roadStationName": "富士見久保",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "ski_ski496",
@@ -7581,7 +7920,10 @@
     "amedasId": "48531",
     "amedasName": "開田高原",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "857100042",
+    "roadStationName": "菅",
+    "roadStationRoute": "国道19号"
   },
   {
     "id": "ski_ski510",
@@ -7605,7 +7947,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "857100042",
+    "roadStationName": "菅",
+    "roadStationRoute": "国道19号"
   },
   {
     "id": "ski_ski501",
@@ -7629,7 +7974,10 @@
     "amedasId": "48361",
     "amedasName": "松本",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "857100027",
+    "roadStationName": "桔梗ヶ原",
+    "roadStationRoute": "国道19号"
   },
   {
     "id": "ski_ski512",
@@ -7653,7 +8001,10 @@
     "amedasId": "48767",
     "amedasName": "飯田",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "857100041",
+    "roadStationName": "新開",
+    "roadStationRoute": "国道19号"
   },
   {
     "id": "ski_ski514",
@@ -7677,7 +8028,10 @@
     "amedasId": "48767",
     "amedasName": "飯田",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "857100034",
+    "roadStationName": "伊豆木",
+    "roadStationRoute": "国道474号"
   },
   {
     "id": "ski_ski516",
@@ -7701,7 +8055,10 @@
     "amedasId": "48767",
     "amedasName": "飯田",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "857100017",
+    "roadStationName": "治部坂",
+    "roadStationRoute": "国道153号"
   },
   {
     "id": "ski_ski511",
@@ -7725,7 +8082,10 @@
     "amedasId": "48531",
     "amedasName": "開田高原",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "857100036",
+    "roadStationName": "漆脇",
+    "roadStationRoute": "国道19号"
   },
   {
     "id": "ski_ski517",
@@ -7749,7 +8109,10 @@
     "amedasId": "48767",
     "amedasName": "飯田",
     "slopeOrientation": "N",
-    "prefecture": "長野県"
+    "prefecture": "長野県",
+    "roadStationId": "857100038",
+    "roadStationName": "平谷",
+    "roadStationRoute": "国道153号"
   },
   {
     "id": "ski_ski519",
@@ -7773,7 +8136,10 @@
     "amedasId": "49251",
     "amedasName": "河口湖",
     "slopeOrientation": "N",
-    "prefecture": "山梨県"
+    "prefecture": "山梨県",
+    "roadStationId": "836500022",
+    "roadStationName": "鳴沢",
+    "roadStationRoute": "国道139号"
   },
   {
     "id": "ski_ski520",
@@ -7797,7 +8163,10 @@
     "amedasId": "48491",
     "amedasName": "諏訪",
     "slopeOrientation": "N",
-    "prefecture": "山梨県"
+    "prefecture": "山梨県",
+    "roadStationId": "836500013",
+    "roadStationName": "山口",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "ski_ski525",
@@ -7845,7 +8214,10 @@
     "amedasId": "52146",
     "amedasName": "高山",
     "slopeOrientation": "N",
-    "prefecture": "岐阜県"
+    "prefecture": "岐阜県",
+    "roadStationId": "853400024",
+    "roadStationName": "高山",
+    "roadStationRoute": "国道41号"
   },
   {
     "id": "ski_ski526",
@@ -7869,7 +8241,10 @@
     "amedasId": "52146",
     "amedasName": "高山",
     "slopeOrientation": "N",
-    "prefecture": "岐阜県"
+    "prefecture": "岐阜県",
+    "roadStationId": "853400024",
+    "roadStationName": "高山",
+    "roadStationRoute": "国道41号"
   },
   {
     "id": "ski_ski530",
@@ -7893,7 +8268,10 @@
     "amedasId": "52051",
     "amedasName": "神岡",
     "slopeOrientation": "N",
-    "prefecture": "岐阜県"
+    "prefecture": "岐阜県",
+    "roadStationId": "853400022",
+    "roadStationName": "数河",
+    "roadStationRoute": "国道41号"
   },
   {
     "id": "ski_ski518",
@@ -7941,7 +8319,10 @@
     "amedasId": "52041",
     "amedasName": "河合",
     "slopeOrientation": "N",
-    "prefecture": "岐阜県"
+    "prefecture": "岐阜県",
+    "roadStationId": "853400025",
+    "roadStationName": "野口",
+    "roadStationRoute": "国道41号"
   },
   {
     "id": "ski_ski523",
@@ -7965,7 +8346,10 @@
     "amedasId": "48767",
     "amedasName": "飯田",
     "slopeOrientation": "N",
-    "prefecture": "愛知県"
+    "prefecture": "愛知県",
+    "roadStationId": "857100016",
+    "roadStationName": "根羽",
+    "roadStationRoute": "国道153号"
   },
   {
     "id": "ski_ski522",
@@ -8013,7 +8397,10 @@
     "amedasId": "49251",
     "amedasName": "河口湖",
     "slopeOrientation": "N",
-    "prefecture": "静岡県"
+    "prefecture": "静岡県",
+    "roadStationId": "836500037",
+    "roadStationName": "籠坂",
+    "roadStationRoute": "国道138号"
   },
   {
     "id": "ski_ski534",
@@ -8037,7 +8424,10 @@
     "amedasId": "52146",
     "amedasName": "高山",
     "slopeOrientation": "N",
-    "prefecture": "岐阜県"
+    "prefecture": "岐阜県",
+    "roadStationId": "853400036",
+    "roadStationName": "宮峠トンネル",
+    "roadStationRoute": "国道41号"
   },
   {
     "id": "ski_ski546",
@@ -8205,7 +8595,10 @@
     "amedasId": "60131",
     "amedasName": "彦根",
     "slopeOrientation": "N",
-    "prefecture": "三重県"
+    "prefecture": "三重県",
+    "roadStationId": "863200012",
+    "roadStationName": "土山",
+    "roadStationRoute": "国道1号"
   },
   {
     "id": "ski_ski561",
@@ -8229,7 +8622,10 @@
     "amedasId": "55267",
     "amedasName": "猪谷",
     "slopeOrientation": "N",
-    "prefecture": "富山県"
+    "prefecture": "富山県",
+    "roadStationId": "844500049",
+    "roadStationName": "楡原",
+    "roadStationRoute": "国道41号"
   },
   {
     "id": "ski_ski562",
@@ -8253,7 +8649,10 @@
     "amedasId": "55267",
     "amedasName": "猪谷",
     "slopeOrientation": "N",
-    "prefecture": "富山県"
+    "prefecture": "富山県",
+    "roadStationId": "844500049",
+    "roadStationName": "楡原",
+    "roadStationRoute": "国道41号"
   },
   {
     "id": "ski_ski560",
@@ -8325,7 +8724,10 @@
     "amedasId": "55141",
     "amedasName": "砺波",
     "slopeOrientation": "N",
-    "prefecture": "富山県"
+    "prefecture": "富山県",
+    "roadStationId": "844500003",
+    "roadStationName": "小牧",
+    "roadStationRoute": "国道156号"
   },
   {
     "id": "ski_ski569",
@@ -8373,7 +8775,10 @@
     "amedasId": "55141",
     "amedasName": "砺波",
     "slopeOrientation": "N",
-    "prefecture": "富山県"
+    "prefecture": "富山県",
+    "roadStationId": "844500003",
+    "roadStationName": "小牧",
+    "roadStationRoute": "国道156号"
   },
   {
     "id": "ski_ski570",
@@ -8397,7 +8802,10 @@
     "amedasId": "55141",
     "amedasName": "砺波",
     "slopeOrientation": "N",
-    "prefecture": "富山県"
+    "prefecture": "富山県",
+    "roadStationId": "844500003",
+    "roadStationName": "小牧",
+    "roadStationRoute": "国道156号"
   },
   {
     "id": "ski_ski575",
@@ -8445,7 +8853,10 @@
     "amedasId": "56301",
     "amedasName": "加賀中津原",
     "slopeOrientation": "N",
-    "prefecture": "石川県"
+    "prefecture": "石川県",
+    "roadStationId": "845000004",
+    "roadStationName": "千木野",
+    "roadStationRoute": "国道8号"
   },
   {
     "id": "ski_ski573",
@@ -8469,7 +8880,10 @@
     "amedasId": "56146",
     "amedasName": "七尾",
     "slopeOrientation": "N",
-    "prefecture": "石川県"
+    "prefecture": "石川県",
+    "roadStationId": "845000050",
+    "roadStationName": "七尾除雪",
+    "roadStationRoute": "国道159号"
   },
   {
     "id": "ski_ski587",
@@ -8493,7 +8907,10 @@
     "amedasId": "57176",
     "amedasName": "九頭竜",
     "slopeOrientation": "N",
-    "prefecture": "福井県"
+    "prefecture": "福井県",
+    "roadStationId": "865100014",
+    "roadStationName": "九頭竜IC",
+    "roadStationRoute": "E67 中部縦貫自動車道"
   },
   {
     "id": "ski_ski579",
@@ -8517,7 +8934,10 @@
     "amedasId": "56227",
     "amedasName": "金沢",
     "slopeOrientation": "N",
-    "prefecture": "石川県"
+    "prefecture": "石川県",
+    "roadStationId": "845000043",
+    "roadStationName": "月浦",
+    "roadStationRoute": "国道159号"
   },
   {
     "id": "ski_ski588",
@@ -8565,7 +8985,10 @@
     "amedasId": "57206",
     "amedasName": "今庄",
     "slopeOrientation": "N",
-    "prefecture": "福井県"
+    "prefecture": "福井県",
+    "roadStationId": "865100005",
+    "roadStationName": "杉津",
+    "roadStationRoute": "国道8号"
   },
   {
     "id": "ski_ski591",
@@ -8613,7 +9036,10 @@
     "amedasId": "60026",
     "amedasName": "柳ケ瀬",
     "slopeOrientation": "N",
-    "prefecture": "滋賀県"
+    "prefecture": "滋賀県",
+    "roadStationId": "865100003",
+    "roadStationName": "山中",
+    "roadStationRoute": "国道161号"
   },
   {
     "id": "ski_ski601",
@@ -8661,7 +9087,10 @@
     "amedasId": "60051",
     "amedasName": "今津",
     "slopeOrientation": "N",
-    "prefecture": "滋賀県"
+    "prefecture": "滋賀県",
+    "roadStationId": "863200005",
+    "roadStationName": "高島",
+    "roadStationRoute": "国道161号"
   },
   {
     "id": "ski_ski594",
@@ -8685,7 +9114,10 @@
     "amedasId": "57206",
     "amedasName": "今庄",
     "slopeOrientation": "N",
-    "prefecture": "滋賀県"
+    "prefecture": "滋賀県",
+    "roadStationId": "865100005",
+    "roadStationName": "杉津",
+    "roadStationRoute": "国道8号"
   },
   {
     "id": "ski_ski604",
@@ -8709,7 +9141,10 @@
     "amedasId": "60216",
     "amedasName": "大津",
     "slopeOrientation": "N",
-    "prefecture": "滋賀県"
+    "prefecture": "滋賀県",
+    "roadStationId": "863200016",
+    "roadStationName": "南小松",
+    "roadStationRoute": "国道161号"
   },
   {
     "id": "ski_ski609",
@@ -8757,7 +9192,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "866100013",
+    "roadStationName": "入江",
+    "roadStationRoute": "国道9号"
   },
   {
     "id": "ski_ski612",
@@ -8781,7 +9219,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "866100013",
+    "roadStationName": "入江",
+    "roadStationRoute": "国道9号"
   },
   {
     "id": "ski_ski614",
@@ -8805,7 +9246,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "866100008",
+    "roadStationName": "春来",
+    "roadStationRoute": "国道9号"
   },
   {
     "id": "ski_ski610",
@@ -8829,7 +9273,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "866100001",
+    "roadStationName": "稲葉川橋",
+    "roadStationRoute": "国道483号"
   },
   {
     "id": "ski_ski622",
@@ -8853,7 +9300,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "866100017",
+    "roadStationName": "福岡",
+    "roadStationRoute": "国道9号"
   },
   {
     "id": "ski_ski624",
@@ -8877,7 +9327,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "865000002",
+    "roadStationName": "戸倉",
+    "roadStationRoute": "国道29号"
   },
   {
     "id": "ski_ski619",
@@ -8901,7 +9354,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "866100017",
+    "roadStationName": "福岡",
+    "roadStationRoute": "国道9号"
   },
   {
     "id": "ski_ski615",
@@ -8949,7 +9405,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "865000002",
+    "roadStationName": "戸倉",
+    "roadStationRoute": "国道29号"
   },
   {
     "id": "ski_ski620",
@@ -8973,7 +9432,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "866100017",
+    "roadStationName": "福岡",
+    "roadStationRoute": "国道9号"
   },
   {
     "id": "ski_ski628",
@@ -8997,7 +9459,10 @@
     "amedasId": "69101",
     "amedasName": "倉吉",
     "slopeOrientation": "N",
-    "prefecture": "岡山県"
+    "prefecture": "岡山県",
+    "roadStationId": "873000020",
+    "roadStationName": "智頭用瀬",
+    "roadStationRoute": "E29鳥取自動車道"
   },
   {
     "id": "ski_ski635",
@@ -9069,7 +9534,10 @@
     "amedasId": "69246",
     "amedasName": "智頭",
     "slopeOrientation": "N",
-    "prefecture": "兵庫県"
+    "prefecture": "兵庫県",
+    "roadStationId": "873000038",
+    "roadStationName": "志戸坂",
+    "roadStationRoute": "E29鳥取自動車道"
   },
   {
     "id": "ski_ski638",
@@ -9117,7 +9585,10 @@
     "amedasId": "67016",
     "amedasName": "高野",
     "slopeOrientation": "N",
-    "prefecture": "広島県"
+    "prefecture": "広島県",
+    "roadStationId": "875200031",
+    "roadStationName": "高野IC",
+    "roadStationRoute": "E54松江自動車道"
   },
   {
     "id": "ski_ski631",
@@ -9237,7 +9708,10 @@
     "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N",
-    "prefecture": "鳥取県"
+    "prefecture": "鳥取県",
+    "roadStationId": "873000029",
+    "roadStationName": "小船",
+    "roadStationRoute": "国道29号"
   },
   {
     "id": "ski_ski650",
@@ -9285,7 +9759,10 @@
     "amedasId": "81286",
     "amedasName": "山口",
     "slopeOrientation": "N",
-    "prefecture": "山口県"
+    "prefecture": "山口県",
+    "roadStationId": "876000012",
+    "roadStationName": "徳佐",
+    "roadStationRoute": "国道9号"
   },
   {
     "id": "ski_ski670",
@@ -9357,7 +9834,10 @@
     "amedasId": "68306",
     "amedasName": "赤名",
     "slopeOrientation": "N",
-    "prefecture": "島根県"
+    "prefecture": "島根県",
+    "roadStationId": "873500017",
+    "roadStationName": "頓原",
+    "roadStationRoute": "国道54号"
   },
   {
     "id": "ski_ski674",
@@ -9381,7 +9861,10 @@
     "amedasId": "67437",
     "amedasName": "広島",
     "slopeOrientation": "N",
-    "prefecture": "愛媛県"
+    "prefecture": "愛媛県",
+    "roadStationId": "875000004",
+    "roadStationName": "日名内",
+    "roadStationRoute": "国道2号"
   },
   {
     "id": "ski_ski673",
@@ -9405,7 +9888,10 @@
     "amedasId": "67437",
     "amedasName": "広島",
     "slopeOrientation": "N",
-    "prefecture": "愛媛県"
+    "prefecture": "愛媛県",
+    "roadStationId": "875000004",
+    "roadStationName": "日名内",
+    "roadStationRoute": "国道2号"
   },
   {
     "id": "ski_ski676",
@@ -9429,7 +9915,10 @@
     "amedasId": "67437",
     "amedasName": "広島",
     "slopeOrientation": "N",
-    "prefecture": "愛媛県"
+    "prefecture": "愛媛県",
+    "roadStationId": "875000004",
+    "roadStationName": "日名内",
+    "roadStationRoute": "国道2号"
   },
   {
     "id": "ski_ski681",
@@ -9477,7 +9966,10 @@
     },
     "amedasId": "63121",
     "amedasName": "和田山",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "865000001",
+    "roadStationName": "引原",
+    "roadStationRoute": "国道29号"
   },
   {
     "id": "kujyu_shinrin",
@@ -9573,7 +10065,10 @@
     },
     "amedasId": "19021",
     "amedasName": "川湯",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "817830276",
+    "roadStationName": "美幌峠",
+    "roadStationRoute": "国道243号"
   },
   {
     "id": "bc_unabetsudake",
@@ -9669,7 +10164,10 @@
     },
     "amedasId": "17561",
     "amedasName": "斜里",
-    "slopeOrientation": "NW"
+    "slopeOrientation": "NW",
+    "roadStationId": "817840273",
+    "roadStationName": "根北峠",
+    "roadStationRoute": "国道244号"
   },
   {
     "id": "bc_asahidake",
@@ -9741,7 +10239,10 @@
     },
     "amedasId": "12551",
     "amedasName": "美瑛",
-    "slopeOrientation": "NW"
+    "slopeOrientation": "NW",
+    "roadStationId": "817070135",
+    "roadStationName": "美馬牛",
+    "roadStationRoute": "国道237号"
   },
   {
     "id": "bc_maetokachi",
@@ -9789,7 +10290,10 @@
     },
     "amedasId": "12551",
     "amedasName": "美瑛",
-    "slopeOrientation": "NW"
+    "slopeOrientation": "NW",
+    "roadStationId": "817070135",
+    "roadStationName": "美馬牛",
+    "roadStationRoute": "国道237号"
   },
   {
     "id": "bc_furanodake",
@@ -9885,7 +10389,10 @@
     },
     "amedasId": "13321",
     "amedasName": "幌糠",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "817220158",
+    "roadStationName": "岩老",
+    "roadStationRoute": "国道231号"
   },
   {
     "id": "bc_memurodake",
@@ -9909,7 +10416,10 @@
     },
     "amedasId": "20421",
     "amedasName": "芽室",
-    "slopeOrientation": "NE"
+    "slopeOrientation": "NE",
+    "roadStationId": "817620244",
+    "roadStationName": "日勝峠",
+    "roadStationRoute": "国道274号"
   },
   {
     "id": "bc_sapporodake",
@@ -9957,7 +10467,10 @@
     },
     "amedasId": "16091",
     "amedasName": "小樽",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "816520043",
+    "roadStationName": "毛無峠",
+    "roadStationRoute": "国道393号"
   },
   {
     "id": "bc_harukayama",
@@ -9981,7 +10494,10 @@
     },
     "amedasId": "16091",
     "amedasName": "小樽",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "816520046",
+    "roadStationName": "張碓峠",
+    "roadStationRoute": "国道5号"
   },
   {
     "id": "bc_teineyama",
@@ -10005,7 +10521,10 @@
     },
     "amedasId": "14163",
     "amedasName": "札幌",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "816520046",
+    "roadStationName": "張碓峠",
+    "roadStationRoute": "国道5号"
   },
   {
     "id": "bc_yoichidake",
@@ -10029,7 +10548,10 @@
     },
     "amedasId": "16091",
     "amedasName": "小樽",
-    "slopeOrientation": "NW"
+    "slopeOrientation": "NW",
+    "roadStationId": "816520043",
+    "roadStationName": "毛無峠",
+    "roadStationRoute": "国道393号"
   },
   {
     "id": "bc_shakotandake",
@@ -10053,7 +10575,10 @@
     },
     "amedasId": "16076",
     "amedasName": "余市",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "816520053",
+    "roadStationName": "美国",
+    "roadStationRoute": "国道229号"
   },
   {
     "id": "bc_yoteizan",
@@ -10101,7 +10626,10 @@
     },
     "amedasId": "16217",
     "amedasName": "倶知安",
-    "slopeOrientation": "ALL"
+    "slopeOrientation": "ALL",
+    "roadStationId": "816540047",
+    "roadStationName": "倶知安峠",
+    "roadStationRoute": "国道5号"
   },
   {
     "id": "bc_iwaonupuri",
@@ -10125,7 +10653,10 @@
     },
     "amedasId": "16217",
     "amedasName": "倶知安",
-    "slopeOrientation": "S"
+    "slopeOrientation": "S",
+    "roadStationId": "816540047",
+    "roadStationName": "倶知安峠",
+    "roadStationRoute": "国道5号"
   },
   {
     "id": "bc_chisenupuri",
@@ -10197,7 +10728,10 @@
     },
     "amedasId": "24051",
     "amedasName": "今金",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "816530037",
+    "roadStationName": "栄浜",
+    "roadStationRoute": "国道229号"
   },
   {
     "id": "bc_iwakisan",
@@ -10317,7 +10851,10 @@
     },
     "amedasId": "33226",
     "amedasName": "岩手松尾",
-    "slopeOrientation": "SE"
+    "slopeOrientation": "SE",
+    "roadStationId": "823500071",
+    "roadStationName": "滝沢防災ST",
+    "roadStationRoute": "国道4号"
   },
   {
     "id": "bc_hayachine",
@@ -10389,7 +10926,10 @@
     },
     "amedasId": "33421",
     "amedasName": "雫石",
-    "slopeOrientation": "W"
+    "slopeOrientation": "W",
+    "roadStationId": "823500061",
+    "roadStationName": "橋場",
+    "roadStationRoute": "国道46号"
   },
   {
     "id": "bc_akitakomagatake",
@@ -10413,7 +10953,10 @@
     },
     "amedasId": "33421",
     "amedasName": "雫石",
-    "slopeOrientation": "W"
+    "slopeOrientation": "W",
+    "roadStationId": "823500061",
+    "roadStationName": "橋場",
+    "roadStationRoute": "国道46号"
   },
   {
     "id": "bc_wagadake",
@@ -10437,7 +10980,10 @@
     },
     "amedasId": "33421",
     "amedasName": "雫石",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "824500045",
+    "roadStationName": "蛇沢",
+    "roadStationRoute": "国道46号"
   },
   {
     "id": "bc_yakeishidake",
@@ -10509,7 +11055,10 @@
     },
     "amedasId": "32626",
     "amedasName": "矢島",
-    "slopeOrientation": "ALL"
+    "slopeOrientation": "ALL",
+    "roadStationId": "825600037",
+    "roadStationName": "日向川橋",
+    "roadStationRoute": "E7日本海東北自動車道"
   },
   {
     "id": "bc_gassan",
@@ -10533,7 +11082,10 @@
     },
     "amedasId": "35361",
     "amedasName": "大井沢",
-    "slopeOrientation": "S"
+    "slopeOrientation": "S",
+    "roadStationId": "825500061",
+    "roadStationName": "上楓沢橋",
+    "roadStationRoute": "国道112号"
   },
   {
     "id": "bc_yudonosan",
@@ -10557,7 +11109,10 @@
     },
     "amedasId": "35361",
     "amedasName": "大井沢",
-    "slopeOrientation": "SW"
+    "slopeOrientation": "SW",
+    "roadStationId": "825600013",
+    "roadStationName": "八紘沢",
+    "roadStationRoute": "国道112号"
   },
   {
     "id": "bc_ubagatake",
@@ -10581,7 +11136,10 @@
     },
     "amedasId": "35361",
     "amedasName": "大井沢",
-    "slopeOrientation": "SE"
+    "slopeOrientation": "SE",
+    "roadStationId": "825500061",
+    "roadStationName": "上楓沢橋",
+    "roadStationRoute": "国道112号"
   },
   {
     "id": "bc_murayamahayama",
@@ -10605,7 +11163,10 @@
     },
     "amedasId": "35216",
     "amedasName": "肘折",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "825500058",
+    "roadStationName": "横手",
+    "roadStationRoute": "国道112号"
   },
   {
     "id": "bc_funagatayama",
@@ -10629,7 +11190,10 @@
     },
     "amedasId": "34311",
     "amedasName": "新川",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "825500073",
+    "roadStationName": "関山トンネル",
+    "roadStationRoute": "国道48号"
   },
   {
     "id": "bc_zao",
@@ -10701,7 +11265,10 @@
     },
     "amedasId": "36251",
     "amedasName": "西会津",
-    "slopeOrientation": "S"
+    "slopeOrientation": "S",
+    "roadStationId": "826700029",
+    "roadStationName": "鳥井大橋",
+    "roadStationRoute": "国道49号"
   },
   {
     "id": "bc_kitamatadake",
@@ -10725,7 +11292,10 @@
     },
     "amedasId": "35486",
     "amedasName": "小国",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "843200059",
+    "roadStationName": "金丸",
+    "roadStationRoute": "国道113号"
   },
   {
     "id": "bc_nishiazuma",
@@ -10749,7 +11319,10 @@
     },
     "amedasId": "35552",
     "amedasName": "米沢",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "826500032",
+    "roadStationName": "西栗子TN西（気象）",
+    "roadStationRoute": "国道13号"
   },
   {
     "id": "bc_issaikyozan",
@@ -10773,7 +11346,10 @@
     },
     "amedasId": "36127",
     "amedasName": "福島",
-    "slopeOrientation": "S"
+    "slopeOrientation": "S",
+    "roadStationId": "826500021",
+    "roadStationName": "栗子国道（気象）",
+    "roadStationRoute": "国道13号"
   },
   {
     "id": "bc_adatarayama",
@@ -10797,7 +11373,10 @@
     },
     "amedasId": "36276",
     "amedasName": "猪苗代",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "826700035",
+    "roadStationName": "熱海高玉",
+    "roadStationRoute": "国道49号"
   },
   {
     "id": "bc_minowayama",
@@ -10821,7 +11400,10 @@
     },
     "amedasId": "36127",
     "amedasName": "福島",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "826500021",
+    "roadStationName": "栗子国道（気象）",
+    "roadStationRoute": "国道13号"
   },
   {
     "id": "bc_bandaisan",
@@ -11133,7 +11715,10 @@
     },
     "amedasId": "42251",
     "amedasName": "前橋",
-    "slopeOrientation": "SW"
+    "slopeOrientation": "SW",
+    "roadStationId": "834000003",
+    "roadStationName": "上白井",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "bc_asakusadake",
@@ -11205,7 +11790,10 @@
     },
     "amedasId": "54616",
     "amedasName": "小出",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "843400036",
+    "roadStationName": "小出",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "bc_makihata",
@@ -11229,7 +11817,10 @@
     },
     "amedasId": "54841",
     "amedasName": "湯沢",
-    "slopeOrientation": "NW"
+    "slopeOrientation": "NW",
+    "roadStationId": "843400033",
+    "roadStationName": "六日町跨線橋",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "bc_tanigawadake",
@@ -11325,7 +11916,10 @@
     },
     "amedasId": "54841",
     "amedasName": "湯沢",
-    "slopeOrientation": "W"
+    "slopeOrientation": "W",
+    "roadStationId": "843400019",
+    "roadStationName": "火打",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "bc_sennokura",
@@ -11349,7 +11943,10 @@
     },
     "amedasId": "54841",
     "amedasName": "湯沢",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "843400019",
+    "roadStationName": "火打",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "bc_naebasan",
@@ -11373,7 +11970,10 @@
     },
     "amedasId": "54841",
     "amedasName": "湯沢",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "843400021",
+    "roadStationName": "萱付",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "bc_kaguragamine",
@@ -11397,7 +11997,10 @@
     },
     "amedasId": "54841",
     "amedasName": "湯沢",
-    "slopeOrientation": "NE"
+    "slopeOrientation": "NE",
+    "roadStationId": "843400021",
+    "roadStationName": "萱付",
+    "roadStationRoute": "国道17号"
   },
   {
     "id": "bc_kusatsushirane",
@@ -11517,7 +12120,10 @@
     },
     "amedasId": "48216",
     "amedasName": "菅平",
-    "slopeOrientation": "S"
+    "slopeOrientation": "S",
+    "roadStationId": "837000023",
+    "roadStationName": "上田",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "bc_asamayama",
@@ -11541,7 +12147,10 @@
     },
     "amedasId": "48331",
     "amedasName": "軽井沢",
-    "slopeOrientation": "W"
+    "slopeOrientation": "W",
+    "roadStationId": "837000007",
+    "roadStationName": "軽井沢",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "bc_tateshinayama",
@@ -11709,7 +12318,10 @@
     },
     "amedasId": "48156",
     "amedasName": "長野",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "837000010",
+    "roadStationName": "牟礼",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "bc_takatsumayama",
@@ -11757,7 +12369,10 @@
     },
     "amedasId": "48061",
     "amedasName": "信濃町",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "837000014",
+    "roadStationName": "野尻",
+    "roadStationRoute": "国道18号"
   },
   {
     "id": "bc_hiuchiyama",
@@ -12237,7 +12852,10 @@
     },
     "amedasId": "55056",
     "amedasName": "魚津",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "844500013",
+    "roadStationName": "大掛",
+    "roadStationRoute": "国道8号"
   },
   {
     "id": "bc_dainichidake",
@@ -12261,7 +12879,10 @@
     },
     "amedasId": "55267",
     "amedasName": "猪谷",
-    "slopeOrientation": "W"
+    "slopeOrientation": "W",
+    "roadStationId": "844500009",
+    "roadStationName": "久金１",
+    "roadStationRoute": "国道8号"
   },
   {
     "id": "bc_yarigatake",
@@ -12381,7 +13002,10 @@
     },
     "amedasId": "48361",
     "amedasName": "松本",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "837000006",
+    "roadStationName": "生坂",
+    "roadStationRoute": "国道19号"
   },
   {
     "id": "bc_chogatake",
@@ -12501,7 +13125,10 @@
     },
     "amedasId": "48531",
     "amedasName": "開田高原",
-    "slopeOrientation": "SE"
+    "slopeOrientation": "SE",
+    "roadStationId": "857100036",
+    "roadStationName": "漆脇",
+    "roadStationRoute": "国道19号"
   },
   {
     "id": "bc_nyukasayama",
@@ -12525,7 +13152,10 @@
     },
     "amedasId": "48491",
     "amedasName": "諏訪",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "837000002",
+    "roadStationName": "富士見久保",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "bc_kitadake",
@@ -12549,7 +13179,10 @@
     },
     "amedasId": "49142",
     "amedasName": "甲府",
-    "slopeOrientation": "E"
+    "slopeOrientation": "E",
+    "roadStationId": "836500013",
+    "roadStationName": "山口",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "bc_senjogatake",
@@ -12573,7 +13206,10 @@
     },
     "amedasId": "49142",
     "amedasName": "甲府",
-    "slopeOrientation": "NE"
+    "slopeOrientation": "NE",
+    "roadStationId": "836500013",
+    "roadStationName": "山口",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "bc_kaikomagatake",
@@ -12597,7 +13233,10 @@
     },
     "amedasId": "49142",
     "amedasName": "甲府",
-    "slopeOrientation": "S"
+    "slopeOrientation": "S",
+    "roadStationId": "836500013",
+    "roadStationName": "山口",
+    "roadStationRoute": "国道20号"
   },
   {
     "id": "bc_fujisan",
@@ -12621,7 +13260,10 @@
     },
     "amedasId": "49251",
     "amedasName": "河口湖",
-    "slopeOrientation": "ALL"
+    "slopeOrientation": "ALL",
+    "roadStationId": "836500021",
+    "roadStationName": "梨ケ原",
+    "roadStationRoute": "国道138号"
   },
   {
     "id": "bc_hakusan",
@@ -12693,7 +13335,10 @@
     },
     "amedasId": "57176",
     "amedasName": "九頭竜",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "865100013",
+    "roadStationName": "勝原IC",
+    "roadStationRoute": "E67 中部縦貫自動車道"
   },
   {
     "id": "bc_kyogatake_fukui",
@@ -12717,7 +13362,10 @@
     },
     "amedasId": "57121",
     "amedasName": "大野",
-    "slopeOrientation": "W"
+    "slopeOrientation": "W",
+    "roadStationId": "865100011",
+    "roadStationName": "大野IC",
+    "roadStationRoute": "E67 中部縦貫自動車道"
   },
   {
     "id": "bc_toritateyama",
@@ -12741,7 +13389,10 @@
     },
     "amedasId": "57121",
     "amedasName": "大野",
-    "slopeOrientation": "W"
+    "slopeOrientation": "W",
+    "roadStationId": "865100010",
+    "roadStationName": "勝山",
+    "roadStationRoute": "E67 中部縦貫自動車道"
   },
   {
     "id": "bc_ginkyo_mine",
@@ -12981,7 +13632,10 @@
     },
     "amedasId": "60051",
     "amedasName": "今津",
-    "slopeOrientation": "SE"
+    "slopeOrientation": "SE",
+    "roadStationId": "863200006",
+    "roadStationName": "国境",
+    "roadStationRoute": "国道161号"
   },
   {
     "id": "bc_bunagatake",
@@ -13005,7 +13659,10 @@
     },
     "amedasId": "60051",
     "amedasName": "今津",
-    "slopeOrientation": "W"
+    "slopeOrientation": "W",
+    "roadStationId": "863200016",
+    "roadStationName": "南小松",
+    "roadStationRoute": "国道161号"
   },
   {
     "id": "bc_hyonosen",
@@ -13029,7 +13686,10 @@
     },
     "amedasId": "63071",
     "amedasName": "兎和野高原",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "866100017",
+    "roadStationName": "福岡",
+    "roadStationRoute": "国道9号"
   },
   {
     "id": "bc_daisen",
@@ -13077,7 +13737,10 @@
     },
     "amedasId": "67437",
     "amedasName": "広島",
-    "slopeOrientation": "N"
+    "slopeOrientation": "N",
+    "roadStationId": "875000004",
+    "roadStationName": "日名内",
+    "roadStationRoute": "国道2号"
   },
   {
     "id": "bc_tsurugisan",

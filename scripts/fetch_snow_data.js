@@ -444,6 +444,63 @@ async function run() {
     console.warn('気象庁アメダス取得エラー:', err.message);
   }
 
+  // 1-2. 国土交通省 全国道路情報提供システム 道路雪量計データ一括取得
+  const roadSnowMap = {};
+  try {
+    const roadBase = 'https://www.road-info-prvs.mlit.go.jp/roadinfo/pc/';
+    const rTop = await fetch(roadBase + 'pcKisho_81_3.html');
+    if (rTop.ok) {
+      const topHtml = await rTop.text();
+      const backupMatch = topHtml.match(/(\.\.\/backup\/[^"']+\.js)/);
+      if (backupMatch) {
+        const configJsUrl = new URL(backupMatch[1], roadBase).href;
+        const configJs = await (await fetch(configJsUrl)).text();
+        const jsonPathMatch = configJs.match(/CREATE_JSON_PATH\s*=\s*"([^"]+)"/);
+        if (jsonPathMatch) {
+          const jsonBaseUrl = new URL(jsonPathMatch[1], roadBase).href;
+          // 積雪計が設置されている整備局: 81北海道, 82東北, 83関東, 84北陸, 85中部, 86近畿, 87中国
+          const regions = ['81', '82', '83', '84', '85', '86', '87'];
+          await Promise.all(regions.map(async (cd) => {
+            try {
+              const res = await fetch(`${jsonBaseUrl}Kisho/${cd}.json`);
+              if (!res.ok) return;
+              const data = await res.json();
+              const walk = (node) => {
+                if (Array.isArray(node)) {
+                  node.forEach(walk);
+                } else if (node && typeof node === 'object') {
+                  if ('sensor_id' in node && node.sekisetsushin_flag === '1') {
+                    const sid = String(node.sensor_id);
+                    const rawSnow = parseFloat(node.snow_amount);
+                    const rawSf = parseFloat(node.snowfall_amount);
+                    const rawTemp = parseFloat(node.temperature);
+                    roadSnowMap[sid] = {
+                      sensorId: sid,
+                      stationName: node.pc_hyoji_meisho || node.sumaho_hyoji_meisho || '',
+                      areaName: node.area_name || '',
+                      cityName: node.cities_name || '',
+                      route: node.rosen_meisho || '',
+                      snow: isNaN(rawSnow) ? null : rawSnow,
+                      snow1h: isNaN(rawSf) ? null : rawSf,
+                      temp: isNaN(rawTemp) ? null : rawTemp,
+                      updatedAt: node.date_time || ''
+                    };
+                  } else {
+                    Object.values(node).forEach(walk);
+                  }
+                }
+              };
+              walk(data);
+            } catch (e) {}
+          }));
+          console.log(`国交省 道路雪量計データ取得成功: ${Object.keys(roadSnowMap).length} 観測点`);
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('国交省 道路雪量計取得エラー (アメダスのみで継続):', err.message);
+  }
+
   // 2. Open-Meteo Multi-location 一括取得
   // 山頂用（top.lat, top.lon, top.elevation）と山麓用（base.lat, base.lon, base.elevation）を完全分離取得
   const BATCH_SIZE = 25;
@@ -554,12 +611,16 @@ async function run() {
           });
         }
 
+        // 実測データ選定 (国交省 道路雪量計 > 気象庁アメダス)
         let liveAmedas = null;
+
+        // 1. 気象庁アメダス実測の準備
+        let jmaLive = null;
         if (spot.amedasId) {
           const raw = amedasMap[spot.amedasId];
           const rawSnow = amedasSnowMap[spot.amedasId];
           if (raw || rawSnow) {
-            liveAmedas = {
+            jmaLive = {
               source: 'jma_amedas',
               stationId: spot.amedasId,
               stationName: spot.amedasName,
@@ -576,6 +637,37 @@ async function run() {
             };
           }
         }
+
+        // 2. 国交省 道路雪量計実測の評価（異常値除外・最寄り優先）
+        let roadLive = null;
+        if (spot.roadStationId && roadSnowMap[spot.roadStationId]) {
+          const r = roadSnowMap[spot.roadStationId];
+          if (r.snow !== null && !isNaN(r.snow) && r.snow >= 0 && r.snow <= 600) {
+            // 異常値判定: 気温 >= 6℃ かつ JMA積雪0cm かつ Open-Meteo山麓積雪0cm で道路雪量計のみ10cm以上ある場合は除外
+            const isAbnormal = (r.temp !== null && r.temp >= 6.0) &&
+                               (!jmaLive || jmaLive.snowDepth === 0 || jmaLive.snowDepth === null) &&
+                               ((baseData.hourly.snow_depth[currentIdx] || 0) === 0) &&
+                               (r.snow >= 10);
+            if (!isAbnormal) {
+              roadLive = {
+                source: 'mlit_road',
+                stationId: spot.roadStationId,
+                stationName: spot.roadStationName,
+                route: spot.roadStationRoute || r.route,
+                snowDepth: r.snow,
+                snow1h: r.snow1h,
+                temp: r.temp !== null ? r.temp : (jmaLive ? jmaLive.temp : null),
+                precipitation1h: jmaLive ? jmaLive.precipitation1h : 0,
+                windSpeed: jmaLive ? jmaLive.windSpeed : null,
+                updatedAt: r.updatedAt || latestJmaTime,
+                snowUpdatedAt: r.updatedAt || latestSnowTime || latestJmaTime
+              };
+            }
+          }
+        }
+
+        // 道路雪量計が有効なら優先採用、そうでなければアメダスを採用
+        liveAmedas = roadLive || jmaLive;
 
         const start6h = Math.max(0, currentIdx - 5);
         const snow6h = Math.round(topData.hourly.snowfall.slice(start6h, currentIdx + 1).reduce((acc, v) => acc + (v || 0), 0) * 10) / 10;

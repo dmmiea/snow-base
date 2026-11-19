@@ -116,6 +116,7 @@
       ridgeWindLabel: '稜線・山頂風',
       amedasLiveDefault: 'アメダス実測',
       amedasStationFormat: '{station}実測',
+      roadStationFormat: '{station}道路雪量計',
       amedasNoData: '実測無し',
 
       // Slope Aspects
@@ -457,6 +458,7 @@
       ridgeWindLabel: 'Ridge / Summit Wind',
       amedasLiveDefault: 'AMeDAS Live',
       amedasStationFormat: '{station} AMeDAS',
+      roadStationFormat: '{station} Road Gauge',
       amedasNoData: 'No Live Data',
 
       // Slope Aspects

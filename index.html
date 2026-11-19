@@ -2060,11 +2060,14 @@
       }
 
       const amedasTitleEl = document.getElementById('heroAmedasTitle');
-      const stationName = (spot.current.liveAmedas && spot.current.liveAmedas.stationName) || spot.amedasName;
+      const isRoad = spot.current.liveAmedas && spot.current.liveAmedas.source === 'mlit_road';
+      const stationName = (spot.current.liveAmedas && spot.current.liveAmedas.stationName) || spot.roadStationName || spot.amedasName;
       if (amedasTitleEl) {
         if (stationName) {
           amedasTitleEl.removeAttribute('data-i18n');
-          amedasTitleEl.textContent = t('amedasStationFormat', { station: tName(stationName) });
+          amedasTitleEl.textContent = isRoad
+            ? t('roadStationFormat', { station: tName(stationName) })
+            : t('amedasStationFormat', { station: tName(stationName) });
         } else {
           amedasTitleEl.setAttribute('data-i18n', 'amedasLiveDefault');
           amedasTitleEl.textContent = t('amedasLiveDefault');
