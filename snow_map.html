@@ -83,16 +83,53 @@
       </div>
     </div>
 
-    <!-- 種別フィルター（🏂 スキー場 / ⛰️ BC山 完全分離2択・デフォルト スキー場） -->
-    <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold">
-      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition">
-        🏂 スキー場
-      </button>
-      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition">
-        ⛰️ BC山
-      </button>
+    <!-- モード切替（📡 実測 / 🔮 予報） & 種別フィルター（🏂 スキー場 / ⛰️ BC山） -->
+    <div class="flex items-center gap-1.5 flex-wrap justify-end">
+      <!-- 予報 / 実測 トグル -->
+      <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold">
+        <button type="button" onclick="setMapSource('forecast')" id="btnSourceForecast" class="px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-sm transition">
+          🔮 予報
+        </button>
+        <button type="button" onclick="setMapSource('live')" id="btnSourceLive" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
+          📡 実測
+        </button>
+      </div>
+
+      <!-- スキー場 / BC山 トグル -->
+      <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold">
+        <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2.5 py-0.5 rounded bg-sky-700 text-white font-black shadow-sm transition">
+          🏂 スキー場
+        </button>
+        <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2.5 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
+          ⛰️ BC山
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- ===============================
+       1.5 実測期間セレクターバー（実測モード時のみ表示）
+       =============================== -->
+  <div id="mapLivePeriodBar" class="hidden bg-sky-50/95 border-b border-sky-200 px-3 py-1 flex items-center justify-between gap-1 text-xs z-15">
+    <div class="flex items-center gap-1 text-[11px] font-bold text-sky-950">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span id="mapLiveBarLabel">公的観測所 実測降雪:</span>
+    </div>
+    <div class="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-sky-300 text-[10.5px] font-bold shadow-sm">
+      <button type="button" onclick="setMapLivePeriod('night')" id="btnMapLiveNight" class="px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-xs transition">
+        🌙 夜間
+      </button>
+      <button type="button" onclick="setMapLivePeriod('6h')" id="btnMapLive6h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
+        6h
+      </button>
+      <button type="button" onclick="setMapLivePeriod('12h')" id="btnMapLive12h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
+        12h
+      </button>
+      <button type="button" onclick="setMapLivePeriod('24h')" id="btnMapLive24h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition">
+        24h
+      </button>
+    </div>
+  </div>
 
   <!-- ===============================
        2. 地域クイックジャンプバー（横スクロール）
@@ -160,6 +197,8 @@
     let map = null;
     let allSpots = [];
     let activeCategory = 'ski'; // デフォルトはスキー場
+    let activeSource = 'forecast'; // 'forecast' または 'live' (初期表示は予報)
+    let activeLivePeriod = 'night'; // 'night', '6h', '12h', '24h'
     let markersLayer = null;
     let legendOpen = true;
     let currentLang = window.currentLang || 'ja';
@@ -194,6 +233,13 @@
         countSuffix: '地点',
         catSki: '🏂 スキー場',
         catBc: '⛰️ BC山',
+        sourceForecast: '🔮 予報',
+        sourceLive: '📡 実測',
+        liveBarLabel: '公的観測所 実測降雪:',
+        livePeriodNight: '🌙 夜間',
+        livePeriod6h: '6h',
+        livePeriod12h: '12h',
+        livePeriod24h: '24h',
         regionLabel: '地域:',
         regAll: '全国',
         regHokkaido: '北海道',
@@ -205,6 +251,7 @@
         regHokuriku: '北陸',
         regWest: '西日本・中四国',
         legendTitle: '🌙 凡例（夜間新雪）',
+        legendTitleLive: '📡 凡例（実測降雪）',
         legWaist: '腰パウ (80cm+)',
         legThigh: 'モモパウ (50〜79cm)',
         legKnee: 'ヒザパウ (30〜49cm)',
@@ -222,7 +269,15 @@
         popSki: '🏂 スキー場',
         popBc: '⛰️ バックカントリー',
         popNightSnow: '🌙 夜間新雪 (18-06時)',
+        popLiveSnowfall: '降雪量',
         popTopSnow: '山頂 積雪深',
+        popLiveSnowDepth: '実測 積雪深',
+        popLiveStation: '観測所:',
+        popLiveStationAmedas: 'アメダス',
+        popLiveStationRoad: '道路雪量計',
+        popLiveSubsidence: '沈降',
+        popLiveFreshness: '鮮度',
+        popLiveTemp: '気温',
         popElev: '標高:',
         popSnowQuality: '雪質:',
         popBcQuality: '山岳:',
@@ -238,6 +293,13 @@
         countSuffix: ' Spots',
         catSki: '🏂 Ski Resort',
         catBc: '⛰️ Backcountry',
+        sourceForecast: '🔮 Forecast',
+        sourceLive: '📡 Observed',
+        liveBarLabel: 'Live Gauges Snowfall:',
+        livePeriodNight: '🌙 Night',
+        livePeriod6h: '6h',
+        livePeriod12h: '12h',
+        livePeriod24h: '24h',
         regionLabel: 'Region:',
         regAll: 'All',
         regHokkaido: 'Hokkaido',
@@ -249,6 +311,7 @@
         regHokuriku: 'Hokuriku',
         regWest: 'West',
         legendTitle: '🌙 Snowfall Legend',
+        legendTitleLive: '📡 Observed Snow Legend',
         legWaist: 'Waist (80cm+)',
         legThigh: 'Thigh (50-79cm)',
         legKnee: 'Knee (30-49cm)',
@@ -266,7 +329,15 @@
         popSki: '🏂 Ski Resort',
         popBc: '⛰️ Backcountry',
         popNightSnow: '🌙 Overnight Snow (18-06h)',
+        popLiveSnowfall: 'Snowfall',
         popTopSnow: 'Top Snow Depth',
+        popLiveSnowDepth: 'Live Depth',
+        popLiveStation: 'Station:',
+        popLiveStationAmedas: 'AMeDAS',
+        popLiveStationRoad: 'Road Gauge',
+        popLiveSubsidence: 'Settling',
+        popLiveFreshness: 'Freshness',
+        popLiveTemp: 'Temp',
         popElev: 'Elev:',
         popSnowQuality: 'Snow:',
         popBcQuality: 'Mountain:',
@@ -286,6 +357,24 @@
 
       const tTitle = document.getElementById('mapTitleText');
       if (tTitle) tTitle.textContent = dict.title;
+
+      const bFc = document.getElementById('btnSourceForecast');
+      if (bFc) bFc.textContent = dict.sourceForecast;
+
+      const bLv = document.getElementById('btnSourceLive');
+      if (bLv) bLv.textContent = dict.sourceLive;
+
+      const barLbl = document.getElementById('mapLiveBarLabel');
+      if (barLbl) barLbl.textContent = dict.liveBarLabel;
+
+      const bNight = document.getElementById('btnMapLiveNight');
+      if (bNight) bNight.textContent = dict.livePeriodNight;
+      const b6h = document.getElementById('btnMapLive6h');
+      if (b6h) b6h.textContent = dict.livePeriod6h;
+      const b12h = document.getElementById('btnMapLive12h');
+      if (b12h) b12h.textContent = dict.livePeriod12h;
+      const b24h = document.getElementById('btnMapLive24h');
+      if (b24h) b24h.textContent = dict.livePeriod24h;
 
       const bSki = document.getElementById('btnCatSki');
       if (bSki) bSki.textContent = dict.catSki;
@@ -313,7 +402,11 @@
       });
 
       const legTitle = document.getElementById('mapLegendTitle');
-      if (legTitle) legTitle.textContent = dict.legendTitle;
+      if (legTitle) {
+        legTitle.innerHTML = activeSource === 'live'
+          ? `<i class="fa-solid fa-satellite-dish text-[11px] text-emerald-600 mr-1"></i>${dict.legendTitleLive}`
+          : `<span class="mr-1">🌙</span>${dict.legendTitle}`;
+      }
 
       const legIds = {
         legWaist: dict.legWaist,
@@ -430,6 +523,65 @@
       return { label: dict.tierNone, bg: '#64748b', badgeCls: 'bg-slate-500', textCls: 'text-slate-600', isDeep: false };
     }
 
+    function setMapSource(source) {
+      activeSource = source;
+      const bFc = document.getElementById('btnSourceForecast');
+      const bLv = document.getElementById('btnSourceLive');
+      const liveBar = document.getElementById('mapLivePeriodBar');
+
+      if (source === 'live') {
+        if (bFc) bFc.className = "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition";
+        if (bLv) bLv.className = "px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-sm transition";
+        if (liveBar) liveBar.classList.remove('hidden');
+      } else {
+        if (bFc) bFc.className = "px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-sm transition";
+        if (bLv) bLv.className = "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition";
+        if (liveBar) liveBar.classList.add('hidden');
+      }
+
+      const dict = I18N_MAP[currentLang] || I18N_MAP.ja;
+      const legTitle = document.getElementById('mapLegendTitle');
+      if (legTitle) {
+        legTitle.innerHTML = activeSource === 'live'
+          ? `<i class="fa-solid fa-satellite-dish text-[11px] text-emerald-600 mr-1"></i>${dict.legendTitleLive}`
+          : `<span class="mr-1">🌙</span>${dict.legendTitle}`;
+      }
+
+      renderMarkers();
+    }
+
+    function setMapLivePeriod(period) {
+      activeLivePeriod = period;
+      const periods = ['night', '6h', '12h', '24h'];
+      const mapBtns = {
+        night: document.getElementById('btnMapLiveNight'),
+        '6h': document.getElementById('btnMapLive6h'),
+        '12h': document.getElementById('btnMapLive12h'),
+        '24h': document.getElementById('btnMapLive24h')
+      };
+
+      periods.forEach(p => {
+        const btn = mapBtns[p];
+        if (!btn) return;
+        if (p === period) {
+          btn.className = "px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-xs transition";
+        } else {
+          btn.className = "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition";
+        }
+      });
+
+      renderMarkers();
+    }
+
+    // スポットの実測降雪量（選択期間）を取得
+    function getSpotLiveSnowfall(s) {
+      const stats = s && s.current && s.current.liveAmedas && s.current.liveAmedas.stats;
+      if (!stats) return 0;
+      const periodStat = stats[activeLivePeriod];
+      if (!periodStat || typeof periodStat.snowfall !== 'number') return 0;
+      return periodStat.snowfall;
+    }
+
     function renderMarkers() {
       if (!markersLayer) return;
       markersLayer.clearLayers();
@@ -448,15 +600,20 @@
         if (!s.top || typeof s.top.lat !== 'number' || typeof s.top.lon !== 'number') return;
 
         const isBc = s.category === 'bc';
-        const nightVal = Math.round(getSpotNightSnow(s) * 10) / 10;
-        const tier = getNightSnowTier(nightVal);
+        const isLive = activeSource === 'live';
+
+        // 予報 or 実測 に応じた降雪量と色分け判定
+        const snowVal = isLive
+          ? Math.round(getSpotLiveSnowfall(s) * 10) / 10
+          : Math.round(getSpotNightSnow(s) * 10) / 10;
+        const tier = getNightSnowTier(snowVal);
         const iconChar = isBc ? '⛰️' : '🏂';
 
         // サーフベース準拠の大きめ白枠ピン（L.divIcon）
         // 新雪があるスポットはピンを一回り強調し、右上に新雪量バッジを表示
-        const pinSize = tier.isDeep ? 28 : (nightVal >= 1 ? 26 : 22);
-        const badgeHtml = nightVal >= 1
-          ? `<span class="absolute -top-2 -right-3 px-1 py-0.2 rounded-full ${tier.badgeCls} text-white font-black text-[9px] font-mono leading-none border border-slate-900 shadow-md pointer-events-none">+${nightVal}</span>`
+        const pinSize = tier.isDeep ? 28 : (snowVal >= 1 ? 26 : 22);
+        const badgeHtml = snowVal >= 1
+          ? `<span class="absolute -top-2 -right-3 px-1 py-0.2 rounded-full ${tier.badgeCls} text-white font-black text-[9px] font-mono leading-none border border-slate-900 shadow-md pointer-events-none">+${snowVal}</span>`
           : '';
 
         const iconHtml = `
@@ -477,6 +634,8 @@
 
         const marker = L.marker([s.top.lat, s.top.lon], { icon });
 
+        const displayName = tName(s.name);
+        const displayArea = tName(s.areaName || s.regionName);
         const topSnow = (s.current && s.current.topSnowDepth) || 0;
         const score = (s.current && typeof s.current.score === 'number') ? s.current.score : null;
         const rawTag = (s.current && s.current.tag) || (isBc ? '山岳安定' : '雪質安定');
@@ -494,29 +653,101 @@
           const cls = lvl === 'HIGH'
             ? 'bg-rose-50 text-rose-800 border-rose-300'
             : (lvl === 'MODERATE' ? 'bg-amber-50 text-amber-800 border-amber-300' : 'bg-emerald-50 text-emerald-800 border-emerald-300');
-          const icon = lvl === 'HIGH' ? '🔴' : (lvl === 'MODERATE' ? '🟡' : '🟢');
+          const aIcon = lvl === 'HIGH' ? '🔴' : (lvl === 'MODERATE' ? '🟡' : '🟢');
           const windLabel = currentLang === 'en' ? 'Wind' : '風';
           const windStr = windSpd !== null ? ` / ${windLabel}: ${windDir ? windDir + ' ' : ''}${windSpd}m/s` : '';
-          bcAlertBadgeHtml = `<div class="col-span-2 px-2 py-1 rounded-lg border text-[10px] font-bold ${cls}">${icon} ${lbl}${windStr}</div>`;
+          bcAlertBadgeHtml = `<div class="col-span-2 px-2 py-1 rounded-lg border text-[10px] font-bold ${cls}">${aIcon} ${lbl}${windStr}</div>`;
         }
 
-        const displayName = tName(s.name);
-        const displayArea = tName(s.areaName || s.regionName);
+        let popupContentHtml = '';
 
-        const popupHtml = `
-          <div class="p-3 text-slate-900 font-sans text-xs bg-white">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-1.5 mb-2 pr-6 gap-2">
-              <span class="text-[11px] font-bold ${isBc ? 'text-emerald-800 bg-emerald-50 border-emerald-300' : 'text-sky-800 bg-sky-50 border-sky-300'} px-2 py-0.5 rounded border shrink-0">
-                ${isBc ? dict.popBc : dict.popSki}
+        if (isLive) {
+          // ==============================
+          // 📡 実測モードのポップアップカード
+          // ==============================
+          const live = s.current && s.current.liveAmedas;
+          const isRoad = live && live.source === 'mlit_road';
+          const stationTypeLabel = isRoad ? dict.popLiveStationRoad : dict.popLiveStationAmedas;
+          const stationName = live ? tName(live.stationName || '') : '―';
+          const liveDepth = (live && typeof live.snowDepth === 'number') ? live.snowDepth : 0;
+          
+          const stats = live && live.stats && live.stats[activeLivePeriod];
+          const subsidence = (stats && typeof stats.subsidence === 'number') ? stats.subsidence : 0;
+          const freshness = stats && stats.freshness !== null && stats.freshness !== undefined ? `${stats.freshness}h` : '―';
+          let tempStr = '―';
+          if (stats && (stats.tempMax !== null || stats.tempMin !== null)) {
+            const tMax = stats.tempMax !== null ? `${stats.tempMax}°` : '―';
+            const tMin = stats.tempMin !== null ? `${stats.tempMin}°` : '―';
+            tempStr = `${tMax}/${tMin}`;
+          } else if (live && typeof live.temp === 'number') {
+            tempStr = `${live.temp}°C`;
+          }
+
+          const periodLabelMap = {
+            night: dict.livePeriodNight,
+            '6h': '6h',
+            '12h': '12h',
+            '24h': '24h'
+          };
+          const periodTxt = periodLabelMap[activeLivePeriod] || '';
+
+          popupContentHtml = `
+            <div class="mb-2 bg-slate-100 rounded-lg px-2 py-1 flex items-center justify-between text-[10.5px]">
+              <span class="font-bold text-slate-700 flex items-center gap-1">
+                <i class="fa-solid fa-satellite-dish text-sky-700 text-[10px]"></i>
+                <span>${stationTypeLabel}: <strong class="text-slate-900">${stationName}</strong></span>
               </span>
-              <span class="text-[11px] font-bold text-slate-600 truncate text-right">${displayArea}</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-100 text-sky-800 font-bold border border-sky-200">📡 実測</span>
             </div>
-            <div class="font-black text-sm text-slate-900 leading-tight mb-2 pr-4">${displayName}</div>
-            
+
+            <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-[11px] mb-2.5">
+              <div>
+                <span class="text-slate-600 font-semibold text-[10px] block">${periodTxt}${dict.popLiveSnowfall}</span>
+                <span class="font-black font-mono text-base ${tier.textCls}">+${snowVal}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
+                <span class="text-[10px] px-1.5 py-0.2 rounded ${tier.badgeCls} text-white font-bold ml-1 inline-block">${tier.label}</span>
+              </div>
+              <div>
+                <span class="text-slate-600 font-semibold text-[10px] block">${dict.popLiveSnowDepth}</span>
+                <span class="font-black text-slate-900 font-mono text-base">${liveDepth}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
+              </div>
+
+              <!-- 実測指標 補助バー（沈降・鮮度・気温） -->
+              <div class="col-span-2 pt-1.5 border-t border-slate-200 grid grid-cols-3 gap-1 text-[10.5px] text-center">
+                <div class="bg-white p-1 rounded border border-slate-200">
+                  <span class="text-[9.5px] text-slate-600 font-semibold block">${dict.popLiveSubsidence}</span>
+                  <span class="font-mono font-bold text-slate-800">${subsidence > 0 ? '-' + subsidence + 'cm' : '0cm'}</span>
+                </div>
+                <div class="bg-white p-1 rounded border border-slate-200">
+                  <span class="text-[9.5px] text-slate-600 font-semibold block">${dict.popLiveFreshness}</span>
+                  <span class="font-mono font-bold text-sky-700">${freshness}</span>
+                </div>
+                <div class="bg-white p-1 rounded border border-slate-200">
+                  <span class="text-[9.5px] text-slate-600 font-semibold block">${dict.popLiveTemp}</span>
+                  <span class="font-mono font-bold text-slate-800">${tempStr}</span>
+                </div>
+              </div>
+
+              <!-- 標高 & スコア/コンディション -->
+              <div class="col-span-2 pt-1 border-t border-slate-200 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[11px]">
+                <span class="text-slate-700 font-semibold whitespace-nowrap">${dict.popElev} ${elev}m</span>
+                <div class="flex items-center gap-1.5 whitespace-nowrap">
+                  <span class="text-slate-600 font-semibold">${isBc ? dict.popBcQuality : dict.popSnowQuality}</span>
+                  <span class="font-black ${score !== null ? (isBc ? 'text-emerald-700' : 'text-sky-700') : 'text-slate-500'}">${score !== null ? score + dict.popScorePt : '―'}</span>
+                  <span class="text-[10px] text-slate-800 font-bold px-1.5 py-0.5 bg-white rounded border border-slate-300 whitespace-nowrap">${tag}</span>
+                </div>
+              </div>
+              ${bcAlertBadgeHtml}
+            </div>
+          `;
+        } else {
+          // ==============================
+          // 🔮 予報モードのポップアップカード（既存維持）
+          // ==============================
+          popupContentHtml = `
             <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-[11px] mb-2.5">
               <div>
                 <span class="text-slate-600 font-semibold text-[10px] block">${dict.popNightSnow}</span>
-                <span class="font-black font-mono text-base ${tier.textCls}">+${nightVal}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
+                <span class="font-black font-mono text-base ${tier.textCls}">+${snowVal}</span> <span class="text-[10px] text-slate-600 font-bold">cm</span>
                 <span class="text-[10px] px-1.5 py-0.2 rounded ${tier.badgeCls} text-white font-bold ml-1 inline-block">${tier.label}</span>
               </div>
               <div>
@@ -533,6 +764,20 @@
               </div>
               ${bcAlertBadgeHtml}
             </div>
+          `;
+        }
+
+        const popupHtml = `
+          <div class="p-3 text-slate-900 font-sans text-xs bg-white">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-1.5 mb-2 pr-6 gap-2">
+              <span class="text-[11px] font-bold ${isBc ? 'text-emerald-800 bg-emerald-50 border-emerald-300' : 'text-sky-800 bg-sky-50 border-sky-300'} px-2 py-0.5 rounded border shrink-0">
+                ${isBc ? dict.popBc : dict.popSki}
+              </span>
+              <span class="text-[11px] font-bold text-slate-600 truncate text-right">${displayArea}</span>
+            </div>
+            <div class="font-black text-sm text-slate-900 leading-tight mb-2 pr-4">${displayName}</div>
+            
+            ${popupContentHtml}
 
             <button type="button" onclick="goToSpot('${s.id}')" class="w-full py-2 px-3 rounded-lg ${isBc ? 'bg-emerald-700 hover:bg-emerald-800' : 'bg-sky-700 hover:bg-sky-800'} active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow transition cursor-pointer">
               <span>${dict.popViewForecast}</span>
