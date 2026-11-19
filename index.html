@@ -2183,6 +2183,7 @@
       const nowHighlightIdx = currentIdx - startIdx;
 
       const labels = [];
+      const xAxisDisplayLabels = [];
       const tickColors = [];
       const depthData = [];
       const snowData = [];
@@ -2194,16 +2195,18 @@
 
       const dayNamesJa = ['日', '月', '火', '水', '木', '金', '土'];
       const dayNamesEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const isJa = currentLang !== 'en';
+      const maxFutureOffset = (endIdx - 1) - currentIdx;
 
       for (let i = startIdx; i < endIdx; i++) {
         const tStr = hourly.time[i]; // 2026-11-10T06:00
         const hour = tStr.slice(11, 16);
         const relIdx = i - startIdx;
+        const offset = i - currentIdx;
         
-        // 日付・曜日取得
+        // ツールチップ用の日付・曜日取得
         const dObj = new Date(tStr + ':00+09:00');
-        const dayOfWeek = dObj.getDay(); // 0: 日, 6: 土
-        const isJa = currentLang !== 'en';
+        const dayOfWeek = dObj.getDay();
         const dayStr = isJa ? `(${dayNamesJa[dayOfWeek]})` : `(${dayNamesEn[dayOfWeek]})`;
         const datePart = `${tStr.slice(5, 7)}/${tStr.slice(8, 10)}${dayStr}`;
 
@@ -2211,23 +2214,33 @@
           midnightsIndices.push(relIdx);
         }
 
-        let label = '';
-        if (currentTrendRange === '7d') {
-          label = (hour === '00:00' || i === startIdx) ? datePart : `${datePart} ${hour}`;
-        } else {
-          // 48hレンジ: 00:00や端点では日付+時、それ以外は時のみ
-          label = (hour === '00:00' || i === startIdx) ? `${datePart} ${hour}` : hour;
-        }
-        labels.push(label);
+        // ツールチップタイトル用の完全表記
+        labels.push(`${datePart} ${hour}`);
 
-        // 土日は目盛り色を分ける（土: スカイブルー #0284c7, 日: ローズレッド #e11d48, 平日: #334155）
-        if (dayOfWeek === 6) {
-          tickColors.push('#0284c7');
-        } else if (dayOfWeek === 0) {
-          tickColors.push('#e11d48');
+        // X軸の相対ラベル（サーフベース準拠）
+        let axisLabel = null;
+        if (currentTrendRange === '7d') {
+          if (offset === -24) axisLabel = isJa ? '24h前' : '-24h';
+          else if (offset === 0) axisLabel = 'NOW';
+          else if (offset === 24) axisLabel = isJa ? '1日後' : '+1d';
+          else if (offset === 48) axisLabel = isJa ? '2日後' : '+2d';
+          else if (offset === 72) axisLabel = isJa ? '3日後' : '+3d';
+          else if (offset === 120) axisLabel = isJa ? '5日後' : '+5d';
+          else if (offset === 168 || (offset === 144 && maxFutureOffset < 168)) {
+            const dNum = Math.round(offset / 24);
+            axisLabel = isJa ? `${dNum}日後` : `+${dNum}d`;
+          }
         } else {
-          tickColors.push('#334155');
+          if (offset === -24) axisLabel = isJa ? '24h前' : '-24h';
+          else if (offset === -12) axisLabel = isJa ? '12h前' : '-12h';
+          else if (offset === 0) axisLabel = 'NOW';
+          else if (offset === 12) axisLabel = isJa ? '12h後' : '+12h';
+          else if (offset === 24) axisLabel = isJa ? '24h後' : '+24h';
         }
+        xAxisDisplayLabels.push(axisLabel);
+
+        // NOWは強調ブルー、他はスレートグレー
+        tickColors.push(offset === 0 ? '#0369a1' : '#64748b');
 
         depthData.push(hourly.snowDepth[i]);
         snowData.push(hourly.snowfall[i] || 0);
@@ -2349,14 +2362,19 @@
           },
           scales: {
             x: {
-              grid: { color: 'rgba(148, 163, 184, 0.25)' },
+              grid: {
+                color: (ctx) => (xAxisDisplayLabels[ctx.index] ? 'rgba(148, 163, 184, 0.2)' : 'transparent')
+              },
               ticks: {
+                autoSkip: false,
+                maxRotation: 0,
+                minRotation: 0,
+                callback: (val, idx) => xAxisDisplayLabels[idx] || null,
                 color: (ctx) => {
                   const idx = ctx.index;
-                  return (tickColors && tickColors[idx]) ? tickColors[idx] : '#334155';
+                  return (tickColors && tickColors[idx]) ? tickColors[idx] : '#64748b';
                 },
-                font: { size: 9, weight: 'bold' },
-                maxTicksLimit: currentTrendRange === '7d' ? 8 : 13
+                font: { size: 10, weight: 'bold' }
               }
             },
             yDepth: {
