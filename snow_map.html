@@ -120,6 +120,16 @@
     html.theme-dark .leaflet-tile-pane {
       filter: invert(100%) hue-rotate(180deg) brightness(88%) contrast(95%);
     }
+    /* ❄️ 気象庁積雪メッシュタイル（ダークモード反転の影響を受けないようpane分離） */
+    .leaflet-pane.leaflet-jma-mesh-pane {
+      z-index: 250;
+      pointer-events: none;
+    }
+    html.theme-dark #meshControlCard {
+      background-color: #0b1522 !important;
+      border-color: #1e3a5f !important;
+      color: #f8fafc !important;
+    }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-900 flex flex-col h-full overflow-hidden select-none">
@@ -195,6 +205,25 @@
   <div class="relative flex-1 bg-slate-100 overflow-hidden">
     <div id="map"></div>
 
+    <!-- 右上：❄️ 気象庁1kmメッシュ切替コントローラー -->
+    <div id="meshControlCard" class="absolute top-3 right-3 z-10 bg-white/95 backdrop-blur-md rounded-xl p-1.5 shadow-lg border border-slate-300 text-xs pointer-events-auto flex items-center gap-1 select-none">
+      <div class="flex items-center gap-1 px-1.5 py-0.5 text-[11px] font-bold text-sky-950">
+        <i class="fa-solid fa-layer-group text-sky-600 text-[10px]"></i>
+        <span id="labelMeshTitle">1kmメッシュ:</span>
+      </div>
+      <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[10.5px] font-bold shrink-0">
+        <button type="button" onclick="setSnowMeshMode('off')" id="btnMeshOff" class="px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-xs transition whitespace-nowrap">
+          OFF
+        </button>
+        <button type="button" onclick="setSnowMeshMode('snowd')" id="btnMeshSnowd" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap" title="実況解析積雪深">
+          積雪深
+        </button>
+        <button type="button" onclick="setSnowMeshMode('snowf24h')" id="btnMeshSnowf24h" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap" title="24時間降雪量">
+          24h降雪
+        </button>
+      </div>
+    </div>
+
     <!-- 左下：凡例カード（7段階 🌙夜間新雪基準・折りたたみ対応） -->
     <div id="legendCard" class="absolute bottom-3 left-3 z-10 bg-white/95 backdrop-blur-md rounded-xl p-2.5 shadow-lg border border-slate-300 text-xs pointer-events-auto max-w-[210px] transition-all duration-200">
       <button type="button" onclick="toggleLegend()" class="w-full font-bold text-slate-900 flex items-center justify-between text-[11px] cursor-pointer hover:text-sky-700 transition gap-2 select-none">
@@ -241,6 +270,9 @@
     let activeCategory = 'ski'; // デフォルトはスキー場
     let activeSource = 'forecast'; // 'forecast' または 'live' (初期表示は予報)
     let activeLivePeriod = 'night'; // 'night', '6h', '12h', '24h'
+    let activeMeshMode = 'off'; // 'off', 'snowd', 'snowf24h'
+    let jmaSnowMeshMeta = null;
+    let jmaMeshLayer = null;
     let markersLayer = null;
     let legendOpen = true;
     let currentLang = window.currentLang || 'ja';
@@ -330,7 +362,15 @@
         tagLowSnow: '積雪不足',
         tagClosed: '滑走不可',
         tagStable: '雪質安定',
-        tagBcStable: '山岳安定'
+        tagBcStable: '山岳安定',
+        meshTitle: '1kmメッシュ:',
+        meshOff: 'OFF',
+        meshSnowd: '積雪深',
+        meshSnowf24h: '24h降雪',
+        meshLegendSnowdTitle: '❄️ 気象庁 1km積雪深',
+        meshLegendSnowf24hTitle: '❄️ 気象庁 24h降雪量',
+        meshUnitCm: 'cm',
+        meshUnit24h: 'cm/24h'
       },
       en: {
         title: 'Japan Snow Map',
@@ -392,7 +432,15 @@
         tagLowSnow: 'Low Snow',
         tagClosed: 'Closed',
         tagStable: 'Stable Snow',
-        tagBcStable: 'Stable'
+        tagBcStable: 'Stable',
+        meshTitle: '1km Mesh:',
+        meshOff: 'OFF',
+        meshSnowd: 'Depth',
+        meshSnowf24h: '24h Snow',
+        meshLegendSnowdTitle: '❄️ JMA 1km Snow Depth',
+        meshLegendSnowf24hTitle: '❄️ JMA 24h Snowfall',
+        meshUnitCm: 'cm',
+        meshUnit24h: 'cm/24h'
       }
     };
 
@@ -427,6 +475,15 @@
 
       const bBc = document.getElementById('btnCatBc');
       if (bBc) bBc.textContent = dict.catBc;
+
+      const lblMesh = document.getElementById('labelMeshTitle');
+      if (lblMesh) lblMesh.textContent = dict.meshTitle;
+      const bMOff = document.getElementById('btnMeshOff');
+      if (bMOff) bMOff.textContent = dict.meshOff;
+      const bMSnowd = document.getElementById('btnMeshSnowd');
+      if (bMSnowd) bMSnowd.textContent = dict.meshSnowd;
+      const bMSnowf = document.getElementById('btnMeshSnowf24h');
+      if (bMSnowf) bMSnowf.textContent = dict.meshSnowf24h;
 
       const regLbl = document.getElementById('mapRegionLabel');
       if (regLbl) regLbl.textContent = dict.regionLabel;
@@ -467,6 +524,8 @@
         const el = document.getElementById(id);
         if (el) el.textContent = legIds[id];
       });
+
+      updateLegendContent();
 
       if (allSpots && allSpots.length > 0) {
         renderMarkers();
@@ -511,6 +570,14 @@
         minZoom: 5
       }).addTo(map);
 
+      // 気象庁1kmメッシュ専用Pane（ダークモード反転の影響を受けず、ピンマーカーの下に描画）
+      map.createPane('jmaMeshPane');
+      const meshPane = map.getPane('jmaMeshPane');
+      if (meshPane) {
+        meshPane.classList.add('leaflet-jma-mesh-pane');
+        meshPane.style.zIndex = 250;
+      }
+
       markersLayer = L.layerGroup().addTo(map);
 
       // 親ウィンドウからのメッセージ受信（タブ切り替え時の invalidateSize 実行 & 言語変更）
@@ -531,6 +598,7 @@
         if (!res.ok) throw new Error('data_japan.json load error');
         const data = await res.json();
         allSpots = data.spots || [];
+        jmaSnowMeshMeta = data.jmaSnowMesh || null;
         applyMapLanguage();
         renderMarkers();
       } catch (err) {
@@ -594,6 +662,131 @@
       }
 
       renderMarkers();
+    }
+
+    // ❄️ 気象庁1kmメッシュ切替（OFF / 積雪深 snowd / 24h降雪 snowf24h）
+    function setSnowMeshMode(mode) {
+      activeMeshMode = mode;
+      const bOff = document.getElementById('btnMeshOff');
+      const bSnowd = document.getElementById('btnMeshSnowd');
+      const bSnowf = document.getElementById('btnMeshSnowf24h');
+      
+      const setBtnState = (btn, isActive) => {
+        if (!btn) return;
+        if (isActive) {
+          btn.className = "px-2 py-0.5 rounded bg-sky-700 text-white font-black shadow-xs transition whitespace-nowrap";
+        } else {
+          btn.className = "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap";
+        }
+      };
+      setBtnState(bOff, mode === 'off');
+      setBtnState(bSnowd, mode === 'snowd');
+      setBtnState(bSnowf, mode === 'snowf24h');
+
+      if (jmaMeshLayer) {
+        map.removeLayer(jmaMeshLayer);
+        jmaMeshLayer = null;
+      }
+
+      const dict = I18N_MAP[currentLang] || I18N_MAP.ja;
+
+      if (mode === 'off' || !jmaSnowMeshMeta || !jmaSnowMeshMeta.analysis) {
+        updateLegendContent();
+        return;
+      }
+
+      // タイルURL生成
+      const basetime = jmaSnowMeshMeta.analysis.basetime;
+      const validtime = jmaSnowMeshMeta.analysis.validtime;
+      const element = mode; // 'snowd' または 'snowf24h'
+      const tileUrl = `https://www.jma.go.jp/bosai/jmatile/data/snow/${basetime}/none/${validtime}/surf/${element}/{z}/{x}/{y}.png`;
+
+      jmaMeshLayer = L.tileLayer(tileUrl, {
+        pane: 'jmaMeshPane',
+        opacity: 0.68,
+        minZoom: 5,
+        maxZoom: 18,
+        maxNativeZoom: 10,
+        attribution: '&copy; <a href="https://www.jma.go.jp/bosai/snow/" target="_blank">気象庁 今後の雪</a>'
+      });
+      jmaMeshLayer.addTo(map);
+
+      updateLegendContent();
+    }
+
+    function updateLegendContent() {
+      const dict = I18N_MAP[currentLang] || I18N_MAP.ja;
+      const legTitle = document.getElementById('mapLegendTitle');
+      const legContent = document.getElementById('legendContent');
+      if (!legTitle || !legContent) return;
+
+      if (activeMeshMode === 'snowd') {
+        legTitle.innerHTML = `<span class="mr-1">❄️</span>${dict.meshLegendSnowdTitle}`;
+        legContent.innerHTML = `
+          <div class="space-y-1 text-[10.5px]">
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0 shadow-sm" style="background: rgb(180,0,104); opacity:0.85;"></span><span class="font-bold">200cm+</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0 shadow-sm" style="background: rgb(255,40,0); opacity:0.85;"></span><span class="font-bold">150〜200cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(255,153,0); opacity:0.85;"></span><span class="font-bold">100〜150cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(255,245,0); opacity:0.85;"></span><span class="font-bold">50〜100cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(0,65,255); opacity:0.85;"></span><span class="font-bold">20〜50cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(33,140,255); opacity:0.85;"></span><span class="font-semibold">5〜20cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(160,210,255); opacity:0.85;"></span><span class="font-medium">1〜5cm</span></div>
+          </div>
+        `;
+        return;
+      }
+
+      if (activeMeshMode === 'snowf24h') {
+        legTitle.innerHTML = `<span class="mr-1">❄️</span>${dict.meshLegendSnowf24hTitle}`;
+        legContent.innerHTML = `
+          <div class="space-y-1 text-[10.5px]">
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0 shadow-sm" style="background: rgb(180,0,104); opacity:0.85;"></span><span class="font-bold">70cm+/24h</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0 shadow-sm" style="background: rgb(255,40,0); opacity:0.85;"></span><span class="font-bold">50〜70cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(255,153,0); opacity:0.85;"></span><span class="font-bold">30〜50cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(255,245,0); opacity:0.85;"></span><span class="font-bold">20〜30cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(0,65,255); opacity:0.85;"></span><span class="font-bold">10〜20cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(33,140,255); opacity:0.85;"></span><span class="font-semibold">5〜10cm</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background: rgb(160,210,255); opacity:0.85;"></span><span class="font-medium">1〜5cm</span></div>
+          </div>
+        `;
+        return;
+      }
+
+      // 通常凡例（スポットピン）
+      legTitle.innerHTML = activeSource === 'live'
+        ? `<i class="fa-solid fa-satellite-dish text-[11px] text-emerald-600 mr-1"></i>${dict.legendTitleLive}`
+        : `<span class="mr-1">🌙</span>${dict.legendTitle}`;
+
+      legContent.innerHTML = `
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-fuchsia-600 border border-slate-900 shrink-0 shadow-sm"></span>
+          <span id="legWaist" class="text-fuchsia-800 font-bold">${dict.legWaist}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-violet-600 border border-slate-900 shrink-0 shadow-sm"></span>
+          <span id="legThigh" class="text-violet-800 font-bold">${dict.legThigh}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-orange-600 border border-slate-900 shrink-0"></span>
+          <span id="legKnee" class="text-orange-800 font-bold">${dict.legKnee}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-amber-500 border border-slate-900 shrink-0"></span>
+          <span id="legShin" class="text-amber-800 font-bold">${dict.legShin}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-sky-600 border border-slate-900 shrink-0"></span>
+          <span id="legAnkle" class="text-sky-800 font-bold">${dict.legAnkle}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-slate-900 shrink-0"></span>
+          <span id="legDust" class="text-emerald-800 font-semibold">${dict.legDust}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded-full bg-slate-500 border border-slate-700 shrink-0"></span>
+          <span id="legNone" class="text-slate-700 font-medium">${dict.legNone}</span>
+        </div>
+      `;
     }
 
     function setMapLivePeriod(period) {

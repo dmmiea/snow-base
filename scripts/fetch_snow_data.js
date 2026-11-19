@@ -1037,6 +1037,49 @@ async function run() {
     tag: s.current.tag
   }));
 
+  // 4. 気象庁 1kmメッシュ積雪タイル最新メタデータ取得（CORS制約回避用）
+  let jmaSnowMesh = null;
+  try {
+    const meshPromise = new Promise((resolve) => {
+      const https = require('https');
+      const req = https.get('https://www.jma.go.jp/bosai/jmatile/data/snow/targetTimes.json', { timeout: 7000 }, (res) => {
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => {
+          try {
+            const list = JSON.parse(data);
+            if (!Array.isArray(list) || list.length === 0) return resolve(null);
+            const analysisItem = list.find(item => item.basetime === item.validtime) || list[list.length - 1];
+            const forecastItem = list[0];
+            resolve({
+              analysis: analysisItem ? { basetime: analysisItem.basetime, validtime: analysisItem.validtime, elements: analysisItem.elements } : null,
+              forecast: forecastItem ? { basetime: forecastItem.basetime, validtime: forecastItem.validtime, elements: forecastItem.elements } : null,
+              fetchedAt: new Date().toISOString()
+            });
+          } catch (e) {
+            console.warn('[JMA Snow Mesh] Parse error:', e.message);
+            resolve(null);
+          }
+        });
+      });
+      req.on('error', (e) => {
+        console.warn('[JMA Snow Mesh] Fetch error:', e.message);
+        resolve(null);
+      });
+      req.on('timeout', () => {
+        req.destroy();
+        console.warn('[JMA Snow Mesh] Timeout');
+        resolve(null);
+      });
+    });
+    jmaSnowMesh = await meshPromise;
+    if (jmaSnowMesh && jmaSnowMesh.analysis) {
+      console.log(`[JMA Snow Mesh] 解析時刻取得成功: ${jmaSnowMesh.analysis.validtime}`);
+    }
+  } catch (meshErr) {
+    console.warn('[JMA Snow Mesh] Error:', meshErr.message);
+  }
+
   // 重複する time 配列を sharedTime に共通化してファイルサイズを大幅削減
   let sharedTime = null;
   for (const sp of processedSpots) {
@@ -1061,6 +1104,7 @@ async function run() {
     rankingNight,
     ranking6h,
     ranking24h,
+    jmaSnowMesh,
     spots: processedSpots
   };
 
