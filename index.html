@@ -685,8 +685,33 @@
     </div>
 
     <!-- B. パウダーランキングパネル -->
-    <div id="areasRankingPanel" class="space-y-3 hidden">
-      <div class="flex rounded-xl bg-white p-1 border border-slate-300 text-xs font-bold gap-1 shadow-sm">
+    <div id="areasRankingPanel" class="space-y-2.5 hidden">
+      <!-- 実測 / 予報 切り替えトグル -->
+      <div class="grid grid-cols-2 gap-1 bg-white p-1 rounded-xl border border-slate-300 shadow-sm text-xs font-bold">
+        <button type="button" id="btnRankSourceLive" onclick="setRankSource('live')" class="py-1.5 px-2 rounded-lg text-center bg-sky-700 text-white shadow font-black whitespace-nowrap transition" data-i18n="rankSourceLive">
+          📡 実測
+        </button>
+        <button type="button" id="btnRankSourceForecast" onclick="setRankSource('forecast')" class="py-1.5 px-2 rounded-lg text-center text-slate-700 hover:text-slate-900 font-bold whitespace-nowrap transition" data-i18n="rankSourceForecast">
+          🔮 予報
+        </button>
+      </div>
+      <!-- 実測用 期間切替バー (オーバーナイト / 6h / 12h / 24h) -->
+      <div id="rankPeriodBarLive" class="flex rounded-xl bg-white p-1 border border-slate-300 text-xs font-bold gap-1 shadow-sm">
+        <button type="button" id="btnLiveRankNight" onclick="setLiveRankPeriod('night')" class="flex-[1.5] py-1.5 px-1 rounded-lg text-center bg-sky-700 text-white shadow whitespace-nowrap truncate font-bold" data-i18n="rankLiveNightBtn">
+          🌙 オーバーナイト
+        </button>
+        <button type="button" id="btnLiveRank6h" onclick="setLiveRankPeriod('6h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate font-bold" data-i18n="rankLive6hBtn">
+          6時間
+        </button>
+        <button type="button" id="btnLiveRank12h" onclick="setLiveRankPeriod('12h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate font-bold" data-i18n="rankLive12hBtn">
+          12時間
+        </button>
+        <button type="button" id="btnLiveRank24h" onclick="setLiveRankPeriod('24h')" class="flex-1 py-1.5 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate font-bold" data-i18n="rankLive24hBtn">
+          24時間
+        </button>
+      </div>
+      <!-- 予報用 期間切替バー (既存維持) -->
+      <div id="rankPeriodBarForecast" class="hidden flex rounded-xl bg-white p-1 border border-slate-300 text-xs font-bold gap-1 shadow-sm">
         <button id="btnRankNight" onclick="setRankPeriod('night')" class="flex-1 py-1.5 px-1 rounded-lg text-center bg-sky-700 text-white shadow whitespace-nowrap truncate" data-i18n="rankNightBtn">
           🌙 オーバーナイト
         </button>
@@ -699,6 +724,9 @@
       </div>
       <div id="rankingListContainer" class="space-y-2">
         <!-- JSで動的生成 -->
+      </div>
+      <div id="rankingLiveLegend" class="text-[11px] text-slate-600 font-bold bg-white/80 border border-slate-300 rounded-xl px-3 py-2 leading-relaxed" data-i18n="rankLiveLegend">
+        沈降: 圧密・融解による減少量 / 鮮度: 最終降雪からの経過時間（0h＝直近1hに降雪）
       </div>
     </div>
   </main>
@@ -1199,7 +1227,10 @@
     let currentArea = '';
     let currentSpotId = '';
     let currentElevLevel = 'top'; // 'top' or 'base'
-    let currentRankPeriod = 'night'; // 'night', '6h', '24h'
+    let currentRankSource = 'live'; // 'live' | 'forecast'
+    let currentLiveRankPeriod = 'night'; // 'night', '6h', '12h', '24h'
+    let currentRankPeriod = 'night'; // 'night', '6h', '24h' (forecast)
+    const expandedRankStationKeys = new Set();
     let currentTrendRange = '7d'; // '7d' or '48h'
     let trendChartInstance = null;
     let favorites = JSON.parse(localStorage.getItem('snow_base_favs') || '[]');
@@ -3074,7 +3105,60 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // ランキングタブ
+    // ランキングタブ（実測 / 予報 切り替え）
+    function setRankSource(source) {
+      currentRankSource = source === 'forecast' ? 'forecast' : 'live';
+      const btnLive = document.getElementById('btnRankSourceLive');
+      const btnForecast = document.getElementById('btnRankSourceForecast');
+      const barLive = document.getElementById('rankPeriodBarLive');
+      const barForecast = document.getElementById('rankPeriodBarForecast');
+      const legend = document.getElementById('rankingLiveLegend');
+      const activeCls = "py-1.5 px-2 rounded-lg text-center bg-sky-700 text-white shadow font-black whitespace-nowrap transition";
+      const inactiveCls = "py-1.5 px-2 rounded-lg text-center text-slate-700 hover:text-slate-900 font-bold whitespace-nowrap transition";
+
+      if (currentRankSource === 'live') {
+        if (btnLive) btnLive.className = activeCls;
+        if (btnForecast) btnForecast.className = inactiveCls;
+        if (barLive) barLive.classList.remove('hidden');
+        if (barForecast) barForecast.classList.add('hidden');
+        if (legend) legend.classList.remove('hidden');
+      } else {
+        if (btnLive) btnLive.className = inactiveCls;
+        if (btnForecast) btnForecast.className = activeCls;
+        if (barLive) barLive.classList.add('hidden');
+        if (barForecast) barForecast.classList.remove('hidden');
+        if (legend) legend.classList.add('hidden');
+      }
+      renderRankingTab();
+    }
+
+    function setLiveRankPeriod(period) {
+      currentLiveRankPeriod = period;
+      const nightCls = "flex-[1.5] py-1.5 px-1 rounded-lg text-center whitespace-nowrap truncate font-bold ";
+      const stdCls = "flex-1 py-1.5 px-1 rounded-lg text-center whitespace-nowrap truncate font-bold ";
+      const activeTail = "bg-sky-700 text-white shadow";
+      const inactiveTail = "text-slate-700 hover:text-slate-900";
+      const btnNight = document.getElementById('btnLiveRankNight');
+      const btn6h = document.getElementById('btnLiveRank6h');
+      const btn12h = document.getElementById('btnLiveRank12h');
+      const btn24h = document.getElementById('btnLiveRank24h');
+      if (btnNight) btnNight.className = nightCls + (period === 'night' ? activeTail : inactiveTail);
+      if (btn6h) btn6h.className = stdCls + (period === '6h' ? activeTail : inactiveTail);
+      if (btn12h) btn12h.className = stdCls + (period === '12h' ? activeTail : inactiveTail);
+      if (btn24h) btn24h.className = stdCls + (period === '24h' ? activeTail : inactiveTail);
+      renderRankingTab();
+    }
+
+    function toggleRankStationExpand(stationKey, ev) {
+      if (ev) ev.stopPropagation();
+      if (expandedRankStationKeys.has(stationKey)) {
+        expandedRankStationKeys.delete(stationKey);
+      } else {
+        expandedRankStationKeys.add(stationKey);
+      }
+      renderRankingTab();
+    }
+
     function setRankPeriod(period) {
       currentRankPeriod = period;
       const baseBtnCls = "flex-1 py-1.5 px-1 rounded-lg text-center whitespace-nowrap truncate font-bold ";
@@ -3090,6 +3174,11 @@
 
       if (!appData || !appData.spots) {
         container.innerHTML = `<div class="text-center py-8 text-slate-600 font-bold text-xs">${t('rankCalculating')}</div>`;
+        return;
+      }
+
+      if (currentRankSource === 'live') {
+        renderLiveRankingTab(container);
         return;
       }
 
@@ -3167,6 +3256,179 @@
             <div class="text-[10.5px] text-slate-600 font-bold">${labelText}</div>
             <div class="font-teko text-2xl font-black text-orange-700 leading-none">+${item.snow} <span class="text-xs">cm</span></div>
             <div class="text-[10.5px] text-slate-600 font-bold">${t('rankDepthFormat', { depth: item.depth })}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderLiveRankingTab(container) {
+      const periodKeyMap = { night: 'night', '6h': 'h6', '12h': 'h12', '24h': 'h24' };
+      const periodLabelMap = {
+        night: t('rankLiveNightLabel'),
+        '6h': t('rankLive6hLabel'),
+        '12h': t('rankLive12hLabel'),
+        '24h': t('rankLive24hLabel')
+      };
+      const statKey = periodKeyMap[currentLiveRankPeriod] || 'night';
+      const labelText = periodLabelMap[currentLiveRankPeriod] || t('rankLiveNightLabel');
+
+      // 1観測所＝1カードにグルーピング
+      const groupMap = new Map();
+      appData.spots
+        .filter(s => s.category === areasCategoryFilter)
+        .forEach(s => {
+          const live = s.current && s.current.liveAmedas;
+          if (!live || !live.stationId) return;
+          const stKey = `${live.source || 'jma_amedas'}:${live.stationId}`;
+          if (!groupMap.has(stKey)) {
+            const st = (live.stats && live.stats[statKey]) ? live.stats[statKey] : null;
+            const fallbackSnow = currentLiveRankPeriod === '6h'
+              ? (typeof live.snow6h === 'number' ? live.snow6h : (typeof live.snow1h === 'number' ? live.snow1h : 0))
+              : currentLiveRankPeriod === '12h'
+                ? (typeof live.snow12h === 'number' ? live.snow12h : 0)
+                : currentLiveRankPeriod === '24h'
+                  ? (typeof live.snow24h === 'number' ? live.snow24h : 0)
+                  : 0;
+            groupMap.set(stKey, {
+              stationKey: stKey,
+              source: live.source || 'jma_amedas',
+              stationId: live.stationId,
+              stationName: live.stationName || '',
+              areaName: s.areaName || s.regionName || '',
+              snowfall: st && typeof st.snowfall === 'number' ? st.snowfall : fallbackSnow,
+              subsidence: st && typeof st.subsidence === 'number' ? st.subsidence : 0,
+              freshness: st && typeof st.freshness === 'number' ? st.freshness : null,
+              tempMax: st && typeof st.tempMax === 'number' ? st.tempMax : (typeof live.temp === 'number' ? live.temp : null),
+              tempMin: st && typeof st.tempMin === 'number' ? st.tempMin : (typeof live.temp === 'number' ? live.temp : null),
+              snowDepth: typeof live.snowDepth === 'number' ? live.snowDepth : null,
+              spots: []
+            });
+          }
+          groupMap.get(stKey).spots.push({
+            id: s.id,
+            name: s.name,
+            elevation: (s.top && typeof s.top.elevation === 'number') ? s.top.elevation : 0,
+            score: (s.current && typeof s.current.score === 'number') ? s.current.score : 0
+          });
+        });
+
+      const list = Array.from(groupMap.values()).map(g => {
+        g.spots.sort((a, b) => (b.elevation - a.elevation) || (b.score - a.score));
+        g.maxElevation = g.spots.length > 0 ? g.spots[0].elevation : 0;
+        return g;
+      }).sort((a, b) => {
+        if (b.snowfall !== a.snowfall) return b.snowfall - a.snowfall;
+        const da = a.snowDepth !== null ? a.snowDepth : -1;
+        const db = b.snowDepth !== null ? b.snowDepth : -1;
+        if (db !== da) return db - da;
+        const fa = a.freshness !== null ? a.freshness : 999;
+        const fb = b.freshness !== null ? b.freshness : 999;
+        if (fa !== fb) return fa - fb;
+        return b.maxElevation - a.maxElevation;
+      }).slice(0, 30);
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-600 font-bold text-xs">${t('rankNoData')}</div>`;
+        return;
+      }
+
+      list.forEach((item, idx) => {
+        const card = document.createElement('div');
+        const isSingleSpot = item.spots.length === 1;
+        card.className = "snow-card rounded-xl p-3 border border-slate-300 transition" + (isSingleSpot ? " active:scale-98 cursor-pointer" : "");
+        if (isSingleSpot) {
+          card.onclick = () => selectSpotFromMap(item.spots[0].id);
+        }
+
+        const isRoad = item.source === 'mlit_road';
+        const sourceBadge = isRoad
+          ? `<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-300 font-bold shrink-0 leading-none">${t('rankLiveStationRoad')}</span>`
+          : `<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-sky-50 text-sky-900 border border-sky-300 font-bold shrink-0 leading-none">${t('rankLiveStationAmedas')}</span>`;
+
+        const snowValColor = item.snowfall >= 10
+          ? 'text-orange-700'
+          : item.snowfall > 0
+            ? 'text-sky-700'
+            : 'text-slate-500';
+        const snowText = item.snowfall > 0 ? `+${item.snowfall}` : '0';
+
+        const depthText = item.snowDepth !== null ? `${item.snowDepth}cm` : '--';
+        const subText = item.subsidence < 0 ? `${item.subsidence}cm` : '0cm';
+        const subColor = item.subsidence < 0 ? 'text-blue-700' : 'text-slate-700';
+
+        const freshText = item.freshness !== null ? `${item.freshness}h` : '--';
+        const freshColor = item.freshness === 0
+          ? 'text-emerald-700'
+          : (item.freshness !== null && item.freshness <= 2 ? 'text-sky-700' : 'text-slate-700');
+
+        const tempText = (item.tempMax !== null && item.tempMin !== null)
+          ? `${item.tempMax.toFixed(1)}/${item.tempMin.toFixed(1)}°`
+          : (item.tempMax !== null ? `${item.tempMax.toFixed(1)}°` : '--');
+
+        const isExpanded = expandedRankStationKeys.has(item.stationKey);
+        const visibleSpots = isExpanded ? item.spots : item.spots.slice(0, 3);
+        const hiddenCount = item.spots.length - visibleSpots.length;
+
+        const spotChipsHtml = visibleSpots.map(sp => `
+          <button type="button" onclick="event.stopPropagation(); selectSpotFromMap('${sp.id}')" class="text-[11px] font-bold px-2 py-1 rounded-lg bg-slate-100 hover:bg-sky-100 text-slate-900 border border-slate-300 active:scale-95 transition max-w-full truncate">
+            ${tName(sp.name)}
+          </button>
+        `).join('');
+
+        let toggleBtnHtml = '';
+        if (hiddenCount > 0) {
+          toggleBtnHtml = `
+            <button type="button" onclick="toggleRankStationExpand('${item.stationKey}', event)" class="text-[11px] font-black px-2 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 active:scale-95 transition shrink-0">
+              ${t('rankLiveMoreSpots', { count: hiddenCount })}
+            </button>
+          `;
+        } else if (isExpanded && item.spots.length > 3) {
+          toggleBtnHtml = `
+            <button type="button" onclick="toggleRankStationExpand('${item.stationKey}', event)" class="text-[11px] font-bold px-2 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 border border-slate-300 active:scale-95 transition shrink-0">
+              ${t('rankLiveCollapseSpots')}
+            </button>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+              <span class="font-teko text-2xl font-black w-6 text-center shrink-0 ${idx === 0 ? 'text-amber-600' : (idx === 1 ? 'text-slate-700' : (idx === 2 ? 'text-orange-700' : 'text-slate-500'))}">${idx + 1}</span>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  ${sourceBadge}
+                  <span class="text-[11px] text-slate-600 font-bold truncate">${tName(item.areaName)}</span>
+                </div>
+                <div class="text-sm font-black text-slate-900 truncate mt-0.5">${tName(item.stationName)}</div>
+              </div>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="text-[10.5px] text-slate-600 font-bold">${labelText}</div>
+              <div class="font-teko text-2xl font-black ${snowValColor} leading-none">${snowText} <span class="text-xs">cm</span></div>
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-1 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1.5 mt-2 text-center">
+            <div class="min-w-0">
+              <div class="text-[10px] text-slate-600 font-bold leading-tight">${t('rankLiveDepthLabel')}</div>
+              <div class="text-xs font-black text-slate-900 leading-tight mt-0.5 truncate">${depthText}</div>
+            </div>
+            <div class="min-w-0 border-l border-slate-200">
+              <div class="text-[10px] text-slate-600 font-bold leading-tight">${t('rankLiveSubsidenceLabel')}</div>
+              <div class="text-xs font-black ${subColor} leading-tight mt-0.5 truncate">${subText}</div>
+            </div>
+            <div class="min-w-0 border-l border-slate-200">
+              <div class="text-[10px] text-slate-600 font-bold leading-tight">${t('rankLiveFreshnessLabel')}</div>
+              <div class="text-xs font-black ${freshColor} leading-tight mt-0.5 truncate">${freshText}</div>
+            </div>
+            <div class="min-w-0 border-l border-slate-200">
+              <div class="text-[10px] text-slate-600 font-bold leading-tight">${t('rankLiveTempLabel')}</div>
+              <div class="text-[11px] font-black text-slate-900 leading-tight mt-0.5 whitespace-nowrap">${tempText}</div>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5 pt-2 mt-2 border-t border-slate-200">
+            ${spotChipsHtml}
+            ${toggleBtnHtml}
           </div>
         `;
         container.appendChild(card);

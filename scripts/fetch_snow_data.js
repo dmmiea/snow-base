@@ -349,6 +349,102 @@ function evaluateSnowCondition(hourlyData, currentHourIndex, category = 'ski') {
   return { score, rank, rankEn, tag: mainTag, tags, bcAlert };
 }
 
+/**
+ * 時系列実測データから オーバーナイト / 6h / 12h / 24h の
+ * 降雪量・沈降量・鮮度(最終降雪からの経過時間)・最高/最低気温を算出
+ */
+function calcLiveSnowStats(series, refEpochMs, officialFallback = {}) {
+  const validSeries = (series || []).filter(p => p && typeof p.ts === 'number').sort((a, b) => a.ts - b.ts);
+  const jstRef = new Date(refEpochMs + 9 * 3600000);
+  const refH = jstRef.getUTCHours();
+  const jstMidnightUtc = Date.UTC(jstRef.getUTCFullYear(), jstRef.getUTCMonth(), jstRef.getUTCDate()) - 9 * 3600000;
+
+  let nightStartTs, nightEndTs;
+  if (refH >= 6 && refH < 18) {
+    // 06:00〜17:59: 昨夜18:00〜今朝06:00（確定済み）
+    nightStartTs = jstMidnightUtc - 6 * 3600000;
+    nightEndTs = jstMidnightUtc + 6 * 3600000;
+  } else if (refH >= 18) {
+    // 18:00〜23:59: 当夜18:00〜現在（速報）
+    nightStartTs = jstMidnightUtc + 18 * 3600000;
+    nightEndTs = refEpochMs;
+  } else {
+    // 00:00〜05:59: 昨夜18:00〜現在（速報）
+    nightStartTs = jstMidnightUtc - 6 * 3600000;
+    nightEndTs = refEpochMs;
+  }
+
+  const calcWindow = (startTs, endTs, officialSnow) => {
+    const tol = 1800000; // ±30分許容
+    const pts = validSeries.filter(p => p.ts >= startTs - tol && p.ts <= endTs + tol);
+    let snowfall = 0;
+    let subsidence = 0;
+    let lastSnowTs = null;
+    let hasPair = false;
+
+    for (let i = 1; i < pts.length; i++) {
+      const prev = pts[i - 1];
+      const curr = pts[i];
+      if (curr.ts <= startTs - 600000) continue;
+      if (typeof prev.snow === 'number' && typeof curr.snow === 'number') {
+        hasPair = true;
+        const delta = curr.snow - prev.snow;
+        if (delta > 0) {
+          snowfall += delta;
+          lastSnowTs = curr.ts;
+        } else if (delta < 0) {
+          subsidence += delta;
+        }
+      }
+    }
+
+    // 履歴不足時（初回実行など）の1時間降雪量フォールバック
+    if (!hasPair && pts.length > 0) {
+      const latest = pts[pts.length - 1];
+      if (typeof latest.snow1h === 'number' && latest.snow1h > 0) {
+        snowfall = latest.snow1h;
+        lastSnowTs = latest.ts;
+      }
+    }
+
+    // 気象庁公式集計値との下支え整合
+    if (typeof officialSnow === 'number' && !isNaN(officialSnow) && officialSnow > snowfall) {
+      snowfall = officialSnow;
+      if (lastSnowTs === null && officialSnow > 0) {
+        lastSnowTs = endTs;
+      }
+    }
+
+    const freshness = lastSnowTs !== null
+      ? Math.max(0, Math.round((endTs - lastSnowTs) / 3600000))
+      : null;
+
+    let tempMax = null;
+    let tempMin = null;
+    const tempPts = pts.filter(p => p.ts > startTs - 600000 && typeof p.temp === 'number' && !isNaN(p.temp));
+    const targetTempPts = tempPts.length > 0 ? tempPts : pts.filter(p => typeof p.temp === 'number' && !isNaN(p.temp));
+    for (const p of targetTempPts) {
+      if (tempMax === null || p.temp > tempMax) tempMax = p.temp;
+      if (tempMin === null || p.temp < tempMin) tempMin = p.temp;
+    }
+
+    return {
+      snowfall: Math.round(snowfall * 10) / 10,
+      subsidence: Math.round(subsidence * 10) / 10,
+      freshness,
+      tempMax: tempMax !== null ? Math.round(tempMax * 10) / 10 : null,
+      tempMin: tempMin !== null ? Math.round(tempMin * 10) / 10 : null
+    };
+  };
+
+  return {
+    night: calcWindow(nightStartTs, nightEndTs, null),
+    h6: calcWindow(refEpochMs - 6 * 3600000, refEpochMs, officialFallback.snow6h),
+    h12: calcWindow(refEpochMs - 12 * 3600000, refEpochMs, officialFallback.snow12h),
+    h24: calcWindow(refEpochMs - 24 * 3600000, refEpochMs, officialFallback.snow24h)
+  };
+}
+
 async function fetchWithRetry(url, maxRetries = 6) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
@@ -395,11 +491,13 @@ async function run() {
     console.warn('既存キャッシュ読み込みスキップ:', e.message);
   }
 
-  // 1. 気象庁アメダス最新データ取得 (最新10分値 + 毎正時積雪値)
+  // 1. 気象庁アメダス最新データ取得 (最新10分値 + 過去26時間分の毎正時積雪・気温値)
   let amedasMap = {};
   let amedasSnowMap = {};
+  const amedasHourlyHistory = []; // [{ ts, map }]
   let latestJmaTime = '';
   let latestSnowTime = '';
+  let latestSnowEpoch = Date.now();
   try {
     const timeRes = await fetch('https://www.jma.go.jp/bosai/amedas/data/latest_time.txt');
     const timeText = (await timeRes.text()).trim();
@@ -416,29 +514,55 @@ async function run() {
     // 積雪データは毎正時 (XX:00:00) に配信されるため、直近の正時JSONを取得
     // GitHub Actions (UTC環境) 等でもズレないよう、timeText (JST: YYYY-MM-DDTHH:mm:ss+09:00) ベースでJST固定計算
     const jmaEpoch = new Date(timeText).getTime();
-    const jstDate = new Date(jmaEpoch + 9 * 3600000);
-    const jstYear = jstDate.getUTCFullYear();
-    const jstMonth = String(jstDate.getUTCMonth() + 1).padStart(2, '0');
-    const jstDay = String(jstDate.getUTCDate()).padStart(2, '0');
-    const jstHour = String(jstDate.getUTCHours()).padStart(2, '0');
+    const formatHourlyStr = (utcEpoch) => {
+      const d = new Date(utcEpoch + 9 * 3600000);
+      return `${d.getUTCFullYear()}${String(d.getUTCMonth() + 1).padStart(2, '0')}${String(d.getUTCDate()).padStart(2, '0')}${String(d.getUTCHours()).padStart(2, '0')}0000`;
+    };
+    const jstBaseDate = new Date(jmaEpoch + 9 * 3600000);
+    let baseHourUtcEpoch = Date.UTC(
+      jstBaseDate.getUTCFullYear(),
+      jstBaseDate.getUTCMonth(),
+      jstBaseDate.getUTCDate(),
+      jstBaseDate.getUTCHours()
+    ) - 9 * 3600000;
 
-    let snowTimeStr = `${jstYear}${jstMonth}${jstDay}${jstHour}0000`;
+    let snowTimeStr = formatHourlyStr(baseHourUtcEpoch);
     let snowRes = await fetch(`https://www.jma.go.jp/bosai/amedas/data/map/${snowTimeStr}.json`);
     if (!snowRes.ok) {
       // 1時間前へフォールバック (JST)
-      const prevJstDate = new Date(jmaEpoch + 9 * 3600000 - 3600000);
-      const prevYear = prevJstDate.getUTCFullYear();
-      const prevMonth = String(prevJstDate.getUTCMonth() + 1).padStart(2, '0');
-      const prevDay = String(prevJstDate.getUTCDate()).padStart(2, '0');
-      const prevHour = String(prevJstDate.getUTCHours()).padStart(2, '0');
-      snowTimeStr = `${prevYear}${prevMonth}${prevDay}${prevHour}0000`;
+      baseHourUtcEpoch -= 3600000;
+      snowTimeStr = formatHourlyStr(baseHourUtcEpoch);
       snowRes = await fetch(`https://www.jma.go.jp/bosai/amedas/data/map/${snowTimeStr}.json`);
     }
 
     if (snowRes.ok) {
       amedasSnowMap = await snowRes.json();
+      latestSnowEpoch = baseHourUtcEpoch;
       latestSnowTime = `${snowTimeStr.slice(0, 4)}-${snowTimeStr.slice(4, 6)}-${snowTimeStr.slice(6, 8)}T${snowTimeStr.slice(8, 10)}:00:00+09:00`;
+      amedasHourlyHistory.push({ ts: baseHourUtcEpoch, map: amedasSnowMap });
       console.log(`気象庁アメダス正時積雪データ取得成功: ${snowTimeStr} (${Object.keys(amedasSnowMap).length} 観測点)`);
+
+      // 過去1〜26時間前の毎正時JSONを並列取得（6h/12h/24h/オーバーナイト実測統計用）
+      const pastOffsets = [];
+      for (let h = 1; h <= 26; h++) pastOffsets.push(h);
+      const CONCURRENCY = 6;
+      for (let k = 0; k < pastOffsets.length; k += CONCURRENCY) {
+        const batch = pastOffsets.slice(k, k + CONCURRENCY);
+        const results = await Promise.all(batch.map(async (h) => {
+          const ts = baseHourUtcEpoch - h * 3600000;
+          const hStr = formatHourlyStr(ts);
+          try {
+            const res = await fetch(`https://www.jma.go.jp/bosai/amedas/data/map/${hStr}.json`);
+            if (!res.ok) return null;
+            return { ts, map: await res.json() };
+          } catch (e) {
+            return null;
+          }
+        }));
+        results.forEach(r => { if (r) amedasHourlyHistory.push(r); });
+      }
+      amedasHourlyHistory.sort((a, b) => a.ts - b.ts);
+      console.log(`気象庁アメダス過去正時履歴取得完了: ${amedasHourlyHistory.length} 時間分`);
     } else {
       console.warn('気象庁アメダス正時積雪JSON取得失敗');
     }
@@ -446,8 +570,21 @@ async function run() {
     console.warn('気象庁アメダス取得エラー:', err.message);
   }
 
-  // 1-2. 国土交通省 全国道路情報提供システム 道路雪量計データ一括取得
+  // 1-2. 国土交通省 全国道路情報提供システム 道路雪量計データ一括取得 ＆ 26時間履歴蓄積
   const roadSnowMap = {};
+  const roadHistoryPath = path.join(__dirname, 'road_snow_history.json');
+  let roadHistoryList = [];
+  try {
+    if (fs.existsSync(roadHistoryPath)) {
+      const parsed = JSON.parse(fs.readFileSync(roadHistoryPath, 'utf8'));
+      if (parsed && Array.isArray(parsed.history)) {
+        roadHistoryList = parsed.history;
+      }
+    }
+  } catch (e) {
+    console.warn('道路雪量計履歴キャッシュ読み込みスキップ:', e.message);
+  }
+
   try {
     const roadBase = 'https://www.road-info-prvs.mlit.go.jp/roadinfo/pc/';
     const rTop = await fetch(roadBase + 'pcKisho_81_3.html');
@@ -496,12 +633,79 @@ async function run() {
             } catch (e) {}
           }));
           console.log(`国交省 道路雪量計データ取得成功: ${Object.keys(roadSnowMap).length} 観測点`);
+
+          // 直近26時間リングバッファへスナップショットを保存
+          if (Object.keys(roadSnowMap).length > 0) {
+            const snapEpoch = Date.now();
+            const jstSnap = new Date(snapEpoch + 9 * 3600000);
+            const hourKey = `${jstSnap.getUTCFullYear()}${String(jstSnap.getUTCMonth() + 1).padStart(2, '0')}${String(jstSnap.getUTCDate()).padStart(2, '0')}${String(jstSnap.getUTCHours()).padStart(2, '0')}`;
+            const snapData = {};
+            for (const [sid, r] of Object.entries(roadSnowMap)) {
+              if (r.snow !== null || r.snow1h !== null || r.temp !== null) {
+                snapData[sid] = [r.snow, r.snow1h, r.temp];
+              }
+            }
+            const existingIdx = roadHistoryList.findIndex(h => h.hourKey === hourKey);
+            const entry = { hourKey, ts: snapEpoch, data: snapData };
+            if (existingIdx >= 0) roadHistoryList[existingIdx] = entry;
+            else roadHistoryList.push(entry);
+
+            const cutoffTs = snapEpoch - 27 * 3600000;
+            roadHistoryList = roadHistoryList
+              .filter(h => h && typeof h.ts === 'number' && h.ts >= cutoffTs)
+              .sort((a, b) => a.ts - b.ts);
+
+            try {
+              fs.writeFileSync(roadHistoryPath, JSON.stringify({ updatedAt: new Date().toISOString(), history: roadHistoryList }), 'utf8');
+              console.log(`国交省 道路雪量計履歴保存完了: ${roadHistoryList.length} 時間分`);
+            } catch (we) {
+              console.warn('道路雪量計履歴保存エラー:', we.message);
+            }
+          }
         }
       }
     }
   } catch (err) {
     console.warn('国交省 道路雪量計取得エラー (アメダスのみで継続):', err.message);
   }
+
+  // 観測所ごとの実測統計計算キャッシュ（同一観測所の重複計算を防止）
+  const jmaStatsCache = {};
+  const getJmaStationStats = (stationId, officialFallback) => {
+    if (jmaStatsCache[stationId]) return jmaStatsCache[stationId];
+    const series = [];
+    for (const h of amedasHourlyHistory) {
+      const st = h.map && h.map[stationId];
+      if (!st) continue;
+      const snow = (st.snow && st.snow[0] !== null && st.snow[0] !== undefined) ? st.snow[0] : null;
+      const snow1h = (st.snow1h && st.snow1h[0] !== null && st.snow1h[0] !== undefined) ? st.snow1h[0] : null;
+      const temp = (st.temp && st.temp[0] !== null && st.temp[0] !== undefined) ? st.temp[0] : null;
+      if (snow !== null || temp !== null) {
+        series.push({ ts: h.ts, snow, snow1h, temp });
+      }
+    }
+    const stats = calcLiveSnowStats(series, latestSnowEpoch, officialFallback);
+    jmaStatsCache[stationId] = stats;
+    return stats;
+  };
+
+  const roadStatsCache = {};
+  const getRoadStationStats = (sensorId) => {
+    if (roadStatsCache[sensorId]) return roadStatsCache[sensorId];
+    const series = [];
+    for (const h of roadHistoryList) {
+      const tuple = h.data && h.data[sensorId];
+      if (!tuple) continue;
+      const [snow, snow1h, temp] = tuple;
+      if (snow !== null || snow1h !== null || temp !== null) {
+        series.push({ ts: h.ts, snow, snow1h, temp });
+      }
+    }
+    const refTs = roadHistoryList.length > 0 ? roadHistoryList[roadHistoryList.length - 1].ts : Date.now();
+    const stats = calcLiveSnowStats(series, refTs);
+    roadStatsCache[sensorId] = stats;
+    return stats;
+  };
 
   // 2. Open-Meteo Multi-location 一括取得
   // 山頂用（top.lat, top.lon, top.elevation）と山麓用（base.lat, base.lon, base.elevation）を完全分離取得
@@ -622,20 +826,26 @@ async function run() {
           const raw = amedasMap[spot.amedasId];
           const rawSnow = amedasSnowMap[spot.amedasId];
           if (raw || rawSnow) {
+            const officialFallback = {
+              snow6h: rawSnow && rawSnow.snow6h ? rawSnow.snow6h[0] : null,
+              snow12h: rawSnow && rawSnow.snow12h ? rawSnow.snow12h[0] : null,
+              snow24h: rawSnow && rawSnow.snow24h ? rawSnow.snow24h[0] : null
+            };
             jmaLive = {
               source: 'jma_amedas',
               stationId: spot.amedasId,
               stationName: spot.amedasName,
               snowDepth: (rawSnow && rawSnow.snow && rawSnow.snow[0] !== null) ? rawSnow.snow[0] : (raw && raw.snow && raw.snow[0] !== null ? raw.snow[0] : null),
               snow1h: rawSnow && rawSnow.snow1h ? rawSnow.snow1h[0] : null,
-              snow6h: rawSnow && rawSnow.snow6h ? rawSnow.snow6h[0] : null,
-              snow12h: rawSnow && rawSnow.snow12h ? rawSnow.snow12h[0] : null,
-              snow24h: rawSnow && rawSnow.snow24h ? rawSnow.snow24h[0] : null,
+              snow6h: officialFallback.snow6h,
+              snow12h: officialFallback.snow12h,
+              snow24h: officialFallback.snow24h,
               temp: raw && raw.temp ? raw.temp[0] : (rawSnow && rawSnow.temp ? rawSnow.temp[0] : null),
               precipitation1h: raw && raw.precipitation1h ? raw.precipitation1h[0] : (rawSnow && rawSnow.precipitation1h ? rawSnow.precipitation1h[0] : 0),
               windSpeed: raw && raw.wind ? raw.wind[0] : (rawSnow && rawSnow.wind ? rawSnow.wind[0] : null),
               updatedAt: latestJmaTime,
-              snowUpdatedAt: latestSnowTime || latestJmaTime
+              snowUpdatedAt: latestSnowTime || latestJmaTime,
+              stats: getJmaStationStats(spot.amedasId, officialFallback)
             };
           }
         }
@@ -652,6 +862,18 @@ async function run() {
                                ((baseData.hourly.snow_depth[currentIdx] || 0) === 0) &&
                                (r.snow >= 10);
             if (!isAbnormal) {
+              const rawRoadStats = getRoadStationStats(spot.roadStationId);
+              // 道路雪量計に温度計がない場合は近隣アメダスの同期間気温で補完
+              const mergedStats = {};
+              for (const k of ['night', 'h6', 'h12', 'h24']) {
+                const rs = rawRoadStats[k];
+                const js = jmaLive && jmaLive.stats ? jmaLive.stats[k] : null;
+                mergedStats[k] = {
+                  ...rs,
+                  tempMax: rs.tempMax !== null ? rs.tempMax : (js ? js.tempMax : null),
+                  tempMin: rs.tempMin !== null ? rs.tempMin : (js ? js.tempMin : null)
+                };
+              }
               roadLive = {
                 source: 'mlit_road',
                 stationId: spot.roadStationId,
@@ -663,7 +885,8 @@ async function run() {
                 precipitation1h: jmaLive ? jmaLive.precipitation1h : 0,
                 windSpeed: jmaLive ? jmaLive.windSpeed : null,
                 updatedAt: r.updatedAt || latestJmaTime,
-                snowUpdatedAt: r.updatedAt || latestSnowTime || latestJmaTime
+                snowUpdatedAt: r.updatedAt || latestSnowTime || latestJmaTime,
+                stats: mergedStats
               };
             }
           }

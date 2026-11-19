@@ -49,7 +49,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data_japan.json scripts/notification_history.json
+          git add data_japan.json scripts/notification_history.json scripts/road_snow_history.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: ❄️ 自動データ巡回更新 [skip ci]" && git push)
 
       - name: Deploy to Cloudflare
