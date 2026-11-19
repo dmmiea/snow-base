@@ -1,5 +1,5 @@
-// POWDER BASE JAPAN Service Worker (Cache & Offline Support v6)
-const CACHE_NAME = 'powder-base-v13';
+// POWDER BASE JAPAN Service Worker (Cache & Offline Support v7)
+const CACHE_NAME = 'powder-base-v14';
 
 const STATIC_ASSETS = [
   './',
@@ -71,20 +71,20 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 2. ルートナビゲーション (HTML / App Shell): Network-First with Cache Fallback
-  if (request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('index.html')) {
+  // 2. ルートナビゲーション (HTML / App Shell) & i18n / snow_map: Network-First with Cache Fallback
+  if (request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('index.html') || url.pathname.endsWith('snow_map.html') || url.pathname.endsWith('i18n.js') || url.pathname.endsWith('en_names.json')) {
     event.respondWith(
       fetch(request)
         .then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             const responseClone = networkResponse.clone();
             caches.open(CACHE_NAME).then((cache) => {
-              cache.put('./', responseClone);
+              cache.put(request, responseClone);
             });
           }
           return networkResponse;
         })
-        .catch(() => caches.match('./'))
+        .catch(() => caches.match(request))
     );
     return;
   }
