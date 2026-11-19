@@ -1601,8 +1601,7 @@
                 ? "bg-sky-700 text-white border-sky-700 shadow-sm font-black"
                 : "bg-white text-slate-800 border-slate-300 hover:bg-slate-50"
             }`;
-            const subName = tName(spot.areaName || spot.regionName || "");
-            btn.innerHTML = `<span>${tName(spot.name)}</span><span class="text-[11px] ${isSelected ? 'text-sky-100 font-semibold' : 'text-slate-600'}">(${spot.category === 'bc' ? '⛰️' : '🏂'}${subName})</span>`;
+            btn.textContent = tName(spot.name);
             btn.onclick = () => {
               currentSpotId = spot.id;
               currentCategory = spot.category;
