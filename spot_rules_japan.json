@@ -67,8 +67,8 @@
       "elevation": 1170,
       "label": "ワンダーランドチェア終点"
     },
-    "amedasId": "16272",
-    "amedasName": "ニセコ",
+    "amedasId": "16217",
+    "amedasName": "倶知安",
     "slopeOrientation": "S"
   },
   {
@@ -91,8 +91,8 @@
       "elevation": 1156,
       "label": "ジャンボ第4ペア終点"
     },
-    "amedasId": "16272",
-    "amedasName": "ニセコ",
+    "amedasId": "16206",
+    "amedasName": "蘭越",
     "slopeOrientation": "SW"
   },
   {
@@ -115,8 +115,8 @@
       "elevation": 994,
       "label": "イゾラ第1ゴンドラ終点(イゾラ山頂)"
     },
-    "amedasId": "16281",
-    "amedasName": "真狩",
+    "amedasId": "16286",
+    "amedasName": "喜茂別",
     "slopeOrientation": "E"
   },
   {
@@ -235,7 +235,7 @@
       "elevation": 1070,
       "label": "第1ゴンドラ終点(前塚見山)"
     },
-    "amedasId": "33526",
+    "amedasId": "33631",
     "amedasName": "湯田",
     "slopeOrientation": "E"
   },
@@ -283,7 +283,7 @@
       "elevation": 1661,
       "label": "地蔵山頂駅(樹氷原・地蔵岳)"
     },
-    "amedasId": "35311",
+    "amedasId": "35426",
     "amedasName": "山形",
     "slopeOrientation": "NW"
   },
@@ -355,8 +355,8 @@
       "elevation": 1704,
       "label": "つが第2ペア終点・栂池自然園"
     },
-    "amedasId": "48151",
-    "amedasName": "小谷",
+    "amedasId": "48141",
+    "amedasName": "白馬",
     "slopeOrientation": "E"
   },
   {
@@ -379,7 +379,7 @@
       "elevation": 1402,
       "label": "第4ペアリフト終点(稗田山頂)"
     },
-    "amedasId": "48151",
+    "amedasId": "48097",
     "amedasName": "小谷",
     "slopeOrientation": "S"
   },
@@ -403,7 +403,7 @@
       "elevation": 1650,
       "label": "毛無山頂・やまびこリフト終点"
     },
-    "amedasId": "48181",
+    "amedasId": "48031",
     "amedasName": "野沢温泉",
     "slopeOrientation": "NW"
   },
@@ -427,8 +427,8 @@
       "elevation": 2000,
       "label": "焼額山第1ゴンドラ終点(山頂)"
     },
-    "amedasId": "48186",
-    "amedasName": "笠岳",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "E"
   },
   {
@@ -451,7 +451,7 @@
       "elevation": 1350,
       "label": "第13パウダーリフト終点(斑尾山頂)"
     },
-    "amedasId": "48201",
+    "amedasId": "48066",
     "amedasName": "飯山",
     "slopeOrientation": "N"
   },
@@ -475,8 +475,8 @@
       "elevation": 1855,
       "label": "三田原第3高速終点(標高1855m)"
     },
-    "amedasId": "54201",
-    "amedasName": "妙高高原",
+    "amedasId": "48061",
+    "amedasName": "信濃町",
     "slopeOrientation": "SE"
   },
   {
@@ -499,8 +499,8 @@
       "elevation": 1280,
       "label": "大毛無リフト終点(標高1429m)"
     },
-    "amedasId": "54156",
-    "amedasName": "高田",
+    "amedasId": "54816",
+    "amedasName": "関山",
     "slopeOrientation": "NE"
   },
   {
@@ -523,8 +523,8 @@
       "elevation": 1789,
       "label": "笋山山頂リフト終点"
     },
-    "amedasId": "54261",
-    "amedasName": "湯沢",
+    "amedasId": "42091",
+    "amedasName": "みなかみ",
     "slopeOrientation": "E"
   },
   {
@@ -547,7 +547,7 @@
       "elevation": 1845,
       "label": "かぐら第5ロマンスリフト終点"
     },
-    "amedasId": "54261",
+    "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "NE"
   },
@@ -571,7 +571,7 @@
       "elevation": 1181,
       "label": "高津倉山頂・グルーバンド終点"
     },
-    "amedasId": "54261",
+    "amedasId": "54841",
     "amedasName": "湯沢",
     "slopeOrientation": "N"
   },
@@ -595,8 +595,8 @@
       "elevation": 1320,
       "label": "イリュージョンサイト最上部終点"
     },
-    "amedasId": "57076",
-    "amedasName": "勝山",
+    "amedasId": "57121",
+    "amedasName": "大野",
     "slopeOrientation": "N"
   },
   {
@@ -619,8 +619,8 @@
       "elevation": 1050,
       "label": "ゴンドラ山頂駅"
     },
-    "amedasId": "56086",
-    "amedasName": "白山河内",
+    "amedasId": "52081",
+    "amedasName": "白川",
     "slopeOrientation": "NW"
   },
   {
@@ -643,8 +643,8 @@
       "elevation": 2000,
       "label": "日光白根山ロープウェイ山頂駅"
     },
-    "amedasId": "42086",
-    "amedasName": "片品",
+    "amedasId": "36716",
+    "amedasName": "桧枝岐",
     "slopeOrientation": "NW"
   },
   {
@@ -667,8 +667,8 @@
       "elevation": 1870,
       "label": "クリスタルエクスプレス終点"
     },
-    "amedasId": "42086",
-    "amedasName": "片品",
+    "amedasId": "42046",
+    "amedasName": "藤原",
     "slopeOrientation": "S"
   },
   {
@@ -691,8 +691,8 @@
       "elevation": 1550,
       "label": "SPゴンドラ終点(大日ヶ岳山頂下)"
     },
-    "amedasId": "52046",
-    "amedasName": "ひるがの",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "N"
   },
   {
@@ -715,8 +715,8 @@
       "elevation": 1430,
       "label": "ガンホーライナー終点"
     },
-    "amedasId": "52046",
-    "amedasName": "ひるがの",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "E"
   },
   {
@@ -739,8 +739,8 @@
       "elevation": 1600,
       "label": "第2クワッドリフト終点(烏帽子岳山頂)"
     },
-    "amedasId": "52086",
-    "amedasName": "宮地",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "NW"
   },
   {
@@ -763,8 +763,8 @@
       "elevation": 1250,
       "label": "日本最速モンブラン終点"
     },
-    "amedasId": "60061",
-    "amedasName": "今津",
+    "amedasId": "60102",
+    "amedasName": "米原",
     "slopeOrientation": "N"
   },
   {
@@ -787,7 +787,7 @@
       "elevation": 1221,
       "label": "鉢伏山頂リフト終点"
     },
-    "amedasId": "63126",
+    "amedasId": "63071",
     "amedasName": "兎和野高原",
     "slopeOrientation": "N"
   },
@@ -811,7 +811,7 @@
       "elevation": 1121,
       "label": "中の原第7クワッド終点"
     },
-    "amedasId": "69141",
+    "amedasId": "69152",
     "amedasName": "大山",
     "slopeOrientation": "NW"
   },
@@ -1098,8 +1098,8 @@
       "elevation": 170,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200013",
-    "amedasName": "多度志",
+    "amedasId": "15116",
+    "amedasName": "石狩沼田",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1338,8 +1338,8 @@
       "elevation": 1600,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200003",
-    "amedasName": "旭岳",
+    "amedasId": "12471",
+    "amedasName": "層雲峡",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1362,8 +1362,8 @@
       "elevation": 250,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200002",
-    "amedasName": "望岳台",
+    "amedasId": "12551",
+    "amedasName": "美瑛",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1458,8 +1458,8 @@
       "elevation": 751,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200012",
-    "amedasName": "音江",
+    "amedasId": "15161",
+    "amedasName": "深川",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1554,8 +1554,8 @@
       "elevation": 199,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200011",
-    "amedasName": "裏の沢",
+    "amedasId": "15442",
+    "amedasName": "夕張",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1578,8 +1578,8 @@
       "elevation": 320,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200020",
-    "amedasName": "放水口",
+    "amedasId": "15356",
+    "amedasName": "岩見沢",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1698,8 +1698,8 @@
       "elevation": 194,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200015",
-    "amedasName": "浦臼",
+    "amedasId": "15241",
+    "amedasName": "滝川",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1722,8 +1722,8 @@
       "elevation": 176,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200019",
-    "amedasName": "岩見沢河川",
+    "amedasId": "15356",
+    "amedasName": "岩見沢",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1794,8 +1794,8 @@
       "elevation": 240,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300116",
-    "amedasName": "野上峠",
+    "amedasId": "19021",
+    "amedasName": "川湯",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -1842,8 +1842,8 @@
       "elevation": 320,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300119",
-    "amedasName": "池北峠",
+    "amedasId": "17596",
+    "amedasName": "留辺蘂",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2130,8 +2130,8 @@
       "elevation": 1030,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300138",
-    "amedasName": "狩勝峠",
+    "amedasId": "20356",
+    "amedasName": "新得",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2226,8 +2226,8 @@
       "elevation": 980,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300143",
-    "amedasName": "東中山",
+    "amedasId": "16286",
+    "amedasName": "喜茂別",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2250,8 +2250,8 @@
       "elevation": 660,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300145",
-    "amedasName": "毛無峠",
+    "amedasId": "16091",
+    "amedasName": "小樽",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2370,8 +2370,8 @@
       "elevation": 380,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200009",
-    "amedasName": "春香山",
+    "amedasId": "16091",
+    "amedasName": "小樽",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2418,8 +2418,8 @@
       "elevation": 1023,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200009",
-    "amedasName": "春香山",
+    "amedasId": "14163",
+    "amedasName": "札幌",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2442,8 +2442,8 @@
       "elevation": 280,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200010",
-    "amedasName": "奥漁",
+    "amedasId": "14206",
+    "amedasName": "恵庭島松",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2514,8 +2514,8 @@
       "elevation": 1100,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200009",
-    "amedasName": "春香山",
+    "amedasId": "16091",
+    "amedasName": "小樽",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2586,8 +2586,8 @@
       "elevation": 454,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300147",
-    "amedasName": "優徳",
+    "amedasId": "21161",
+    "amedasName": "大滝",
     "slopeOrientation": "N",
     "prefecture": "北海道"
   },
@@ -2706,8 +2706,8 @@
       "elevation": 185,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300084",
-    "amedasName": "みちのく管理事務所",
+    "amedasId": "31332",
+    "amedasName": "野辺地",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -2850,8 +2850,8 @@
       "elevation": 210,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300087",
-    "amedasName": "みちのくトンネル(七戸側)",
+    "amedasId": "31586",
+    "amedasName": "十和田",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -2874,8 +2874,8 @@
       "elevation": 485,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200024",
-    "amedasName": "滝の沢",
+    "amedasId": "31482",
+    "amedasName": "酸ケ湯",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -2898,8 +2898,8 @@
       "elevation": 784,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300071",
-    "amedasName": "百沢",
+    "amedasId": "31461",
+    "amedasName": "弘前",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -2922,8 +2922,8 @@
       "elevation": 533,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300073",
-    "amedasName": "大鰐",
+    "amedasId": "31646",
+    "amedasName": "碇ケ関",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -2946,8 +2946,8 @@
       "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300100",
-    "amedasName": "トロコ",
+    "amedasId": "33226",
+    "amedasName": "岩手松尾",
     "slopeOrientation": "N",
     "prefecture": "秋田県"
   },
@@ -2970,8 +2970,8 @@
       "elevation": 520,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300082",
-    "amedasName": "夏坂",
+    "amedasId": "31721",
+    "amedasName": "三戸",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -2994,8 +2994,8 @@
       "elevation": 164,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300071",
-    "amedasName": "百沢",
+    "amedasId": "31461",
+    "amedasName": "弘前",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -3042,8 +3042,8 @@
       "elevation": 740,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300100",
-    "amedasName": "トロコ",
+    "amedasId": "32146",
+    "amedasName": "鹿角",
     "slopeOrientation": "N",
     "prefecture": "秋田県"
   },
@@ -3114,8 +3114,8 @@
       "elevation": 921,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300070",
-    "amedasName": "第二松代",
+    "amedasId": "31366",
+    "amedasName": "鰺ケ沢",
     "slopeOrientation": "N",
     "prefecture": "青森県"
   },
@@ -3138,8 +3138,8 @@
       "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300105",
-    "amedasName": "比立内",
+    "amedasId": "32311",
+    "amedasName": "阿仁合",
     "slopeOrientation": "N",
     "prefecture": "秋田県"
   },
@@ -3162,8 +3162,8 @@
       "elevation": 770,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300108",
-    "amedasName": "椿台",
+    "amedasId": "33631",
+    "amedasName": "湯田",
     "slopeOrientation": "N",
     "prefecture": "秋田県"
   },
@@ -3186,8 +3186,8 @@
       "elevation": 456,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300106",
-    "amedasName": "太田",
+    "amedasId": "32466",
+    "amedasName": "角館",
     "slopeOrientation": "N",
     "prefecture": "秋田県"
   },
@@ -3234,8 +3234,8 @@
       "elevation": 1186,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300101",
-    "amedasName": "乳頭",
+    "amedasId": "33421",
+    "amedasName": "雫石",
     "slopeOrientation": "N",
     "prefecture": "秋田県"
   },
@@ -3258,8 +3258,8 @@
       "elevation": 350,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300108",
-    "amedasName": "椿台",
+    "amedasId": "32691",
+    "amedasName": "湯沢",
     "slopeOrientation": "N",
     "prefecture": "秋田県"
   },
@@ -3282,8 +3282,8 @@
       "elevation": 910,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300199",
-    "amedasName": "平庭",
+    "amedasId": "33186",
+    "amedasName": "葛巻",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3306,8 +3306,8 @@
       "elevation": 490,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300190",
-    "amedasName": "田山",
+    "amedasId": "32146",
+    "amedasName": "鹿角",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3330,8 +3330,8 @@
       "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200035",
-    "amedasName": "網張",
+    "amedasId": "33421",
+    "amedasName": "雫石",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3354,8 +3354,8 @@
       "elevation": 1213,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200035",
-    "amedasName": "網張",
+    "amedasId": "33421",
+    "amedasName": "雫石",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3378,8 +3378,8 @@
       "elevation": 1128,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200033",
-    "amedasName": "松川",
+    "amedasId": "33421",
+    "amedasName": "雫石",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3402,8 +3402,8 @@
       "elevation": 532,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300195",
-    "amedasName": "伊保内",
+    "amedasId": "33071",
+    "amedasName": "二戸",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3426,8 +3426,8 @@
       "elevation": 1130,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200033",
-    "amedasName": "松川",
+    "amedasId": "33226",
+    "amedasName": "岩手松尾",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3474,8 +3474,8 @@
       "elevation": 480,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300214",
-    "amedasName": "鉛",
+    "amedasId": "33576",
+    "amedasName": "花巻",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3594,8 +3594,8 @@
       "elevation": 669,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300216",
-    "amedasName": "石淵",
+    "amedasId": "33831",
+    "amedasName": "祭畤",
     "slopeOrientation": "N",
     "prefecture": "岩手県"
   },
@@ -3690,8 +3690,8 @@
       "elevation": 1600,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200050",
-    "amedasName": "志津",
+    "amedasId": "35361",
+    "amedasName": "大井沢",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -3714,8 +3714,8 @@
       "elevation": 690,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200048",
-    "amedasName": "関山",
+    "amedasId": "34311",
+    "amedasName": "新川",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -3786,8 +3786,8 @@
       "elevation": 700,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200053",
-    "amedasName": "月山ダム",
+    "amedasId": "35201",
+    "amedasName": "櫛引",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -3858,8 +3858,8 @@
       "elevation": 644,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200049",
-    "amedasName": "日暮沢",
+    "amedasId": "35361",
+    "amedasName": "大井沢",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -3882,8 +3882,8 @@
       "elevation": 1030,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200048",
-    "amedasName": "関山",
+    "amedasId": "34311",
+    "amedasName": "新川",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -3906,8 +3906,8 @@
       "elevation": 1446,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200045",
-    "amedasName": "硯石",
+    "amedasId": "35426",
+    "amedasName": "山形",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -3930,8 +3930,8 @@
       "elevation": 840,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200044",
-    "amedasName": "滑津",
+    "amedasId": "35426",
+    "amedasName": "山形",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -4074,8 +4074,8 @@
       "elevation": 1820,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300169",
-    "amedasName": "栗子国道維持出張所",
+    "amedasId": "35552",
+    "amedasName": "米沢",
     "slopeOrientation": "N",
     "prefecture": "山形県"
   },
@@ -4218,8 +4218,8 @@
       "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200042",
-    "amedasName": "笹谷",
+    "amedasId": "34461",
+    "amedasName": "白石",
     "slopeOrientation": "N",
     "prefecture": "宮城県"
   },
@@ -4242,8 +4242,8 @@
       "elevation": 1146,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200045",
-    "amedasName": "硯石",
+    "amedasId": "34461",
+    "amedasName": "白石",
     "slopeOrientation": "N",
     "prefecture": "宮城県"
   },
@@ -4266,8 +4266,8 @@
       "elevation": 1000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200044",
-    "amedasName": "滑津",
+    "amedasId": "36056",
+    "amedasName": "茂庭",
     "slopeOrientation": "N",
     "prefecture": "宮城県"
   },
@@ -4554,8 +4554,8 @@
       "elevation": 1650,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200057",
-    "amedasName": "針生",
+    "amedasId": "36641",
+    "amedasName": "田島",
     "slopeOrientation": "N",
     "prefecture": "福島県"
   },
@@ -4602,8 +4602,8 @@
       "elevation": 780,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200163",
-    "amedasName": "馬取川",
+    "amedasId": "36251",
+    "amedasName": "西会津",
     "slopeOrientation": "N",
     "prefecture": "福島県"
   },
@@ -4626,8 +4626,8 @@
       "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200057",
-    "amedasName": "針生",
+    "amedasId": "36536",
+    "amedasName": "南郷",
     "slopeOrientation": "N",
     "prefecture": "福島県"
   },
@@ -4722,8 +4722,8 @@
       "elevation": 1270,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200063",
-    "amedasName": "タキガ沢",
+    "amedasId": "42046",
+    "amedasName": "藤原",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -4746,8 +4746,8 @@
       "elevation": 1420,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200070",
-    "amedasName": "戸倉",
+    "amedasId": "42046",
+    "amedasName": "藤原",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -4770,8 +4770,8 @@
       "elevation": 1703,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200063",
-    "amedasName": "タキガ沢",
+    "amedasId": "42046",
+    "amedasName": "藤原",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -4842,8 +4842,8 @@
       "elevation": 1828,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200071",
-    "amedasName": "武尊高原",
+    "amedasId": "42046",
+    "amedasName": "藤原",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -4866,8 +4866,8 @@
       "elevation": 1800,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200058",
-    "amedasName": "加仁湯",
+    "amedasId": "41116",
+    "amedasName": "土呂部",
     "slopeOrientation": "N",
     "prefecture": "栃木県"
   },
@@ -4890,8 +4890,8 @@
       "elevation": 1550,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200071",
-    "amedasName": "武尊高原",
+    "amedasId": "42046",
+    "amedasName": "藤原",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -4962,8 +4962,8 @@
       "elevation": 1220,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200073",
-    "amedasName": "川古",
+    "amedasId": "42091",
+    "amedasName": "みなかみ",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -5010,8 +5010,8 @@
       "elevation": 2100,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200074",
-    "amedasName": "小串",
+    "amedasId": "48216",
+    "amedasName": "菅平",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -5034,8 +5034,8 @@
       "elevation": 860,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200071",
-    "amedasName": "武尊高原",
+    "amedasId": "42046",
+    "amedasName": "藤原",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -5082,8 +5082,8 @@
       "elevation": 1990,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300006",
-    "amedasName": "渋峠",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -5178,8 +5178,8 @@
       "elevation": 1850,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200075",
-    "amedasName": "地蔵峠",
+    "amedasId": "48216",
+    "amedasName": "菅平",
     "slopeOrientation": "N",
     "prefecture": "群馬県"
   },
@@ -5202,8 +5202,8 @@
       "elevation": 533,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200090",
-    "amedasName": "大石ダム",
+    "amedasId": "54191",
+    "amedasName": "下関",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5250,8 +5250,8 @@
       "elevation": 1000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200093",
-    "amedasName": "湯沢2",
+    "amedasId": "54841",
+    "amedasName": "湯沢",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5274,8 +5274,8 @@
       "elevation": 840,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200090",
-    "amedasName": "大石ダム",
+    "amedasId": "54191",
+    "amedasName": "下関",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5298,8 +5298,8 @@
       "elevation": 650,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300053",
-    "amedasName": "大栗田",
+    "amedasId": "54191",
+    "amedasName": "下関",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5322,8 +5322,8 @@
       "elevation": 690,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200093",
-    "amedasName": "湯沢2",
+    "amedasId": "54841",
+    "amedasName": "湯沢",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5346,8 +5346,8 @@
       "elevation": 702,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200093",
-    "amedasName": "湯沢2",
+    "amedasId": "54841",
+    "amedasName": "湯沢",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5442,8 +5442,8 @@
       "elevation": 985,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200093",
-    "amedasName": "湯沢2",
+    "amedasId": "54841",
+    "amedasName": "湯沢",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5490,8 +5490,8 @@
       "elevation": 670,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200093",
-    "amedasName": "湯沢2",
+    "amedasId": "54841",
+    "amedasName": "湯沢",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5538,8 +5538,8 @@
       "elevation": 579,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300058",
-    "amedasName": "野中",
+    "amedasId": "54841",
+    "amedasName": "湯沢",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5562,8 +5562,8 @@
       "elevation": 650,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200093",
-    "amedasName": "湯沢2",
+    "amedasId": "54841",
+    "amedasName": "湯沢",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5610,8 +5610,8 @@
       "elevation": 1175,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200094",
-    "amedasName": "三国川ダム",
+    "amedasId": "54616",
+    "amedasName": "小出",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5682,8 +5682,8 @@
       "elevation": 551,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200162",
-    "amedasName": "上条",
+    "amedasId": "54566",
+    "amedasName": "守門",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5754,8 +5754,8 @@
       "elevation": 223,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200162",
-    "amedasName": "上条",
+    "amedasId": "54566",
+    "amedasName": "守門",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5778,8 +5778,8 @@
       "elevation": 1242,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300014",
-    "amedasName": "銀山平",
+    "amedasId": "36716",
+    "amedasName": "桧枝岐",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5802,8 +5802,8 @@
       "elevation": 701,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300059",
-    "amedasName": "天水越",
+    "amedasId": "54836",
+    "amedasName": "津南",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5874,8 +5874,8 @@
       "elevation": 380,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300059",
-    "amedasName": "天水越",
+    "amedasId": "54676",
+    "amedasName": "十日町",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5898,8 +5898,8 @@
       "elevation": 1250,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200096",
-    "amedasName": "赤倉",
+    "amedasId": "54816",
+    "amedasName": "関山",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5946,8 +5946,8 @@
       "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200096",
-    "amedasName": "赤倉",
+    "amedasId": "54816",
+    "amedasName": "関山",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5970,8 +5970,8 @@
       "elevation": 1487,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200096",
-    "amedasName": "赤倉",
+    "amedasId": "48061",
+    "amedasName": "信濃町",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -5994,8 +5994,8 @@
       "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200096",
-    "amedasName": "赤倉",
+    "amedasId": "54816",
+    "amedasName": "関山",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -6018,8 +6018,8 @@
       "elevation": 1500,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200096",
-    "amedasName": "赤倉",
+    "amedasId": "54816",
+    "amedasName": "関山",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -6066,8 +6066,8 @@
       "elevation": 740,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300063",
-    "amedasName": "焼山温泉",
+    "amedasId": "48097",
+    "amedasName": "小谷",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -6138,8 +6138,8 @@
       "elevation": 1120,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200080",
-    "amedasName": "志賀",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6186,8 +6186,8 @@
       "elevation": 1800,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200080",
-    "amedasName": "志賀",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6210,8 +6210,8 @@
       "elevation": 1000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300062",
-    "amedasName": "田麦平",
+    "amedasId": "54721",
+    "amedasName": "能生",
     "slopeOrientation": "N",
     "prefecture": "新潟県"
   },
@@ -6234,8 +6234,8 @@
       "elevation": 2073,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200075",
-    "amedasName": "地蔵峠",
+    "amedasId": "48331",
+    "amedasName": "軽井沢",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6258,8 +6258,8 @@
       "elevation": 1950,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300008",
-    "amedasName": "陽坂",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6282,8 +6282,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6306,8 +6306,8 @@
       "elevation": 1050,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300228",
-    "amedasName": "軽井沢2",
+    "amedasId": "48331",
+    "amedasName": "軽井沢",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6330,8 +6330,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6354,8 +6354,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6378,8 +6378,8 @@
       "elevation": 1965,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200075",
-    "amedasName": "地蔵峠",
+    "amedasId": "48216",
+    "amedasName": "菅平",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6402,8 +6402,8 @@
       "elevation": 2307,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300006",
-    "amedasName": "渋峠",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6426,8 +6426,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6450,8 +6450,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6474,8 +6474,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6498,8 +6498,8 @@
       "elevation": 2307,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300008",
-    "amedasName": "陽坂",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6522,8 +6522,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6546,8 +6546,8 @@
       "elevation": 1570,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6570,8 +6570,8 @@
       "elevation": 2060,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300009",
-    "amedasName": "大洞沢",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6594,8 +6594,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6618,8 +6618,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6642,8 +6642,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300009",
-    "amedasName": "大洞沢",
+    "amedasId": "48031",
+    "amedasName": "野沢温泉",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6666,8 +6666,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300007",
-    "amedasName": "丸池",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6690,8 +6690,8 @@
       "elevation": 1215,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300010",
-    "amedasName": "苗間",
+    "amedasId": "48066",
+    "amedasName": "飯山",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6714,8 +6714,8 @@
       "elevation": 1215,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300010",
-    "amedasName": "苗間",
+    "amedasId": "48066",
+    "amedasName": "飯山",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6738,8 +6738,8 @@
       "elevation": 1250,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300010",
-    "amedasName": "苗間",
+    "amedasId": "48066",
+    "amedasName": "飯山",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6762,8 +6762,8 @@
       "elevation": 1930,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300010",
-    "amedasName": "苗間",
+    "amedasId": "48066",
+    "amedasName": "飯山",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6786,8 +6786,8 @@
       "elevation": 1030,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200079",
-    "amedasName": "戸狩",
+    "amedasId": "48031",
+    "amedasName": "野沢温泉",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6810,8 +6810,8 @@
       "elevation": 800,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300059",
-    "amedasName": "天水越",
+    "amedasId": "54836",
+    "amedasName": "津南",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6834,8 +6834,8 @@
       "elevation": 1500,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300066",
-    "amedasName": "飯綱原",
+    "amedasId": "48061",
+    "amedasName": "信濃町",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6858,8 +6858,8 @@
       "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300011",
-    "amedasName": "斑尾",
+    "amedasId": "48066",
+    "amedasName": "飯山",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6882,8 +6882,8 @@
       "elevation": 1160,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300068",
-    "amedasName": "新地蔵峠",
+    "amedasId": "48156",
+    "amedasName": "長野",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6906,8 +6906,8 @@
       "elevation": 1270,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300010",
-    "amedasName": "苗間",
+    "amedasId": "48066",
+    "amedasName": "飯山",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -6930,8 +6930,8 @@
       "elevation": 1320,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300065",
-    "amedasName": "古海",
+    "amedasId": "48061",
+    "amedasName": "信濃町",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7002,8 +7002,8 @@
       "elevation": 1748,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300067",
-    "amedasName": "宝光社",
+    "amedasId": "48061",
+    "amedasName": "信濃町",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7074,8 +7074,8 @@
       "elevation": 1618,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300222",
-    "amedasName": "山口",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7098,8 +7098,8 @@
       "elevation": 1300,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200081",
-    "amedasName": "金山沢",
+    "amedasId": "48097",
+    "amedasName": "小谷",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7146,8 +7146,8 @@
       "elevation": 1780,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300223",
-    "amedasName": "富士見久保",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7170,8 +7170,8 @@
       "elevation": 1830,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300223",
-    "amedasName": "富士見久保",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7194,8 +7194,8 @@
       "elevation": 1450,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300222",
-    "amedasName": "山口",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7386,8 +7386,8 @@
       "elevation": 1780,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300223",
-    "amedasName": "富士見久保",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7482,8 +7482,8 @@
       "elevation": 2000,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300004",
-    "amedasName": "白骨",
+    "amedasId": "48531",
+    "amedasName": "開田高原",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7530,8 +7530,8 @@
       "elevation": 2240,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300042",
-    "amedasName": "濁河",
+    "amedasId": "48531",
+    "amedasName": "開田高原",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7554,8 +7554,8 @@
       "elevation": 2130,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200087",
-    "amedasName": "ワサビ沢",
+    "amedasId": "48531",
+    "amedasName": "開田高原",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7578,8 +7578,8 @@
       "elevation": 1689,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200087",
-    "amedasName": "ワサビ沢",
+    "amedasId": "48531",
+    "amedasName": "開田高原",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7602,8 +7602,8 @@
       "elevation": 1086,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300223",
-    "amedasName": "富士見久保",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7626,8 +7626,8 @@
       "elevation": 1110,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200087",
-    "amedasName": "ワサビ沢",
+    "amedasId": "48361",
+    "amedasName": "松本",
     "slopeOrientation": "N",
     "prefecture": "長野県"
   },
@@ -7770,8 +7770,8 @@
       "elevation": 1485,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300227",
-    "amedasName": "鳴沢",
+    "amedasId": "49251",
+    "amedasName": "河口湖",
     "slopeOrientation": "N",
     "prefecture": "山梨県"
   },
@@ -7794,8 +7794,8 @@
       "elevation": 1900,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300222",
-    "amedasName": "山口",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "N",
     "prefecture": "山梨県"
   },
@@ -7818,8 +7818,8 @@
       "elevation": 1860,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300036",
-    "amedasName": "平湯",
+    "amedasId": "52051",
+    "amedasName": "神岡",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -7842,8 +7842,8 @@
       "elevation": 1430,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300177",
-    "amedasName": "日影平",
+    "amedasId": "52146",
+    "amedasName": "高山",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -7866,8 +7866,8 @@
       "elevation": 1550,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300036",
-    "amedasName": "平湯",
+    "amedasId": "52146",
+    "amedasName": "高山",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -7890,8 +7890,8 @@
       "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300174",
-    "amedasName": "山田",
+    "amedasId": "52051",
+    "amedasName": "神岡",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -7938,8 +7938,8 @@
       "elevation": 1216,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300173",
-    "amedasName": "元田",
+    "amedasId": "52041",
+    "amedasName": "河合",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -7986,8 +7986,8 @@
       "elevation": 1441,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300226",
-    "amedasName": "本栖",
+    "amedasId": "50331",
+    "amedasName": "静岡",
     "slopeOrientation": "N",
     "prefecture": "静岡県"
   },
@@ -8010,8 +8010,8 @@
       "elevation": 1450,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300225",
-    "amedasName": "平野",
+    "amedasId": "49251",
+    "amedasName": "河口湖",
     "slopeOrientation": "N",
     "prefecture": "静岡県"
   },
@@ -8034,8 +8034,8 @@
       "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300181",
-    "amedasName": "宮",
+    "amedasId": "52146",
+    "amedasName": "高山",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -8058,8 +8058,8 @@
       "elevation": 1276,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300043",
-    "amedasName": "檜峠",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -8082,8 +8082,8 @@
       "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300043",
-    "amedasName": "檜峠",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -8106,8 +8106,8 @@
       "elevation": 1405,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300044",
-    "amedasName": "蛭ヶ野",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -8130,8 +8130,8 @@
       "elevation": 1350,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300044",
-    "amedasName": "蛭ヶ野",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -8154,8 +8154,8 @@
       "elevation": 1150,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300044",
-    "amedasName": "蛭ヶ野",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -8178,8 +8178,8 @@
       "elevation": 1040,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300044",
-    "amedasName": "蛭ヶ野",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "N",
     "prefecture": "岐阜県"
   },
@@ -8202,8 +8202,8 @@
       "elevation": 1155,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200112",
-    "amedasName": "黄和田",
+    "amedasId": "60131",
+    "amedasName": "彦根",
     "slopeOrientation": "N",
     "prefecture": "三重県"
   },
@@ -8226,8 +8226,8 @@
       "elevation": 1188,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300241",
-    "amedasName": "原",
+    "amedasId": "55267",
+    "amedasName": "猪谷",
     "slopeOrientation": "N",
     "prefecture": "富山県"
   },
@@ -8250,8 +8250,8 @@
       "elevation": 825,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200097",
-    "amedasName": "千寿ヶ原",
+    "amedasId": "55267",
+    "amedasName": "猪谷",
     "slopeOrientation": "N",
     "prefecture": "富山県"
   },
@@ -8274,8 +8274,8 @@
       "elevation": 638,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200099",
-    "amedasName": "宇奈月ダム",
+    "amedasId": "55022",
+    "amedasName": "朝日",
     "slopeOrientation": "N",
     "prefecture": "富山県"
   },
@@ -8298,8 +8298,8 @@
       "elevation": 746,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300032",
-    "amedasName": "上平",
+    "amedasId": "52081",
+    "amedasName": "白川",
     "slopeOrientation": "N",
     "prefecture": "富山県"
   },
@@ -8322,8 +8322,8 @@
       "elevation": 510,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300033",
-    "amedasName": "利賀",
+    "amedasId": "55141",
+    "amedasName": "砺波",
     "slopeOrientation": "N",
     "prefecture": "富山県"
   },
@@ -8346,8 +8346,8 @@
       "elevation": 924,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300030",
-    "amedasName": "湯涌",
+    "amedasId": "55141",
+    "amedasName": "砺波",
     "slopeOrientation": "N",
     "prefecture": "富山県"
   },
@@ -8370,8 +8370,8 @@
       "elevation": 650,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300033",
-    "amedasName": "利賀",
+    "amedasId": "55141",
+    "amedasName": "砺波",
     "slopeOrientation": "N",
     "prefecture": "富山県"
   },
@@ -8394,8 +8394,8 @@
       "elevation": 933,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300031",
-    "amedasName": "平",
+    "amedasId": "55141",
+    "amedasName": "砺波",
     "slopeOrientation": "N",
     "prefecture": "富山県"
   },
@@ -8418,8 +8418,8 @@
       "elevation": 830,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200105",
-    "amedasName": "内尾",
+    "amedasId": "56286",
+    "amedasName": "白山河内",
     "slopeOrientation": "N",
     "prefecture": "石川県"
   },
@@ -8442,8 +8442,8 @@
       "elevation": 500,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200107",
-    "amedasName": "尾小屋",
+    "amedasId": "56301",
+    "amedasName": "加賀中津原",
     "slopeOrientation": "N",
     "prefecture": "石川県"
   },
@@ -8514,8 +8514,8 @@
       "elevation": 540,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300026",
-    "amedasName": "キゴ山ふれあいの里",
+    "amedasId": "56227",
+    "amedasName": "金沢",
     "slopeOrientation": "N",
     "prefecture": "石川県"
   },
@@ -8562,8 +8562,8 @@
       "elevation": 760,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300156",
-    "amedasName": "新保",
+    "amedasId": "57206",
+    "amedasName": "今庄",
     "slopeOrientation": "N",
     "prefecture": "福井県"
   },
@@ -8586,8 +8586,8 @@
       "elevation": 305,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300023",
-    "amedasName": "谷口",
+    "amedasId": "57106",
+    "amedasName": "武生",
     "slopeOrientation": "N",
     "prefecture": "福井県"
   },
@@ -8610,8 +8610,8 @@
       "elevation": 592,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300288",
-    "amedasName": "在原",
+    "amedasId": "60026",
+    "amedasName": "柳ケ瀬",
     "slopeOrientation": "N",
     "prefecture": "滋賀県"
   },
@@ -8658,8 +8658,8 @@
       "elevation": 580,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300290",
-    "amedasName": "葛川坊村町",
+    "amedasId": "60051",
+    "amedasName": "今津",
     "slopeOrientation": "N",
     "prefecture": "滋賀県"
   },
@@ -8682,8 +8682,8 @@
       "elevation": 740,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300156",
-    "amedasName": "新保",
+    "amedasId": "57206",
+    "amedasName": "今庄",
     "slopeOrientation": "N",
     "prefecture": "滋賀県"
   },
@@ -8706,8 +8706,8 @@
       "elevation": 1174,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300290",
-    "amedasName": "葛川坊村町",
+    "amedasId": "60216",
+    "amedasName": "大津",
     "slopeOrientation": "N",
     "prefecture": "滋賀県"
   },
@@ -8730,8 +8730,8 @@
       "elevation": 855,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "62078",
-    "amedasName": "大阪",
+    "amedasId": "63518",
+    "amedasName": "神戸",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8754,8 +8754,8 @@
       "elevation": 940,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200118",
-    "amedasName": "栗栖野",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8778,8 +8778,8 @@
       "elevation": 800,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200118",
-    "amedasName": "栗栖野",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8802,8 +8802,8 @@
       "elevation": 560,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300294",
-    "amedasName": "大久保",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8826,8 +8826,8 @@
       "elevation": 470,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200118",
-    "amedasName": "栗栖野",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8850,8 +8850,8 @@
       "elevation": 1050,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300294",
-    "amedasName": "大久保",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8874,8 +8874,8 @@
       "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200167",
-    "amedasName": "野尻",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8922,8 +8922,8 @@
       "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300308",
-    "amedasName": "柤岡",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8946,8 +8946,8 @@
       "elevation": 830,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300297",
-    "amedasName": "若杉",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8970,8 +8970,8 @@
       "elevation": 1100,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300295",
-    "amedasName": "丹戸",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -8994,8 +8994,8 @@
       "elevation": 920,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300281",
-    "amedasName": "上斎原小林",
+    "amedasId": "69101",
+    "amedasName": "倉吉",
     "slopeOrientation": "N",
     "prefecture": "岡山県"
   },
@@ -9018,8 +9018,8 @@
       "elevation": 1050,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300355",
-    "amedasName": "三坂",
+    "amedasId": "68276",
+    "amedasName": "横田",
     "slopeOrientation": "N",
     "prefecture": "広島県"
   },
@@ -9042,8 +9042,8 @@
       "elevation": 850,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300274",
-    "amedasName": "明地峠",
+    "amedasId": "66091",
+    "amedasName": "千屋",
     "slopeOrientation": "N",
     "prefecture": "岡山県"
   },
@@ -9066,8 +9066,8 @@
       "elevation": 1125,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300301",
-    "amedasName": "西河内",
+    "amedasId": "69246",
+    "amedasName": "智頭",
     "slopeOrientation": "N",
     "prefecture": "兵庫県"
   },
@@ -9090,8 +9090,8 @@
       "elevation": 1080,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300249",
-    "amedasName": "馬木",
+    "amedasId": "68276",
+    "amedasName": "横田",
     "slopeOrientation": "N",
     "prefecture": "広島県"
   },
@@ -9138,8 +9138,8 @@
       "elevation": 727,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300276",
-    "amedasName": "野土路",
+    "amedasId": "66046",
+    "amedasName": "上長田",
     "slopeOrientation": "N",
     "prefecture": "岡山県"
   },
@@ -9162,8 +9162,8 @@
       "elevation": 1150,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300261",
-    "amedasName": "都川",
+    "amedasId": "67151",
+    "amedasName": "大朝",
     "slopeOrientation": "N",
     "prefecture": "広島県"
   },
@@ -9186,8 +9186,8 @@
       "elevation": 1066,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300368",
-    "amedasName": "吉和",
+    "amedasId": "67136",
+    "amedasName": "八幡",
     "slopeOrientation": "N",
     "prefecture": "広島県"
   },
@@ -9210,8 +9210,8 @@
       "elevation": 1346,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300369",
-    "amedasName": "戸河内",
+    "amedasId": "67136",
+    "amedasName": "八幡",
     "slopeOrientation": "N",
     "prefecture": "広島県"
   },
@@ -9234,8 +9234,8 @@
       "elevation": 1200,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "200143",
-    "amedasName": "舂米",
+    "amedasId": "63071",
+    "amedasName": "兎和野高原",
     "slopeOrientation": "N",
     "prefecture": "鳥取県"
   },
@@ -9282,8 +9282,8 @@
       "elevation": 900,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300271",
-    "amedasName": "名賀",
+    "amedasId": "81286",
+    "amedasName": "山口",
     "slopeOrientation": "N",
     "prefecture": "山口県"
   },
@@ -9330,8 +9330,8 @@
       "elevation": 960,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300277",
-    "amedasName": "内海峠",
+    "amedasId": "69152",
+    "amedasName": "大山",
     "slopeOrientation": "N",
     "prefecture": "鳥取県"
   },
@@ -9354,8 +9354,8 @@
       "elevation": 720,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "300252",
-    "amedasName": "頓原",
+    "amedasId": "68306",
+    "amedasName": "赤名",
     "slopeOrientation": "N",
     "prefecture": "島根県"
   },
@@ -9378,8 +9378,8 @@
       "elevation": 1003,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "73266",
-    "amedasName": "久万",
+    "amedasId": "67437",
+    "amedasName": "広島",
     "slopeOrientation": "N",
     "prefecture": "愛媛県"
   },
@@ -9402,8 +9402,8 @@
       "elevation": 1400,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "73221",
-    "amedasName": "成就社",
+    "amedasId": "67437",
+    "amedasName": "広島",
     "slopeOrientation": "N",
     "prefecture": "愛媛県"
   },
@@ -9426,8 +9426,8 @@
       "elevation": 1220,
       "label": "リフト最上部・ゲレンデトップ"
     },
-    "amedasId": "73266",
-    "amedasName": "久万",
+    "amedasId": "67437",
+    "amedasName": "広島",
     "slopeOrientation": "N",
     "prefecture": "愛媛県"
   },
@@ -9475,8 +9475,8 @@
       "elevation": 1070,
       "label": "山頂ゲレンデ"
     },
-    "amedasId": "300297",
-    "amedasName": "若杉",
+    "amedasId": "63121",
+    "amedasName": "和田山",
     "slopeOrientation": "N"
   },
   {
@@ -9547,8 +9547,8 @@
       "elevation": 1721,
       "label": "利尻山山頂"
     },
-    "amedasId": "11091",
-    "amedasName": "本泊",
+    "amedasId": "11016",
+    "amedasName": "稚内",
     "slopeOrientation": "ALL"
   },
   {
@@ -9571,8 +9571,8 @@
       "elevation": 1000,
       "label": "藻琴山山頂"
     },
-    "amedasId": "17642",
-    "amedasName": "山園",
+    "amedasId": "19021",
+    "amedasName": "川湯",
     "slopeOrientation": "N"
   },
   {
@@ -9739,8 +9739,8 @@
       "elevation": 2077,
       "label": "十勝岳本峰山頂"
     },
-    "amedasId": "12607",
-    "amedasName": "白金",
+    "amedasId": "12551",
+    "amedasName": "美瑛",
     "slopeOrientation": "NW"
   },
   {
@@ -9763,8 +9763,8 @@
       "elevation": 1733,
       "label": "前十勝山頂"
     },
-    "amedasId": "12607",
-    "amedasName": "白金",
+    "amedasId": "12626",
+    "amedasName": "富良野",
     "slopeOrientation": "W"
   },
   {
@@ -9787,8 +9787,8 @@
       "elevation": 1748,
       "label": "三段山山頂"
     },
-    "amedasId": "12607",
-    "amedasName": "白金",
+    "amedasId": "12551",
+    "amedasName": "美瑛",
     "slopeOrientation": "NW"
   },
   {
@@ -9811,8 +9811,8 @@
       "elevation": 1912,
       "label": "富良野岳山頂"
     },
-    "amedasId": "12607",
-    "amedasName": "白金",
+    "amedasId": "12626",
+    "amedasName": "富良野",
     "slopeOrientation": "NW"
   },
   {
@@ -9835,8 +9835,8 @@
       "elevation": 2013,
       "label": "オプタテシケ山山頂"
     },
-    "amedasId": "12607",
-    "amedasName": "白金",
+    "amedasId": "12551",
+    "amedasName": "美瑛",
     "slopeOrientation": "NW"
   },
   {
@@ -9883,8 +9883,8 @@
       "elevation": 1491,
       "label": "暑寒別岳山頂"
     },
-    "amedasId": "13311",
-    "amedasName": "増毛",
+    "amedasId": "13321",
+    "amedasName": "幌糠",
     "slopeOrientation": "N"
   },
   {
@@ -9979,8 +9979,8 @@
       "elevation": 907,
       "label": "春香山山頂"
     },
-    "amedasId": "14116",
-    "amedasName": "山口",
+    "amedasId": "16091",
+    "amedasName": "小樽",
     "slopeOrientation": "N"
   },
   {
@@ -10003,8 +10003,8 @@
       "elevation": 1023,
       "label": "手稲山山頂"
     },
-    "amedasId": "14157",
-    "amedasName": "手稲山",
+    "amedasId": "14163",
+    "amedasName": "札幌",
     "slopeOrientation": "N"
   },
   {
@@ -10051,8 +10051,8 @@
       "elevation": 1255,
       "label": "積丹岳山頂"
     },
-    "amedasId": "16026",
-    "amedasName": "美国",
+    "amedasId": "16076",
+    "amedasName": "余市",
     "slopeOrientation": "N"
   },
   {
@@ -10075,8 +10075,8 @@
       "elevation": 1898,
       "label": "羊蹄山最高点（火口縁）"
     },
-    "amedasId": "16281",
-    "amedasName": "真狩",
+    "amedasId": "16217",
+    "amedasName": "倶知安",
     "slopeOrientation": "ALL"
   },
   {
@@ -10219,8 +10219,8 @@
       "elevation": 1625,
       "label": "岩木山山頂"
     },
-    "amedasId": "31451",
-    "amedasName": "岳",
+    "amedasId": "31461",
+    "amedasName": "弘前",
     "slopeOrientation": "S"
   },
   {
@@ -10291,8 +10291,8 @@
       "elevation": 1613,
       "label": "八幡平山頂"
     },
-    "amedasId": "32266",
-    "amedasName": "八幡平",
+    "amedasId": "33226",
+    "amedasName": "岩手松尾",
     "slopeOrientation": "NE"
   },
   {
@@ -10315,8 +10315,8 @@
       "elevation": 2038,
       "label": "岩手山山頂（薬師岳）"
     },
-    "amedasId": "33361",
-    "amedasName": "滝沢",
+    "amedasId": "33226",
+    "amedasName": "岩手松尾",
     "slopeOrientation": "SE"
   },
   {
@@ -10339,8 +10339,8 @@
       "elevation": 1917,
       "label": "早池峰山山頂"
     },
-    "amedasId": "33596",
-    "amedasName": "附馬牛",
+    "amedasId": "33441",
+    "amedasName": "区界",
     "slopeOrientation": "S"
   },
   {
@@ -10387,8 +10387,8 @@
       "elevation": 1478,
       "label": "乳頭山山頂"
     },
-    "amedasId": "32431",
-    "amedasName": "田沢湖高原",
+    "amedasId": "33421",
+    "amedasName": "雫石",
     "slopeOrientation": "W"
   },
   {
@@ -10411,8 +10411,8 @@
       "elevation": 1637,
       "label": "秋田駒ヶ岳（男女岳）"
     },
-    "amedasId": "32431",
-    "amedasName": "田沢湖高原",
+    "amedasId": "33421",
+    "amedasName": "雫石",
     "slopeOrientation": "W"
   },
   {
@@ -10435,8 +10435,8 @@
       "elevation": 1440,
       "label": "和賀岳山頂"
     },
-    "amedasId": "33486",
-    "amedasName": "沢内",
+    "amedasId": "33421",
+    "amedasName": "雫石",
     "slopeOrientation": "E"
   },
   {
@@ -10459,8 +10459,8 @@
       "elevation": 1548,
       "label": "焼石岳山頂"
     },
-    "amedasId": "33711",
-    "amedasName": "金ケ崎",
+    "amedasId": "33831",
+    "amedasName": "祭畤",
     "slopeOrientation": "SE"
   },
   {
@@ -10507,8 +10507,8 @@
       "elevation": 2236,
       "label": "鳥海山（新山）山頂"
     },
-    "amedasId": "35056",
-    "amedasName": "酒田大沢",
+    "amedasId": "32626",
+    "amedasName": "矢島",
     "slopeOrientation": "ALL"
   },
   {
@@ -10603,8 +10603,8 @@
       "elevation": 1462,
       "label": "村山葉山山頂"
     },
-    "amedasId": "35332",
-    "amedasName": "村山",
+    "amedasId": "35216",
+    "amedasName": "肘折",
     "slopeOrientation": "E"
   },
   {
@@ -10627,8 +10627,8 @@
       "elevation": 1500,
       "label": "船形山山頂"
     },
-    "amedasId": "34262",
-    "amedasName": "泉ケ岳",
+    "amedasId": "34311",
+    "amedasName": "新川",
     "slopeOrientation": "E"
   },
   {
@@ -10699,8 +10699,8 @@
       "elevation": 2105,
       "label": "飯豊山山頂（本山）"
     },
-    "amedasId": "35537",
-    "amedasName": "中津川",
+    "amedasId": "36251",
+    "amedasName": "西会津",
     "slopeOrientation": "S"
   },
   {
@@ -10723,8 +10723,8 @@
       "elevation": 2025,
       "label": "北股岳山頂"
     },
-    "amedasId": "35537",
-    "amedasName": "中津川",
+    "amedasId": "35486",
+    "amedasName": "小国",
     "slopeOrientation": "N"
   },
   {
@@ -10747,8 +10747,8 @@
       "elevation": 2035,
       "label": "西吾妻山山頂"
     },
-    "amedasId": "36106",
-    "amedasName": "桧原",
+    "amedasId": "35552",
+    "amedasName": "米沢",
     "slopeOrientation": "N"
   },
   {
@@ -10771,8 +10771,8 @@
       "elevation": 1949,
       "label": "一切経山山頂"
     },
-    "amedasId": "36196",
-    "amedasName": "鷲倉",
+    "amedasId": "36127",
+    "amedasName": "福島",
     "slopeOrientation": "S"
   },
   {
@@ -10795,8 +10795,8 @@
       "elevation": 1700,
       "label": "安達太良山山頂"
     },
-    "amedasId": "36196",
-    "amedasName": "鷲倉",
+    "amedasId": "36276",
+    "amedasName": "猪苗代",
     "slopeOrientation": "E"
   },
   {
@@ -10819,8 +10819,8 @@
       "elevation": 1728,
       "label": "箕輪山山頂"
     },
-    "amedasId": "36196",
-    "amedasName": "鷲倉",
+    "amedasId": "36127",
+    "amedasName": "福島",
     "slopeOrientation": "N"
   },
   {
@@ -10939,8 +10939,8 @@
       "elevation": 2065,
       "label": "三岩岳山頂"
     },
-    "amedasId": "36726",
-    "amedasName": "舘岩",
+    "amedasId": "36716",
+    "amedasName": "桧枝岐",
     "slopeOrientation": "NW"
   },
   {
@@ -11035,8 +11035,8 @@
       "elevation": 2578,
       "label": "日光白根山（奥白根）山頂"
     },
-    "amedasId": "42106",
-    "amedasName": "片品",
+    "amedasId": "41116",
+    "amedasName": "土呂部",
     "slopeOrientation": "W"
   },
   {
@@ -11059,8 +11059,8 @@
       "elevation": 2228,
       "label": "至仏山山頂"
     },
-    "amedasId": "42106",
-    "amedasName": "片品",
+    "amedasId": "42046",
+    "amedasName": "藤原",
     "slopeOrientation": "SE"
   },
   {
@@ -11131,8 +11131,8 @@
       "elevation": 1828,
       "label": "黒檜山山頂"
     },
-    "amedasId": "42261",
-    "amedasName": "黒保根",
+    "amedasId": "42251",
+    "amedasName": "前橋",
     "slopeOrientation": "SW"
   },
   {
@@ -11203,8 +11203,8 @@
       "elevation": 2003,
       "label": "越後駒ヶ岳山頂"
     },
-    "amedasId": "54621",
-    "amedasName": "大湯",
+    "amedasId": "54616",
+    "amedasName": "小出",
     "slopeOrientation": "E"
   },
   {
@@ -11227,8 +11227,8 @@
       "elevation": 1967,
       "label": "巻機山（御機屋）山頂"
     },
-    "amedasId": "54761",
-    "amedasName": "塩沢",
+    "amedasId": "54841",
+    "amedasName": "湯沢",
     "slopeOrientation": "NW"
   },
   {
@@ -11443,8 +11443,8 @@
       "elevation": 2307,
       "label": "横手山山頂"
     },
-    "amedasId": "48172",
-    "amedasName": "笠岳",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N"
   },
   {
@@ -11467,8 +11467,8 @@
       "elevation": 2076,
       "label": "志賀笠ヶ岳山頂"
     },
-    "amedasId": "48172",
-    "amedasName": "笠岳",
+    "amedasId": "42121",
+    "amedasName": "草津",
     "slopeOrientation": "N"
   },
   {
@@ -11515,8 +11515,8 @@
       "elevation": 2101,
       "label": "湯ノ丸山山頂"
     },
-    "amedasId": "48321",
-    "amedasName": "東御",
+    "amedasId": "48216",
+    "amedasName": "菅平",
     "slopeOrientation": "S"
   },
   {
@@ -11539,8 +11539,8 @@
       "elevation": 2404,
       "label": "黒斑山山頂"
     },
-    "amedasId": "42221",
-    "amedasName": "田代",
+    "amedasId": "48331",
+    "amedasName": "軽井沢",
     "slopeOrientation": "W"
   },
   {
@@ -11563,8 +11563,8 @@
       "elevation": 2530,
       "label": "蓼科山山頂"
     },
-    "amedasId": "48436",
-    "amedasName": "白樺湖",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "NW"
   },
   {
@@ -11587,8 +11587,8 @@
       "elevation": 1925,
       "label": "車山山頂"
     },
-    "amedasId": "48436",
-    "amedasName": "白樺湖",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "E"
   },
   {
@@ -11611,8 +11611,8 @@
       "elevation": 1289,
       "label": "鍋倉山山頂"
     },
-    "amedasId": "54737",
-    "amedasName": "筒方",
+    "amedasId": "48031",
+    "amedasName": "野沢温泉",
     "slopeOrientation": "S"
   },
   {
@@ -11659,8 +11659,8 @@
       "elevation": 1382,
       "label": "斑尾山山頂"
     },
-    "amedasId": "54892",
-    "amedasName": "樽本",
+    "amedasId": "48066",
+    "amedasName": "飯山",
     "slopeOrientation": "N"
   },
   {
@@ -12163,8 +12163,8 @@
       "elevation": 3003,
       "label": "立山・雄山山頂"
     },
-    "amedasId": "55166",
-    "amedasName": "上市",
+    "amedasId": "48191",
+    "amedasName": "大町",
     "slopeOrientation": "ALL"
   },
   {
@@ -12187,8 +12187,8 @@
       "elevation": 2999,
       "label": "剱岳山頂"
     },
-    "amedasId": "55166",
-    "amedasName": "上市",
+    "amedasId": "48191",
+    "amedasName": "大町",
     "slopeOrientation": "S"
   },
   {
@@ -12211,8 +12211,8 @@
       "elevation": 2777,
       "label": "剱御前山頂"
     },
-    "amedasId": "55166",
-    "amedasName": "上市",
+    "amedasId": "48191",
+    "amedasName": "大町",
     "slopeOrientation": "SW"
   },
   {
@@ -12235,8 +12235,8 @@
       "elevation": 2414,
       "label": "毛勝山山頂"
     },
-    "amedasId": "55166",
-    "amedasName": "上市",
+    "amedasId": "55056",
+    "amedasName": "魚津",
     "slopeOrientation": "N"
   },
   {
@@ -12259,8 +12259,8 @@
       "elevation": 2501,
       "label": "大日岳山頂"
     },
-    "amedasId": "55217",
-    "amedasName": "立山芦峅",
+    "amedasId": "55267",
+    "amedasName": "猪谷",
     "slopeOrientation": "W"
   },
   {
@@ -12283,8 +12283,8 @@
       "elevation": 3180,
       "label": "槍ヶ岳山頂"
     },
-    "amedasId": "48346",
-    "amedasName": "上高地",
+    "amedasId": "48191",
+    "amedasName": "大町",
     "slopeOrientation": "SE"
   },
   {
@@ -12307,8 +12307,8 @@
       "elevation": 3190,
       "label": "奥穂高岳山頂"
     },
-    "amedasId": "48346",
-    "amedasName": "上高地",
+    "amedasId": "48361",
+    "amedasName": "松本",
     "slopeOrientation": "E"
   },
   {
@@ -12331,8 +12331,8 @@
       "elevation": 3106,
       "label": "北穂高岳山頂"
     },
-    "amedasId": "48346",
-    "amedasName": "上高地",
+    "amedasId": "48361",
+    "amedasName": "松本",
     "slopeOrientation": "E"
   },
   {
@@ -12355,8 +12355,8 @@
       "elevation": 2897,
       "label": "笠ヶ岳山頂"
     },
-    "amedasId": "48346",
-    "amedasName": "上高地",
+    "amedasId": "52051",
+    "amedasName": "神岡",
     "slopeOrientation": "W"
   },
   {
@@ -12379,8 +12379,8 @@
       "elevation": 2857,
       "label": "常念岳山頂"
     },
-    "amedasId": "48296",
-    "amedasName": "穂高",
+    "amedasId": "48361",
+    "amedasName": "松本",
     "slopeOrientation": "E"
   },
   {
@@ -12403,8 +12403,8 @@
       "elevation": 2677,
       "label": "蝶ヶ岳山頂"
     },
-    "amedasId": "48296",
-    "amedasName": "穂高",
+    "amedasId": "48361",
+    "amedasName": "松本",
     "slopeOrientation": "E"
   },
   {
@@ -12427,8 +12427,8 @@
       "elevation": 2455,
       "label": "焼岳山頂（北峰）"
     },
-    "amedasId": "48346",
-    "amedasName": "上高地",
+    "amedasId": "52051",
+    "amedasName": "神岡",
     "slopeOrientation": "SE"
   },
   {
@@ -12451,8 +12451,8 @@
       "elevation": 3026,
       "label": "乗鞍岳（剣ヶ峰）山頂"
     },
-    "amedasId": "48466",
-    "amedasName": "奈川",
+    "amedasId": "48531",
+    "amedasName": "開田高原",
     "slopeOrientation": "E"
   },
   {
@@ -12475,8 +12475,8 @@
       "elevation": 3067,
       "label": "御嶽山（剣ヶ峰）山頂"
     },
-    "amedasId": "48601",
-    "amedasName": "御嶽山",
+    "amedasId": "48531",
+    "amedasName": "開田高原",
     "slopeOrientation": "E"
   },
   {
@@ -12499,8 +12499,8 @@
       "elevation": 2956,
       "label": "木曽駒ヶ岳山頂"
     },
-    "amedasId": "48681",
-    "amedasName": "宮田高原",
+    "amedasId": "48531",
+    "amedasName": "開田高原",
     "slopeOrientation": "SE"
   },
   {
@@ -12523,8 +12523,8 @@
       "elevation": 1955,
       "label": "入笠山山頂"
     },
-    "amedasId": "48561",
-    "amedasName": "原村",
+    "amedasId": "48491",
+    "amedasName": "諏訪",
     "slopeOrientation": "E"
   },
   {
@@ -12547,8 +12547,8 @@
       "elevation": 3193,
       "label": "北岳山頂"
     },
-    "amedasId": "49086",
-    "amedasName": "韮崎",
+    "amedasId": "49142",
+    "amedasName": "甲府",
     "slopeOrientation": "E"
   },
   {
@@ -12571,8 +12571,8 @@
       "elevation": 3033,
       "label": "仙丈ヶ岳山頂"
     },
-    "amedasId": "48691",
-    "amedasName": "杉島",
+    "amedasId": "49142",
+    "amedasName": "甲府",
     "slopeOrientation": "NE"
   },
   {
@@ -12595,8 +12595,8 @@
       "elevation": 2967,
       "label": "甲斐駒ヶ岳山頂"
     },
-    "amedasId": "48691",
-    "amedasName": "杉島",
+    "amedasId": "49142",
+    "amedasName": "甲府",
     "slopeOrientation": "S"
   },
   {
@@ -12619,8 +12619,8 @@
       "elevation": 3776,
       "label": "富士山（剣ヶ峰）山頂"
     },
-    "amedasId": "50066",
-    "amedasName": "富士山",
+    "amedasId": "49251",
+    "amedasName": "河口湖",
     "slopeOrientation": "ALL"
   },
   {
@@ -12643,8 +12643,8 @@
       "elevation": 2702,
       "label": "白山（御前峰）山頂"
     },
-    "amedasId": "56346",
-    "amedasName": "白山白峰",
+    "amedasId": "52081",
+    "amedasName": "白川",
     "slopeOrientation": "W"
   },
   {
@@ -12715,8 +12715,8 @@
       "elevation": 1625,
       "label": "経ヶ岳山頂"
     },
-    "amedasId": "57082",
-    "amedasName": "勝山",
+    "amedasId": "57121",
+    "amedasName": "大野",
     "slopeOrientation": "W"
   },
   {
@@ -12739,8 +12739,8 @@
       "elevation": 1307,
       "label": "取立山山頂"
     },
-    "amedasId": "56346",
-    "amedasName": "白山白峰",
+    "amedasId": "57121",
+    "amedasName": "大野",
     "slopeOrientation": "W"
   },
   {
@@ -12811,8 +12811,8 @@
       "elevation": 1709,
       "label": "大日ヶ岳山頂"
     },
-    "amedasId": "52173",
-    "amedasName": "ひるがの",
+    "amedasId": "52221",
+    "amedasName": "長滝",
     "slopeOrientation": "E"
   },
   {
@@ -12859,8 +12859,8 @@
       "elevation": 2059,
       "label": "三方崩山山頂"
     },
-    "amedasId": "52131",
-    "amedasName": "御母衣",
+    "amedasId": "52081",
+    "amedasName": "白川",
     "slopeOrientation": "W"
   },
   {
@@ -13003,8 +13003,8 @@
       "elevation": 1214,
       "label": "武奈ヶ岳山頂"
     },
-    "amedasId": "60081",
-    "amedasName": "朽木平良",
+    "amedasId": "60051",
+    "amedasName": "今津",
     "slopeOrientation": "W"
   },
   {
@@ -13075,8 +13075,8 @@
       "elevation": 1982,
       "label": "石鎚山（弥山・天狗岳）"
     },
-    "amedasId": "73247",
-    "amedasName": "成就社",
+    "amedasId": "67437",
+    "amedasName": "広島",
     "slopeOrientation": "N"
   },
   {
@@ -13099,8 +13099,8 @@
       "elevation": 1955,
       "label": "剣山山頂"
     },
-    "amedasId": "71192",
-    "amedasName": "東祖谷",
+    "amedasId": "66408",
+    "amedasName": "岡山",
     "slopeOrientation": "N"
   },
   {
@@ -13123,8 +13123,8 @@
       "elevation": 1787,
       "label": "久住山山頂"
     },
-    "amedasId": "86066",
-    "amedasName": "南小国",
+    "amedasId": "86157",
+    "amedasName": "南阿蘇",
     "slopeOrientation": "N"
   }
 ]

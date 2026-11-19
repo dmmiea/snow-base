@@ -395,9 +395,11 @@ async function run() {
     console.warn('既存キャッシュ読み込みスキップ:', e.message);
   }
 
-  // 1. 気象庁アメダス最新データ取得
+  // 1. 気象庁アメダス最新データ取得 (最新10分値 + 毎正時積雪値)
   let amedasMap = {};
+  let amedasSnowMap = {};
   let latestJmaTime = '';
+  let latestSnowTime = '';
   try {
     const timeRes = await fetch('https://www.jma.go.jp/bosai/amedas/data/latest_time.txt');
     const timeText = (await timeRes.text()).trim();
@@ -409,6 +411,34 @@ async function run() {
     if (jmaRes.ok) {
       amedasMap = await jmaRes.json();
       console.log(`気象庁観測所データ取得成功: ${Object.keys(amedasMap).length} 観測点`);
+    }
+
+    // 積雪データは毎正時 (XX:00:00) に配信されるため、直近の正時JSONを取得
+    const jmaDate = new Date(timeText);
+    const jmaMinute = jmaDate.getMinutes();
+    const snowDate = new Date(jmaDate);
+    snowDate.setMinutes(0, 0, 0);
+    // 正時直後 (00〜05分等) はデータ生成遅延がある場合があるため、取得失敗時は1時間前へフォールバック
+    const formatTimeStr = (d) => {
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}${pad(d.getHours())}0000`;
+    };
+
+    let snowTimeStr = formatTimeStr(snowDate);
+    let snowRes = await fetch(`https://www.jma.go.jp/bosai/amedas/data/map/${snowTimeStr}.json`);
+    if (!snowRes.ok) {
+      // 1時間前へフォールバック
+      const prevHourDate = new Date(snowDate.getTime() - 3600000);
+      snowTimeStr = formatTimeStr(prevHourDate);
+      snowRes = await fetch(`https://www.jma.go.jp/bosai/amedas/data/map/${snowTimeStr}.json`);
+    }
+
+    if (snowRes.ok) {
+      amedasSnowMap = await snowRes.json();
+      latestSnowTime = `${snowTimeStr.slice(0, 4)}-${snowTimeStr.slice(4, 6)}-${snowTimeStr.slice(6, 8)}T${snowTimeStr.slice(8, 10)}:00:00+09:00`;
+      console.log(`気象庁アメダス正時積雪データ取得成功: ${snowTimeStr} (${Object.keys(amedasSnowMap).length} 観測点)`);
+    } else {
+      console.warn('気象庁アメダス正時積雪JSON取得失敗');
     }
   } catch (err) {
     console.warn('気象庁アメダス取得エラー:', err.message);
@@ -525,17 +555,26 @@ async function run() {
         }
 
         let liveAmedas = null;
-        if (spot.amedasId && amedasMap[spot.amedasId]) {
+        if (spot.amedasId) {
           const raw = amedasMap[spot.amedasId];
-          liveAmedas = {
-            stationId: spot.amedasId,
-            stationName: spot.amedasName,
-            snowDepth: raw.snow ? raw.snow[0] : null,
-            temp: raw.temp ? raw.temp[0] : null,
-            precipitation1h: raw.precipitation1h ? raw.precipitation1h[0] : 0,
-            windSpeed: raw.wind ? raw.wind[0] : null,
-            updatedAt: latestJmaTime
-          };
+          const rawSnow = amedasSnowMap[spot.amedasId];
+          if (raw || rawSnow) {
+            liveAmedas = {
+              source: 'jma_amedas',
+              stationId: spot.amedasId,
+              stationName: spot.amedasName,
+              snowDepth: (rawSnow && rawSnow.snow && rawSnow.snow[0] !== null) ? rawSnow.snow[0] : (raw && raw.snow && raw.snow[0] !== null ? raw.snow[0] : null),
+              snow1h: rawSnow && rawSnow.snow1h ? rawSnow.snow1h[0] : null,
+              snow6h: rawSnow && rawSnow.snow6h ? rawSnow.snow6h[0] : null,
+              snow12h: rawSnow && rawSnow.snow12h ? rawSnow.snow12h[0] : null,
+              snow24h: rawSnow && rawSnow.snow24h ? rawSnow.snow24h[0] : null,
+              temp: raw && raw.temp ? raw.temp[0] : (rawSnow && rawSnow.temp ? rawSnow.temp[0] : null),
+              precipitation1h: raw && raw.precipitation1h ? raw.precipitation1h[0] : (rawSnow && rawSnow.precipitation1h ? rawSnow.precipitation1h[0] : 0),
+              windSpeed: raw && raw.wind ? raw.wind[0] : (rawSnow && rawSnow.wind ? rawSnow.wind[0] : null),
+              updatedAt: latestJmaTime,
+              snowUpdatedAt: latestSnowTime || latestJmaTime
+            };
+          }
         }
 
         const start6h = Math.max(0, currentIdx - 5);
