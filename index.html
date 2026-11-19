@@ -273,14 +273,14 @@
           <span data-i18n="searchBtn">検索</span>
         </button>
 
-        <!-- LIVE インジケーター -->
-        <div class="text-right whitespace-nowrap pl-1.5 border-l border-slate-200 shrink-0">
+        <!-- LIVE インジケーター (タップで手動更新) -->
+        <button type="button" onclick="loadData(true)" title="タップして最新データを再取得" class="text-right whitespace-nowrap pl-1.5 border-l border-slate-200 shrink-0 cursor-pointer hover:opacity-80 active:scale-95 transition">
           <div class="flex items-center justify-end space-x-1">
             <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
             <span class="text-[11px] font-extrabold text-emerald-700">LIVE</span>
           </div>
           <span id="lastUpdated" class="text-[11px] text-slate-600 font-bold whitespace-nowrap block" data-i18n="loadingShort">読込中...</span>
-        </div>
+        </button>
       </div>
     </div>
   </header>
@@ -1524,11 +1524,17 @@
     // スプラッシュ画面の独立フェイルセーフ（最大3秒で確実に解除）
     setTimeout(hideSplashScreen, 3000);
 
-    async function loadData() {
+    async function loadData(forceRefresh = false) {
       const loadingBanner = document.getElementById('dataLoadingBanner');
       try {
-        // 1時間単位のキャッシュキー（2回目以降の起動を高速化）
-        const res = await fetch('data_japan.json?t=' + Math.floor(Date.now() / 3600000));
+        if (forceRefresh && loadingBanner) {
+          loadingBanner.classList.remove('hidden');
+        }
+        // キャッシュバスター：手動更新時はミリ秒、通常時は分単位で最新データを即時取得
+        const cacheBuster = forceRefresh ? Date.now() : Math.floor(Date.now() / 60000);
+        const res = await fetch(`data_japan.json?t=${cacheBuster}`, {
+          cache: forceRefresh ? 'no-store' : 'no-cache'
+        });
         if (!res.ok) throw new Error('data_japan.json load failed');
         appData = await res.json();
         // 共通化された sharedTime を各スポットへ高速復元（参照代入）
