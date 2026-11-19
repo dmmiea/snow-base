@@ -44,6 +44,10 @@
       loadErrorShort: '取得エラー',
       loadErrorBanner: '⚠️ データの読み込みに失敗しました',
       reloadBtn: '再読込',
+      pullToRefresh: '引いて最新データに更新',
+      releaseToRefresh: '指を離して更新',
+      refreshingData: 'データ更新中...',
+      refreshComplete: '更新完了！',
 
       // Category & Region Selector
       catSkiLabel: 'スキー場',
@@ -428,6 +432,10 @@
       loadErrorShort: 'Error',
       loadErrorBanner: '⚠️ Failed to load snow data',
       reloadBtn: 'Reload',
+      pullToRefresh: 'Pull to refresh',
+      releaseToRefresh: 'Release to refresh',
+      refreshingData: 'Refreshing data...',
+      refreshComplete: 'Updated!',
 
       // Category & Region Selector
       catSkiLabel: 'Ski Resorts',

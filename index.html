@@ -245,6 +245,14 @@
     </div>
   </div>
 
+  <!-- PULL TO REFRESH INDICATOR (サーフベース準拠 フローティングピル) -->
+  <div id="pullIndicator" class="fixed top-0 left-0 right-0 z-[60] flex items-center justify-center transition-all duration-300 pointer-events-none opacity-0 -translate-y-12 select-none" style="padding-top: max(env(safe-area-inset-top, 0px), 8px);">
+    <div class="bg-sky-700 text-white text-xs font-bold py-1.5 px-3.5 rounded-full shadow-lg flex items-center gap-2 border border-sky-500/50">
+      <i id="pullIcon" class="fa-solid fa-arrows-rotate text-sm transition-transform duration-200"></i>
+      <span id="pullText" data-i18n="pullToRefresh">引いて最新データに更新</span>
+    </div>
+  </div>
+
   <!-- ===============================
        1. TOP APP BAR
        =============================== -->
@@ -1380,7 +1388,7 @@
   <!-- ===============================
        UNIFIED I18N MODULE & APPLICATION LOGIC SCRIPT
        =============================== -->
-  <script src="i18n.js?v=20261120_v14"></script>
+  <script src="i18n.js?v=20261120_v15"></script>
   <script>
     // グローバル状態
     let appData = null;
@@ -5154,6 +5162,102 @@
     window.addEventListener('orientationchange', () => setTimeout(syncHeaderHeight, 150));
     document.addEventListener('DOMContentLoaded', syncHeaderHeight);
     window.addEventListener('load', syncHeaderHeight);
+
+    // ===============================
+    // プル更新（Pull to Refresh: サーフベース完全準拠）
+    // ===============================
+    function triggerPullRefresh() {
+      const pullIndicator = document.getElementById('pullIndicator');
+      const pullText = document.getElementById('pullText');
+      const pullIcon = document.getElementById('pullIcon');
+      if (!pullIndicator || !pullText || !pullIcon) return;
+
+      pullIndicator.classList.remove('opacity-0', '-translate-y-12');
+      pullIndicator.classList.add('opacity-100', 'translate-y-4');
+      pullText.textContent = t('refreshingData');
+      pullIcon.classList.add('fa-spin');
+
+      return loadData(true).finally(() => {
+        pullText.textContent = t('refreshComplete');
+        setTimeout(() => {
+          pullIndicator.classList.add('opacity-0', '-translate-y-12');
+          pullIndicator.classList.remove('opacity-100', 'translate-y-4');
+          pullIcon.classList.remove('fa-spin');
+          pullText.textContent = t('pullToRefresh');
+        }, 600);
+      });
+    }
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isPulling = false;
+
+    window.addEventListener('touchstart', (e) => {
+      // モーダル表示中または全国マップタブ表示中はプル更新を無効化
+      const isMapActive = (currentTab === 'tabMap');
+      const hasOpenModal = document.querySelector('#modalReport:not(.hidden), #modalSearch:not(.hidden), #notificationModal:not(.hidden), #guideHelpModal:not(.hidden), #shareModal:not(.hidden)');
+      if (isMapActive || hasOpenModal) {
+        isPulling = false;
+        return;
+      }
+      if (window.scrollY === 0) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isPulling = true;
+      } else {
+        isPulling = false;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isPulling || window.scrollY > 0) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - touchStartX);
+      const diffY = currentY - touchStartY;
+
+      // 横スワイプ（横スクロール）時はプル更新をキャンセル
+      if (diffX > Math.abs(diffY)) {
+        isPulling = false;
+        return;
+      }
+
+      const pullIndicator = document.getElementById('pullIndicator');
+      const pullIcon = document.getElementById('pullIcon');
+      const pullText = document.getElementById('pullText');
+      if (!pullIndicator || !pullIcon || !pullText) return;
+
+      if (diffY > 15) {
+        pullIndicator.classList.remove('opacity-0', '-translate-y-12');
+        pullIndicator.classList.add('opacity-100');
+        const pullProgress = Math.min(diffY, 70);
+        pullIndicator.style.transform = `translateY(${pullProgress}px)`;
+
+        if (diffY > 60) {
+          pullText.textContent = t('releaseToRefresh');
+          pullIcon.style.transform = 'rotate(180deg)';
+        } else {
+          pullText.textContent = t('pullToRefresh');
+          pullIcon.style.transform = 'rotate(0deg)';
+        }
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      if (!isPulling) return;
+      isPulling = false;
+      const pullIndicator = document.getElementById('pullIndicator');
+      if (!pullIndicator) return;
+      pullIndicator.style.transform = '';
+
+      const changedY = e.changedTouches[0].clientY;
+      if (changedY - touchStartY > 60) {
+        triggerPullRefresh();
+      } else {
+        pullIndicator.classList.add('opacity-0', '-translate-y-12');
+        pullIndicator.classList.remove('opacity-100');
+      }
+    }, { passive: true });
 
     // PWA Service Worker 登録 & 通知クリックメッセージ受信
     if ('serviceWorker' in navigator) {
