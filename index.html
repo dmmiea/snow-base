@@ -384,8 +384,8 @@
           <span id="heroWindLabel" class="text-[11px] text-slate-600 font-bold block whitespace-nowrap" data-i18n="topWindLabel">トップ風速</span>
           <span id="heroWind" class="font-teko text-base sm:text-lg font-bold text-slate-900 block mt-0.5 whitespace-nowrap">-- m/s</span>
         </div>
-        <div class="shrink-0 flex flex-col items-center">
-          <span id="heroAmedasTitle" class="text-[11px] text-slate-600 font-bold block truncate whitespace-nowrap" data-i18n="amedasLiveDefault">アメダス実測</span>
+        <div class="shrink-0 flex flex-col items-center min-w-0 w-full px-1">
+          <span id="heroAmedasTitle" class="text-[11px] text-slate-600 font-bold block max-w-full truncate whitespace-nowrap" data-i18n="amedasLiveDefault">アメダス実測</span>
           <span id="heroAmedasDepth" class="font-teko text-base sm:text-lg font-bold text-emerald-700 block mt-0.5 whitespace-nowrap">-- cm</span>
         </div>
       </div>
@@ -1620,9 +1620,14 @@
     let currentHelpTopicKey = null;
 
     function openHelpModal(topicKey) {
+      // BCモード時は hero トピックを BC専用解説 (heroBc) に自動切替
+      let effectiveTopic = topicKey;
+      if (topicKey === 'hero' && currentCategory === 'bc') {
+        effectiveTopic = 'heroBc';
+      }
       currentHelpTopicKey = topicKey;
       const langDict = (window.GUIDE_HELP_I18N && window.GUIDE_HELP_I18N[currentLang]) || (window.GUIDE_HELP_I18N && window.GUIDE_HELP_I18N.ja) || {};
-      const data = langDict[topicKey];
+      const data = langDict[effectiveTopic] || langDict[topicKey];
       if (!data) return;
       const modal = document.getElementById('guideHelpModal');
       if (!modal) return;
@@ -2060,8 +2065,9 @@
       }
 
       const amedasTitleEl = document.getElementById('heroAmedasTitle');
-      const isRoad = spot.current.liveAmedas && spot.current.liveAmedas.source === 'mlit_road';
-      const stationName = (spot.current.liveAmedas && spot.current.liveAmedas.stationName) || spot.roadStationName || spot.amedasName;
+      const live = spot.current.liveAmedas;
+      const isRoad = live && live.source === 'mlit_road';
+      const stationName = (live && live.stationName) || spot.amedasName;
       if (amedasTitleEl) {
         if (stationName) {
           amedasTitleEl.removeAttribute('data-i18n');

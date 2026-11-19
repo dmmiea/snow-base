@@ -414,22 +414,24 @@ async function run() {
     }
 
     // 積雪データは毎正時 (XX:00:00) に配信されるため、直近の正時JSONを取得
-    const jmaDate = new Date(timeText);
-    const jmaMinute = jmaDate.getMinutes();
-    const snowDate = new Date(jmaDate);
-    snowDate.setMinutes(0, 0, 0);
-    // 正時直後 (00〜05分等) はデータ生成遅延がある場合があるため、取得失敗時は1時間前へフォールバック
-    const formatTimeStr = (d) => {
-      const pad = (n) => String(n).padStart(2, '0');
-      return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}${pad(d.getHours())}0000`;
-    };
+    // GitHub Actions (UTC環境) 等でもズレないよう、timeText (JST: YYYY-MM-DDTHH:mm:ss+09:00) ベースでJST固定計算
+    const jmaEpoch = new Date(timeText).getTime();
+    const jstDate = new Date(jmaEpoch + 9 * 3600000);
+    const jstYear = jstDate.getUTCFullYear();
+    const jstMonth = String(jstDate.getUTCMonth() + 1).padStart(2, '0');
+    const jstDay = String(jstDate.getUTCDate()).padStart(2, '0');
+    const jstHour = String(jstDate.getUTCHours()).padStart(2, '0');
 
-    let snowTimeStr = formatTimeStr(snowDate);
+    let snowTimeStr = `${jstYear}${jstMonth}${jstDay}${jstHour}0000`;
     let snowRes = await fetch(`https://www.jma.go.jp/bosai/amedas/data/map/${snowTimeStr}.json`);
     if (!snowRes.ok) {
-      // 1時間前へフォールバック
-      const prevHourDate = new Date(snowDate.getTime() - 3600000);
-      snowTimeStr = formatTimeStr(prevHourDate);
+      // 1時間前へフォールバック (JST)
+      const prevJstDate = new Date(jmaEpoch + 9 * 3600000 - 3600000);
+      const prevYear = prevJstDate.getUTCFullYear();
+      const prevMonth = String(prevJstDate.getUTCMonth() + 1).padStart(2, '0');
+      const prevDay = String(prevJstDate.getUTCDate()).padStart(2, '0');
+      const prevHour = String(prevJstDate.getUTCHours()).padStart(2, '0');
+      snowTimeStr = `${prevYear}${prevMonth}${prevDay}${prevHour}0000`;
       snowRes = await fetch(`https://www.jma.go.jp/bosai/amedas/data/map/${snowTimeStr}.json`);
     }
 
@@ -469,7 +471,7 @@ async function run() {
                 if (Array.isArray(node)) {
                   node.forEach(walk);
                 } else if (node && typeof node === 'object') {
-                  if ('sensor_id' in node && node.sekisetsushin_flag === '1') {
+                  if ('sensor_id' in node && node.sekisetsushin_flag === '1' && node.yuki_komoku_no_hyoji_hihyoji === '1') {
                     const sid = String(node.sensor_id);
                     const rawSnow = parseFloat(node.snow_amount);
                     const rawSf = parseFloat(node.snowfall_amount);
@@ -643,8 +645,9 @@ async function run() {
         if (spot.roadStationId && roadSnowMap[spot.roadStationId]) {
           const r = roadSnowMap[spot.roadStationId];
           if (r.snow !== null && !isNaN(r.snow) && r.snow >= 0 && r.snow <= 600) {
-            // 異常値判定: 気温 >= 6℃ かつ JMA積雪0cm かつ Open-Meteo山麓積雪0cm で道路雪量計のみ10cm以上ある場合は除外
-            const isAbnormal = (r.temp !== null && r.temp >= 6.0) &&
+            // 異常値判定: 気温 >= 6℃ (温度計未設置時は近隣アメダス気温を参照) かつ JMA積雪0cm かつ Open-Meteo山麓積雪0cm で道路雪量計のみ10cm以上ある場合は除外
+            const refTemp = r.temp !== null ? r.temp : (jmaLive ? jmaLive.temp : null);
+            const isAbnormal = (refTemp !== null && refTemp >= 6.0) &&
                                (!jmaLive || jmaLive.snowDepth === 0 || jmaLive.snowDepth === null) &&
                                ((baseData.hourly.snow_depth[currentIdx] || 0) === 0) &&
                                (r.snow >= 10);

@@ -32,6 +32,8 @@ jobs:
         run: npm ci
 
       - name: Run Fetch Snow Data Script
+        env:
+          TZ: 'Asia/Tokyo'
         run: |
           node scripts/fetch_snow_data.js
 

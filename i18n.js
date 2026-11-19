@@ -883,7 +883,7 @@
     ja: {
       hero: {
         title: '実況 ＆ 雪質スコアの見方',
-        subtitle: '雪質スコア・アメダス実測・気温・風速',
+        subtitle: '雪質スコア・積雪実測・気温・風速',
         icon: 'fa-solid fa-snowflake',
         iconBg: 'bg-sky-50 text-sky-700 border-sky-200',
         html: `
@@ -891,7 +891,7 @@
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
               <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
                 <i class="fa-solid fa-star text-amber-500"></i>
-                <span>雪質スコア（0〜100点）</span>
+                <span>ゲレンデ雪質スコア（0〜100点）</span>
               </div>
               <ul class="text-xs text-slate-700 space-y-1.5 pl-3.5 list-disc leading-relaxed">
                 <li><strong class="text-sky-800">80〜100点（極上パウダー）</strong>：新雪十分＆氷点下！羽毛のような極上ドライスノーが期待できる最高のコンディション。</li>
@@ -904,10 +904,44 @@
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
               <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
                 <i class="fa-solid fa-tower-broadcast text-emerald-700"></i>
-                <span>アメダス積雪実測 ＆ 鮮度</span>
+                <span>公的積雪実測（道路雪量計 ＆ 気象庁アメダス）</span>
               </div>
               <p class="text-xs text-slate-700 leading-relaxed">
-                気象庁アメダスが毎時観測した生の積雪深・増減を表示しています。机上の計算だけでなく、近隣の山で今まさに雪が何cm積もっているかの真実が分かります。
+                現場至近の「国土交通省 道路雪量計（峠・山間部）」および「気象庁アメダス」が観測した生の積雪深・増減を表示しています。机上の計算だけでなく、近隣の山で今まさに雪が何cm積もっているかの真実が分かります。
+              </p>
+            </div>
+          </div>
+        `
+      },
+      heroBc: {
+        title: '山岳コンディション ＆ BCリスクの見方',
+        subtitle: '安全スコア・雪崩警戒アラート・積雪実測',
+        icon: 'fa-solid fa-mountain',
+        iconBg: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+        html: `
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200">
+              <div class="font-bold text-emerald-950 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-shield-halved text-emerald-700"></i>
+                <span>山岳安全コンディション（0〜100点）</span>
+              </div>
+              <p class="text-xs text-emerald-950/90 leading-relaxed mb-2">
+                バックカントリーでは単なるパウダースノーの深さではなく、<strong>「雪崩・暴風・弱層・埋没リスク」</strong>を加味した安全重視の判定を行います。
+              </p>
+              <ul class="text-xs text-slate-700 space-y-1.5 pl-3.5 list-disc leading-relaxed">
+                <li><strong class="text-rose-800">🔴 入山警戒（スコア上限45点）</strong>：稜線暴風（15m/s〜）・24h急増雪（40cm〜）・降雨や急昇温（+6℃〜）による全層/表層雪崩警戒時。安全のため入山見送りを強く推奨。</li>
+                <li><strong class="text-amber-800">🟡 山岳注意（スコア上限75点）</strong>：強風（10m/s〜）・気温0℃以上・再凍結クラスト上の新雪弱層・積雪100cm未満（薮/岩露出）など要注意コンディション。</li>
+                <li><strong class="text-emerald-800">🟢 比較的安定（75〜99点）</strong>：十分な積雪深があり、極端な昇温や暴風のない好天しまり雪〜良質ドライパウダー。</li>
+                <li><strong class="text-slate-800">積雪不足（滑走不可）</strong>：積雪30cm未満。岩やブッシュが露出し入山不可。</li>
+              </ul>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-tower-broadcast text-emerald-700"></i>
+                <span>公的積雪実測（道路雪量計 ＆ 気象庁アメダス）</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                山岳エリアや峠に設置された国土交通省の道路雪量計、および気象庁アメダスのリアルタイム実測深を表示。現場アプローチ時の積雪状況を把握できます。
               </p>
             </div>
           </div>
@@ -1052,7 +1086,7 @@
     en: {
       hero: {
         title: 'Live Data & Snow Score Guide',
-        subtitle: 'Snow Score, AMeDAS Live Data, Temp & Wind',
+        subtitle: 'Snow Score, Live Observation, Temp & Wind',
         icon: 'fa-solid fa-snowflake',
         iconBg: 'bg-sky-50 text-sky-700 border-sky-200',
         html: `
@@ -1060,7 +1094,7 @@
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
               <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
                 <i class="fa-solid fa-star text-amber-500"></i>
-                <span>Snow Quality Score (0–100 pts)</span>
+                <span>Resort Snow Quality Score (0–100 pts)</span>
               </div>
               <ul class="text-xs text-slate-700 space-y-1.5 pl-3.5 list-disc leading-relaxed">
                 <li><strong class="text-sky-800">80–100 pts (Epic / Deep Powder)</strong>: Plenty of fresh snow & sub-zero temps! Feather-light dry Japanese powder.</li>
@@ -1073,10 +1107,44 @@
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
               <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
                 <i class="fa-solid fa-tower-broadcast text-emerald-700"></i>
-                <span>JMA AMeDAS Live Snow Depth</span>
+                <span>Public Live Snow Depth (Road Gauge & AMeDAS)</span>
               </div>
               <p class="text-xs text-slate-700 leading-relaxed">
-                Displays hourly real-world snow depth observed by JMA AMeDAS weather stations near the mountain.
+                Displays real-time hourly snow depth observed by MLIT mountain road snow gauges and JMA AMeDAS weather stations.
+              </p>
+            </div>
+          </div>
+        `
+      },
+      heroBc: {
+        title: 'Backcountry Safety & Risk Guide',
+        subtitle: 'Safety Score, Avalanche Warnings, Live Observation',
+        icon: 'fa-solid fa-mountain',
+        iconBg: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+        html: `
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200">
+              <div class="font-bold text-emerald-950 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-shield-halved text-emerald-700"></i>
+                <span>Mountain Safety Condition (0–100 pts)</span>
+              </div>
+              <p class="text-xs text-emerald-950/90 leading-relaxed mb-2">
+                In backcountry zones, our engine prioritizes <strong>avalanche risk, gale-force winds, weak layers, and terrain traps</strong> over simple powder depth.
+              </p>
+              <ul class="text-xs text-slate-700 space-y-1.5 pl-3.5 list-disc leading-relaxed">
+                <li><strong class="text-rose-800">🔴 High Risk / Warning (Capped at 45 pts)</strong>: Ridge gale (15m/s+), rapid snowfall dump (40cm/24h+), rainfall or rapid warmup (+6℃/24h). Postponing trips is strongly advised.</li>
+                <li><strong class="text-amber-800">🟡 Moderate Risk / Caution (Capped at 75 pts)</strong>: Strong wind (10m/s+), temp above 0℃, buried crust weak layer, or base snow depth under 100cm (exposed rocks/crevasses).</li>
+                <li><strong class="text-emerald-800">🟢 Relatively Stable (75–99 pts)</strong>: Ample base snowpack, no severe warming or gale, good packed snow to dry powder.</li>
+                <li><strong class="text-slate-800">No Snow / Unskiable</strong>: Snow depth under 30cm. Exposed rocks and bush.</li>
+              </ul>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="font-bold text-slate-900 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-tower-broadcast text-emerald-700"></i>
+                <span>Public Live Snow Depth (Road Gauge & AMeDAS)</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                Displays live snow depth from MLIT highway/pass gauges and JMA AMeDAS stations around trailheads and mountain passes.
               </p>
             </div>
           </div>
