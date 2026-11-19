@@ -270,6 +270,7 @@
       ridgeWindShort: '稜線',
       liveAmedasShort: '実測',
       tlZeroDegreeNotice: '0℃境界',
+      themeToggleTitle: 'テーマ切替 (ライト/ダーク)',
 
       // Feed Tab
       feedHeaderTitle: '全国最新雪レポフィード',
@@ -653,6 +654,7 @@
       ridgeWindShort: 'Ridge',
       liveAmedasShort: 'Live',
       tlZeroDegreeNotice: '0℃ Line',
+      themeToggleTitle: 'Toggle Theme (Light/Dark)',
 
       // Feed Tab
       feedHeaderTitle: 'Japan Snow Reports Feed',

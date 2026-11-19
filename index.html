@@ -52,6 +52,19 @@
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <link rel="icon" type="image/png" href="icons/icon-192.png">
 
+  <!-- 早期テーマ判定（白飛び防止） -->
+  <script>
+    (function() {
+      try {
+        if (localStorage.getItem('powderbase_theme') === 'dark') {
+          document.documentElement.classList.add('theme-dark');
+          const metaTheme = document.querySelector('meta[name="theme-color"]');
+          if (metaTheme) metaTheme.setAttribute('content', '#000000');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Google Fonts: Teko & Noto Sans JP -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,6 +139,91 @@
     }
     .animate-splash-logo {
       animation: splashFadeIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ==========================================
+       🌙 漆黒ダークモード (OLED #000000 × チャコール #14171d)
+       ========================================== */
+    html.theme-dark body {
+      background-color: #000000 !important;
+      color: #f8fafc !important;
+    }
+    html.theme-dark #appHeader {
+      background-color: #0b0e14 !important;
+      border-color: #1e2430 !important;
+    }
+    html.theme-dark #splashScreen {
+      background-color: #000000 !important;
+    }
+    html.theme-dark .snow-card {
+      background: #14171d !important;
+      border-color: #2a313e !important;
+      box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.7), 0 2px 6px 0 rgba(0, 0, 0, 0.5) !important;
+    }
+    html.theme-dark .bg-slate-100 {
+      background-color: #0b0e14 !important;
+    }
+    html.theme-dark .bg-slate-50,
+    html.theme-dark .bg-slate-50\/90,
+    html.theme-dark .bg-slate-50\/70 {
+      background-color: #1a1f29 !important;
+    }
+    html.theme-dark .bg-white {
+      background-color: #14171d !important;
+    }
+    html.theme-dark .bg-slate-200,
+    html.theme-dark .bg-slate-200\/90 {
+      background-color: #242b38 !important;
+    }
+    html.theme-dark .border-slate-200,
+    html.theme-dark .border-slate-300,
+    html.theme-dark .border-slate-200\/80,
+    html.theme-dark .border-slate-200\/70 {
+      border-color: #2a313e !important;
+    }
+    html.theme-dark .text-slate-900 {
+      color: #f8fafc !important;
+    }
+    html.theme-dark .text-slate-800 {
+      color: #f1f5f9 !important;
+    }
+    html.theme-dark .text-slate-700 {
+      color: #cbd5e1 !important;
+    }
+    html.theme-dark .text-slate-600 {
+      color: #94a3b8 !important;
+    }
+    html.theme-dark .text-slate-500 {
+      color: #64748b !important;
+    }
+    html.theme-dark select {
+      background-color: #14171d !important;
+      color: #f8fafc !important;
+      border-color: #2a313e !important;
+    }
+    html.theme-dark #bottomNav {
+      background-color: #0b0e14 !important;
+      border-color: #1e2430 !important;
+    }
+    html.theme-dark #bottomNav a:not(.text-sky-700):not(.active) {
+      color: #94a3b8 !important;
+    }
+    html.theme-dark .sticky.z-40 {
+      background-color: #0b0e14 !important;
+      border-color: #1e2430 !important;
+    }
+    html.theme-dark [data-date] {
+      background-color: rgba(11, 14, 20, 0.95) !important;
+      border-color: #2a313e !important;
+      color: #f8fafc !important;
+    }
+    html.theme-dark #homeReportCard {
+      background: linear-gradient(135deg, #1c1917 0%, #14171d 50%, #0c1929 100%) !important;
+      border-color: #78350f !important;
+    }
+    html.theme-dark .hover\:bg-slate-50:hover,
+    html.theme-dark .hover\:bg-slate-100:hover {
+      background-color: #1e2533 !important;
     }
   </style>
 </head>
@@ -838,11 +936,16 @@
     <span>REPORT</span>
   </button>
 
-  <!-- 右下フロート：言語切り替えボタン (JP / EN) -->
-  <button type="button" id="floatingLangBtn" onclick="toggleLanguage()" class="fixed right-3.5 z-40 h-9 px-3 rounded-full bg-slate-900/95 hover:bg-slate-800 text-white font-black text-xs shadow-lg shadow-slate-900/25 border border-slate-600/80 flex items-center gap-1.5 transition-all duration-200 active:scale-95 backdrop-blur-sm" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 56px);" aria-label="Switch Language">
-    <i class="fa-solid fa-globe text-sky-400 text-xs"></i>
-    <span id="floatingLangLabel">EN</span>
-  </button>
+  <!-- 右下フロート操作バー：テーマ切替 (Light/Dark) ＆ 言語切り替え (JP / EN) -->
+  <div class="fixed right-3.5 z-40 flex items-center gap-1.5" style="bottom: calc(max(env(safe-area-inset-bottom, 0px), 20px) + 56px);">
+    <button type="button" id="floatingThemeBtn" onclick="toggleTheme()" class="h-9 w-9 rounded-full bg-slate-900/95 hover:bg-slate-800 text-white font-black text-sm shadow-lg shadow-slate-900/25 border border-slate-600/80 flex items-center justify-center transition-all duration-200 active:scale-95 backdrop-blur-sm" data-i18n-title="themeToggleTitle" title="テーマ切替 (ライト/ダーク)" aria-label="Toggle Theme">
+      <i id="floatingThemeIcon" class="fa-solid fa-moon text-amber-400"></i>
+    </button>
+    <button type="button" id="floatingLangBtn" onclick="toggleLanguage()" class="h-9 px-3 rounded-full bg-slate-900/95 hover:bg-slate-800 text-white font-black text-xs shadow-lg shadow-slate-900/25 border border-slate-600/80 flex items-center gap-1.5 transition-all duration-200 active:scale-95 backdrop-blur-sm" aria-label="Switch Language">
+      <i class="fa-solid fa-globe text-sky-400 text-xs"></i>
+      <span id="floatingLangLabel">EN</span>
+    </button>
+  </div>
 
   <!-- ===============================
        BOTTOM NAVIGATION BAR (サーフベース準拠・5等分グリッド)
@@ -2414,6 +2517,7 @@
       const dayNamesJa = ['日', '月', '火', '水', '木', '金', '土'];
       const dayNamesEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const isJa = currentLang !== 'en';
+      const isDark = document.documentElement.classList.contains('theme-dark');
 
       for (let i = startIdx; i < endIdx; i++) {
         const tStr = hourly.time[i]; // 2026-11-10T06:00
@@ -2452,8 +2556,8 @@
         }
         xAxisDisplayLabels.push(axisLabel);
 
-        // NOWは強調ブルー、他はスレートグレー
-        tickColors.push(offset === 0 ? '#0369a1' : '#64748b');
+        // NOWは強調ブルー/シアン、他はスレートグレー
+        tickColors.push(offset === 0 ? (isDark ? '#38bdf8' : '#0369a1') : (isDark ? '#94a3b8' : '#64748b'));
 
         depthData.push(hourly.snowDepth[i]);
         snowData.push(hourly.snowfall[i] || 0);
@@ -2478,7 +2582,7 @@
               const mx = meta.data[idx].x;
               c.save();
               c.beginPath();
-              c.strokeStyle = 'rgba(100, 116, 139, 0.45)';
+              c.strokeStyle = isDark ? 'rgba(148, 163, 184, 0.25)' : 'rgba(100, 116, 139, 0.45)';
               c.lineWidth = 1.2;
               c.moveTo(mx, top);
               c.lineTo(mx, bottom);
@@ -2512,8 +2616,8 @@
               type: 'line',
               label: t('legendSnowDepth'),
               data: depthData,
-              borderColor: '#0369a1',
-              backgroundColor: 'rgba(3, 105, 161, 0.12)',
+              borderColor: isDark ? '#38bdf8' : '#0369a1',
+              backgroundColor: isDark ? 'rgba(56, 189, 248, 0.15)' : 'rgba(3, 105, 161, 0.12)',
               borderWidth: 2.2,
               fill: true,
               tension: 0.3,
@@ -2539,7 +2643,7 @@
               label: t('legendRainfall'),
               data: rainData,
               borderColor: '#0284c7',
-              backgroundColor: 'rgba(2, 132, 199, 0.5)',
+              backgroundColor: isDark ? 'rgba(2, 132, 199, 0.65)' : 'rgba(2, 132, 199, 0.5)',
               borderWidth: 1,
               borderRadius: 2,
               yAxisID: 'ySnow'
@@ -2554,10 +2658,10 @@
           plugins: {
             legend: { display: false },
             tooltip: {
-              backgroundColor: 'rgba(255, 255, 255, 0.97)',
-              titleColor: '#0369a1',
-              bodyColor: '#0f172a',
-              borderColor: '#cbd5e1',
+              backgroundColor: isDark ? 'rgba(20, 23, 29, 0.96)' : 'rgba(255, 255, 255, 0.97)',
+              titleColor: isDark ? '#38bdf8' : '#0369a1',
+              bodyColor: isDark ? '#f8fafc' : '#0f172a',
+              borderColor: isDark ? '#2a313e' : '#cbd5e1',
               borderWidth: 1,
               callbacks: {
                 afterBody(items) {
@@ -2576,7 +2680,7 @@
           scales: {
             x: {
               grid: {
-                color: (ctx) => (xAxisDisplayLabels[ctx.index] ? 'rgba(148, 163, 184, 0.2)' : 'transparent')
+                color: (ctx) => (xAxisDisplayLabels[ctx.index] ? (isDark ? 'rgba(148, 163, 184, 0.12)' : 'rgba(148, 163, 184, 0.2)') : 'transparent')
               },
               ticks: {
                 autoSkip: false,
@@ -2585,7 +2689,7 @@
                 callback: (val, idx) => xAxisDisplayLabels[idx] || null,
                 color: (ctx) => {
                   const idx = ctx.index;
-                  return (tickColors && tickColors[idx]) ? tickColors[idx] : '#64748b';
+                  return (tickColors && tickColors[idx]) ? tickColors[idx] : (isDark ? '#94a3b8' : '#64748b');
                 },
                 font: { size: 9, weight: 'bold' }
               }
@@ -2594,15 +2698,15 @@
               position: 'left',
               beginAtZero: true,
               suggestedMax: 10,
-              grid: { color: 'rgba(148, 163, 184, 0.25)' },
-              ticks: { color: '#0369a1', font: { size: 9, weight: 'bold' }, precision: 0 }
+              grid: { color: isDark ? 'rgba(148, 163, 184, 0.15)' : 'rgba(148, 163, 184, 0.25)' },
+              ticks: { color: isDark ? '#38bdf8' : '#0369a1', font: { size: 9, weight: 'bold' }, precision: 0 }
             },
             ySnow: {
               position: 'right',
               beginAtZero: true,
               suggestedMax: 5,
               grid: { drawOnChartArea: false },
-              ticks: { color: '#ea580c', font: { size: 9, weight: 'bold' } }
+              ticks: { color: isDark ? '#fb923c' : '#ea580c', font: { size: 9, weight: 'bold' } }
             }
           }
         }
@@ -5165,6 +5269,46 @@
 
     window.refreshAllI18nViews = applyLanguage;
 
+    // ==========================================
+    // ☀️ ライト / 🌙 漆黒ダーク モード管理
+    // ==========================================
+    function updateThemeUI() {
+      const isDark = document.documentElement.classList.contains('theme-dark');
+      const icon = document.getElementById('floatingThemeIcon');
+      if (icon) {
+        icon.className = isDark ? 'fa-solid fa-sun text-amber-400' : 'fa-solid fa-moon text-amber-400';
+      }
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) {
+        metaTheme.setAttribute('content', isDark ? '#000000' : '#f8fafc');
+      }
+    }
+
+    function toggleTheme() {
+      const isCurrentlyDark = document.documentElement.classList.contains('theme-dark');
+      const newTheme = isCurrentlyDark ? 'light' : 'dark';
+
+      if (newTheme === 'dark') {
+        document.documentElement.classList.add('theme-dark');
+      } else {
+        document.documentElement.classList.remove('theme-dark');
+      }
+      localStorage.setItem('powderbase_theme', newTheme);
+      updateThemeUI();
+
+      // トレンドグラフ即時再描画（色調同期）
+      const spot = (appData && appData.spots) ? appData.spots.find(s => s.id === currentSpotId) : null;
+      if (spot && typeof renderTrendChart === 'function') {
+        renderTrendChart(spot);
+      }
+
+      // マップiframeへのリアルタイム通知
+      const mapIframe = document.querySelector('#tabMap iframe');
+      if (mapIframe && mapIframe.contentWindow) {
+        mapIframe.contentWindow.postMessage({ type: 'POWDERBASE_THEME_CHANGE', theme: newTheme }, '*');
+      }
+    }
+
     function toggleLanguage() {
       window.currentLang = (window.currentLang === 'ja') ? 'en' : 'ja';
       localStorage.setItem('powderbase_lang', window.currentLang);
@@ -5172,6 +5316,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      updateThemeUI();
       if (typeof window.applyI18n === 'function') {
         window.applyI18n(document);
       }
