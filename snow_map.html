@@ -98,9 +98,27 @@
     html.theme-dark .border-slate-200 {
       border-color: #2a313e !important;
     }
+    html.theme-dark .text-slate-800,
     html.theme-dark .text-slate-700,
     html.theme-dark .text-slate-900 {
       color: #f1f5f9 !important;
+    }
+    html.theme-dark .text-slate-600,
+    html.theme-dark .text-slate-500 {
+      color: #cbd5e1 !important;
+    }
+    html.theme-dark .text-sky-700:not(button),
+    html.theme-dark .text-sky-800:not(button),
+    html.theme-dark .text-sky-950:not(button) {
+      color: #38bdf8 !important;
+    }
+    html.theme-dark .text-amber-800:not(button),
+    html.theme-dark .text-amber-700:not(button) {
+      color: #fbbf24 !important;
+    }
+    html.theme-dark .text-emerald-700:not(button),
+    html.theme-dark .text-emerald-800:not(button) {
+      color: #34d399 !important;
     }
     html.theme-dark #mapLivePeriodBar {
       background-color: #0b1522 !important;
@@ -263,7 +281,7 @@
     </div>
   </div>
 
-  <script src="i18n.js?v=20261120_v15"></script>
+  <script src="i18n.js?v=20261120_v16"></script>
   <script>
     let map = null;
     let allSpots = [];
@@ -983,7 +1001,7 @@
                 <span class="text-slate-700 font-semibold whitespace-nowrap">${dict.popElev} ${elev}m</span>
                 <div class="flex items-center gap-1.5 whitespace-nowrap">
                   <span class="text-slate-600 font-semibold">${isBc ? dict.popBcQuality : dict.popSnowQuality}</span>
-                  <span class="font-black ${score !== null ? (isBc ? 'text-emerald-700' : 'text-sky-700') : 'text-slate-500'}">${score !== null ? score + dict.popScorePt : '―'}</span>
+                  <span class="font-black ${score !== null ? (isBc ? 'text-emerald-700' : 'text-sky-700') : 'text-slate-600'}">${score !== null ? score + dict.popScorePt : '―'}</span>
                   <span class="text-[10px] text-slate-800 font-bold px-1.5 py-0.5 bg-white rounded border border-slate-300 whitespace-nowrap">${tag}</span>
                 </div>
               </div>
@@ -1009,7 +1027,7 @@
                 <span class="text-slate-700 font-semibold whitespace-nowrap">${dict.popElev} ${elev}m</span>
                 <div class="flex items-center gap-1.5 whitespace-nowrap">
                   <span class="text-slate-600 font-semibold">${isBc ? dict.popBcQuality : dict.popSnowQuality}</span>
-                  <span class="font-black ${score !== null ? (isBc ? 'text-emerald-700' : 'text-sky-700') : 'text-slate-500'}">${score !== null ? score + dict.popScorePt : '―'}</span>
+                  <span class="font-black ${score !== null ? (isBc ? 'text-emerald-700' : 'text-sky-700') : 'text-slate-600'}">${score !== null ? score + dict.popScorePt : '―'}</span>
                   <span class="text-[10px] text-slate-800 font-bold px-1.5 py-0.5 bg-white rounded border border-slate-300 whitespace-nowrap">${tag}</span>
                 </div>
               </div>

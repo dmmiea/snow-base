@@ -188,13 +188,30 @@
       color: #f1f5f9 !important;
     }
     html.theme-dark .text-slate-700 {
+      color: #e2e8f0 !important;
+    }
+    html.theme-dark .text-slate-600,
+    html.theme-dark .text-slate-500,
+    html.theme-dark .text-slate-400 {
       color: #cbd5e1 !important;
     }
-    html.theme-dark .text-slate-600 {
-      color: #94a3b8 !important;
+    html.theme-dark .text-sky-700:not(button):not(.tab-active),
+    html.theme-dark .text-sky-800:not(button):not(.tab-active),
+    html.theme-dark .text-sky-900:not(button):not(.tab-active),
+    html.theme-dark .text-sky-950:not(button):not(.tab-active) {
+      color: #38bdf8 !important;
     }
-    html.theme-dark .text-slate-500 {
-      color: #64748b !important;
+    html.theme-dark .text-rose-700:not(button),
+    html.theme-dark .text-rose-800:not(button) {
+      color: #fb7185 !important;
+    }
+    html.theme-dark .text-amber-700:not(button),
+    html.theme-dark .text-amber-800:not(button) {
+      color: #fbbf24 !important;
+    }
+    html.theme-dark .text-emerald-700:not(button),
+    html.theme-dark .text-emerald-800:not(button) {
+      color: #34d399 !important;
     }
     html.theme-dark select {
       background-color: #14171d !important;
@@ -206,7 +223,7 @@
       border-color: #1e2430 !important;
     }
     html.theme-dark #bottomNav a:not(.text-sky-700):not(.active) {
-      color: #94a3b8 !important;
+      color: #cbd5e1 !important;
     }
     html.theme-dark .sticky.z-40 {
       background-color: #0b0e14 !important;
@@ -364,15 +381,15 @@
             白馬八方尾根スキー場
           </h2>
           <!-- お気に入り★ボタン -->
-          <button id="btnFav" onclick="toggleFavorite()" class="text-slate-400 hover:text-amber-500 text-xl sm:text-2xl leading-none active:scale-95 transition ml-0.5 inline-flex items-center" data-i18n-title="favBtnTitle" title="MYスポット登録">
+          <button id="btnFav" onclick="toggleFavorite()" class="text-slate-500 hover:text-amber-500 text-xl sm:text-2xl leading-none active:scale-95 transition ml-0.5 inline-flex items-center" data-i18n-title="favBtnTitle" title="MYスポット登録">
             <i id="favIcon" class="fa-regular fa-star"></i>
           </button>
           <!-- シェア（共有）ボタン -->
-          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="text-slate-500 hover:text-sky-700 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" data-i18n-title="shareBtnTitle" title="このスポットをシェア">
+          <button id="btnSpotShare" onclick="handleSpotShareClick()" class="text-slate-600 hover:text-sky-700 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" data-i18n-title="shareBtnTitle" title="このスポットをシェア">
             <i class="fa-solid fa-arrow-up-from-bracket"></i>
           </button>
           <!-- Googleマップ位置確認ボタン -->
-          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="text-slate-500 hover:text-rose-600 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" data-i18n-title="mapBtnTitle" title="Googleマップで場所・アクセスを確認">
+          <button id="btnSpotMap" onclick="handleSpotMapClick()" class="text-slate-600 hover:text-rose-600 text-xl sm:text-2xl leading-none active:scale-95 transition inline-flex items-center" data-i18n-title="mapBtnTitle" title="Googleマップで場所・アクセスを確認">
             <i class="fa-solid fa-location-dot"></i>
           </button>
         </div>
@@ -669,9 +686,9 @@
           <span data-i18n="weatherLegendTitle" class="truncate">天気マーク・風の見方（凡例）</span>
         </div>
         <div class="flex items-center gap-1.5 shrink-0">
-          <span class="text-[10.5px] font-bold text-slate-500 hidden sm:inline" data-i18n="weatherLegendSub">1時間降雪・風速連動</span>
+          <span class="text-[10.5px] font-bold text-slate-600 hidden sm:inline" data-i18n="weatherLegendSub">1時間降雪・風速連動</span>
           <span class="text-[10.5px] text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200 font-bold group-open:hidden" data-i18n="legendOpenHint">開く</span>
-          <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200 group-open:rotate-180"></i>
+          <i class="fa-solid fa-chevron-down text-slate-600 text-xs transition-transform duration-200 group-open:rotate-180"></i>
         </div>
       </summary>
 
@@ -747,7 +764,7 @@
           <i class="fa-solid fa-book-open"></i>
         </div>
         <div class="min-w-0">
-          <div class="text-[11px] text-slate-500 font-bold" data-i18n="firstTimeLabel">初めての方へ</div>
+          <div class="text-[11px] text-slate-600 font-bold" data-i18n="firstTimeLabel">初めての方へ</div>
           <div class="text-xs font-black text-slate-800 truncate" data-i18n="userGuideLabel">使い方ガイド</div>
         </div>
       </button>
@@ -757,7 +774,7 @@
           <i class="fa-solid fa-share-nodes"></i>
         </div>
         <div class="min-w-0">
-          <div class="text-[11px] text-slate-500 font-bold" data-i18n="shareFriendsLabel">雪山仲間に</div>
+          <div class="text-[11px] text-slate-600 font-bold" data-i18n="shareFriendsLabel">雪山仲間に</div>
           <div class="text-xs font-black text-slate-800 truncate" data-i18n="shareAppLabel">教える・シェア</div>
         </div>
       </button>
@@ -773,12 +790,12 @@
           </div>
           <div class="flex items-center gap-1.5 shrink-0">
             <span class="text-[11px] text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200 whitespace-nowrap group-open:hidden" data-i18n="viewListBadge">一覧を見る</span>
-            <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200 group-open:rotate-180"></i>
+            <i class="fa-solid fa-chevron-down text-slate-600 text-xs transition-transform duration-200 group-open:rotate-180"></i>
           </div>
         </summary>
         <div id="homeAllSpotsListContainer" class="mt-3 pt-3 border-t border-slate-100 space-y-4 text-xs">
           <!-- JSで地方・エリア・スポットを動的挿入 -->
-          <div class="text-center py-4 text-slate-400 text-xs font-bold" data-i18n="loadingText">読み込み中...</div>
+          <div class="text-center py-4 text-slate-600 text-xs font-bold" data-i18n="loadingText">読み込み中...</div>
         </div>
       </details>
     </section>
@@ -1177,7 +1194,7 @@
             <p id="guideHelpSubtitle" class="text-[11px] text-slate-500 font-medium" data-i18n="guideDefaultSub">見方とチェックポイント</p>
           </div>
         </div>
-        <button type="button" onclick="closeHelpModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition active:scale-95">
+        <button type="button" onclick="closeHelpModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 hover:text-slate-800 flex items-center justify-center transition active:scale-95">
           <i class="fa-solid fa-xmark text-xs"></i>
         </button>
       </div>
@@ -1208,17 +1225,17 @@
           </div>
           <div>
             <h3 class="font-bold text-sm text-slate-900" data-i18n="shareModalTitle">雪山情報をシェア</h3>
-            <p class="text-[11px] text-slate-500 font-medium" data-i18n="shareModalSub">仲間にコンディションを教える</p>
+            <p class="text-[11px] text-slate-600 font-bold" data-i18n="shareModalSub">仲間にコンディションを教える</p>
           </div>
         </div>
-        <button onclick="closeShareModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition active:scale-95">
+        <button onclick="closeShareModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 hover:text-slate-800 flex items-center justify-center transition active:scale-95">
           <i class="fa-solid fa-xmark text-xs"></i>
         </button>
       </div>
 
       <!-- シェア対象スポットプレビュー -->
       <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
-        <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Share Spot</div>
+        <div class="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Share Spot</div>
         <div id="shareModalSpotTitle" class="font-black text-slate-900 text-sm">【白馬八方尾根】積雪・パウダー雪質速報</div>
         <div id="shareModalSpotSubtitle" class="text-xs text-slate-600 font-medium">雪質スコア・トップ積雪深・夜間新雪予報</div>
       </div>
@@ -1388,7 +1405,7 @@
   <!-- ===============================
        UNIFIED I18N MODULE & APPLICATION LOGIC SCRIPT
        =============================== -->
-  <script src="i18n.js?v=20261120_v15"></script>
+  <script src="i18n.js?v=20261120_v16"></script>
   <script>
     // グローバル状態
     let appData = null;
@@ -2368,7 +2385,7 @@
               freshEl.className = "text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700";
             } else {
               freshEl.textContent = '―';
-              freshEl.className = "text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-slate-100 text-slate-400";
+              freshEl.className = "text-[10.5px] font-bold px-1.5 py-0.2 rounded bg-slate-100 text-slate-600";
             }
           }
 
@@ -2767,7 +2784,7 @@
       } else if (hasRain) {
         return `<span class="font-bold text-xs text-sky-700">${rainMm}mm</span>`;
       } else {
-        return `<span class="font-bold text-xs text-slate-400">―</span>`;
+        return `<span class="font-bold text-xs text-slate-600">―</span>`;
       }
     }
 
@@ -2837,7 +2854,7 @@
           : '';
         const windSpeedHtml = (windSpeed !== null && windSpeed !== undefined)
           ? `<span class="${windStyle.text}">${Math.round(windSpeed)}m</span>`
-          : '<span class="text-slate-400">—</span>';
+          : '<span class="text-slate-600">—</span>';
 
         // トップ雪/雨データ
         const topSnow = (topH && topH.snowfall && topH.snowfall[i] !== undefined) ? Math.round(topH.snowfall[i] * 10) / 10 : 0;
@@ -2886,7 +2903,7 @@
           <!-- ベース 雪/雨 (降雪・降雨 / 積雪) -->
           <div class="flex flex-col items-center justify-center leading-tight bg-slate-50 rounded py-1 min-h-[36px]">
             ${formatPrecipHtml(baseSnow, baseRain)}
-            <span class="text-[11px] font-semibold ${baseDepth !== null ? 'text-slate-700' : 'text-slate-400'}">
+            <span class="text-[11px] font-semibold ${baseDepth !== null ? 'text-slate-700' : 'text-slate-600'}">
               ${baseDepth !== null ? baseDepth + 'cm' : '--'}
             </span>
           </div>
@@ -2894,7 +2911,7 @@
           <!-- トップ 雪/雨 (降雪・降雨 / 積雪) -->
           <div class="flex flex-col items-center justify-center leading-tight bg-sky-50/70 rounded py-1 min-h-[36px]">
             ${formatPrecipHtml(topSnow, topRain)}
-            <span class="text-[11px] font-bold ${topDepth !== null ? 'text-sky-800' : 'text-slate-400'}">
+            <span class="text-[11px] font-bold ${topDepth !== null ? 'text-sky-800' : 'text-slate-600'}">
               ${topDepth !== null ? topDepth + 'cm' : '--'}
             </span>
           </div>
@@ -3073,13 +3090,13 @@
           <span class="text-2xl my-1 pointer-events-none">${dayWeather.icon}</span>
           <span class="text-[11px] font-bold text-slate-800 pointer-events-none truncate max-w-full">${dayWeather.label}</span>
           <div class="font-teko text-sm font-bold mt-0.5 pointer-events-none">
-            <span class="text-rose-700">${day.maxTemp}℃</span> <span class="text-slate-400">/</span> <span class="text-sky-800">${day.minTemp}℃</span>
+            <span class="text-rose-700">${day.maxTemp}℃</span> <span class="text-slate-600">/</span> <span class="text-sky-800">${day.minTemp}℃</span>
           </div>
           <div class="w-full mt-1.5 space-y-1 pointer-events-none">
             <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${day.totalSnowfall >= 10 ? 'bg-sky-700 text-white' : 'bg-slate-200 text-slate-800'}">
               ❄️ +${day.totalSnowfall}cm
             </div>
-            <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${nightVal >= 10 ? 'bg-orange-600 text-white' : (nightVal > 0 ? 'bg-orange-50 text-orange-800 border border-orange-300' : 'bg-white text-slate-500 border border-slate-300')}">
+            <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${nightVal >= 10 ? 'bg-orange-600 text-white' : (nightVal > 0 ? 'bg-orange-50 text-orange-800 border border-orange-300' : 'bg-white text-slate-700 border border-slate-300')}">
               ${nightLabel} +${nightVal}cm
             </div>
           </div>
@@ -4169,10 +4186,10 @@
               </div>
               <div class="text-right shrink-0">
                 <div class="flex items-baseline justify-end gap-0.5">
-                  <span class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-700' : 'text-slate-400'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}</span>
+                  <span class="font-teko text-2xl font-black ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-700' : 'text-slate-600'} leading-none">${s.current.score !== null && s.current.score !== undefined ? s.current.score : '―'}</span>
                   ${s.current.score !== null && s.current.score !== undefined ? `<span class="text-xs font-bold text-sky-700">${t('scorePtUnit')}</span>` : ''}
                 </div>
-                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-50 text-sky-800 border border-sky-300' : 'bg-slate-100 text-slate-600 border border-slate-300'}">${tTag(s.current.rank || '積雪不足')}</span>
+                <span class="text-[11px] font-bold px-1.5 py-0.2 rounded ${s.current.score !== null && s.current.score !== undefined ? 'bg-sky-50 text-sky-800 border border-sky-300' : 'bg-slate-100 text-slate-700 border border-slate-300'}">${tTag(s.current.rank || '積雪不足')}</span>
               </div>
             </div>
 
@@ -4486,7 +4503,7 @@
       if (isFav) {
         icon.className = "fa-solid fa-star text-amber-500 text-sm";
       } else {
-        icon.className = "fa-regular fa-star text-slate-400 text-sm";
+        icon.className = "fa-regular fa-star text-slate-500 text-sm";
       }
     }
 
@@ -4706,10 +4723,10 @@
             <div class="flex items-center gap-2 shrink-0">
               <div class="text-right flex flex-col items-end">
                 <div class="flex items-baseline justify-end gap-0.5">
-                  <span class="font-teko text-2xl font-black ${score !== null ? 'text-sky-700' : 'text-slate-400'} leading-none">${score !== null ? score : '―'}</span>
+                  <span class="font-teko text-2xl font-black ${score !== null ? 'text-sky-700' : 'text-slate-600'} leading-none">${score !== null ? score : '―'}</span>
                   ${score !== null ? `<span class="text-xs font-bold text-sky-700">${t('scorePtUnit')}</span>` : ''}
                 </div>
-                <span class="text-[10px] font-bold px-1.5 py-0.2 rounded mt-0.5 ${score !== null ? 'bg-sky-50 text-sky-800 border border-sky-300' : 'bg-slate-100 text-slate-600 border border-slate-300'}">${scoreRank}</span>
+                <span class="text-[10px] font-bold px-1.5 py-0.2 rounded mt-0.5 ${score !== null ? 'bg-sky-50 text-sky-800 border border-sky-300' : 'bg-slate-100 text-slate-700 border border-slate-300'}">${scoreRank}</span>
               </div>
               <button type="button" onclick="toggleFavFromMyPoints(event, '${s.id}')" class="w-7 h-7 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-600 border border-amber-300 flex items-center justify-center transition active:scale-90" title="${t('unfavBtnTitle')}">
                 <i class="fa-solid fa-star text-xs"></i>
@@ -4740,7 +4757,7 @@
             <div class="pt-0.5">
               <div class="text-[10px] font-bold text-slate-600 mb-1 flex items-center justify-between">
                 <span>${t('forecast3DayTitle')}</span>
-                <span class="text-slate-500 text-[9.5px]">${t('forecast3DaySub')}</span>
+                <span class="text-slate-600 text-[9.5px] font-medium">${t('forecast3DaySub')}</span>
               </div>
               <div class="grid grid-cols-3 gap-1">
                 ${daysGridHtml}
@@ -4791,11 +4808,11 @@
         const catBadgeStr = s.category === 'bc' ? t('catBcMountBadge') : t('catSkiBadge');
         row.innerHTML = `
           <div>
-            <span class="text-[11px] text-slate-500 font-bold">${tName(s.areaName || s.regionName)} (${catBadgeStr})</span>
+            <span class="text-[11px] text-slate-600 font-bold">${tName(s.areaName || s.regionName)} (${catBadgeStr})</span>
             <div class="text-xs font-bold text-slate-900">${tName(s.name)}</div>
           </div>
           <div class="text-right">
-            <span class="text-xs font-bold ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-700' : 'text-slate-400'}">${s.current.score !== null && s.current.score !== undefined ? s.current.score + t('scorePtUnit') : '―'}</span>
+            <span class="text-xs font-bold ${s.current.score !== null && s.current.score !== undefined ? 'text-sky-700' : 'text-slate-600'}">${s.current.score !== null && s.current.score !== undefined ? s.current.score + t('scorePtUnit') : '―'}</span>
           </div>
         `;
         container.appendChild(row);
