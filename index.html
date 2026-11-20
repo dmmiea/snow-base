@@ -508,18 +508,26 @@
       <!-- バーン判定タグ & 夜間新雪ハイライト -->
       <div class="space-y-1.5 relative z-10">
         <!-- 朝イチ夜間新雪バッジ -->
-        <div class="powder-badge text-slate-950 rounded-xl px-3 py-2 flex items-center justify-between shadow-md border border-orange-600/30">
-          <div class="flex items-center gap-2 min-w-0">
+        <div class="powder-badge text-slate-950 rounded-xl px-3 py-2 flex items-center justify-between shadow-md border border-orange-600/30 gap-2">
+          <div class="flex items-center gap-2 min-w-0 flex-1">
             <span class="text-base shrink-0">🌙</span>
-            <div class="min-w-0">
-              <div class="flex items-center gap-1.5 min-w-0"><div class="text-[11px] font-black uppercase tracking-wider text-slate-950/85 truncate" data-i18n="overnightHeader">OVERNIGHT SNOW (18時〜翌06時)</div><button type="button" onclick="openHelpModal('overnight')" class="w-4 h-4 rounded-full bg-black/10 hover:bg-black/25 text-slate-950 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" data-i18n-title="overnightHelpTitle" title="夜間新雪の解説"><i class="fa-solid fa-circle-info"></i></button></div>
-              <div class="mt-0.5">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <div id="heroNightHeaderTitle" class="text-[11px] font-black uppercase tracking-wider text-slate-950/90 truncate" data-i18n="overnightHeader">OVERNIGHT SNOW (18時〜翌06時)</div>
+                <button type="button" onclick="openHelpModal('overnight')" class="w-4 h-4 rounded-full bg-black/10 hover:bg-black/25 text-slate-950 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" data-i18n-title="overnightHelpTitle" title="夜間新雪の解説"><i class="fa-solid fa-circle-info"></i></button>
+              </div>
+              <div class="mt-1 flex items-center gap-1.5 flex-wrap">
                 <span id="heroResetTag" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-white/80 text-slate-950 border border-slate-900/20">降雪なし</span>
+                <!-- 今朝 / 明朝 切替スイッチ -->
+                <div class="inline-flex bg-black/15 rounded-lg p-0.5 border border-black/10 text-[10.5px] font-bold" id="heroNightToggleGroup">
+                  <button type="button" id="btnHeroNightThis" onclick="setHeroNightMode('thisMorning')" class="px-2 py-0.5 rounded text-white bg-slate-950 font-black shadow-sm transition" data-i18n="heroNightToggleThis">今朝</button>
+                  <button type="button" id="btnHeroNightNext" onclick="setHeroNightMode('nextMorning')" class="px-2 py-0.5 rounded text-slate-950 hover:bg-black/10 font-bold transition" data-i18n="heroNightToggleNext">明朝</button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="text-right shrink-0 pl-2">
-            <div class="text-[11px] font-bold text-slate-950/80 leading-none" data-i18n="topFreshSnow">トップ新雪</div>
+          <div class="text-right shrink-0 pl-1">
+            <div class="text-[10.5px] font-bold text-slate-950/80 leading-none" data-i18n="topFreshSnow">トップ新雪</div>
             <div class="flex items-baseline justify-end gap-0.5 mt-0.5">
               <span id="heroNightSnow" class="font-teko text-3xl font-black leading-none text-slate-950">+--</span>
               <span class="text-xs font-bold text-slate-950/85">cm</span>
@@ -1485,7 +1493,7 @@
   <!-- ===============================
        UNIFIED I18N MODULE & APPLICATION LOGIC SCRIPT
        =============================== -->
-  <script src="i18n.js?v=20261120_v19"></script>
+  <script src="i18n.js?v=20261120_v20"></script>
   <script>
     // グローバル状態
     let appData = null;
@@ -2246,31 +2254,8 @@
           : "text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-700 text-white mt-1";
       }
 
-      // 夜間新雪（今夜〜翌朝06:00の直近ターゲット値を参照）
-      const jstNow = new Date(Date.now() + 9 * 3600000);
-      const jstHour = jstNow.getUTCHours();
-      const targetMorning = new Date(jstNow.getTime() + (jstHour >= 12 ? 24 * 3600000 : 0));
-      const target06Str = `${targetMorning.toISOString().slice(0, 10)}T06:00`;
-      const nightKeys = Object.keys(spot.nightSnowByDate || {});
-      let nextNightVal = 0;
-      if (spot.nightSnowByDate) {
-        if (spot.nightSnowByDate[target06Str] !== undefined) {
-          nextNightVal = spot.nightSnowByDate[target06Str];
-        } else {
-          const upcoming = nightKeys.filter(k => k >= target06Str);
-          if (upcoming.length > 0) nextNightVal = spot.nightSnowByDate[upcoming[0]];
-          else if (nightKeys.length > 0) nextNightVal = spot.nightSnowByDate[nightKeys[nightKeys.length - 1]];
-        }
-      }
-      document.getElementById('heroNightSnow').textContent = `+${nextNightVal}`;
-      let depthTag = '降雪なし';
-      if (nextNightVal >= 80) depthTag = '腰パウ';
-      else if (nextNightVal >= 50) depthTag = 'モモパウ';
-      else if (nextNightVal >= 30) depthTag = 'ヒザパウ';
-      else if (nextNightVal >= 20) depthTag = 'スネパウ';
-      else if (nextNightVal >= 10) depthTag = 'くるぶしパウ';
-      else if (nextNightVal >= 1) depthTag = 'うっすら新雪';
-      document.getElementById('heroResetTag').textContent = tTag(depthTag);
+      // 夜間新雪（今朝/明朝のトグル状態およびJST基準で更新）
+      updateHeroNightSnowCard(spot);
 
       // タグ（絵文字を除去してすっきり表示）
       const rawMainTag = spot.current.tag || '';
@@ -3578,7 +3563,7 @@
               </div>
               <div class="text-right shrink-0 flex items-center gap-2">
                 <div>
-                  <div class="text-[10px] text-slate-600 font-bold">${t('overnightSnowLabel')}</div>
+                  <div class="text-[10px] text-slate-600 font-bold">${getNightSnowTargetMeta('auto').badgeLabel}</div>
                   <div class="font-teko text-xl font-black ${nightSnow > 0 ? 'text-orange-700' : 'text-slate-500'} leading-none">+${nightSnow}<span class="text-[11px] ml-0.5">cm</span></div>
                 </div>
                 <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
@@ -3601,7 +3586,7 @@
               <div class="w-full flex items-center justify-between gap-2 pt-1.5 border-t border-slate-200 text-[11px]">
                 <div class="flex items-center gap-2 min-w-0">
                   <span class="text-slate-600 font-medium">${t('areaMaxDepth')} <strong class="text-slate-900">${maxDepth}cm</strong></span>
-                  ${maxNight > 0 ? `<span class="px-1.5 py-0.2 rounded bg-orange-100 text-orange-900 border border-orange-300 font-black">${t('nightShort')} +${maxNight}cm</span>` : ''}
+                  ${maxNight > 0 ? `<span class="px-1.5 py-0.2 rounded bg-orange-100 text-orange-900 border border-orange-300 font-black">${getNightSnowTargetMeta('auto').badgeLabel} +${maxNight}cm</span>` : ''}
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
                   <span class="text-slate-600 font-medium">${t('areaBest')}</span>
@@ -3718,7 +3703,7 @@
 
       let labelText = t('rankSnowfallLabel');
       if (currentRankPeriod === 'night') {
-        labelText = t('overnightSnowLabel');
+        labelText = getNightSnowTargetMeta('auto').badgeLabel;
       } else if (currentRankPeriod === '6h') {
         labelText = t('rank6hLabel');
       } else {
@@ -4050,20 +4035,96 @@
       return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
     }
 
-    function getSpotNightSnow(s) {
-      if (!s || !s.nightSnowByDate) return 0;
+    let currentHeroNightMode = 'auto'; // 'auto' | 'thisMorning' | 'nextMorning'
+
+    function getNightSnowTargetMeta(mode = 'auto') {
       const jstNow = new Date(Date.now() + 9 * 3600000);
       const jstHour = jstNow.getUTCHours();
-      const targetMorning = new Date(jstNow.getTime() + (jstHour >= 12 ? 24 * 3600000 : 0));
-      const target06Str = `${targetMorning.toISOString().slice(0, 10)}T06:00`;
+      const isNext = mode === 'nextMorning' || (mode === 'auto' && jstHour >= 12);
+      const targetMorning = new Date(jstNow.getTime() + (isNext ? 24 * 3600000 : 0));
+      const ymd = targetMorning.toISOString().slice(0, 10);
+      const target06Str = `${ymd}T06:00`;
+
+      const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+      const dObj = new Date(ymd + 'T00:00:00+09:00');
+      const dow = tTag(weekdays[dObj.getDay()] || '');
+      const mmdd = `${targetMorning.getUTCMonth() + 1}/${targetMorning.getUTCDate()}`;
+      const dateWithDow = `${mmdd}(${dow})`;
+
+      return {
+        mode: isNext ? 'nextMorning' : 'thisMorning',
+        isNextMorning: isNext,
+        target06Str,
+        ymd,
+        dateShort: mmdd,
+        dateWithDow,
+        headerTitle: isNext
+          ? t('heroNightHeaderNext', { date: dateWithDow })
+          : t('heroNightHeaderThis', { date: dateWithDow }),
+        badgeLabel: isNext
+          ? t('overnightNextMorningWithDate', { date: mmdd })
+          : t('overnightThisMorningWithDate', { date: mmdd }),
+        feedLabel: isNext
+          ? t('nextMorningNightSnowDate', { date: dateWithDow })
+          : t('thisMorningNightSnowDate', { date: dateWithDow })
+      };
+    }
+
+    function getSpotNightSnow(s, mode = 'auto') {
+      if (!s || !s.nightSnowByDate) return 0;
+      const meta = getNightSnowTargetMeta(mode);
       const nightKeys = Object.keys(s.nightSnowByDate);
-      if (s.nightSnowByDate[target06Str] !== undefined) {
-        return s.nightSnowByDate[target06Str];
+      if (s.nightSnowByDate[meta.target06Str] !== undefined) {
+        return s.nightSnowByDate[meta.target06Str];
       }
-      const upcoming = nightKeys.filter(k => k >= target06Str);
+      const upcoming = nightKeys.filter(k => k >= meta.target06Str);
       if (upcoming.length > 0) return s.nightSnowByDate[upcoming[0]];
       if (nightKeys.length > 0) return s.nightSnowByDate[nightKeys[nightKeys.length - 1]];
       return 0;
+    }
+
+    function setHeroNightMode(mode) {
+      currentHeroNightMode = mode;
+      const spot = appData ? appData.spots.find(s => s.id === currentSpotId) : null;
+      if (spot) updateHeroNightSnowCard(spot);
+    }
+
+    function updateHeroNightSnowCard(spot) {
+      if (!spot) spot = appData ? appData.spots.find(s => s.id === currentSpotId) : null;
+      if (!spot) return;
+
+      const meta = getNightSnowTargetMeta(currentHeroNightMode);
+      
+      const headerTitleEl = document.getElementById('heroNightHeaderTitle');
+      if (headerTitleEl) {
+        headerTitleEl.textContent = meta.headerTitle;
+      }
+
+      const btnThis = document.getElementById('btnHeroNightThis');
+      const btnNext = document.getElementById('btnHeroNightNext');
+      if (btnThis && btnNext) {
+        if (!meta.isNextMorning) {
+          btnThis.className = "px-2 py-0.5 rounded text-white bg-slate-950 font-black shadow-sm transition";
+          btnNext.className = "px-2 py-0.5 rounded text-slate-950 hover:bg-black/10 font-bold transition";
+        } else {
+          btnThis.className = "px-2 py-0.5 rounded text-slate-950 hover:bg-black/10 font-bold transition";
+          btnNext.className = "px-2 py-0.5 rounded text-white bg-slate-950 font-black shadow-sm transition";
+        }
+      }
+
+      const nightVal = getSpotNightSnow(spot, meta.mode);
+      const valEl = document.getElementById('heroNightSnow');
+      if (valEl) valEl.textContent = `+${nightVal}`;
+
+      let depthTag = '降雪なし';
+      if (nightVal >= 80) depthTag = '腰パウ';
+      else if (nightVal >= 50) depthTag = 'モモパウ';
+      else if (nightVal >= 30) depthTag = 'ヒザパウ';
+      else if (nightVal >= 20) depthTag = 'スネパウ';
+      else if (nightVal >= 10) depthTag = 'くるぶしパウ';
+      else if (nightVal >= 1) depthTag = 'うっすら新雪';
+      const tagEl = document.getElementById('heroResetTag');
+      if (tagEl) tagEl.textContent = tTag(depthTag);
     }
 
     const FEED_SEEN_ITEMS_KEY = 'snow_base_feed_seen_items_v1';
@@ -4409,7 +4470,7 @@
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🌙</span>
                 <div>
-                  <span class="text-[10.5px] text-slate-600 block leading-none">${jstHour >= 12 ? t('nextMorningNightSnow') : t('thisMorningNightSnow')}</span>
+                  <span class="text-[10.5px] text-slate-600 block leading-none">${getNightSnowTargetMeta('auto').feedLabel}</span>
                   <span class="text-sm font-black ${nightVal >= 10 ? 'text-orange-700' : 'text-slate-900'}">+${nightVal}cm</span>
                 </div>
               </div>
@@ -4934,7 +4995,7 @@
       const jstNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
       const todayStr = jstNow.toISOString().slice(0, 10);
       const jstHour = jstNow.getHours();
-      const nightLabel = jstHour >= 12 ? t('nextMorningNightSnow') : t('thisMorningNightSnow');
+      const nightLabel = getNightSnowTargetMeta('auto').feedLabel;
       const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
 
       sortedSpots.forEach(s => {
