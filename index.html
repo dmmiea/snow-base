@@ -160,7 +160,8 @@
       border-color: #2a313e !important;
       box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.7), 0 2px 6px 0 rgba(0, 0, 0, 0.5) !important;
     }
-    html.theme-dark .bg-slate-100 {
+    html.theme-dark .bg-slate-100,
+    html.theme-dark .bg-slate-100\/95 {
       background-color: #0b0e14 !important;
     }
     html.theme-dark .bg-slate-50,
@@ -168,12 +169,59 @@
     html.theme-dark .bg-slate-50\/70 {
       background-color: #1a1f29 !important;
     }
-    html.theme-dark .bg-white {
+    html.theme-dark .bg-white,
+    html.theme-dark .bg-white\/95,
+    html.theme-dark .bg-white\/80 {
       background-color: #14171d !important;
     }
     html.theme-dark .bg-slate-200,
     html.theme-dark .bg-slate-200\/90 {
       background-color: #242b38 !important;
+    }
+    /* 🎨 パステル・淡色カラーバッジ＆カードのダークトーン化 */
+    html.theme-dark .bg-sky-50,
+    html.theme-dark .bg-sky-50\/70,
+    html.theme-dark .bg-sky-50\/90,
+    html.theme-dark .bg-sky-100 {
+      background-color: #0c2438 !important;
+      border-color: #1e4976 !important;
+      color: #7dd3fc !important;
+    }
+    html.theme-dark .bg-orange-50,
+    html.theme-dark .bg-orange-100 {
+      background-color: #2e1605 !important;
+      border-color: #7c2d12 !important;
+      color: #fdba74 !important;
+    }
+    html.theme-dark .bg-amber-50,
+    html.theme-dark .bg-amber-50\/70,
+    html.theme-dark .bg-amber-100 {
+      background-color: #2b1805 !important;
+      border-color: #78350f !important;
+      color: #fde68a !important;
+    }
+    html.theme-dark .bg-emerald-50,
+    html.theme-dark .bg-emerald-50\/70,
+    html.theme-dark .bg-emerald-100 {
+      background-color: #06281b !important;
+      border-color: #065f46 !important;
+      color: #6ee7b7 !important;
+    }
+    html.theme-dark .bg-rose-50,
+    html.theme-dark .bg-rose-100 {
+      background-color: #2e0d17 !important;
+      border-color: #881337 !important;
+      color: #fda4af !important;
+    }
+    html.theme-dark .bg-indigo-50 {
+      background-color: #171b36 !important;
+      border-color: #3730a3 !important;
+      color: #c7d2fe !important;
+    }
+    html.theme-dark #heroResetTag {
+      background-color: rgba(15, 23, 42, 0.9) !important;
+      color: #f8fafc !important;
+      border-color: #475569 !important;
     }
     html.theme-dark .border-slate-200,
     html.theme-dark .border-slate-300,
@@ -195,22 +243,29 @@
     html.theme-dark .text-slate-400 {
       color: #cbd5e1 !important;
     }
-    html.theme-dark .text-sky-700:not(button):not(.tab-active),
-    html.theme-dark .text-sky-800:not(button):not(.tab-active),
-    html.theme-dark .text-sky-900:not(button):not(.tab-active),
-    html.theme-dark .text-sky-950:not(button):not(.tab-active) {
+    html.theme-dark .text-sky-700:not(.bg-sky-700):not(.tab-active),
+    html.theme-dark .text-sky-800:not(.bg-sky-700):not(.tab-active),
+    html.theme-dark .text-sky-900:not(.bg-sky-700):not(.tab-active),
+    html.theme-dark .text-sky-950:not(.bg-sky-700):not(.tab-active) {
       color: #38bdf8 !important;
     }
-    html.theme-dark .text-rose-700:not(button),
-    html.theme-dark .text-rose-800:not(button) {
+    html.theme-dark .text-rose-700:not(.bg-rose-600),
+    html.theme-dark .text-rose-800:not(.bg-rose-600),
+    html.theme-dark .text-rose-900:not(.bg-rose-600) {
       color: #fb7185 !important;
     }
-    html.theme-dark .text-amber-700:not(button),
-    html.theme-dark .text-amber-800:not(button) {
+    html.theme-dark .text-amber-700:not(.bg-amber-500),
+    html.theme-dark .text-amber-800:not(.bg-amber-500),
+    html.theme-dark .text-amber-900:not(.bg-amber-500),
+    html.theme-dark .text-amber-950:not(.bg-amber-500) {
       color: #fbbf24 !important;
     }
-    html.theme-dark .text-emerald-700:not(button),
-    html.theme-dark .text-emerald-800:not(button) {
+    html.theme-dark .text-indigo-950 {
+      color: #c7d2fe !important;
+    }
+    html.theme-dark .text-emerald-700:not(.bg-emerald-600),
+    html.theme-dark .text-emerald-800:not(.bg-emerald-600),
+    html.theme-dark .text-emerald-900:not(.bg-emerald-600) {
       color: #34d399 !important;
     }
     html.theme-dark select {
@@ -225,7 +280,8 @@
     html.theme-dark #bottomNav a:not(.text-sky-700):not(.active) {
       color: #cbd5e1 !important;
     }
-    html.theme-dark .sticky.z-40 {
+    html.theme-dark .sticky.z-40,
+    html.theme-dark .sticky.z-30 {
       background-color: #0b0e14 !important;
       border-color: #1e2430 !important;
     }
@@ -1405,7 +1461,7 @@
   <!-- ===============================
        UNIFIED I18N MODULE & APPLICATION LOGIC SCRIPT
        =============================== -->
-  <script src="i18n.js?v=20261120_v16"></script>
+  <script src="i18n.js?v=20261120_v17"></script>
   <script>
     // グローバル状態
     let appData = null;
