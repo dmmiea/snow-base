@@ -1016,6 +1016,13 @@
       </button>
     </div>
 
+    <!-- 並び替えピル（登録順 / 🌙 新雪順 / 🏆 スコア順） -->
+    <div class="flex bg-slate-100 rounded-xl p-1 border border-slate-300 text-xs font-bold gap-1" id="mySpotsSortGroup">
+      <button type="button" id="mySpotsSortBtnDefault" onclick="setMySpotsSort('default')" class="flex-1 py-1.5 px-2 rounded-lg text-center bg-sky-700 text-white font-black shadow-sm transition" data-i18n="sortFavDefault">登録順</button>
+      <button type="button" id="mySpotsSortBtnNightSnow" onclick="setMySpotsSort('nightSnow')" class="flex-1 py-1.5 px-2 rounded-lg text-center text-slate-700 hover:text-slate-900 font-bold transition" data-i18n="sortFavNightSnow">🌙 新雪順</button>
+      <button type="button" id="mySpotsSortBtnScore" onclick="setMySpotsSort('score')" class="flex-1 py-1.5 px-2 rounded-lg text-center text-slate-700 hover:text-slate-900 font-bold transition" data-i18n="sortFavScore">🏆 スコア順</button>
+    </div>
+
     <div id="mySpotsListContainer" class="space-y-3">
       <!-- JSで動的生成 -->
     </div>
@@ -1478,7 +1485,7 @@
   <!-- ===============================
        UNIFIED I18N MODULE & APPLICATION LOGIC SCRIPT
        =============================== -->
-  <script src="i18n.js?v=20261120_v18"></script>
+  <script src="i18n.js?v=20261120_v19"></script>
   <script>
     // グローバル状態
     let appData = null;
@@ -4252,7 +4259,41 @@
 
       const jstNow = new Date(Date.now() + 9 * 3600000);
       const todayStr = jstNow.toISOString().slice(0, 10);
+      const jstHour = jstNow.getHours();
+      const isMorning = jstHour < 12; // 00:00〜11:59（朝通知受け皿・実測中心）/ 12:00〜23:59（夜通知受け皿・ピーク予報中心）
       const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+
+      // 4.2 全国注目トップ速報バナー（プッシュ通知連動）
+      if (currentFeedFilter !== 'favs' && appData && Array.isArray(appData.spots)) {
+        let bestSpot = null;
+        let bestNight = 0;
+        appData.spots.forEach(sp => {
+          const nv = getSpotNightSnow(sp);
+          if (nv > bestNight) {
+            bestNight = nv;
+            bestSpot = sp;
+          }
+        });
+        if (bestSpot && bestNight > 0) {
+          const topDiv = document.createElement('div');
+          topDiv.onclick = () => selectSpotFromMap(bestSpot.id);
+          topDiv.className = "snow-card rounded-2xl p-2.5 px-3 border border-sky-300 bg-gradient-to-r from-sky-50 via-white to-sky-50 flex items-center justify-between cursor-pointer hover:border-sky-500 shadow-sm transition active:scale-[0.99]";
+          topDiv.innerHTML = `
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-700 text-white font-black shrink-0 flex items-center gap-1">
+                <span>🤖</span><span>${t('feedAiTopBanner')}</span>
+              </span>
+              <span class="text-xs font-black text-slate-900 truncate">${tName(bestSpot.name)}</span>
+              <span class="text-[11px] text-slate-600 font-bold truncate">(${tName(bestSpot.areaName || bestSpot.regionName || '')})</span>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0 text-right">
+              <span class="text-xs font-black text-orange-700">+${bestNight}cm</span>
+              <i class="fa-solid fa-chevron-right text-[10px] text-sky-700"></i>
+            </div>
+          `;
+          container.appendChild(topDiv);
+        }
+      }
 
       // 5. カード描画
       displayFeedItems.slice(0, 50).forEach(item => {
@@ -4261,36 +4302,85 @@
           const nightVal = getSpotNightSnow(s);
           const wInfo = s.current.weatherInfo || getWeatherInfo(s.current.weatherCode || 0);
           const isBC = s.category === 'bc';
-          const next3Days = (s.dailySummary || []).filter(d => d.date >= todayStr).slice(0, 3);
+          const live = s.current && s.current.liveAmedas;
 
-          const daysGridHtml = next3Days.map((d, dIdx) => {
-            const dObj = new Date(d.date + 'T00:00:00+09:00');
-            const dow = tTag(weekdays[dObj.getDay()] || '');
-            const dayLabel = dIdx === 0 ? t('todayLabel') : (dIdx === 1 ? t('tomorrowLabel') : `${d.date.slice(5).replace('-', '/')}(${dow})`);
-            const dNight = (s.nightSnowByDate && s.nightSnowByDate[`${d.date}T06:00`] !== undefined)
-              ? s.nightSnowByDate[`${d.date}T06:00`]
-              : 0;
-            const isHeavyNight = dNight >= 10;
-
-            return `
-              <div class="rounded-xl p-2 text-center border ${isHeavyNight ? 'bg-orange-50 border-orange-300' : 'bg-slate-50 border-slate-200'}">
-                <div class="flex items-center justify-center gap-1 text-[11px] font-bold ${dIdx === 0 ? 'text-amber-700' : 'text-slate-700'}">
-                  <span>${dayLabel}</span>
-                  <span>${d.weatherIcon}</span>
+          // 通知連動1行サマリー：午前は公的実測、午後は直近3日間の降雪ピーク
+          let notifyContextHtml = '';
+          if (isMorning) {
+            if (isBC) {
+              const alert = s.current && s.current.bcAlert;
+              const alertBadge = alert ? (alert.level === 'HIGH' ? '🔴' : (alert.level === 'MEDIUM' ? '🟡' : '🟢')) : '🟢';
+              const alertText = alert ? tTag(alert.label) : t('statusSafe');
+              const stName = live ? tName(live.stationName) : '';
+              const stDepth = (live && typeof live.snowDepth === 'number') ? `${live.snowDepth}cm` : '--';
+              notifyContextHtml = `
+                <div class="flex items-center justify-between text-[11px] px-2.5 py-1.5 rounded-lg bg-emerald-50/70 border border-emerald-200/80 font-bold">
+                  <div class="flex items-center gap-1 text-slate-800 truncate">
+                    <span>${alertBadge}</span>
+                    <span class="truncate">${alertText}</span>
+                  </div>
+                  <div class="text-slate-600 shrink-0 text-right">
+                    <span>📡 ${stName} ${stDepth}</span>
+                  </div>
                 </div>
-                <div class="mt-1 text-xs font-black ${isHeavyNight ? 'text-orange-700' : (dNight > 0 ? 'text-sky-700' : 'text-slate-500')} whitespace-nowrap">
-                  ${t('nightShort')} +${dNight}cm
+              `;
+            } else if (live) {
+              const stName = tName(live.stationName);
+              const stDepth = typeof live.snowDepth === 'number' ? `${live.snowDepth}cm` : '--';
+              const sNight = (live.stats && live.stats.night && typeof live.stats.night.snowfall === 'number') ? live.stats.night.snowfall : (typeof live.snow1h === 'number' ? live.snow1h : 0);
+              const fresh = (live.stats && live.stats.h6 && typeof live.stats.h6.freshness === 'number') ? live.stats.h6.freshness : null;
+              const freshText = fresh === 0 ? t('rankLiveFreshSnowing') : (fresh !== null ? t('rankLiveFreshHours', { h: fresh }) : '');
+              notifyContextHtml = `
+                <div class="flex items-center justify-between text-[11px] px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 font-bold">
+                  <div class="flex items-center gap-1.5 text-slate-700 truncate">
+                    <span class="text-[9.5px] px-1 py-0.2 rounded bg-sky-100 text-sky-800 font-black shrink-0">${t('feedLiveLineLabel')}</span>
+                    <span class="truncate">${stName} <strong class="text-slate-900">${stDepth}</strong></span>
+                  </div>
+                  <div class="text-slate-600 shrink-0 text-right">
+                    <span class="${sNight > 0 ? 'text-orange-700 font-black' : ''}">夜間+${sNight}cm</span>
+                    ${freshText ? `<span class="text-slate-500 ml-1">/ ${freshText}</span>` : ''}
+                  </div>
                 </div>
-                <div class="text-[10.5px] text-slate-500 font-medium whitespace-nowrap mt-0.5">
-                  ${t('dailyShort')} +${d.totalSnowfall}cm
+              `;
+            }
+          } else {
+            // 午後：直近3日間の降雪ピーク検出
+            let maxPeakNight = 0;
+            let peakDateStr = '';
+            (s.dailySummary || []).filter(d => d.date >= todayStr).slice(0, 3).forEach(d => {
+              const dNight = (s.nightSnowByDate && s.nightSnowByDate[`${d.date}T06:00`] !== undefined) ? s.nightSnowByDate[`${d.date}T06:00`] : 0;
+              if (dNight > maxPeakNight) {
+                maxPeakNight = dNight;
+                const dObj = new Date(d.date + 'T00:00:00+09:00');
+                const dow = tTag(weekdays[dObj.getDay()] || '');
+                peakDateStr = `${d.date.slice(5).replace('-', '/')}(${dow})`;
+              }
+            });
+            if (maxPeakNight > 0) {
+              notifyContextHtml = `
+                <div class="flex items-center justify-between text-[11px] px-2.5 py-1.5 rounded-lg bg-orange-50/70 border border-orange-200/80 font-bold">
+                  <div class="flex items-center gap-1.5 text-orange-800 truncate">
+                    <span>📅</span>
+                    <span class="truncate">${t('feedUpcomingPeak', { day: peakDateStr, snow: maxPeakNight })}</span>
+                  </div>
+                  <div class="text-xs font-black text-orange-700 shrink-0">
+                    +${maxPeakNight}cm
+                  </div>
                 </div>
-              </div>
-            `;
-          }).join('');
+              `;
+            } else {
+              notifyContextHtml = `
+                <div class="flex items-center justify-between text-[10.5px] px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 font-medium">
+                  <span>${t('forecast3DayTitle')}</span>
+                  <span>${t('feedNoPeakUpcoming')}</span>
+                </div>
+              `;
+            }
+          }
 
           const card = document.createElement('div');
           card.onclick = () => selectSpotFromMap(s.id);
-          card.className = "snow-card rounded-2xl p-3.5 border border-sky-300 hover:border-sky-600 bg-white shadow-sm cursor-pointer active:scale-[0.99] transition space-y-2.5";
+          card.className = "snow-card rounded-2xl p-3.5 border border-sky-300 hover:border-sky-600 bg-white shadow-sm cursor-pointer active:scale-[0.99] transition space-y-2";
           card.innerHTML = `
             <div class="flex items-start justify-between gap-2">
               <div class="min-w-0">
@@ -4319,7 +4409,7 @@
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🌙</span>
                 <div>
-                  <span class="text-[10.5px] text-slate-600 block leading-none">${jstNow.getHours() >= 12 ? t('nextMorningNightSnow') : t('thisMorningNightSnow')}</span>
+                  <span class="text-[10.5px] text-slate-600 block leading-none">${jstHour >= 12 ? t('nextMorningNightSnow') : t('thisMorningNightSnow')}</span>
                   <span class="text-sm font-black ${nightVal >= 10 ? 'text-orange-700' : 'text-slate-900'}">+${nightVal}cm</span>
                 </div>
               </div>
@@ -4329,18 +4419,8 @@
               </div>
             </div>
 
-            <!-- 今後3日間の降雪・夜間新雪予報 -->
-            ${next3Days.length > 0 ? `
-              <div>
-                <div class="text-[10.5px] font-bold text-slate-600 mb-1 flex items-center justify-between">
-                  <span>${t('forecast3DayTitle')}</span>
-                  <span>${t('forecast3DaySub')}</span>
-                </div>
-                <div class="grid grid-cols-3 gap-1.5">
-                  ${daysGridHtml}
-                </div>
-              </div>
-            ` : ''}
+            <!-- 通知連動1行サマリー（午前:実測 / 午後:直近ピーク） -->
+            ${notifyContextHtml}
 
             <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-200">
               <span>${t('savedSpotLiveUpdate')}</span>
@@ -4777,6 +4857,16 @@
       renderMySpotsTab();
     }
 
+    let currentMySpotsSort = localStorage.getItem('snow_base_my_sort') || 'default';
+
+    function setMySpotsSort(sortKey) {
+      currentMySpotsSort = sortKey;
+      try {
+        localStorage.setItem('snow_base_my_sort', sortKey);
+      } catch (e) {}
+      renderMySpotsTab();
+    }
+
     function renderMySpotsTab() {
       const container = document.getElementById('mySpotsListContainer');
       const countBadge = document.getElementById('mySpotsViewCountBadge');
@@ -4789,6 +4879,22 @@
       if (countBadge) {
         countBadge.textContent = t('spotsCountUnit', { n: validFavSpots.length });
       }
+
+      // 並び替えピルのボタン状態同期
+      const sortBtns = {
+        default: document.getElementById('mySpotsSortBtnDefault'),
+        nightSnow: document.getElementById('mySpotsSortBtnNightSnow'),
+        score: document.getElementById('mySpotsSortBtnScore')
+      };
+      Object.keys(sortBtns).forEach(k => {
+        const btn = sortBtns[k];
+        if (!btn) return;
+        if (k === currentMySpotsSort) {
+          btn.className = "flex-1 py-1.5 px-2 rounded-lg text-center bg-sky-700 text-white font-black shadow-sm transition";
+        } else {
+          btn.className = "flex-1 py-1.5 px-2 rounded-lg text-center text-slate-700 hover:text-slate-900 font-bold transition";
+        }
+      });
 
       if (validFavSpots.length === 0) {
         container.innerHTML = `
@@ -4809,13 +4915,29 @@
         return;
       }
 
+      // ソート適用（登録順 / 🌙 新雪順 / 🏆 スコア順）
+      let sortedSpots = [...validFavSpots];
+      if (currentMySpotsSort === 'nightSnow') {
+        sortedSpots.sort((a, b) => {
+          const aNight = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(a) : 0;
+          const bNight = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(b) : 0;
+          return bNight - aNight;
+        });
+      } else if (currentMySpotsSort === 'score') {
+        sortedSpots.sort((a, b) => {
+          const aScore = (a.current && typeof a.current.score === 'number') ? a.current.score : -1;
+          const bScore = (b.current && typeof b.current.score === 'number') ? b.current.score : -1;
+          return bScore - aScore;
+        });
+      }
+
       const jstNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
       const todayStr = jstNow.toISOString().slice(0, 10);
       const jstHour = jstNow.getHours();
       const nightLabel = jstHour >= 12 ? t('nextMorningNightSnow') : t('thisMorningNightSnow');
       const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
 
-      validFavSpots.forEach(s => {
+      sortedSpots.forEach(s => {
         const nightVal = typeof getSpotNightSnow === 'function' ? getSpotNightSnow(s) : 0;
         const isBC = s.category === 'bc';
         const catBadge = isBC
