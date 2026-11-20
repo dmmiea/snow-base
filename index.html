@@ -970,13 +970,25 @@
   </main>
 
   <!-- TAB 4: 統合フィード（登録スポット速報 ＆ 雪レポ） -->
-  <main id="tabFeed" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3.5 hidden">
+  <main id="tabFeed" class="max-w-md mx-auto px-3.5 pt-2 pb-32 space-y-3 hidden">
     <div class="flex items-center justify-between px-1">
       <h2 class="text-xs font-black text-slate-800 flex items-center gap-1.5">
         <i class="fa-solid fa-rss text-sky-700"></i>
         <span data-i18n="feedHeaderTitle">全国最新雪レポフィード</span>
       </h2>
+      <button type="button" onclick="openReportModal()" class="py-1.5 px-3 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+        <i class="fa-solid fa-pen-to-square text-[11px]"></i>
+        <span data-i18n="feedPostBtn">＋ 雪レポ</span>
+      </button>
     </div>
+
+    <!-- フィードフィルターピル -->
+    <div class="flex bg-slate-100 rounded-xl p-1 border border-slate-300 text-xs font-bold gap-1" id="feedFilterGroup">
+      <button type="button" id="feedFilterBtnAll" onclick="setFeedFilter('all')" class="flex-1 py-1.5 px-2 rounded-lg text-center bg-sky-700 text-white font-black shadow-sm transition" data-i18n="feedFilterAll">すべて</button>
+      <button type="button" id="feedFilterBtnReports" onclick="setFeedFilter('reports')" class="flex-1 py-1.5 px-2 rounded-lg text-center text-slate-700 hover:text-slate-900 font-bold transition" data-i18n="feedFilterReports">💬 雪レポのみ</button>
+      <button type="button" id="feedFilterBtnFavs" onclick="setFeedFilter('favs')" class="flex-1 py-1.5 px-2 rounded-lg text-center text-slate-700 hover:text-slate-900 font-bold transition" data-i18n="feedFilterFavs">⭐ MYスポット</button>
+    </div>
+
     <div id="feedListContainer" class="space-y-3">
       <!-- JSで動的生成 -->
     </div>
@@ -1410,40 +1422,45 @@
           </div>
         </div>
 
-        <!-- 4. 雪質・バーン状況（ホーム画面バッジ統一・段階順） -->
+        <!-- 4. 雪質・バーン状況（タップしやすいチップUI・段階順） -->
         <div>
-          <label class="block text-slate-800 font-bold mb-1" data-i18n="reportSnowTypeField">雪質・バーン状況</label>
-          <select id="reportSnowType" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold text-xs focus:outline-none focus:border-sky-700">
-            <option value="神パウ" data-i18n="optEpicPow">神パウ</option>
-            <option value="極上パウ" data-i18n="optDeepPow">極上パウ</option>
-            <option value="良質パウ" data-i18n="optGoodPow">良質パウ</option>
-            <option value="ちょいパウ" data-i18n="optLightPow">ちょいパウ</option>
-            <option value="重パウ" data-i18n="optHeavyPow">重パウ</option>
-            <option value="しまり雪" data-i18n="optPacked">しまり雪</option>
-            <option value="ザラメ雪" data-i18n="optCorn">ザラメ雪</option>
-            <option value="アイスバーン" data-i18n="optIce">アイスバーン</option>
-            <option value="雨・融雪" data-i18n="optRainMelt">雨・融雪</option>
-          </select>
+          <label class="block text-slate-800 font-bold mb-1.5" data-i18n="reportSnowTypeField">雪質・バーン状況</label>
+          <input type="hidden" id="reportSnowType" value="神パウ">
+          <div class="grid grid-cols-3 gap-1.5" id="reportSnowTypeGroup">
+            <button type="button" onclick="setReportSnowType('神パウ')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="神パウ" data-i18n="optEpicPow">神パウ</button>
+            <button type="button" onclick="setReportSnowType('極上パウ')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="極上パウ" data-i18n="optDeepPow">極上パウ</button>
+            <button type="button" onclick="setReportSnowType('良質パウ')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="良質パウ" data-i18n="optGoodPow">良質パウ</button>
+            <button type="button" onclick="setReportSnowType('ちょいパウ')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="ちょいパウ" data-i18n="optLightPow">ちょいパウ</button>
+            <button type="button" onclick="setReportSnowType('重パウ')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="重パウ" data-i18n="optHeavyPow">重パウ</button>
+            <button type="button" onclick="setReportSnowType('しまり雪')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="しまり雪" data-i18n="optPacked">しまり雪</button>
+            <button type="button" onclick="setReportSnowType('ザラメ雪')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="ザラメ雪" data-i18n="optCorn">ザラメ雪</button>
+            <button type="button" onclick="setReportSnowType('アイスバーン')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="アイスバーン" data-i18n="optIce">アイスバーン</button>
+            <button type="button" onclick="setReportSnowType('雨・融雪')" class="report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center" data-type="雨・融雪" data-i18n="optRainMelt">雨・融雪</button>
+          </div>
         </div>
 
-        <!-- 5. 新雪の深さ（案B：7段階・カッコ説明なし） -->
+        <!-- 5. 新雪の深さ（タップしやすいチップUI・7段階） -->
         <div>
-          <label class="block text-slate-800 font-bold mb-1" data-i18n="reportSnowDepthField">新雪の深さ</label>
-          <select id="reportSnowDepth" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold text-xs focus:outline-none focus:border-sky-700">
-            <option value="新雪なし" data-i18n="optDepthNone">新雪なし</option>
-            <option value="くるぶし 5〜15cm" data-i18n="optDepthAnkle">くるぶし 5〜15cm</option>
-            <option value="すね 15〜30cm" data-i18n="optDepthShin">すね 15〜30cm</option>
-            <option value="ひざ 30〜50cm" data-i18n="optDepthKnee">ひざ 30〜50cm</option>
-            <option value="もも 50〜70cm" data-i18n="optDepthThigh">もも 50〜70cm</option>
-            <option value="腰 70〜100cm" data-i18n="optDepthWaist">腰 70〜100cm</option>
-            <option value="胸以上 100cm+" data-i18n="optDepthChest">胸以上 100cm+</option>
-          </select>
+          <label class="block text-slate-800 font-bold mb-1.5" data-i18n="reportSnowDepthField">新雪の深さ</label>
+          <input type="hidden" id="reportSnowDepth" value="新雪なし">
+          <div class="grid grid-cols-2 gap-1.5" id="reportSnowDepthGroup">
+            <button type="button" onclick="setReportSnowDepth('新雪なし')" class="report-depth-btn py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition text-center" data-depth="新雪なし" data-i18n="optDepthNone">新雪なし</button>
+            <button type="button" onclick="setReportSnowDepth('くるぶし 5〜15cm')" class="report-depth-btn py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition text-center" data-depth="くるぶし 5〜15cm" data-i18n="optDepthAnkle">くるぶし 5〜15cm</button>
+            <button type="button" onclick="setReportSnowDepth('すね 15〜30cm')" class="report-depth-btn py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition text-center" data-depth="すね 15〜30cm" data-i18n="optDepthShin">すね 15〜30cm</button>
+            <button type="button" onclick="setReportSnowDepth('ひざ 30〜50cm')" class="report-depth-btn py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition text-center" data-depth="ひざ 30〜50cm" data-i18n="optDepthKnee">ひざ 30〜50cm</button>
+            <button type="button" onclick="setReportSnowDepth('もも 50〜70cm')" class="report-depth-btn py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition text-center" data-depth="もも 50〜70cm" data-i18n="optDepthThigh">もも 50〜70cm</button>
+            <button type="button" onclick="setReportSnowDepth('腰 70〜100cm')" class="report-depth-btn py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition text-center" data-depth="腰 70〜100cm" data-i18n="optDepthWaist">腰 70〜100cm</button>
+            <button type="button" onclick="setReportSnowDepth('胸以上 100cm+')" class="report-depth-btn col-span-2 py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition text-center" data-depth="胸以上 100cm+" data-i18n="optDepthChest">胸以上 100cm+</button>
+          </div>
         </div>
 
         <!-- 6. 現地の様子・コメント -->
         <div>
-          <label class="block text-slate-800 font-bold mb-1" data-i18n="reportCommentField">現地のひとことメモ（任意）</label>
-          <textarea id="reportComment" rows="2" maxlength="120" data-i18n-placeholder="reportCommentPlaceholder" placeholder="例: 朝イチの非圧雪コースが軽く、視界も良好でした" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-700 text-xs"></textarea>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-slate-800 font-bold" data-i18n="reportCommentField">現地のひとことメモ（任意）</label>
+            <span class="text-[10.5px] text-slate-500 font-bold"><span id="reportCharCount">0</span>/120</span>
+          </div>
+          <textarea id="reportComment" rows="2" maxlength="120" oninput="updateReportCharCount(this)" data-i18n-placeholder="reportCommentPlaceholder" placeholder="例: 朝イチの非圧雪コースが軽く、視界も良好でした" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-700 text-xs"></textarea>
         </div>
       </div>
 
@@ -1461,7 +1478,7 @@
   <!-- ===============================
        UNIFIED I18N MODULE & APPLICATION LOGIC SCRIPT
        =============================== -->
-  <script src="i18n.js?v=20261120_v17"></script>
+  <script src="i18n.js?v=20261120_v18"></script>
   <script>
     // グローバル状態
     let appData = null;
@@ -3988,6 +4005,8 @@
             snowReports = list;
             renderFeedTab();
             updateBottomNavBadges();
+            const curSpot = appData ? appData.spots.find(s => s.id === currentSpotId) : null;
+            if (curSpot) updateHomeReportSummary(curSpot);
           }, (err) => {
             console.warn('⚠️ Firestore onSnapshot listener error:', err);
             renderFeedTab();
@@ -4075,6 +4094,36 @@
       } catch (e) {}
     }
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    let currentFeedFilter = 'all';
+    function setFeedFilter(filter) {
+      currentFeedFilter = filter;
+      const btns = {
+        all: document.getElementById('feedFilterBtnAll'),
+        reports: document.getElementById('feedFilterBtnReports'),
+        favs: document.getElementById('feedFilterBtnFavs')
+      };
+      Object.keys(btns).forEach(key => {
+        const btn = btns[key];
+        if (!btn) return;
+        if (key === filter) {
+          btn.className = "flex-1 py-1.5 px-2 rounded-lg text-center bg-sky-700 text-white font-black shadow-sm transition";
+        } else {
+          btn.className = "flex-1 py-1.5 px-2 rounded-lg text-center text-slate-700 hover:text-slate-900 font-bold transition";
+        }
+      });
+      renderFeedTab();
+    }
+
     function renderFeedTab() {
       const container = document.getElementById('feedListContainer');
       container.innerHTML = '';
@@ -4089,8 +4138,8 @@
       const nowMs = Date.now();
       const recentWindow = 12 * 3600 * 1000;
 
-      // 1. MYスポット未登録時は先頭に登録ガイドカードを表示
-      if (favSpots.length === 0) {
+      // 1. MYスポット未登録時は先頭に登録ガイドカードを表示（雪レポのみフィルター時は非表示）
+      if (favSpots.length === 0 && currentFeedFilter !== 'reports') {
         const emptyGuide = document.createElement('div');
         emptyGuide.className = "snow-card rounded-2xl p-4 border border-amber-300 bg-gradient-to-br from-white via-white to-amber-50/80 text-center space-y-2.5 shadow-sm";
         emptyGuide.innerHTML = `
@@ -4185,12 +4234,28 @@
       normalItems.sort((a, b) => b.sortTime - a.sortTime);
       const finalFeedItems = [...priorityItems, ...normalItems];
 
+      // 4.1 フィードフィルター適用
+      let displayFeedItems = finalFeedItems;
+      if (currentFeedFilter === 'reports') {
+        displayFeedItems = finalFeedItems.filter(item => item.type === 'report');
+      } else if (currentFeedFilter === 'favs') {
+        displayFeedItems = finalFeedItems.filter(item => item.isMySpot);
+      }
+
+      if (displayFeedItems.length === 0) {
+        const emptyDiv = document.createElement('div');
+        emptyDiv.className = "snow-card rounded-2xl p-6 text-center text-slate-500 font-bold text-xs bg-slate-50 border border-slate-200";
+        emptyDiv.textContent = t('feedEmptyFilter');
+        container.appendChild(emptyDiv);
+        return;
+      }
+
       const jstNow = new Date(Date.now() + 9 * 3600000);
       const todayStr = jstNow.toISOString().slice(0, 10);
       const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
 
       // 5. カード描画
-      finalFeedItems.slice(0, 50).forEach(item => {
+      displayFeedItems.slice(0, 50).forEach(item => {
         if (item.type === 'spot_snapshot') {
           const s = item.spot;
           const nightVal = getSpotNightSnow(s);
@@ -4288,6 +4353,10 @@
 
         // 雪レポカード（新雪深さを主役に強調）
         const r = item;
+        const targetSpot = appData ? appData.spots.find(s => s.id === r.spotId) : null;
+        const isBc = targetSpot ? (targetSpot.category === 'bc') : (r.category === 'bc');
+        const spotArea = targetSpot ? (targetSpot.areaName || targetSpot.regionName || '') : (r.region || '');
+
         const card = document.createElement('div');
         card.className = "snow-card rounded-2xl p-3.5 border border-slate-300 hover:border-sky-600 space-y-2 transition bg-white shadow-sm";
 
@@ -4307,7 +4376,11 @@
             <div class="min-w-0">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <span class="text-[10.5px] px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold shrink-0">${t('reportBadge')}</span>
-                ${r.isMySpot ? '<span class="text-[10.5px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-300 font-bold shrink-0">MY</span>' : ''}
+                <span class="text-[10.5px] px-1.5 py-0.2 rounded ${isBc ? 'bg-emerald-50 text-emerald-800 border border-emerald-300' : 'bg-sky-50 text-sky-800 border border-sky-300'} font-bold shrink-0">
+                  ${isBc ? t('catBcLabel') : t('catSkiLabel')}
+                </span>
+                ${spotArea ? `<span class="text-[11px] text-slate-600 font-bold truncate">${tName(spotArea)}</span>` : ''}
+                ${r.isMySpot ? '<span class="text-[10.5px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-300 font-bold shrink-0"><i class="fa-solid fa-star text-[9px]"></i> MY</span>' : ''}
                 <span class="text-[11px] text-slate-500 font-medium">${displayTime}</span>
               </div>
               <div class="font-black text-sm text-slate-900 mt-1 truncate ${r.spotId ? 'cursor-pointer hover:text-sky-700' : ''}" ${r.spotId ? `onclick="selectSpotFromMap('${r.spotId}')"` : ''}>
@@ -4328,7 +4401,7 @@
             ${slotHtml}
           </div>
 
-          ${r.comment ? `<div class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-200 report-comment-text">${r.comment}</div>` : ''}
+          ${r.comment ? `<div class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-200 report-comment-text">${escapeHtml(r.comment)}</div>` : ''}
 
           <div class="text-[11px] text-slate-500 flex items-center justify-between pt-1 border-t border-slate-200">
             <span>${t('userFieldReport')}</span>
@@ -4339,7 +4412,7 @@
       });
     }
 
-    // ホーム画面の雪レポサマリー更新（本日分集計・サーフベース準拠）
+    // ホーム画面の雪レポサマリー更新（直近24h集計・サーフベース準拠）
     function updateHomeReportSummary(spot) {
       if (!spot) return;
       const repBadge = document.getElementById('reportCountBadge');
@@ -4347,8 +4420,14 @@
       const repSnow = document.getElementById('userAvgSnow');
       if (!repBadge || !repRate || !repSnow) return;
 
+      const nowMs = Date.now();
+      const cutoff24h = nowMs - 24 * 3600 * 1000;
       const allReports = [...snowReports, ...localReports];
-      const spotReports = allReports.filter(r => r.spotId === spot.id);
+      const spotReports = allReports.filter(r => {
+        if (r.spotId !== spot.id) return false;
+        const timeMs = r.createdAtMs || (r.rawCreatedAt ? (typeof r.rawCreatedAt.toDate === 'function' ? r.rawCreatedAt.toDate().getTime() : new Date(r.rawCreatedAt).getTime()) : 0);
+        return timeMs >= cutoff24h;
+      });
 
       repBadge.textContent = t('reportCountFormat', { n: spotReports.length });
       if (spotReports.length > 0) {
@@ -4419,6 +4498,61 @@
       });
     }
 
+    function setReportSnowType(type) {
+      const input = document.getElementById('reportSnowType');
+      if (input) input.value = type;
+      const btns = document.querySelectorAll('.report-type-btn');
+      btns.forEach(btn => {
+        if (btn.dataset.type === type) {
+          btn.className = "report-type-btn py-1.5 px-1 rounded-lg text-xs font-black border border-sky-700 bg-sky-700 text-white shadow-sm transition truncate text-center";
+        } else {
+          btn.className = "report-type-btn py-1.5 px-1 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition truncate text-center";
+        }
+      });
+    }
+
+    function setReportSnowDepth(depth) {
+      const input = document.getElementById('reportSnowDepth');
+      if (input) input.value = depth;
+      const btns = document.querySelectorAll('.report-depth-btn');
+      btns.forEach(btn => {
+        const isChest = btn.dataset.depth === '胸以上 100cm+';
+        const colSpanClass = isChest ? 'col-span-2 ' : '';
+        if (btn.dataset.depth === depth) {
+          btn.className = `report-depth-btn ${colSpanClass}py-1.5 px-2 rounded-lg text-xs font-black border border-orange-600 bg-orange-600 text-white shadow-sm transition text-center`;
+        } else {
+          btn.className = `report-depth-btn ${colSpanClass}py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100 transition text-center`;
+        }
+      });
+    }
+
+    function updateReportCharCount(textarea) {
+      const countEl = document.getElementById('reportCharCount');
+      if (countEl && textarea) {
+        countEl.textContent = String(textarea.value.length);
+      }
+    }
+
+    function getReportCooldownRemaining(spotId) {
+      try {
+        const key = `snow_cooldown_${spotId}`;
+        const lastTime = parseInt(localStorage.getItem(key), 10);
+        if (!lastTime || isNaN(lastTime)) return 0;
+        const cooldownMs = 30 * 60 * 1000; // 30分
+        const diff = Date.now() - lastTime;
+        if (diff < cooldownMs) {
+          return cooldownMs - diff;
+        }
+      } catch (e) {}
+      return 0;
+    }
+
+    function setReportCooldown(spotId) {
+      try {
+        localStorage.setItem(`snow_cooldown_${spotId}`, Date.now().toString());
+      } catch (e) {}
+    }
+
     function openReportModal() {
       const spot = appData ? appData.spots.find(s => s.id === currentSpotId) : null;
       if (spot) {
@@ -4444,6 +4578,13 @@
       setReportTimeSlot(autoSlot);
 
       setReportRating(5);
+      setReportSnowType('神パウ');
+      setReportSnowDepth('新雪なし');
+
+      const commentInput = document.getElementById('reportComment');
+      if (commentInput) {
+        updateReportCharCount(commentInput);
+      }
 
       const modal = document.getElementById('modalReport');
       if (modal) {
@@ -4467,7 +4608,7 @@
         if (idx < stars) {
           btn.className = "fa-solid fa-star text-amber-500";
         } else {
-          btn.className = "fa-regular fa-star text-slate-300";
+          btn.className = "fa-regular fa-star text-slate-400";
         }
       });
       const label = document.getElementById('reportRatingLabel');
@@ -4476,8 +4617,19 @@
       }
     }
 
+    let isSubmittingReport = false;
     async function submitReport() {
+      if (isSubmittingReport) return;
       const spot = appData ? appData.spots.find(s => s.id === currentSpotId) : null;
+      const targetSpotId = spot ? spot.id : currentSpotId;
+
+      const remainingMs = getReportCooldownRemaining(targetSpotId);
+      if (remainingMs > 0) {
+        const remainingMins = Math.ceil(remainingMs / 60000);
+        alert(t('reportCooldownAlert', { mins: remainingMins }));
+        return;
+      }
+
       const snowType = document.getElementById('reportSnowType').value;
       const snowDepth = document.getElementById('reportSnowDepth').value;
       const comment = document.getElementById('reportComment').value.trim();
@@ -4488,17 +4640,20 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = `<span data-i18n="submittingBtn">${t('submittingBtn')}</span>`;
       }
+      isSubmittingReport = true;
 
+      const nowMs = Date.now();
       const newReportData = {
-        spotId: spot ? spot.id : currentSpotId,
+        spotId: targetSpotId,
         spotName: spot ? spot.name : '雪山スポット',
         category: spot ? spot.category : 'ski',
-        region: spot ? spot.region : '',
+        region: spot ? (spot.areaName || spot.regionName || '') : '',
         rating: currentRating,
         timeSlot: currentReportSlot,
         snowType,
         snowDepth,
         comment,
+        createdAtMs: nowMs,
         createdAt: (typeof firebase !== 'undefined' && firebase.firestore && firebase.firestore.FieldValue) ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
       };
 
@@ -4514,8 +4669,13 @@
           if (spot) updateHomeReportSummary(spot);
         }
 
+        setReportCooldown(targetSpotId);
         closeReportModal();
-        document.getElementById('reportComment').value = '';
+        const commentEl = document.getElementById('reportComment');
+        if (commentEl) {
+          commentEl.value = '';
+          updateReportCharCount(commentEl);
+        }
         alert(t('reportSuccessAlert', {
           spot: spot ? tName(spot.name) : tName('雪山スポット'),
           slot: tTag(currentReportSlot),
@@ -4526,12 +4686,18 @@
         const fallbackItem = { ...newReportData, time: 'たった今' };
         localReports.unshift(fallbackItem);
         localStorage.setItem('snow_base_reports', JSON.stringify(localReports));
+        setReportCooldown(targetSpotId);
         closeReportModal();
-        document.getElementById('reportComment').value = '';
+        const commentEl = document.getElementById('reportComment');
+        if (commentEl) {
+          commentEl.value = '';
+          updateReportCharCount(commentEl);
+        }
         alert(t('reportOfflineAlert'));
         renderFeedTab();
         if (spot) updateHomeReportSummary(spot);
       } finally {
+        isSubmittingReport = false;
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerHTML = origText;
@@ -5422,19 +5588,20 @@
           openHelpModal(currentHelpTopicKey);
         }
 
-        const reportModal = document.getElementById('reportModal');
+        const reportModal = document.getElementById('modalReport');
         if (reportModal && !reportModal.classList.contains('hidden')) {
           setReportRating(currentRating);
           const spot = appData.spots.find(s => s.id === currentSpotId) || appData.spots[0];
           if (spot) {
-            const nameEl = document.getElementById('reportSpotName');
-            const areaEl = document.getElementById('reportSpotArea');
-            const catEl = document.getElementById('reportSpotCatBadge');
+            const nameEl = document.getElementById('reportSpotLabel');
+            const areaEl = document.getElementById('reportSpotAreaLabel');
+            const catEl = document.getElementById('reportSpotCategoryBadge');
             if (nameEl) nameEl.textContent = tName(spot.name);
-            if (areaEl) areaEl.textContent = tName(spot.areaName || '');
+            if (areaEl) areaEl.textContent = tName(spot.areaName || spot.regionName || '');
             if (catEl) {
-              const isBc = spot.category === 'bc';
-              catEl.textContent = isBc ? t('catBcShort') : t('catSkiShort');
+              const catKey = spot.category === 'bc' ? 'catBcShortMount' : 'catSkiShort';
+              catEl.setAttribute('data-i18n', catKey);
+              catEl.textContent = t(catKey);
             }
           }
         }

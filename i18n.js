@@ -280,6 +280,11 @@
 
       // Feed Tab
       feedHeaderTitle: '全国最新雪レポフィード',
+      feedFilterAll: 'すべて',
+      feedFilterReports: '💬 雪レポのみ',
+      feedFilterFavs: '⭐ MYスポット',
+      feedPostBtn: '＋ 雪レポ',
+      feedEmptyFilter: '該当するレポートはありません',
       feedEmptyFavTitle: 'MYスポットを登録して最新速報を受け取る',
       feedEmptyFavDesc: 'よく行くスキー場や山を★お気に入り登録すると、ここに今後3日間の降雪・夜間新雪速報が定時配信（6:00 / 19:30）されます。',
       feedEmptyFavBtn: 'スポットを探して登録する',
@@ -420,7 +425,8 @@
       submittingBtn: '送信中...',
       reportFooterNote: '※全国のスキーヤー・スノーボーダーと即座にリアルタイム共有されます',
       reportSuccessAlert: '【雪レポ登録完了】\n{spot}\n{slot} / {snow}\n\nレポートありがとうございます！全国のスキーヤー・スノーボーダーとリアルタイム共有されました。',
-      reportOfflineAlert: '雪レポを登録しました！（オフライン保持）'
+      reportOfflineAlert: '雪レポを登録しました！（オフライン保持）',
+      reportCooldownAlert: '【連続投稿の制限】\nいたずら・重複投稿防止のため、同じスポットへの再投稿は30分間制限されています。\nあと約{mins}分後に再投稿が可能になります。'
     },
 
     en: {
@@ -670,6 +676,11 @@
 
       // Feed Tab
       feedHeaderTitle: 'Japan Snow Reports Feed',
+      feedFilterAll: 'All',
+      feedFilterReports: '💬 Reports Only',
+      feedFilterFavs: '⭐ MY Spots',
+      feedPostBtn: '+ Report',
+      feedEmptyFilter: 'No matching reports found.',
       feedEmptyFavTitle: 'Save spots to receive live snow updates',
       feedEmptyFavDesc: 'Tap ★ on your favorite ski resorts or mountains to get 3-day snowfall & overnight powder updates here.',
       feedEmptyFavBtn: 'Find & Save Spots',
@@ -810,7 +821,8 @@
       submittingBtn: 'Submitting...',
       reportFooterNote: '* Shared instantly in real-time with riders across Japan',
       reportSuccessAlert: '[Report Submitted]\n{spot}\n{slot} / {snow}\n\nThank you! Your report is now shared in real-time.',
-      reportOfflineAlert: 'Snow report saved! (Offline mode)'
+      reportOfflineAlert: 'Snow report saved! (Offline mode)',
+      reportCooldownAlert: '[Cooldown Limit]\nTo prevent duplicates, posting to the same spot is limited to once every 30 minutes.\nPlease wait about {mins} more min(s).'
     }
   };
 
