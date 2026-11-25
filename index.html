@@ -1493,7 +1493,7 @@
   <!-- ===============================
        UNIFIED I18N MODULE & APPLICATION LOGIC SCRIPT
        =============================== -->
-  <script src="i18n.js?v=20261120_v20"></script>
+  <script src="i18n.js?v=20261120_v21"></script>
   <script>
     // グローバル状態
     let appData = null;
@@ -3860,11 +3860,6 @@
           card.onclick = () => selectSpotFromMap(item.spots[0].id);
         }
 
-        const isRoad = item.source === 'mlit_road';
-        const sourceBadge = isRoad
-          ? `<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-300 font-bold shrink-0 leading-none">${t('rankLiveStationRoad')}</span>`
-          : `<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-sky-50 text-sky-900 border border-sky-300 font-bold shrink-0 leading-none">${t('rankLiveStationAmedas')}</span>`;
-
         const snowValColor = item.snowfall >= 10
           ? 'text-orange-700'
           : item.snowfall > 0
@@ -3917,10 +3912,7 @@
             <div class="flex items-center gap-2 min-w-0 flex-1">
               <span class="font-teko text-2xl font-black w-6 text-center shrink-0 ${idx === 0 ? 'text-amber-600' : (idx === 1 ? 'text-slate-700' : (idx === 2 ? 'text-orange-700' : 'text-slate-500'))}">${idx + 1}</span>
               <div class="min-w-0 flex-1">
-                <div class="flex items-center gap-1.5 flex-wrap">
-                  ${sourceBadge}
-                  <span class="text-[11px] text-slate-600 font-bold truncate">${tName(item.areaName)}</span>
-                </div>
+                <div class="text-[11px] text-slate-600 font-bold truncate">${tName(item.areaName)}</div>
                 <div class="text-sm font-black text-slate-900 truncate mt-0.5">${tName(item.stationName)}</div>
               </div>
             </div>
