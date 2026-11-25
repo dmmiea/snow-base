@@ -129,6 +129,7 @@
       amedasLiveDefault: 'アメダス実測',
       amedasStationFormat: '{station}実測',
       roadStationFormat: '{station}道路雪量計',
+      riverStationFormat: '{station}テレメータ',
       amedasNoData: '実測無し',
 
       // Slope Aspects
@@ -259,6 +260,7 @@
       rankLiveTempLabel: '気温',
       rankLiveStationAmedas: 'アメダス',
       rankLiveStationRoad: '道路雪量計',
+      rankLiveStationRiver: 'テレメータ',
       rankLiveMoreSpots: '＋他{count}件',
       rankLiveCollapseSpots: '閉じる',
       rankLiveLegend: '沈降: 圧密・融解による減少量 / 最終降雪: 0h=直近1hに降雪',
@@ -539,6 +541,7 @@
       amedasLiveDefault: 'AMeDAS Live',
       amedasStationFormat: '{station} AMeDAS',
       roadStationFormat: '{station} Road Gauge',
+      riverStationFormat: '{station} Telemeter',
       amedasNoData: 'No Live Data',
 
       // Slope Aspects
@@ -669,6 +672,7 @@
       rankLiveTempLabel: 'Temp',
       rankLiveStationAmedas: 'AMeDAS',
       rankLiveStationRoad: 'Road Gauge',
+      rankLiveStationRiver: 'Telemeter',
       rankLiveMoreSpots: '+{count} more',
       rankLiveCollapseSpots: 'Close',
       rankLiveLegend: 'Settling: Compaction/melt loss / Last Snow: 0h = within 1h',

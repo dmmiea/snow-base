@@ -404,6 +404,7 @@
         popLiveStation: '観測所:',
         popLiveStationAmedas: 'アメダス',
         popLiveStationRoad: '道路雪量計',
+        popLiveStationRiver: 'テレメータ',
         popLiveSubsidence: '沈降',
         popLiveFreshness: '最終降雪',
         popLiveTemp: '気温',
@@ -474,6 +475,7 @@
         popLiveStation: 'Station:',
         popLiveStationAmedas: 'AMeDAS',
         popLiveStationRoad: 'Road Gauge',
+        popLiveStationRiver: 'Telemeter',
         popLiveSubsidence: 'Settling',
         popLiveFreshness: 'Last Snow',
         popLiveTemp: 'Temp',
@@ -969,7 +971,8 @@
           // ==============================
           const live = s.current && s.current.liveAmedas;
           const isRoad = live && live.source === 'mlit_road';
-          const stationTypeLabel = isRoad ? dict.popLiveStationRoad : dict.popLiveStationAmedas;
+          const isRiver = live && live.source === 'mlit_river';
+          const stationTypeLabel = isRiver ? dict.popLiveStationRiver : (isRoad ? dict.popLiveStationRoad : dict.popLiveStationAmedas);
           const stationName = live ? tName(live.stationName || '') : '―';
           const liveDepth = (live && typeof live.snowDepth === 'number') ? live.snowDepth : 0;
           

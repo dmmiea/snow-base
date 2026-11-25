@@ -669,6 +669,143 @@ async function run() {
     console.warn('国交省 道路雪量計取得エラー (アメダスのみで継続):', err.message);
   }
 
+  // 1-3. 国交省「川の防災情報」山岳・ダム積雪テレメータ一括取得 ＆ 直近50時間統計解析
+  const riverSnowMap = {}; // { obsFcd: { obsFcd, name, lat, lon, snow, updatedAt, stats } }
+  try {
+    const rTimeRes = await fetch('https://www.river.go.jp/kawabou/file/system/tmCrntTime.json');
+    if (rTimeRes.ok) {
+      const crntJson = await rTimeRes.json();
+      if (crntJson && crntJson.crntObsTime) {
+        const [dPart, tPart] = crntJson.crntObsTime.split(' ');
+        const rYmd = dPart.replace(/\//g, '');
+        const [rH, rM] = tPart.split(':');
+        const rHm10 = rH + String(Math.floor(parseInt(rM, 10) / 10) * 10).padStart(2, '0');
+
+        const prefDataRes = await fetch('https://www.river.go.jp/kawabou/file/files/map/pref/prefarea.json');
+        if (prefDataRes.ok) {
+          const prefData = await prefDataRes.json();
+          const allPrefs = prefData.prefs || [];
+
+          // 18地域の最新積雪GeoJSONを取得
+          const activeRiverGauges = new Map();
+          const prefBatchSize = 6;
+          for (let pIdx = 0; pIdx < allPrefs.length; pIdx += prefBatchSize) {
+            const pBatch = allPrefs.slice(pIdx, pIdx + prefBatchSize);
+            await Promise.all(pBatch.map(async (p) => {
+              try {
+                const gjUrl = `https://www.river.go.jp/kawabou/file/gjson/obs/${rYmd}/${rHm10}/snow/${p.prefCd}.json`;
+                const gjRes = await fetch(gjUrl);
+                if (!gjRes.ok) return;
+                const gj = await gjRes.json();
+                (gj.features || []).forEach(f => {
+                  const pr = f.properties;
+                  if (!pr || !pr.obs_fcd) return;
+                  // 品質チェック: 正常観測値 (snwdp_ccd < 128) かつ 0〜8.0m (0〜800cm)
+                  const isNormal = (pr.snwdp !== null && pr.snwdp !== undefined && !isNaN(pr.snwdp) && pr.snwdp >= 0 && pr.snwdp <= 8.0);
+                  const isGoodQuality = pr.snwdp_ccd === null || pr.snwdp_ccd === undefined || pr.snwdp_ccd < 128;
+                  if (isNormal && isGoodQuality) {
+                    activeRiverGauges.set(String(pr.obs_fcd), {
+                      obsFcd: String(pr.obs_fcd),
+                      name: pr.obs_nm,
+                      lat: pr.lat,
+                      lon: pr.lon,
+                      snowDepthCm: Math.round(pr.snwdp * 100),
+                      obsTime: pr.obs_time || `${dPart} ${rH}:00`
+                    });
+                  }
+                });
+              } catch (e) {}
+            }));
+          }
+          console.log(`国交省 川の防災情報 稼働中テレメータ: ${activeRiverGauges.size} 観測点`);
+
+          // 全スポットから、既存の道路雪量計・アメダスより近く（25km以内）にあるテレメータを探索
+          const neededObsFcds = new Set();
+          const haversineDist = (lat1, lon1, lat2, lon2) => {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          };
+
+          for (const s of spots) {
+            const curBestD = Math.min(
+              typeof s.roadStationDistKm === 'number' ? s.roadStationDistKm : 999,
+              typeof s.amedasDistKm === 'number' ? s.amedasDistKm : 999
+            );
+            let closestFcd = null, closestD = 999;
+            for (const [fcd, rg] of activeRiverGauges.entries()) {
+              const d = haversineDist(s.base.lat, s.base.lon, rg.lat, rg.lon);
+              if (d < closestD) {
+                closestD = d;
+                closestFcd = fcd;
+              }
+            }
+            if (closestFcd && closestD < curBestD && closestD <= 25.0) {
+              neededObsFcds.add(closestFcd);
+            }
+          }
+          console.log(`スポット最近傍として必要なテレメータ時系列取得数: ${neededObsFcds.size} 観測点`);
+
+          // 必要なテレメータの tmlist (過去50時間分の毎正時積雪深) を並列取得
+          const neededList = Array.from(neededObsFcds);
+          const tmBatchSize = 6;
+          for (let k = 0; k < neededList.length; k += tmBatchSize) {
+            const tmBatch = neededList.slice(k, k + tmBatchSize);
+            await Promise.all(tmBatch.map(async (fcd) => {
+              const baseInfo = activeRiverGauges.get(fcd);
+              if (!baseInfo) return;
+              try {
+                const tmUrl = `https://www.river.go.jp/kawabou/file/files/tmlist/snw/${rYmd}/${rHm10}/${fcd}.json`;
+                const tmRes = await fetch(tmUrl);
+                if (!tmRes.ok) return;
+                const tmData = await tmRes.json();
+                const hrValues = tmData && tmData.hrValues;
+                if (!Array.isArray(hrValues) || hrValues.length === 0) return;
+
+                // hrValues: [{ snwdp (cm), tmp, obsTime: 'YYYY/MM/DD HH:mm', snwdpCcd, tmpCcd }]
+                // 過去〜現在へ昇順ソートして時系列シリーズを構築
+                const series = [];
+                for (const hr of hrValues) {
+                  if (hr.snwdpCcd !== null && hr.snwdpCcd !== undefined && hr.snwdpCcd >= 128) continue;
+                  if (typeof hr.snwdp !== 'number' || hr.snwdp < 0 || hr.snwdp > 800) continue;
+                  const ts = new Date(hr.obsTime.replace(/\//g, '-') + ':00+09:00').getTime();
+                  if (isNaN(ts)) continue;
+                  const hasTemp = (hr.tmpCcd === 0 || hr.tmpCcd === null) && typeof hr.tmp === 'number' && hr.tmp > -50 && hr.tmp < 50;
+                  series.push({
+                    ts,
+                    snow: hr.snwdp,
+                    snow1h: null,
+                    temp: hasTemp ? hr.tmp : null
+                  });
+                }
+                series.sort((a, b) => a.ts - b.ts);
+                if (series.length === 0) return;
+
+                const latestEntry = series[series.length - 1];
+                const stats = calcLiveSnowStats(series, latestEntry.ts);
+                riverSnowMap[fcd] = {
+                  obsFcd: fcd,
+                  name: baseInfo.name,
+                  lat: baseInfo.lat,
+                  lon: baseInfo.lon,
+                  snow: latestEntry.snow,
+                  temp: latestEntry.temp,
+                  updatedAt: baseInfo.obsTime,
+                  stats
+                };
+              } catch (e) {}
+            }));
+          }
+          console.log(`国交省 川の防災情報 時系列統計計算完了: ${Object.keys(riverSnowMap).length} 観測点`);
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('国交省 川の防災情報取得エラー (道路・アメダスのみで継続):', err.message);
+  }
+
   // 観測所ごとの実測統計計算キャッシュ（同一観測所の重複計算を防止）
   const jmaStatsCache = {};
   const getJmaStationStats = (stationId, officialFallback) => {
@@ -892,8 +1029,68 @@ async function run() {
           }
         }
 
-        // 道路雪量計が有効なら優先採用、そうでなければアメダスを採用
-        liveAmedas = roadLive || jmaLive;
+        // 3. 国交省 川の防災情報（河川・山岳テレメータ積雪計）の評価（最寄り優先）
+        let riverLive = null;
+        const haversineDistSpot = (lat1, lon1, lat2, lon2) => {
+          const R = 6371;
+          const dLat = (lat2 - lat1) * Math.PI / 180;
+          const dLon = (lon2 - lon1) * Math.PI / 180;
+          const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+          return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        };
+
+        let bestRiv = null;
+        let bestRivD = 999;
+        for (const rv of Object.values(riverSnowMap)) {
+          const d = haversineDistSpot(spot.base.lat, spot.base.lon, rv.lat, rv.lon);
+          if (d < bestRivD) {
+            bestRivD = d;
+            bestRiv = rv;
+          }
+        }
+
+        const curBestD = Math.min(
+          (roadLive && typeof spot.roadStationDistKm === 'number') ? spot.roadStationDistKm : 999,
+          (jmaLive && typeof spot.amedasDistKm === 'number') ? spot.amedasDistKm : 999
+        );
+
+        if (bestRiv && bestRivD < curBestD && bestRivD <= 25.0) {
+          // 異常値ガード: 気温 >= 6℃ かつ JMA積雪0cm かつ Open-Meteo山麓積雪0cm でテレメータのみ10cm以上ある場合は除外
+          const refTemp = bestRiv.temp !== null ? bestRiv.temp : (jmaLive ? jmaLive.temp : null);
+          const isAbnormal = (refTemp !== null && refTemp >= 6.0) &&
+                             (!jmaLive || jmaLive.snowDepth === 0 || jmaLive.snowDepth === null) &&
+                             ((baseData.hourly.snow_depth[currentIdx] || 0) === 0) &&
+                             (bestRiv.snow >= 10);
+          if (!isAbnormal) {
+            // テレメータに気温がない場合は近隣アメダスの同期間気温で補完
+            const mergedStats = {};
+            for (const k of ['night', 'h6', 'h12', 'h24']) {
+              const rs = bestRiv.stats[k] || {};
+              const js = jmaLive && jmaLive.stats ? jmaLive.stats[k] : null;
+              mergedStats[k] = {
+                ...rs,
+                tempMax: rs.tempMax !== null && rs.tempMax !== undefined ? rs.tempMax : (js ? js.tempMax : null),
+                tempMin: rs.tempMin !== null && rs.tempMin !== undefined ? rs.tempMin : (js ? js.tempMin : null)
+              };
+            }
+            riverLive = {
+              source: 'mlit_river',
+              stationId: bestRiv.obsFcd,
+              stationName: bestRiv.name,
+              snowDepth: bestRiv.snow,
+              snow1h: null,
+              temp: bestRiv.temp !== null ? bestRiv.temp : (jmaLive ? jmaLive.temp : null),
+              precipitation1h: jmaLive ? jmaLive.precipitation1h : 0,
+              windSpeed: jmaLive ? jmaLive.windSpeed : null,
+              updatedAt: bestRiv.updatedAt || latestJmaTime,
+              snowUpdatedAt: bestRiv.updatedAt || latestSnowTime || latestJmaTime,
+              stats: mergedStats
+            };
+          }
+        }
+
+        // 川の防災情報 > 道路雪量計 > アメダス の順で最寄り優先採用
+        liveAmedas = riverLive || roadLive || jmaLive;
 
         const start6h = Math.max(0, currentIdx - 5);
         const snow6h = Math.round(topData.hourly.snowfall.slice(start6h, currentIdx + 1).reduce((acc, v) => acc + (v || 0), 0) * 10) / 10;

@@ -1493,7 +1493,7 @@
   <!-- ===============================
        UNIFIED I18N MODULE & APPLICATION LOGIC SCRIPT
        =============================== -->
-  <script src="i18n.js?v=20261120_v21"></script>
+  <script src="i18n.js?v=20261126_v22"></script>
   <script>
     // グローバル状態
     let appData = null;
@@ -2358,13 +2358,16 @@
       const amedasTitleEl = document.getElementById('heroAmedasTitle');
       const live = spot.current.liveAmedas;
       const isRoad = live && live.source === 'mlit_road';
+      const isRiver = live && live.source === 'mlit_river';
       const stationName = (live && live.stationName) || spot.amedasName;
       if (amedasTitleEl) {
         if (stationName) {
           amedasTitleEl.removeAttribute('data-i18n');
-          amedasTitleEl.textContent = isRoad
-            ? t('roadStationFormat', { station: tName(stationName) })
-            : t('amedasStationFormat', { station: tName(stationName) });
+          amedasTitleEl.textContent = isRiver
+            ? t('riverStationFormat', { station: tName(stationName) })
+            : (isRoad
+                ? t('roadStationFormat', { station: tName(stationName) })
+                : t('amedasStationFormat', { station: tName(stationName) }));
         } else {
           amedasTitleEl.setAttribute('data-i18n', 'amedasLiveDefault');
           amedasTitleEl.textContent = t('amedasLiveDefault');
@@ -3837,13 +3840,17 @@
         g.maxElevation = g.spots.length > 0 ? g.spots[0].elevation : 0;
         return g;
       }).sort((a, b) => {
+        // パウダーサーチ完全準拠: 降雪量(降順) ➔ 鮮度(昇順:新しい順) ➔ 沈降量(降順:沈んでいない順: 0 > -1 > -2) ➔ 積雪深(降順) ➔ 標高(降順)
         if (b.snowfall !== a.snowfall) return b.snowfall - a.snowfall;
-        const da = a.snowDepth !== null ? a.snowDepth : -1;
-        const db = b.snowDepth !== null ? b.snowDepth : -1;
-        if (db !== da) return db - da;
         const fa = a.freshness !== null ? a.freshness : 999;
         const fb = b.freshness !== null ? b.freshness : 999;
         if (fa !== fb) return fa - fb;
+        const sa = typeof a.subsidence === 'number' ? a.subsidence : 0;
+        const sb = typeof b.subsidence === 'number' ? b.subsidence : 0;
+        if (sb !== sa) return sb - sa;
+        const da = a.snowDepth !== null ? a.snowDepth : -1;
+        const db = b.snowDepth !== null ? b.snowDepth : -1;
+        if (db !== da) return db - da;
         return b.maxElevation - a.maxElevation;
       }).slice(0, 30);
 
@@ -5047,8 +5054,9 @@
             </div>
           `;
         } else if (live) {
+          const isRiver = live.source === 'mlit_river';
           const isRoad = live.source === 'mlit_road';
-          const stBadge = isRoad ? t('rankLiveStationRoad') : t('rankLiveStationAmedas');
+          const stBadge = isRiver ? t('rankLiveStationRiver') : (isRoad ? t('rankLiveStationRoad') : t('rankLiveStationAmedas'));
           const stName = tName(live.stationName);
           const stDepth = typeof live.snowDepth === 'number' ? `${live.snowDepth}cm` : '--';
           const sNight = (live.stats && live.stats.night && typeof live.stats.night.snowfall === 'number') ? live.stats.night.snowfall : (typeof live.snow1h === 'number' ? live.snow1h : 0);
