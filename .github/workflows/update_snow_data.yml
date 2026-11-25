@@ -52,7 +52,7 @@ jobs:
           git add data_japan.json scripts/notification_history.json scripts/road_snow_history.json
           if ! git diff --quiet || ! git diff --staged --quiet; then
             git commit -m "chore: ❄️ 自動データ巡回更新 [skip ci]"
-            git pull --rebase origin main || true
+            git pull --rebase -X theirs origin main
             git push origin main
           fi
 
