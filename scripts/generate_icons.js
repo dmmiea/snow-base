@@ -4,78 +4,63 @@ const path = require('path');
 const iconDir = path.join(__dirname, '..', 'icons');
 if (!fs.existsSync(iconDir)) fs.mkdirSync(iconDir, { recursive: true });
 
-// 美しいSVGアイコンを作成
+// 正式アイコン：サーフベース姉妹デザイン「白単色P（3-B3 Slim）＋ 右下JPゴールドメダル」
 const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0b132b" />
-      <stop offset="50%" stop-color="#1c2541" />
-      <stop offset="100%" stop-color="#0284c7" />
-    </linearGradient>
-    <linearGradient id="mtn1" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="35%" stop-color="#e0f2fe" />
-      <stop offset="100%" stop-color="#38bdf8" />
-    </linearGradient>
-    <linearGradient id="mtn2" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#bae6fd" />
-      <stop offset="100%" stop-color="#0284c7" />
-    </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="8" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <filter id="shadowFlat1" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="2" dy="5" stdDeviation="6" flood-color="#000000" flood-opacity="0.35"/>
     </filter>
   </defs>
 
-  <!-- Background rounded rectangle -->
-  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+  <!-- 背景（サーフベース完全同色 #0284c7） -->
+  <rect width="512" height="512" rx="108" fill="#0284c7"/>
 
-  <!-- Background mountain -->
-  <polygon points="90,410 210,210 330,410" fill="url(#mtn2)" opacity="0.75" />
-  <polygon points="210,210 240,260 210,275 180,260" fill="#ffffff" opacity="0.9" />
-
-  <!-- Main front mountain -->
-  <polygon points="170,410 330,150 490,410" fill="url(#mtn1)" />
-  <!-- Snowcap -->
-  <polygon points="330,150 375,225 345,245 330,225 315,245 285,225" fill="#ffffff" />
-
-  <!-- Glowing Snowflake Icon -->
-  <g transform="translate(140, 140)" filter="url(#glow)">
-    <circle cx="0" cy="0" r="28" fill="#38bdf8" opacity="0.3" />
-    <path d="M0,-46 L0,46 M-46,0 L46,0 M-32,-32 L32,32 M-32,32 L32,-32" stroke="#ffffff" stroke-width="6" stroke-linecap="round" />
-    <!-- Branch details -->
-    <path d="M0,-28 L-10,-38 M0,-28 L10,-38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
-    <path d="M0,28 L-10,38 M0,28 L10,38" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
-    <path d="M-28,0 L-38,-10 M-28,0 L-38,10" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
-    <path d="M28,0 L38,-10 M28,0 L38,10" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
-    <circle cx="0" cy="0" r="7" fill="#38bdf8" />
+  <!-- Pマーク（白単色・3-B3 Slim） -->
+  <g transform="translate(-8, -8)">
+    <!-- 前傾スウォッシュ軸（細身＆シャープ） -->
+    <path d="M 64 436
+             C 122 382, 166 232, 206 110
+             C 222 86, 274 80, 348 86
+             C 418 92, 456 124, 462 164
+             C 432 134, 390 116, 336 116
+             C 278 116, 244 136, 232 178
+             C 214 242, 194 316, 166 372
+             C 140 404, 102 426, 64 436 Z" fill="#ffffff" />
+    <!-- ループ後半 -->
+    <path d="M 398 116
+             C 444 136, 456 184, 436 236
+             C 412 292, 344 318, 256 306
+             C 224 302, 198 292, 180 278
+             C 214 278, 250 274, 286 266
+             C 348 252, 386 226, 396 188
+             C 404 156, 390 132, 360 118 Z" fill="#ffffff" />
   </g>
 
-  <!-- App Label Accent -->
-  <text x="256" y="462" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="31" font-weight="900" fill="#ffffff" letter-spacing="4" text-anchor="middle" opacity="0.95">POWDER BASE</text>
+  <!-- 右下：ゴールド単色ラウンドバッジ × 黒文字JP（サーフベース完全同一仕様） -->
+  <g transform="translate(390, 390)" filter="url(#shadowFlat1)">
+    <circle cx="0" cy="0" r="70" fill="#d4af37"/>
+    <circle cx="0" cy="0" r="62" fill="none" stroke="#0f172a" stroke-width="2" stroke-opacity="0.25" stroke-dasharray="5 3"/>
+    <text x="0" y="16" font-family="-apple-system, BlinkMacSystemFont, 'Arial Black', sans-serif" font-size="46" font-weight="900" fill="#0f172a" text-anchor="middle" letter-spacing="2">JP</text>
+    <polygon points="0,-36 3,-28 11,-28 5,-23 7,-15 0,-19 -7,-15 -5,-23 -11,-28 -3,-28" fill="#0f172a"/>
+  </g>
 </svg>`;
 
 const svgPath = path.join(iconDir, 'icon.svg');
 fs.writeFileSync(svgPath, svgContent, 'utf8');
-
-// 192x192, 512x512用にも対応できるようにコピー・保存
 fs.writeFileSync(path.join(iconDir, 'icon-192.svg'), svgContent, 'utf8');
 fs.writeFileSync(path.join(iconDir, 'icon-512.svg'), svgContent, 'utf8');
 
 // sharp で各サイズの PNG を自動生成
-try {
-  const sharp = require('sharp');
-  const svgBuffer = Buffer.from(svgContent);
-  
-  Promise.all([
-    sharp(svgBuffer).resize(180, 180).png().toFile(path.join(iconDir, 'apple-touch-icon-180.png')),
-    sharp(svgBuffer).resize(192, 192).png().toFile(path.join(iconDir, 'icon-192.png')),
-    sharp(svgBuffer).resize(512, 512).png().toFile(path.join(iconDir, 'icon-512.png'))
-  ]).then(() => {
-    console.log('✅ SVG and PNG icons (180, 192, 512) generated successfully with sharp!');
-  }).catch(err => {
-    console.error('❌ Error generating PNGs with sharp:', err);
-  });
-} catch (e) {
-  console.log('⚠️ sharp is not installed, only SVGs generated.');
-}
+const sharp = require('sharp');
+const svgBuffer = Buffer.from(svgContent);
+
+Promise.all([
+  sharp(svgBuffer).resize(180, 180).png().toFile(path.join(iconDir, 'apple-touch-icon-180.png')),
+  sharp(svgBuffer).resize(192, 192).png().toFile(path.join(iconDir, 'icon-192.png')),
+  sharp(svgBuffer).resize(512, 512).png().toFile(path.join(iconDir, 'icon-512.png'))
+]).then(() => {
+  console.log('✅ Official SVG and PNG icons (180, 192, 512) generated successfully!');
+}).catch(err => {
+  console.error('❌ Error generating PNGs with sharp:', err);
+  process.exit(1);
+});
