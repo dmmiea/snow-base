@@ -533,10 +533,11 @@
               <span class="text-[9px] font-black px-1 py-0.2 rounded bg-emerald-100 text-emerald-800 border border-emerald-300" data-i18n="naturalSnowEstBadge">自然雪推定</span>
               <span class="font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
             </div>
-            <!-- スキー場用: 気温 & 強風注意 -->
+            <!-- スキー場用: 気温 & 風速 & 強風注意 -->
             <div id="heroBaseCondWrap" class="flex items-center gap-2 shrink-0">
               <span id="heroLiftAlertBadge" class="hidden text-[10px] font-black px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300 whitespace-nowrap" data-i18n="windLiftAlert">⚠️運休注意</span>
               <span id="heroBaseCondTemp" class="font-teko text-xl sm:text-2xl font-black text-slate-800 whitespace-nowrap">--℃</span>
+              <span id="heroBaseCondWind" class="font-teko text-lg sm:text-xl font-bold text-slate-800 whitespace-nowrap">--m/s</span>
             </div>
           </div>
         </div>
@@ -711,22 +712,22 @@
          TREND CHART (実績＋予報シームレス連結)
          =============================== -->
     <div class="snow-card rounded-2xl p-4">
-      <div class="flex items-center justify-between mb-2">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
         <h3 class="text-sm font-black text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
           <i class="fa-solid fa-chart-line text-sky-700"></i>
           <span data-i18n="trendTitle">SNOW TREND（過去24h・7日予報）</span>
           <button type="button" onclick="openHelpModal('trend')" class="w-4 h-4 rounded-full bg-slate-200/90 hover:bg-sky-100 text-slate-500 hover:text-sky-700 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" data-i18n-title="trendHelpTitle" title="トレンドグラフの解説"><i class="fa-solid fa-circle-info"></i></button>
         </h3>
-        <div class="flex items-center gap-1.5">
+        <div class="flex items-center gap-1.5 ml-auto shrink-0">
           <!-- BC専用: 積雪深 / 山頂気温(0℃線) 切替ピル -->
           <div id="trendBcMetricGroup" class="hidden flex bg-emerald-50 rounded-lg p-0.5 border border-emerald-300 text-[11px]">
-            <button id="btnTrendBcDepth" onclick="setTrendBcMetric('depth')" class="px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm" data-i18n="trendBcDepthBtn">積雪深</button>
-            <button id="btnTrendBcTemp" onclick="setTrendBcMetric('temp')" class="px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold" data-i18n="trendBcTempBtn">気温(0℃線)</button>
+            <button id="btnTrendBcDepth" onclick="setTrendBcMetric('depth')" class="px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm whitespace-nowrap" data-i18n="trendBcDepthBtn">積雪深</button>
+            <button id="btnTrendBcTemp" onclick="setTrendBcMetric('temp')" class="px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold whitespace-nowrap" data-i18n="trendBcTempBtn">気温(0℃線)</button>
           </div>
           <!-- 期間切替（7日間 / 48h） -->
           <div class="flex bg-slate-100 rounded-lg p-0.5 border border-slate-300 text-[11px]">
-            <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-white bg-sky-700 font-bold" data-i18n="trend7dBtn">7日間</button>
-            <button id="btnTrend48h" onclick="setTrendRange('48h')" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold">48h</button>
+            <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-white bg-sky-700 font-bold whitespace-nowrap" data-i18n="trend7dBtn">7日間</button>
+            <button id="btnTrend48h" onclick="setTrendRange('48h')" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold whitespace-nowrap">48h</button>
           </div>
         </div>
       </div>
@@ -2304,6 +2305,7 @@
         const tTopEl = document.getElementById('heroTopCondTemp');
         const wTopEl = document.getElementById('heroTopCondWind');
         const tBaseEl = document.getElementById('heroBaseCondTemp');
+        const wBaseEl = document.getElementById('heroBaseCondWind');
         const liftBadge = document.getElementById('heroLiftAlertBadge');
         if (tTopEl) tTopEl.textContent = `${spot.current.topTemp}℃`;
         if (tBaseEl) tBaseEl.textContent = `${spot.current.baseTemp}℃`;
@@ -2312,8 +2314,25 @@
           const wStyle = getWindColorStyle(wSpd);
           wTopEl.innerHTML = `<span class="${wStyle.text}">${wSpd} m/s</span>`;
         }
+
+        // ベース風速（current.baseWindSpeed または baseHourly.windSpeed の現在時刻インデックスから取得）
+        let baseWSpd = 0;
+        if (spot.current && typeof spot.current.baseWindSpeed === 'number') {
+          baseWSpd = spot.current.baseWindSpeed;
+        } else if (spot.baseHourly && spot.baseHourly.windSpeed && spot.baseHourly.time) {
+          const jstNow = new Date(Date.now() + 9 * 3600000);
+          const currentHourStr = jstNow.toISOString().slice(0, 13);
+          let bIdx = spot.baseHourly.time.findIndex(t => t.startsWith(currentHourStr));
+          if (bIdx === -1) bIdx = 24;
+          baseWSpd = Math.round(Number(spot.baseHourly.windSpeed[bIdx] || 0) * 10) / 10;
+        }
+        if (wBaseEl) {
+          const bwStyle = getWindColorStyle(baseWSpd);
+          wBaseEl.innerHTML = `<span class="${bwStyle.text}">${baseWSpd} m/s</span>`;
+        }
+
         if (liftBadge) {
-          if (wSpd >= 15) liftBadge.classList.remove('hidden');
+          if (wSpd >= 15 || baseWSpd >= 15) liftBadge.classList.remove('hidden');
           else liftBadge.classList.add('hidden');
         }
       }
@@ -2721,11 +2740,11 @@
       const btnTemp = document.getElementById('btnTrendBcTemp');
       if (btnDepth && btnTemp) {
         if (metric === 'depth') {
-          btnDepth.className = "px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm";
-          btnTemp.className = "px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold";
+          btnDepth.className = "px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm whitespace-nowrap";
+          btnTemp.className = "px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold whitespace-nowrap";
         } else {
-          btnDepth.className = "px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold";
-          btnTemp.className = "px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm";
+          btnDepth.className = "px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold whitespace-nowrap";
+          btnTemp.className = "px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm whitespace-nowrap";
         }
       }
       const spot = appData.spots.find(s => s.id === currentSpotId);
@@ -2735,11 +2754,11 @@
     function setTrendRange(range) {
       currentTrendRange = range;
       document.getElementById('btnTrend7d').className = range === '7d'
-        ? "px-2 py-0.5 rounded text-white bg-sky-700 font-bold"
-        : "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold";
+        ? "px-2 py-0.5 rounded text-white bg-sky-700 font-bold whitespace-nowrap"
+        : "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold whitespace-nowrap";
       document.getElementById('btnTrend48h').className = range === '48h'
-        ? "px-2 py-0.5 rounded text-white bg-sky-700 font-bold"
-        : "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold";
+        ? "px-2 py-0.5 rounded text-white bg-sky-700 font-bold whitespace-nowrap"
+        : "px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold whitespace-nowrap";
       const spot = appData.spots.find(s => s.id === currentSpotId);
       if (spot) renderTrendChart(spot);
     }

@@ -1111,6 +1111,7 @@ async function run() {
             topTemp: Math.round(topData.hourly.temperature_2m[currentIdx] * 10) / 10,
             baseTemp: Math.round(baseData.hourly.temperature_2m[currentIdx] * 10) / 10,
             windSpeed: Math.round(topData.hourly.wind_speed_10m[currentIdx] * 10) / 10,
+            baseWindSpeed: Math.round(baseData.hourly.wind_speed_10m[currentIdx] * 10) / 10,
             windDirection: topData.hourly.wind_direction_10m ? topData.hourly.wind_direction_10m[currentIdx] : null,
             windDirText: getWindDirDisplay(topData.hourly.wind_direction_10m ? topData.hourly.wind_direction_10m[currentIdx] : null),
             weatherCode: topData.hourly.weather_code[currentIdx],
