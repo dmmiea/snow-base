@@ -348,38 +348,38 @@
   <!-- ===============================
        1. TOP APP BAR
        =============================== -->
-  <header id="appHeader" class="bg-white border-b border-slate-200 px-3 sm:px-4 shadow-sm sticky top-0 z-50" style="padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-bottom: 8px;">
-    <div class="max-w-md mx-auto flex items-center justify-between gap-2">
-      <div onclick="resetToHomeTop()" class="flex items-center space-x-1.5 sm:space-x-2 cursor-pointer active:scale-95 transition select-none min-w-0" data-i18n-title="headerHomeTitle" title="ホーム先頭へ戻る">
-        <div class="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-xl overflow-hidden shadow-sm border border-slate-200/80">
+  <header id="appHeader" class="bg-white border-b border-slate-200 px-2.5 sm:px-4 shadow-sm sticky top-0 z-50" style="padding-top: calc(env(safe-area-inset-top, 0px) + 8px); padding-bottom: 8px;">
+    <div class="max-w-md mx-auto flex items-center justify-between gap-1.5 sm:gap-2">
+      <div onclick="resetToHomeTop()" class="flex items-center space-x-1 sm:space-x-2 cursor-pointer active:scale-95 transition select-none min-w-0" data-i18n-title="headerHomeTitle" title="ホーム先頭へ戻る">
+        <div class="w-6 h-6 sm:w-8 sm:h-8 shrink-0 rounded-lg sm:rounded-xl overflow-hidden shadow-sm border border-slate-200/80">
           <img src="icons/apple-touch-icon-180.png" alt="POWDER BASE" class="w-full h-full object-cover">
         </div>
-        <h1 class="flex items-center space-x-1.5 m-0 p-0 font-normal min-w-0">
-          <span class="font-teko text-xl sm:text-2xl font-bold tracking-wider text-slate-900 leading-none uppercase whitespace-nowrap">POWDER BASE</span>
-          <span class="text-[11px] sm:text-[11px] px-1.5 py-0.2 rounded-md bg-sky-50 text-sky-800 font-extrabold border border-sky-300 shrink-0 whitespace-nowrap">JAPAN</span>
+        <h1 class="flex items-center space-x-1 sm:space-x-1.5 m-0 p-0 font-normal min-w-0">
+          <span class="font-teko text-lg sm:text-2xl font-bold tracking-wider text-slate-900 leading-none uppercase whitespace-nowrap">POWDER BASE</span>
+          <span class="text-[9.5px] sm:text-[11px] px-1 sm:px-1.5 py-0.2 rounded bg-sky-50 text-sky-800 font-extrabold border border-sky-300 shrink-0 whitespace-nowrap">JAPAN</span>
         </h1>
       </div>
       
-      <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+      <div class="flex items-center space-x-1 sm:space-x-2 shrink-0">
         <!-- プッシュ通知設定ボタン -->
-        <button id="btnNotification" onclick="openNotificationModal()" class="relative w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 transition flex items-center justify-center border border-slate-300 active:scale-95 shadow-sm shrink-0" data-i18n-title="headerNotifTitle" title="雪予報プッシュ通知設定">
+        <button id="btnNotification" onclick="openNotificationModal()" class="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 transition flex items-center justify-center border border-slate-300 active:scale-95 shadow-sm shrink-0" data-i18n-title="headerNotifTitle" title="雪予報プッシュ通知設定">
           <i class="fa-regular fa-bell text-sky-700 text-xs sm:text-sm"></i>
-          <span id="notifActiveDot" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white"></span>
+          <span id="notifActiveDot" class="hidden absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white"></span>
         </button>
 
         <!-- 検索ボタン -->
-        <button id="btnOpenSearch" onclick="openSearchModal()" class="h-8 px-2 sm:px-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 transition flex items-center gap-1 text-xs font-bold border border-slate-300 active:scale-95 shadow-sm whitespace-nowrap shrink-0">
+        <button id="btnOpenSearch" onclick="openSearchModal()" class="h-7 sm:h-8 px-1.5 sm:px-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 transition flex items-center gap-1 text-[11px] sm:text-xs font-bold border border-slate-300 active:scale-95 shadow-sm whitespace-nowrap shrink-0">
           <i class="fa-solid fa-magnifying-glass text-sky-700 text-xs"></i>
           <span data-i18n="searchBtn">検索</span>
         </button>
 
         <!-- LIVE インジケーター (タップで手動更新) -->
-        <button type="button" onclick="loadData(true)" title="タップして最新データを再取得" class="text-right whitespace-nowrap pl-1.5 border-l border-slate-200 shrink-0 cursor-pointer hover:opacity-80 active:scale-95 transition">
+        <button type="button" onclick="loadData(true)" title="タップして最新データを再取得" class="text-right whitespace-nowrap pl-1 sm:pl-1.5 border-l border-slate-200 shrink-0 cursor-pointer hover:opacity-80 active:scale-95 transition">
           <div class="flex items-center justify-end space-x-1">
-            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-            <span class="text-[11px] font-extrabold text-emerald-700">LIVE</span>
+            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+            <span class="text-[10px] sm:text-[11px] font-extrabold text-emerald-700">LIVE</span>
           </div>
-          <span id="lastUpdated" class="text-[11px] text-slate-600 font-bold whitespace-nowrap block" data-i18n="loadingShort">読込中...</span>
+          <span id="lastUpdated" class="text-[10px] sm:text-[11px] text-slate-600 font-bold whitespace-nowrap block" data-i18n="loadingShort">読込中...</span>
         </button>
       </div>
     </div>
@@ -4745,7 +4745,7 @@
                     <span class="truncate">${stName} <strong class="text-slate-900">${stDepth}</strong></span>
                   </div>
                   <div class="text-slate-600 shrink-0 text-right">
-                    <span class="${sNight > 0 ? 'text-orange-700 font-black' : ''}">夜間+${sNight}cm</span>
+                    <span class="${sNight > 0 ? 'text-orange-700 font-black' : ''}">${sNight > 0 ? t('nightPlusFormat', { n: sNight }) : t('nightPlusZero')}</span>
                     ${freshText ? `<span class="text-slate-500 ml-1">/ ${freshText}</span>` : ''}
                   </div>
                 </div>
@@ -5423,7 +5423,7 @@
                 <span class="truncate">${stName} <strong class="text-slate-900">${stDepth}</strong></span>
               </div>
               <div class="text-slate-600 font-bold shrink-0 text-right">
-                <span class="${sNight > 0 ? 'text-orange-700 font-black' : ''}">夜間+${sNight}cm</span>
+                <span class="${sNight > 0 ? 'text-orange-700 font-black' : ''}">${sNight > 0 ? t('nightPlusFormat', { n: sNight }) : t('nightPlusZero')}</span>
                 ${freshText ? `<span class="text-slate-500 ml-1">/ ${freshText}</span>` : ''}
               </div>
             </div>

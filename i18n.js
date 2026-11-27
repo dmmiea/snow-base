@@ -111,8 +111,8 @@
       overnightHeader: 'OVERNIGHT SNOW (18時〜翌06時)',
       heroNightToggleThis: '今朝',
       heroNightToggleNext: '明朝',
-      heroNightHeaderThis: '今朝の実績 ({date} 06:00)',
-      heroNightHeaderNext: '明朝の予報 ({date} 06:00)',
+      heroNightHeaderThis: '今朝の実績 ({date})',
+      heroNightHeaderNext: '明朝の予報 ({date})',
       overnightThisMorningWithDate: '今朝({date})',
       overnightNextMorningWithDate: '明朝({date})',
       thisMorningNightSnowDate: '今朝 新雪 ({date})',
@@ -325,6 +325,8 @@
       minAgoFormat: '{n}分前',
       hourAgoFormat: '{n}時間前',
       dayAgoFormat: '{n}日前',
+      nightPlusFormat: '夜間+{n}cm',
+      nightPlusZero: '夜間+0cm',
 
       // Saved (My Spots) Tab
       mySpotsTitle: 'MYスポット一覧',
@@ -531,8 +533,8 @@
       overnightHeader: 'OVERNIGHT (18-06h)',
       heroNightToggleThis: 'This AM',
       heroNightToggleNext: 'Next AM',
-      heroNightHeaderThis: 'This AM Actual ({date} 06:00)',
-      heroNightHeaderNext: 'Tomorrow AM Forecast ({date} 06:00)',
+      heroNightHeaderThis: 'This AM ({date})',
+      heroNightHeaderNext: 'Next AM ({date})',
       overnightThisMorningWithDate: 'This AM({date})',
       overnightNextMorningWithDate: 'Next AM({date})',
       thisMorningNightSnowDate: 'This AM Snow ({date})',
@@ -745,6 +747,8 @@
       minAgoFormat: '{n}m ago',
       hourAgoFormat: '{n}h ago',
       dayAgoFormat: '{n}d ago',
+      nightPlusFormat: 'Night +{n}cm',
+      nightPlusZero: 'Night +0cm',
 
       // Saved (My Spots) Tab
       mySpotsTitle: 'Saved Spots',

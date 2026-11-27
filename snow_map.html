@@ -192,23 +192,23 @@
   <!-- ===============================
        1. マップヘッダー（1行スリム設計・折り返し防止）
        =============================== -->
-  <header class="bg-white text-slate-900 px-3 py-1.5 shadow-sm z-20 border-b border-slate-200 flex items-center justify-between shrink-0 gap-2">
+  <header class="bg-white text-slate-900 px-2 sm:px-3 py-1 shadow-sm z-20 border-b border-slate-200 flex items-center justify-between shrink-0 gap-1.5 overflow-x-auto hide-scrollbar">
     <!-- 予報 / 実測 トグル（左側） -->
-    <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold shrink-0">
-      <button type="button" onclick="setMapSource('forecast')" id="btnSourceForecast" class="px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition whitespace-nowrap">
+    <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[10.5px] sm:text-[11px] font-bold shrink-0">
+      <button type="button" onclick="setMapSource('forecast')" id="btnSourceForecast" class="px-2 sm:px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition whitespace-nowrap">
         🔮 予報
       </button>
-      <button type="button" onclick="setMapSource('live')" id="btnSourceLive" class="px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
+      <button type="button" onclick="setMapSource('live')" id="btnSourceLive" class="px-2 sm:px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
         📡 実測
       </button>
     </div>
 
     <!-- スキー場 / BC山 トグル（右側） -->
-    <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[11px] font-bold shrink-0">
-      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition whitespace-nowrap">
+    <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-300 text-[10.5px] sm:text-[11px] font-bold shrink-0">
+      <button type="button" onclick="filterCategory('ski')" id="btnCatSki" class="px-2 sm:px-2.5 py-1 rounded bg-sky-700 text-white font-black shadow-sm transition whitespace-nowrap">
         🏂 スキー場
       </button>
-      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
+      <button type="button" onclick="filterCategory('bc')" id="btnCatBc" class="px-2 sm:px-2.5 py-1 rounded text-slate-700 hover:text-slate-900 transition whitespace-nowrap">
         ⛰️ BC山
       </button>
     </div>
@@ -379,8 +379,8 @@
         regGunma: '群馬・尾瀬',
         regHokuriku: '北陸',
         regWest: '西日本・中四国',
-        legendTitle: '🌙 凡例（夜間新雪）',
-        legendTitleLive: '📡 凡例（実測降雪）',
+        legendTitle: '凡例（夜間新雪）',
+        legendTitleLive: '凡例（実測降雪）',
         legWaist: '腰パウ (80cm+)',
         legThigh: 'モモパウ (50〜79cm)',
         legKnee: 'ヒザパウ (30〜49cm)',
@@ -431,7 +431,7 @@
       en: {
         title: 'Japan Snow Map',
         countSuffix: ' Spots',
-        catSki: '🏂 Ski Resort',
+        catSki: '🏂 Ski',
         catBc: '⛰️ Backcountry',
         sourceForecast: '🔮 Forecast',
         sourceLive: '📡 Observed',
@@ -450,8 +450,8 @@
         regGunma: 'Gunma',
         regHokuriku: 'Hokuriku',
         regWest: 'West',
-        legendTitle: '🌙 Snowfall Legend',
-        legendTitleLive: '📡 Observed Snow Legend',
+        legendTitle: 'Snowfall Legend',
+        legendTitleLive: 'Observed Snow Legend',
         legWaist: 'Waist (80cm+)',
         legThigh: 'Thigh (50-79cm)',
         legKnee: 'Knee (30-49cm)',
