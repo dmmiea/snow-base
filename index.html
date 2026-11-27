@@ -508,8 +508,11 @@
               </span>
               <span id="heroTopLabel" class="text-[11px] text-slate-600 font-medium truncate block max-w-[130px]">八方池山荘</span>
             </div>
-            <!-- BC用: 積雪深 -->
-            <span id="heroTopSnowWrap" class="hidden font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroTopSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
+            <!-- BC用: 積雪深（自然雪推定） -->
+            <div id="heroTopSnowWrap" class="hidden flex items-baseline gap-1 shrink-0">
+              <span class="text-[9px] font-black px-1 py-0.2 rounded bg-emerald-100 text-emerald-800 border border-emerald-300" data-i18n="naturalSnowEstBadge">自然雪推定</span>
+              <span class="font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroTopSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
+            </div>
             <!-- スキー場用: 気温 & 風速 -->
             <div id="heroTopCondWrap" class="flex items-center gap-2 shrink-0">
               <span id="heroTopCondTemp" class="font-teko text-xl sm:text-2xl font-black text-sky-800 whitespace-nowrap">--℃</span>
@@ -525,8 +528,11 @@
               </span>
               <span id="heroBaseLabel" class="text-[11px] text-slate-600 font-medium truncate block max-w-[130px]">八方ゴンドラ山麓駅</span>
             </div>
-            <!-- BC用: 積雪深 -->
-            <span id="heroBaseSnowWrap" class="hidden font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
+            <!-- BC用: 積雪深（自然雪推定） -->
+            <div id="heroBaseSnowWrap" class="hidden flex items-baseline gap-1 shrink-0">
+              <span class="text-[9px] font-black px-1 py-0.2 rounded bg-emerald-100 text-emerald-800 border border-emerald-300" data-i18n="naturalSnowEstBadge">自然雪推定</span>
+              <span class="font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
+            </div>
             <!-- スキー場用: 気温 & 強風注意 -->
             <div id="heroBaseCondWrap" class="flex items-center gap-2 shrink-0">
               <span id="heroLiftAlertBadge" class="hidden text-[10px] font-black px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300 whitespace-nowrap" data-i18n="windLiftAlert">⚠️運休注意</span>
@@ -711,9 +717,17 @@
           <span data-i18n="trendTitle">SNOW TREND（過去24h・7日予報）</span>
           <button type="button" onclick="openHelpModal('trend')" class="w-4 h-4 rounded-full bg-slate-200/90 hover:bg-sky-100 text-slate-500 hover:text-sky-700 inline-flex items-center justify-center transition active:scale-95 text-[10px] shrink-0" data-i18n-title="trendHelpTitle" title="トレンドグラフの解説"><i class="fa-solid fa-circle-info"></i></button>
         </h3>
-        <div class="flex bg-slate-100 rounded-lg p-0.5 border border-slate-300 text-[11px]">
-          <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-white bg-sky-700 font-bold" data-i18n="trend7dBtn">7日間</button>
-          <button id="btnTrend48h" onclick="setTrendRange('48h')" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold">48h</button>
+        <div class="flex items-center gap-1.5">
+          <!-- BC専用: 積雪深 / 山頂気温(0℃線) 切替ピル -->
+          <div id="trendBcMetricGroup" class="hidden flex bg-emerald-50 rounded-lg p-0.5 border border-emerald-300 text-[11px]">
+            <button id="btnTrendBcDepth" onclick="setTrendBcMetric('depth')" class="px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm" data-i18n="trendBcDepthBtn">積雪深</button>
+            <button id="btnTrendBcTemp" onclick="setTrendBcMetric('temp')" class="px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold" data-i18n="trendBcTempBtn">気温(0℃線)</button>
+          </div>
+          <!-- 期間切替（7日間 / 48h） -->
+          <div class="flex bg-slate-100 rounded-lg p-0.5 border border-slate-300 text-[11px]">
+            <button id="btnTrend7d" onclick="setTrendRange('7d')" class="px-2 py-0.5 rounded text-white bg-sky-700 font-bold" data-i18n="trend7dBtn">7日間</button>
+            <button id="btnTrend48h" onclick="setTrendRange('48h')" class="px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold">48h</button>
+          </div>
         </div>
       </div>
       <div class="w-full h-48 relative">
@@ -2699,6 +2713,25 @@
     }
 
     // トレンドグラフ表示期間切替（7日間 ⇄ 48h）
+    let currentTrendBcMetric = 'depth'; // 'depth' または 'temp'
+
+    function setTrendBcMetric(metric) {
+      currentTrendBcMetric = metric;
+      const btnDepth = document.getElementById('btnTrendBcDepth');
+      const btnTemp = document.getElementById('btnTrendBcTemp');
+      if (btnDepth && btnTemp) {
+        if (metric === 'depth') {
+          btnDepth.className = "px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm";
+          btnTemp.className = "px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold";
+        } else {
+          btnDepth.className = "px-2 py-0.5 rounded text-emerald-900 hover:text-emerald-950 font-bold";
+          btnTemp.className = "px-2 py-0.5 rounded text-white bg-emerald-700 font-bold shadow-sm";
+        }
+      }
+      const spot = appData.spots.find(s => s.id === currentSpotId);
+      if (spot) renderTrendChart(spot);
+    }
+
     function setTrendRange(range) {
       currentTrendRange = range;
       document.getElementById('btnTrend7d').className = range === '7d'
@@ -2833,8 +2866,9 @@
             c.restore();
           }
 
-          // スキー場モード時：気温 0℃ 基準線（雨雪境界・融解ライン）
-          if (spot.category !== 'bc' && chart.scales.yDepth) {
+          // 気温 0℃ 基準線（スキー場、またはBCモードで気温選択時）
+          const showZeroLine = (spot.category !== 'bc') || (spot.category === 'bc' && currentTrendBcMetric === 'temp');
+          if (showZeroLine && chart.scales.yDepth) {
             const yZero = chart.scales.yDepth.getPixelForValue(0);
             if (yZero >= top && yZero <= bottom) {
               const { left, right } = chart.chartArea;
@@ -2855,16 +2889,25 @@
         }
       };
 
-      const isBcChart = spot.category === 'bc';
+      const isBc = spot.category === 'bc';
+      const isBcDepth = isBc && currentTrendBcMetric === 'depth';
+
+      // BC専用メトリック切替ピルの表示制御
+      const trendBcMetricGroup = document.getElementById('trendBcMetricGroup');
+      if (trendBcMetricGroup) {
+        if (isBc) trendBcMetricGroup.classList.remove('hidden');
+        else trendBcMetricGroup.classList.add('hidden');
+      }
+
       const legendPrimaryEl = document.getElementById('trendLegendPrimary');
       const legendZeroEl = document.getElementById('trendLegendZeroLine');
       if (legendPrimaryEl) {
-        const lKey = isBcChart ? 'legendSnowDepth' : 'legendTopTemp';
+        const lKey = isBcDepth ? 'legendSnowDepth' : 'legendTopTemp';
         legendPrimaryEl.setAttribute('data-i18n', lKey);
         legendPrimaryEl.textContent = t(lKey);
       }
       if (legendZeroEl) {
-        if (isBcChart) legendZeroEl.classList.add('hidden');
+        if (isBcDepth) legendZeroEl.classList.add('hidden');
         else legendZeroEl.classList.remove('hidden');
       }
 
@@ -2873,7 +2916,7 @@
         data: {
           labels: labels,
           datasets: [
-            isBcChart ? {
+            isBcDepth ? {
               type: 'line',
               label: t('legendSnowDepth'),
               data: depthData,
@@ -2969,9 +3012,9 @@
             },
             yDepth: {
               position: 'left',
-              beginAtZero: isBcChart,
-              suggestedMin: isBcChart ? 0 : -12,
-              suggestedMax: isBcChart ? 10 : 4,
+              beginAtZero: isBcDepth,
+              suggestedMin: isBcDepth ? 0 : -12,
+              suggestedMax: isBcDepth ? 10 : 4,
               grid: { color: isDark ? 'rgba(148, 163, 184, 0.15)' : 'rgba(148, 163, 184, 0.25)' },
               ticks: { color: isDark ? '#38bdf8' : '#0369a1', font: { size: 9, weight: 'bold' }, precision: 0 }
             },
@@ -3272,6 +3315,7 @@
       let sumWind = 0;
       let windCount = 0;
       let rainSum = 0;
+      let weatherCodes = [];
       const h = spot.topHourly;
       if (h && Array.isArray(h.time)) {
         for (let i = 0; i < h.time.length; i++) {
@@ -3284,6 +3328,9 @@
               sumWind += w;
               windCount++;
               rainSum += h.rain ? (Number(h.rain[i]) || 0) : 0;
+              if (h.weatherCode && h.weatherCode[i] !== undefined) {
+                weatherCodes.push(h.weatherCode[i]);
+              }
             }
           }
         }
@@ -3291,7 +3338,8 @@
       return {
         maxWind: Math.round(maxWind * 10) / 10,
         avgWind: windCount > 0 ? Math.round((sumWind / windCount) * 10) / 10 : 0,
-        rainSum: Math.round(rainSum * 10) / 10
+        rainSum: Math.round(rainSum * 10) / 10,
+        weatherCodes: weatherCodes
       };
     }
 
@@ -3305,8 +3353,62 @@
         const isColdNoRain = stats.rainSum === 0 && (day.maxTemp === undefined || day.maxTemp <= 1.0);
         return hasSnow && isCalm && isColdNoRain;
       }
-      // BC基準（Step 2でさらに厳格化予定）
-      return (nightVal >= 10 || totalSnow >= 15) && stats.maxWind < 13 && stats.rainSum === 0;
+
+      // ⛰️ BC厳格新基準（安全ゲート + パウダー条件 + 視界/微風）
+      // Gate 1: 当日で現在入山警戒HIGHの場合は除外
+      const jstNow = new Date(Date.now() + 9 * 3600000);
+      const todayStr = jstNow.toISOString().slice(0, 10);
+      if (day.date === todayStr && spot.current && spot.current.bcAlert && spot.current.bcAlert.level === 'HIGH') {
+        return false;
+      }
+
+      // Gate 2: ドカ雪除外（24hまたは夜間40cm以上の急増雪による表層雪崩警戒）
+      if (nightVal >= 40 || totalSnow >= 40) {
+        return false;
+      }
+
+      // Gate 3: 薮・地形露出リスク除外（自然積雪深100cm未満）
+      let estDepth = (spot.current && typeof spot.current.topSnowDepth === 'number') ? spot.current.topSnowDepth : 0;
+      if (day.snowDepth !== undefined && day.snowDepth !== null) {
+        estDepth = day.snowDepth;
+      }
+      if (estDepth < 100) {
+        return false;
+      }
+
+      // Gate 4: 融解・降雨・急昇温除外（降雨あり、または山頂最高気温0℃以上、または前日比+6℃以上の急昇温）
+      if (stats.rainSum > 0 || (day.maxTemp !== undefined && day.maxTemp >= 0.0)) {
+        return false;
+      }
+      if (spot.dailySummary && Array.isArray(spot.dailySummary)) {
+        const dayIdx = spot.dailySummary.findIndex(d => d.date === day.date);
+        if (dayIdx > 0) {
+          const prevDay = spot.dailySummary[dayIdx - 1];
+          if (prevDay && prevDay.maxTemp !== undefined && day.maxTemp !== undefined) {
+            if ((day.maxTemp - prevDay.maxTemp) >= 6.0) return false;
+          }
+        }
+      }
+
+      // Gate 5: 稜線暴風・地吹雪除外（日中最大風速10m/s以上）
+      if (stats.maxWind >= 10.0) {
+        return false;
+      }
+
+      // パウダー条件: 夜間15〜35cm、または前日20〜35cm＋当日穏やか
+      let hasBcPowder = (nightVal >= 15 && nightVal < 40);
+      if (!hasBcPowder && spot.dailySummary && Array.isArray(spot.dailySummary)) {
+        const dayIdx = spot.dailySummary.findIndex(d => d.date === day.date);
+        if (dayIdx > 0) {
+          const prevDay = spot.dailySummary[dayIdx - 1];
+          const prevTotal = prevDay ? (prevDay.totalSnowfall || 0) : 0;
+          if (prevTotal >= 20 && prevTotal < 40 && nightVal >= 5) {
+            hasBcPowder = true;
+          }
+        }
+      }
+
+      return hasBcPowder;
     }
 
     function renderWeeklyForecast(spot) {
@@ -3328,7 +3430,14 @@
           : 0;
         const totalSnow = day.totalSnowfall || 0;
         if (isTheDayCandidate(spot, day, nVal)) {
-          const score = (nVal * 1.5) + totalSnow;
+          let score = (nVal * 1.5) + totalSnow;
+          // BCモード時のブルーバード優遇（晴れ＆微風ボーナス）
+          if (spot.category === 'bc') {
+            const dStats = getDaytimeStats(spot, day.date);
+            const isBluebird = dStats.weatherCodes && dStats.weatherCodes.length > 0 && dStats.weatherCodes.every(c => c <= 2);
+            if (isBluebird) score += 20; // 晴れ・視界良好ボーナス
+            if (dStats.maxWind < 6.0) score += 10; // 微風ボーナス
+          }
           if (score > maxTheDayScore) {
             maxTheDayScore = score;
             theDayDate = day.date;
@@ -5240,7 +5349,13 @@
           const nVal = (s.nightSnowByDate && s.nightSnowByDate[`${d.date}T06:00`] !== undefined) ? s.nightSnowByDate[`${d.date}T06:00`] : 0;
           const tot = d.totalSnowfall || 0;
           if (typeof isTheDayCandidate === 'function' ? isTheDayCandidate(s, d, nVal) : (nVal >= 10 || tot >= 15)) {
-            const sc = (nVal * 1.5) + tot;
+            let sc = (nVal * 1.5) + tot;
+            if (isBC) {
+              const dStats = getDaytimeStats(s, d.date);
+              const isBluebird = dStats.weatherCodes && dStats.weatherCodes.length > 0 && dStats.weatherCodes.every(c => c <= 2);
+              if (isBluebird) sc += 20;
+              if (dStats.maxWind < 6.0) sc += 10;
+            }
             if (sc > spotTheDayScore) {
               spotTheDayScore = sc;
               const dObj = new Date(d.date + 'T00:00:00+09:00');
