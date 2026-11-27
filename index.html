@@ -498,28 +498,40 @@
           <span id="heroRank" class="text-[11px] font-black px-2 py-0.5 rounded-full bg-sky-700 text-white mt-1">圧雪良好</span>
         </div>
 
-        <!-- 積雪深（トップ & ベース） -->
+        <!-- 標高別コンディション（スキー場: 気温・風速 / BC: 自然雪推計積雪深） -->
         <div class="col-span-8 bg-slate-50 rounded-xl p-2.5 flex flex-col justify-between border border-slate-200">
-          <div class="flex justify-between items-center text-xs">
+          <div class="flex justify-between items-center text-xs gap-1">
             <div class="min-w-0 pr-1">
               <span class="text-slate-700 font-bold flex items-center gap-1">
                 <i class="fa-solid fa-mountain text-sky-700 text-[11px]"></i>
                 <span><span data-i18n="topLabel">トップ</span> (<span id="heroTopElev">1831m</span>)</span>
               </span>
-              <span id="heroTopLabel" class="text-[11px] text-slate-600 font-medium truncate block max-w-[140px]">八方池山荘</span>
+              <span id="heroTopLabel" class="text-[11px] text-slate-600 font-medium truncate block max-w-[130px]">八方池山荘</span>
             </div>
-            <span class="font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroTopSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
+            <!-- BC用: 積雪深 -->
+            <span id="heroTopSnowWrap" class="hidden font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroTopSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
+            <!-- スキー場用: 気温 & 風速 -->
+            <div id="heroTopCondWrap" class="flex items-center gap-2 shrink-0">
+              <span id="heroTopCondTemp" class="font-teko text-xl sm:text-2xl font-black text-sky-800 whitespace-nowrap">--℃</span>
+              <span id="heroTopCondWind" class="font-teko text-lg sm:text-xl font-bold text-slate-800 whitespace-nowrap">--m/s</span>
+            </div>
           </div>
           <div class="border-t border-slate-200 my-1"></div>
-          <div class="flex justify-between items-center text-xs">
+          <div class="flex justify-between items-center text-xs gap-1">
             <div class="min-w-0 pr-1">
               <span class="text-slate-700 font-bold flex items-center gap-1">
                 <i class="fa-solid fa-house text-emerald-700 text-[11px]"></i>
                 <span><span data-i18n="baseLabel">ベース</span> (<span id="heroBaseElev">760m</span>)</span>
               </span>
-              <span id="heroBaseLabel" class="text-[11px] text-slate-600 font-medium truncate block max-w-[140px]">八方ゴンドラ山麓駅</span>
+              <span id="heroBaseLabel" class="text-[11px] text-slate-600 font-medium truncate block max-w-[130px]">八方ゴンドラ山麓駅</span>
             </div>
-            <span class="font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
+            <!-- BC用: 積雪深 -->
+            <span id="heroBaseSnowWrap" class="hidden font-teko text-2xl font-black text-slate-900 whitespace-nowrap"><span id="heroBaseSnow">--</span><span class="text-xs font-bold text-slate-600 ml-1">cm</span></span>
+            <!-- スキー場用: 気温 & 強風注意 -->
+            <div id="heroBaseCondWrap" class="flex items-center gap-2 shrink-0">
+              <span id="heroLiftAlertBadge" class="hidden text-[10px] font-black px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300 whitespace-nowrap" data-i18n="windLiftAlert">⚠️運休注意</span>
+              <span id="heroBaseCondTemp" class="font-teko text-xl sm:text-2xl font-black text-slate-800 whitespace-nowrap">--℃</span>
+            </div>
           </div>
         </div>
       </div>
@@ -565,7 +577,7 @@
         </div>
       </div>
 
-      <!-- 気温 & 風速 & 現在天気 & アメダス実況（スマホ2列x2段 / PC4列） -->
+      <!-- 下部4分割行（BC: 天気/気温/風/実測 | スキー場: 天気/今後24h降雪/公的実測/実測24h増減） -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 pt-3 border-t border-slate-200 text-center text-xs relative z-10 px-0.5">
         <div class="shrink-0 flex flex-col items-center">
           <span class="text-[11px] text-slate-600 font-bold block whitespace-nowrap" data-i18n="curWeatherLabel">現在天気</span>
@@ -574,7 +586,8 @@
             <span id="heroWeatherLabel" class="text-xs font-black text-slate-900 whitespace-nowrap">雪</span>
           </div>
         </div>
-        <div class="shrink-0 flex flex-col items-center">
+        <!-- BC用: 気温 -->
+        <div id="heroBcTempCell" class="hidden shrink-0 flex flex-col items-center">
           <span class="text-[11px] text-slate-600 font-bold block whitespace-nowrap" data-i18n="tempTopBaseLabel">気温 (トップ/ベース)</span>
           <div class="font-teko text-base sm:text-lg font-bold mt-0.5 whitespace-nowrap">
             <span id="heroTopTemp" class="text-sky-800">--</span>
@@ -582,14 +595,26 @@
             <span id="heroBaseTemp" class="text-slate-800">--℃</span>
           </div>
         </div>
-        <div class="shrink-0 flex flex-col items-center">
+        <!-- スキー場用: 今後の降雪(24h) -->
+        <div id="heroSkiSnow24hCell" class="shrink-0 flex flex-col items-center">
+          <span class="text-[11px] text-slate-600 font-bold block whitespace-nowrap" data-i18n="next24hSnowLabel">今後24h降雪</span>
+          <span id="heroSkiSnow24h" class="font-teko text-base sm:text-lg font-black text-orange-600 block mt-0.5 whitespace-nowrap">+0 cm</span>
+        </div>
+        <!-- BC用: 風速 -->
+        <div id="heroBcWindCell" class="hidden shrink-0 flex flex-col items-center">
           <span id="heroWindLabel" class="text-[11px] text-slate-600 font-bold block whitespace-nowrap" data-i18n="topWindLabel">トップ風速</span>
           <span id="heroWind" class="font-teko text-base sm:text-lg font-bold text-slate-900 block mt-0.5 whitespace-nowrap">-- m/s</span>
         </div>
+        <!-- 公的実測 -->
         <div class="shrink-0 flex flex-col items-center min-w-0 w-full px-1">
           <span id="heroAmedasTitle" class="text-[11px] text-slate-600 font-bold block max-w-full truncate whitespace-nowrap" data-i18n="amedasLiveDefault">アメダス実測</span>
           <span id="heroAmedasDepth" class="font-teko text-base sm:text-lg font-bold text-emerald-700 block mt-0.5 whitespace-nowrap">-- cm</span>
           <span id="heroAmedasSub" class="text-[10px] font-bold text-slate-500 block max-w-full truncate whitespace-nowrap"></span>
+        </div>
+        <!-- スキー場用: 実測24h増減 -->
+        <div id="heroSkiLiveDeltaCell" class="shrink-0 flex flex-col items-center">
+          <span class="text-[11px] text-slate-600 font-bold block whitespace-nowrap" data-i18n="liveDelta24hLabel">実測24h増減</span>
+          <span id="heroSkiLiveDelta" class="font-teko text-base sm:text-lg font-bold text-slate-700 block mt-0.5 whitespace-nowrap">--</span>
         </div>
       </div>
 
@@ -695,7 +720,8 @@
         <canvas id="trendChartCanvas"></canvas>
       </div>
       <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 text-[11px] font-bold text-slate-700 mt-2">
-        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-sky-700 inline-block"></span><span data-i18n="legendSnowDepth">積雪深(cm)</span></span>
+        <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-sky-700 inline-block"></span><span id="trendLegendPrimary" data-i18n="legendTopTemp">山頂気温(℃)</span></span>
+        <span id="trendLegendZeroLine" class="flex items-center gap-1"><span class="w-3 border-t-2 border-dashed border-rose-600 inline-block"></span><span data-i18n="legendZeroLine">0℃基準線</span></span>
         <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-orange-600 inline-block"></span><span data-i18n="legendSnowfall">降雪量(cm/h)</span></span>
         <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-sky-600/70 border border-sky-700 inline-block"></span><span data-i18n="legendRainfall">降雨量(mm/h)</span></span>
         <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-orange-600 inline-block"></span><span data-i18n="legendNow">現在時刻</span></span>
@@ -2244,13 +2270,43 @@
       const baseLabelEl = document.getElementById('heroBaseLabel');
       if (baseLabelEl) baseLabelEl.textContent = tName(spot.base.label || (spot.category === 'bc' ? '登山口・ベース' : 'ゲレンデベース'));
 
-      // 積雪深
-      document.getElementById('heroTopSnow').textContent = spot.current.topSnowDepth;
-      document.getElementById('heroBaseSnow').textContent = spot.current.baseSnowDepth;
+      // 積雪深 / 標高別コンディション切り替え
+      const topSnowWrap = document.getElementById('heroTopSnowWrap');
+      const baseSnowWrap = document.getElementById('heroBaseSnowWrap');
+      const topCondWrap = document.getElementById('heroTopCondWrap');
+      const baseCondWrap = document.getElementById('heroBaseCondWrap');
+      if (isBc) {
+        if (topSnowWrap) topSnowWrap.classList.remove('hidden');
+        if (baseSnowWrap) baseSnowWrap.classList.remove('hidden');
+        if (topCondWrap) topCondWrap.classList.add('hidden');
+        if (baseCondWrap) baseCondWrap.classList.add('hidden');
+        document.getElementById('heroTopSnow').textContent = spot.current.topSnowDepth;
+        document.getElementById('heroBaseSnow').textContent = spot.current.baseSnowDepth;
+      } else {
+        if (topSnowWrap) topSnowWrap.classList.add('hidden');
+        if (baseSnowWrap) baseSnowWrap.classList.add('hidden');
+        if (topCondWrap) topCondWrap.classList.remove('hidden');
+        if (baseCondWrap) baseCondWrap.classList.remove('hidden');
+        const tTopEl = document.getElementById('heroTopCondTemp');
+        const wTopEl = document.getElementById('heroTopCondWind');
+        const tBaseEl = document.getElementById('heroBaseCondTemp');
+        const liftBadge = document.getElementById('heroLiftAlertBadge');
+        if (tTopEl) tTopEl.textContent = `${spot.current.topTemp}℃`;
+        if (tBaseEl) tBaseEl.textContent = `${spot.current.baseTemp}℃`;
+        const wSpd = Number(spot.current.windSpeed || 0);
+        if (wTopEl) {
+          const wStyle = getWindColorStyle(wSpd);
+          wTopEl.innerHTML = `<span class="${wStyle.text}">${wSpd} m/s</span>`;
+        }
+        if (liftBadge) {
+          if (wSpd >= 15) liftBadge.classList.remove('hidden');
+          else liftBadge.classList.add('hidden');
+        }
+      }
 
-      // スコア & ランク（積雪30cm未満はスコア非表示・積雪不足）
+      // スコア & ランク（BCのみ積雪30cm未満はスコア非表示・積雪不足。スキー場は人工雪対応のため常にスコア表示）
       const scoreVal = spot.current.score;
-      const isNoSnow = scoreVal === null || scoreVal === undefined || spot.current.topSnowDepth < 30;
+      const isNoSnow = scoreVal === null || scoreVal === undefined || (isBc && spot.current.topSnowDepth < 30);
       const heroScoreEl = document.getElementById('heroScore');
       const heroScoreMaxEl = heroScoreEl.nextElementSibling; // "/100"
       if (isNoSnow) {
@@ -2347,7 +2403,61 @@
       const heroWeatherLabel = document.getElementById('heroWeatherLabel');
       if (heroWeatherLabel) heroWeatherLabel.textContent = wInfo.label;
 
-      // 気温・風・アメダス
+      // 気温・風・アメダス（下部4分割行のBC/スキー場切替）
+      const bcTempCell = document.getElementById('heroBcTempCell');
+      const bcWindCell = document.getElementById('heroBcWindCell');
+      const skiSnow24hCell = document.getElementById('heroSkiSnow24hCell');
+      const skiLiveDeltaCell = document.getElementById('heroSkiLiveDeltaCell');
+      if (isBc) {
+        if (bcTempCell) bcTempCell.classList.remove('hidden');
+        if (bcWindCell) bcWindCell.classList.remove('hidden');
+        if (skiSnow24hCell) skiSnow24hCell.classList.add('hidden');
+        if (skiLiveDeltaCell) skiLiveDeltaCell.classList.add('hidden');
+      } else {
+        if (bcTempCell) bcTempCell.classList.add('hidden');
+        if (bcWindCell) bcWindCell.classList.add('hidden');
+        if (skiSnow24hCell) skiSnow24hCell.classList.remove('hidden');
+        if (skiLiveDeltaCell) skiLiveDeltaCell.classList.remove('hidden');
+
+        // 今後24h降雪予報の集計
+        let next24Snow = 0;
+        if (curHourIdx >= 0 && spot.topHourly && Array.isArray(spot.topHourly.snowfall)) {
+          for (let k = curHourIdx; k < Math.min(curHourIdx + 24, spot.topHourly.snowfall.length); k++) {
+            next24Snow += (Number(spot.topHourly.snowfall[k]) || 0);
+          }
+        }
+        next24Snow = Math.round(next24Snow);
+        const skiSnow24hEl = document.getElementById('heroSkiSnow24h');
+        if (skiSnow24hEl) {
+          skiSnow24hEl.textContent = `+${next24Snow} cm`;
+          skiSnow24hEl.className = next24Snow >= 10
+            ? "font-teko text-base sm:text-lg font-black text-orange-600 block mt-0.5 whitespace-nowrap"
+            : (next24Snow > 0
+                ? "font-teko text-base sm:text-lg font-bold text-sky-700 block mt-0.5 whitespace-nowrap"
+                : "font-teko text-base sm:text-lg font-bold text-slate-600 block mt-0.5 whitespace-nowrap");
+        }
+
+        // 実測24h増減
+        const liveDeltaEl = document.getElementById('heroSkiLiveDelta');
+        if (liveDeltaEl) {
+          const live24 = spot.current.liveAmedas && spot.current.liveAmedas.stats && spot.current.liveAmedas.stats.h24;
+          const sf24 = (live24 && typeof live24.snowfall === 'number') ? live24.snowfall : null;
+          const sub24 = (live24 && typeof live24.subsidence === 'number') ? live24.subsidence : null;
+          if (sf24 !== null && sf24 > 0) {
+            liveDeltaEl.textContent = `+${sf24} cm`;
+            liveDeltaEl.className = "font-teko text-base sm:text-lg font-black text-emerald-700 block mt-0.5 whitespace-nowrap";
+          } else if (sub24 !== null && sub24 > 0) {
+            liveDeltaEl.textContent = `-${sub24} cm`;
+            liveDeltaEl.className = "font-teko text-base sm:text-lg font-bold text-rose-700 block mt-0.5 whitespace-nowrap";
+          } else if (sf24 === 0) {
+            liveDeltaEl.textContent = `±0 cm`;
+            liveDeltaEl.className = "font-teko text-base sm:text-lg font-bold text-slate-600 block mt-0.5 whitespace-nowrap";
+          } else {
+            liveDeltaEl.textContent = '--';
+            liveDeltaEl.className = "font-teko text-base sm:text-lg font-bold text-slate-500 block mt-0.5 whitespace-nowrap";
+          }
+        }
+      }
       document.getElementById('heroTopTemp').textContent = `${spot.current.topTemp}`;
       const heroBaseTempEl = document.getElementById('heroBaseTemp');
       if (heroBaseTempEl) heroBaseTempEl.textContent = `${spot.current.baseTemp}℃`;
@@ -2722,15 +2832,48 @@
             c.stroke();
             c.restore();
           }
+
+          // スキー場モード時：気温 0℃ 基準線（雨雪境界・融解ライン）
+          if (spot.category !== 'bc' && chart.scales.yDepth) {
+            const yZero = chart.scales.yDepth.getPixelForValue(0);
+            if (yZero >= top && yZero <= bottom) {
+              const { left, right } = chart.chartArea;
+              c.save();
+              c.beginPath();
+              c.setLineDash([5, 4]);
+              c.strokeStyle = isDark ? 'rgba(244, 63, 94, 0.75)' : 'rgba(225, 29, 72, 0.65)';
+              c.lineWidth = 1.5;
+              c.moveTo(left, yZero);
+              c.lineTo(right, yZero);
+              c.stroke();
+              c.fillStyle = isDark ? 'rgba(251, 113, 133, 0.95)' : 'rgba(190, 18, 60, 0.9)';
+              c.font = 'bold 10px sans-serif';
+              c.fillText('0℃', left + 4, yZero - 4);
+              c.restore();
+            }
+          }
         }
       };
+
+      const isBcChart = spot.category === 'bc';
+      const legendPrimaryEl = document.getElementById('trendLegendPrimary');
+      const legendZeroEl = document.getElementById('trendLegendZeroLine');
+      if (legendPrimaryEl) {
+        const lKey = isBcChart ? 'legendSnowDepth' : 'legendTopTemp';
+        legendPrimaryEl.setAttribute('data-i18n', lKey);
+        legendPrimaryEl.textContent = t(lKey);
+      }
+      if (legendZeroEl) {
+        if (isBcChart) legendZeroEl.classList.add('hidden');
+        else legendZeroEl.classList.remove('hidden');
+      }
 
       trendChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
           labels: labels,
           datasets: [
-            {
+            isBcChart ? {
               type: 'line',
               label: t('legendSnowDepth'),
               data: depthData,
@@ -2738,6 +2881,18 @@
               backgroundColor: isDark ? 'rgba(56, 189, 248, 0.15)' : 'rgba(3, 105, 161, 0.12)',
               borderWidth: 2.2,
               fill: true,
+              tension: 0.3,
+              yAxisID: 'yDepth',
+              pointRadius: (ctx) => ctx.dataIndex === nowHighlightIdx ? 5 : 0,
+              pointBackgroundColor: '#ea580c'
+            } : {
+              type: 'line',
+              label: t('legendTopTemp') || '山頂気温(℃)',
+              data: tempData,
+              borderColor: isDark ? '#38bdf8' : '#0284c7',
+              backgroundColor: 'transparent',
+              borderWidth: 2.2,
+              fill: false,
               tension: 0.3,
               yAxisID: 'yDepth',
               pointRadius: (ctx) => ctx.dataIndex === nowHighlightIdx ? 5 : 0,
@@ -2814,8 +2969,9 @@
             },
             yDepth: {
               position: 'left',
-              beginAtZero: true,
-              suggestedMax: 10,
+              beginAtZero: isBcChart,
+              suggestedMin: isBcChart ? 0 : -12,
+              suggestedMax: isBcChart ? 10 : 4,
               grid: { color: isDark ? 'rgba(148, 163, 184, 0.15)' : 'rgba(148, 163, 184, 0.25)' },
               ticks: { color: isDark ? '#38bdf8' : '#0369a1', font: { size: 9, weight: 'bold' }, precision: 0 }
             },
@@ -3108,8 +3264,50 @@
       }
     }
 
-    // 週間天気予報描画
+    // 週間天気予報描画 & スキー場/BC別 THE DAY 判定
     let selectedWeeklyDate = null;
+
+    function getDaytimeStats(spot, dateStr) {
+      let maxWind = 0;
+      let sumWind = 0;
+      let windCount = 0;
+      let rainSum = 0;
+      const h = spot.topHourly;
+      if (h && Array.isArray(h.time)) {
+        for (let i = 0; i < h.time.length; i++) {
+          const tStr = h.time[i];
+          if (tStr && tStr.startsWith(dateStr)) {
+            const hr = parseInt(tStr.slice(11, 13), 10);
+            if (hr >= 9 && hr <= 15) {
+              const w = h.windSpeed ? (Number(h.windSpeed[i]) || 0) : 0;
+              if (w > maxWind) maxWind = w;
+              sumWind += w;
+              windCount++;
+              rainSum += h.rain ? (Number(h.rain[i]) || 0) : 0;
+            }
+          }
+        }
+      }
+      return {
+        maxWind: Math.round(maxWind * 10) / 10,
+        avgWind: windCount > 0 ? Math.round((sumWind / windCount) * 10) / 10 : 0,
+        rainSum: Math.round(rainSum * 10) / 10
+      };
+    }
+
+    function isTheDayCandidate(spot, day, nightVal) {
+      const totalSnow = day.totalSnowfall || 0;
+      const stats = getDaytimeStats(spot, day.date);
+      if (spot.category !== 'bc') {
+        // スキー場新基準: 十分な降雪 + リフトが止まらない風 + 雨/高温でない
+        const hasSnow = nightVal >= 15 || (nightVal >= 10 && totalSnow >= 20);
+        const isCalm = stats.maxWind < 13 && stats.avgWind < 10;
+        const isColdNoRain = stats.rainSum === 0 && (day.maxTemp === undefined || day.maxTemp <= 1.0);
+        return hasSnow && isCalm && isColdNoRain;
+      }
+      // BC基準（Step 2でさらに厳格化予定）
+      return (nightVal >= 10 || totalSnow >= 15) && stats.maxWind < 13 && stats.rainSum === 0;
+    }
 
     function renderWeeklyForecast(spot) {
       const container = document.getElementById('weeklyForecastContainer');
@@ -3121,7 +3319,7 @@
       const todayStr = jstNow.toISOString().slice(0, 10);
       const daysList = spot.dailySummary.filter(d => d.date >= todayStr).slice(0, 7);
 
-      // 今週の「THE DAY」候補日の自動検出（夜間新雪10cm以上または日降雪15cm以上のうち最大日）
+      // 今週の「THE DAY」候補日の自動検出（新基準適用）
       let theDayDate = null;
       let maxTheDayScore = 0;
       daysList.forEach(day => {
@@ -3129,7 +3327,7 @@
           ? spot.nightSnowByDate[`${day.date}T06:00`]
           : 0;
         const totalSnow = day.totalSnowfall || 0;
-        if (nVal >= 10 || totalSnow >= 15) {
+        if (isTheDayCandidate(spot, day, nVal)) {
           const score = (nVal * 1.5) + totalSnow;
           if (score > maxTheDayScore) {
             maxTheDayScore = score;
@@ -3171,6 +3369,8 @@
 
         col.className = `flex-shrink-0 w-[92px] ${borderAndBg} rounded-xl p-2 flex flex-col items-center justify-between text-center border cursor-pointer active:scale-95 transition-all select-none relative`;
         const nightLabel = t('nightShort');
+        const dStats = getDaytimeStats(spot, day.date);
+        const windClass = dStats.maxWind >= 15 ? 'text-rose-700 font-black' : (dStats.maxWind >= 10 ? 'text-amber-700 font-bold' : 'text-slate-600 font-bold');
         col.innerHTML = `
           ${isTheDay ? `<div class="w-full flex items-center justify-center mb-0.5"><span class="text-[9px] font-black px-1.5 py-0.2 rounded-full bg-amber-500 text-white shadow-sm flex items-center gap-0.5 whitespace-nowrap"><i class="fa-solid fa-star text-[7px]"></i> THE DAY</span></div>` : ''}
           <span class="text-[11px] font-bold ${isToday ? 'text-orange-700 font-black' : (rawDow === '日' ? 'text-rose-700' : (rawDow === '土' ? 'text-sky-700' : 'text-slate-700'))}">${dateLabel}</span>
@@ -3179,7 +3379,8 @@
           <div class="font-teko text-sm font-bold mt-0.5 pointer-events-none">
             <span class="text-rose-700">${day.maxTemp}℃</span> <span class="text-slate-600">/</span> <span class="text-sky-800">${day.minTemp}℃</span>
           </div>
-          <div class="w-full mt-1.5 space-y-1 pointer-events-none">
+          <div class="text-[10px] ${windClass} pointer-events-none whitespace-nowrap">💨 ${dStats.maxWind}m/s</div>
+          <div class="w-full mt-1 space-y-1 pointer-events-none">
             <div class="text-[11px] font-black py-0.5 rounded leading-tight flex items-center justify-center whitespace-nowrap ${day.totalSnowfall >= 10 ? 'bg-sky-700 text-white' : 'bg-slate-200 text-slate-800'}">
               ❄️ +${day.totalSnowfall}cm
             </div>
@@ -5038,7 +5239,7 @@
         (s.dailySummary || []).filter(d => d.date >= todayStr).slice(0, 7).forEach(d => {
           const nVal = (s.nightSnowByDate && s.nightSnowByDate[`${d.date}T06:00`] !== undefined) ? s.nightSnowByDate[`${d.date}T06:00`] : 0;
           const tot = d.totalSnowfall || 0;
-          if (nVal >= 10 || tot >= 15) {
+          if (typeof isTheDayCandidate === 'function' ? isTheDayCandidate(s, d, nVal) : (nVal >= 10 || tot >= 15)) {
             const sc = (nVal * 1.5) + tot;
             if (sc > spotTheDayScore) {
               spotTheDayScore = sc;

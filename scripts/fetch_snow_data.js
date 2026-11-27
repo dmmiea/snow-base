@@ -128,15 +128,15 @@ function evaluateSnowCondition(hourlyData, currentHourIndex, category = 'ski') {
   const rawDepth = snowDepthArr[currentHourIndex];
   const currentSnowDepth = hourlyData.snow_depth !== undefined ? (rawDepth || 0) * 100 : (rawDepth || 0);
 
-  // 1. 【最優先】積雪不足判定（滑走不可：30cm未満）
-  if (currentSnowDepth < 30 || isNaN(currentSnowDepth)) {
+  // 1. 【最優先】積雪不足判定（BCのみ30cm未満で入山不可・滑走不可。スキー場は人工雪対応のため除外）
+  if (isBc && (currentSnowDepth < 30 || isNaN(currentSnowDepth))) {
     return {
       score: null,
       rank: '積雪不足',
       rankEn: 'NO SNOW',
-      tag: isBc ? '積雪不足 (滑走不可)' : '滑走不可',
-      tags: ['積雪30cm未満', isBc ? '薮・岩露出注意' : 'ブッシュ・石注意'],
-      bcAlert: isBc ? { level: 'HIGH', label: '積雪不足・滑走不可', reasons: ['積雪30cm未満'] } : null
+      tag: '積雪不足 (滑走不可)',
+      tags: ['積雪30cm未満', '薮・岩露出注意'],
+      bcAlert: { level: 'HIGH', label: '積雪不足・滑走不可', reasons: ['積雪30cm未満'] }
     };
   }
 
@@ -310,17 +310,22 @@ function evaluateSnowCondition(hourlyData, currentHourIndex, category = 'ski') {
   }
 
   // 6. 風速による補正
-  if (currentWind >= 12) {
+  if (!isBc && currentWind >= 15) {
+    score -= 15;
+    tags.push('強風運休注意', '地吹雪注意');
+  } else if (currentWind >= 12) {
     score -= isBc ? 15 : 10;
     tags.push(isBc ? 'ウインドパック・風成雪' : '強風・風パック', '地吹雪注意');
   }
 
-  // 7. 積雪深が浅い場合の安全注意（BCは100cm未満、スキー場は50cm未満）
+  // 7. 積雪深が浅い場合の安全注意（BCは100cm未満、スキー場は30cm未満で公式確認タグ）
   if (isBc && currentSnowDepth < 100) {
     score -= 15;
     tags.push('積雪100cm未満', '薮・地形露出注意');
+  } else if (!isBc && (currentSnowDepth < 30 || isNaN(currentSnowDepth))) {
+    tags.push('自然雪少・公式確認');
   } else if (!isBc && currentSnowDepth < 50) {
-    score -= 10;
+    score -= 5;
     tags.push('積雪浅め', 'ブッシュ注意');
   }
 
