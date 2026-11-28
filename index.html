@@ -984,6 +984,14 @@
         <!-- JSで動的生成 -->
       </div>
 
+      <!-- 並び替えピルバー -->
+      <div id="areasSortBar" class="flex bg-white rounded-xl p-1 border border-slate-300 text-[11px] font-bold gap-1 shadow-sm">
+        <button type="button" id="btnAreasSortDefault" onclick="setAreasSortMode('default')" class="flex-1 py-1 px-1 rounded-lg text-center bg-sky-700 text-white font-black shadow-sm whitespace-nowrap truncate transition" data-i18n="areasSortDefault">標準</button>
+        <button type="button" id="btnAreasSortNight" onclick="setAreasSortMode('nightSnow')" class="flex-1 py-1 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate transition" data-i18n="areasSortNight">🌙 新雪順</button>
+        <button type="button" id="btnAreasSortScore" onclick="setAreasSortMode('score')" class="flex-1 py-1 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate transition" data-i18n="areasSortScore">🏆 スコア順</button>
+        <button type="button" id="btnAreasSortDepth" onclick="setAreasSortMode('depth')" class="flex-1 py-1 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate transition" data-i18n="areasSortDepth">❄️ 積雪順</button>
+      </div>
+
       <!-- エリア別アコーディオン一覧 -->
       <div id="areasAccordionContainer" class="space-y-2">
         <!-- JSで動的生成 -->
@@ -1573,6 +1581,7 @@
     let currentRankSource = 'live'; // 'live' | 'forecast'
     let currentLiveRankPeriod = 'night'; // 'night', '6h', '12h', '24h'
     let currentRankPeriod = 'night'; // 'night', '6h', '24h' (forecast)
+    let currentRankNightMode = 'auto'; // 'auto' | 'thisMorning' | 'nextMorning'
     const expandedRankStationKeys = new Set();
     let currentTrendRange = '7d'; // '7d' or '48h'
     let trendChartInstance = null;
@@ -1588,6 +1597,7 @@
     let areasCategoryFilter = 'ski'; // 'ski' | 'bc'
     let areasSearchQuery = '';
     let areasConditionFilter = 'all'; // 'all' | 'fresh' | 'open'
+    let areasSortMode = 'default'; // 'default' | 'nightSnow' | 'score' | 'depth'
     const expandedAreaKeys = new Set();
     const FEED_SEEN_KEY = 'snow_base_feed_last_seen_v1';
 
@@ -3729,11 +3739,35 @@
       const inactiveCls = 'py-1.5 px-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-700 hover:text-slate-900 whitespace-nowrap';
       if (btnSki) btnSki.className = areasCategoryFilter === 'ski' ? activeCls : inactiveCls;
       if (btnBc) btnBc.className = areasCategoryFilter === 'bc' ? activeCls : inactiveCls;
+
+      // BCタブ時は条件フィルター「滑走可能(30cm~)」をBC向け「低〜中リスク」へ最適化
+      const btnOpen = document.getElementById('btnAreasCondOpen');
+      if (btnOpen) {
+        const condKey = areasCategoryFilter === 'bc' ? 'condBcSafe' : 'condOpen';
+        btnOpen.setAttribute('data-i18n', condKey);
+        btnOpen.textContent = t(condKey);
+      }
+
       if (currentAreasSubView === 'ranking') {
         renderRankingTab();
       } else {
         renderAreasAccordionList();
       }
+    }
+
+    function setAreasSortMode(mode) {
+      areasSortMode = ['nightSnow', 'score', 'depth'].includes(mode) ? mode : 'default';
+      const activeCls = 'flex-1 py-1 px-1 rounded-lg text-center bg-sky-700 text-white font-black shadow-sm whitespace-nowrap truncate transition';
+      const inactiveCls = 'flex-1 py-1 px-1 rounded-lg text-center text-slate-700 hover:text-slate-900 whitespace-nowrap truncate transition';
+      const btnDef = document.getElementById('btnAreasSortDefault');
+      const btnNight = document.getElementById('btnAreasSortNight');
+      const btnScore = document.getElementById('btnAreasSortScore');
+      const btnDepth = document.getElementById('btnAreasSortDepth');
+      if (btnDef) btnDef.className = areasSortMode === 'default' ? activeCls : inactiveCls;
+      if (btnNight) btnNight.className = areasSortMode === 'nightSnow' ? activeCls : inactiveCls;
+      if (btnScore) btnScore.className = areasSortMode === 'score' ? activeCls : inactiveCls;
+      if (btnDepth) btnDepth.className = areasSortMode === 'depth' ? activeCls : inactiveCls;
+      renderAreasAccordionList();
     }
 
     function setAreasSearchQuery(val) {
@@ -3789,8 +3823,13 @@
         if (areasConditionFilter === 'fresh') {
           if ((getSpotNightSnow(s) || 0) <= 0) return;
         } else if (areasConditionFilter === 'open') {
-          const depth = (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : 0;
-          if (depth < 30) return;
+          if (areasCategoryFilter === 'bc') {
+            const lvl = s.current && s.current.bcAlert && s.current.bcAlert.level;
+            if (lvl !== 'LOW' && lvl !== 'MEDIUM') return;
+          } else {
+            const depth = (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : 0;
+            if (depth < 30) return;
+          }
         }
 
         const areaName = s.areaName || s.regionName || 'その他エリア';
@@ -3807,12 +3846,34 @@
         groupMap.get(compKey).spots.push(s);
       });
 
-      return Array.from(groupMap.values()).sort((a, b) => {
-        const ra = regionOrderMap.has(a.regionKey) ? regionOrderMap.get(a.regionKey) : 99;
-        const rb = regionOrderMap.has(b.regionKey) ? regionOrderMap.get(b.regionKey) : 99;
-        if (ra !== rb) return ra - rb;
-        return a.areaName.localeCompare(b.areaName, 'ja');
-      });
+      const groups = Array.from(groupMap.values());
+      if (areasSortMode === 'nightSnow') {
+        groups.forEach(g => {
+          g.spots.sort((a, b) => (getSpotNightSnow(b) || 0) - (getSpotNightSnow(a) || 0));
+          g._metric = Math.max(...g.spots.map(s => getSpotNightSnow(s) || 0));
+        });
+        groups.sort((a, b) => b._metric - a._metric);
+      } else if (areasSortMode === 'score') {
+        groups.forEach(g => {
+          g.spots.sort((a, b) => ((b.current && typeof b.current.score === 'number') ? b.current.score : -1) - ((a.current && typeof a.current.score === 'number') ? a.current.score : -1));
+          g._metric = Math.max(...g.spots.map(s => (s.current && typeof s.current.score === 'number') ? s.current.score : -1));
+        });
+        groups.sort((a, b) => b._metric - a._metric);
+      } else if (areasSortMode === 'depth') {
+        groups.forEach(g => {
+          g.spots.sort((a, b) => ((b.current && typeof b.current.topSnowDepth === 'number') ? b.current.topSnowDepth : -1) - ((a.current && typeof a.current.topSnowDepth === 'number') ? a.current.topSnowDepth : -1));
+          g._metric = Math.max(...g.spots.map(s => (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : -1));
+        });
+        groups.sort((a, b) => b._metric - a._metric);
+      } else {
+        groups.sort((a, b) => {
+          const ra = regionOrderMap.has(a.regionKey) ? regionOrderMap.get(a.regionKey) : 99;
+          const rb = regionOrderMap.has(b.regionKey) ? regionOrderMap.get(b.regionKey) : 99;
+          if (ra !== rb) return ra - rb;
+          return a.areaName.localeCompare(b.areaName, 'ja');
+        });
+      }
+      return groups;
     }
 
     function toggleAllAreaAccordions() {
@@ -4156,6 +4217,11 @@
       }
     }
 
+    function setRankNightMode(mode) {
+      currentRankNightMode = ['thisMorning', 'nextMorning'].includes(mode) ? mode : 'auto';
+      renderRankingTab();
+    }
+
     function renderRankingTab() {
       const container = document.getElementById('rankingListContainer');
       container.innerHTML = '';
@@ -4173,11 +4239,20 @@
 
       let labelText = t('rankSnowfallLabel');
       let bannerText = '';
+      let nightToggleHtml = '';
       const baseMs = appData.updatedAt ? (Date.parse(appData.updatedAt) || Date.now()) : Date.now();
       if (currentRankPeriod === 'night') {
-        const meta = getNightSnowTargetMeta('auto');
+        const meta = getNightSnowTargetMeta(currentRankNightMode);
         labelText = meta.badgeLabel;
         bannerText = t('rankBannerForecastNight', { date: meta.dateWithDow });
+        const activeNightCls = 'px-2 py-0.5 rounded bg-sky-700 text-white font-black text-[10px] transition';
+        const inactiveNightCls = 'px-2 py-0.5 rounded text-slate-700 hover:text-slate-900 font-bold text-[10px] transition';
+        nightToggleHtml = `
+          <div class="flex items-center gap-0.5 bg-white border border-sky-300 rounded-md p-0.5 shrink-0">
+            <button type="button" onclick="setRankNightMode('thisMorning')" class="${!meta.isNextMorning ? activeNightCls : inactiveNightCls}">${t('rankNightThisBtn')}</button>
+            <button type="button" onclick="setRankNightMode('nextMorning')" class="${meta.isNextMorning ? activeNightCls : inactiveNightCls}">${t('rankNightNextBtn')}</button>
+          </div>
+        `;
       } else if (currentRankPeriod === '6h') {
         labelText = t('rank6hLabel');
         const sFmt = formatJstMmDdDowHm(baseMs);
@@ -4195,6 +4270,7 @@
           <span class="shrink-0">📅 ${t('rankPeriodPrefix')}</span>
           <span class="text-slate-900 truncate">${bannerText}</span>
         </div>
+        ${nightToggleHtml}
       `);
 
       const list = appData.spots
@@ -4202,7 +4278,7 @@
         .map(s => {
           const cur = s.current || {};
           let snowVal = 0;
-          if (currentRankPeriod === 'night') snowVal = getSpotNightSnow(s) || 0;
+          if (currentRankPeriod === 'night') snowVal = getSpotNightSnow(s, currentRankNightMode) || 0;
           else if (currentRankPeriod === '6h') snowVal = typeof cur.snow6h === 'number' ? cur.snow6h : 0;
           else snowVal = typeof cur.snow24h === 'number' ? cur.snow24h : 0;
 
