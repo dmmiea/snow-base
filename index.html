@@ -1028,6 +1028,14 @@
           ❄️ 24時間累積
         </button>
       </div>
+      <!-- ランキング用 地方フィルターピルバー -->
+      <div id="rankingRegionFilterBar" class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar pb-0.5">
+        <!-- JSで動的生成 -->
+      </div>
+      <!-- ランキング対象期間・日付バナー -->
+      <div id="rankingPeriodBanner" class="flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg bg-sky-50/90 border border-sky-200 text-[11px] font-bold text-slate-700">
+        <!-- JSで動的生成 -->
+      </div>
       <div id="rankingListContainer" class="space-y-2">
         <!-- JSで動的生成 -->
       </div>
@@ -1576,6 +1584,7 @@
     let isHomeReportCardInView = true;
     let currentAreasSubView = 'list'; // 'list' | 'ranking'
     let areasRegionFilter = 'all';
+    let rankingRegionFilter = 'all';
     let areasCategoryFilter = 'ski'; // 'ski' | 'bc'
     let areasSearchQuery = '';
     let areasConditionFilter = 'all'; // 'all' | 'fresh' | 'open'
@@ -3884,6 +3893,13 @@
           const favStar = isFav ? '<i class="fa-solid fa-star text-amber-500 text-[11px] shrink-0"></i>' : '';
 
           const isBcSpot = s.category === 'bc';
+          const topTemp = (s.current && typeof s.current.topTemp === 'number') ? s.current.topTemp : null;
+          const windSpd = (s.current && typeof s.current.windSpeed === 'number') ? s.current.windSpeed : null;
+          const windDir = (s.current && s.current.windDirText) ? tTag(s.current.windDirText) : '';
+          const topElev = (s.top && typeof s.top.elevation === 'number') ? s.top.elevation : null;
+          const tempCls = topTemp !== null ? (topTemp >= 1 ? 'text-orange-700 font-bold' : 'text-sky-800 font-bold') : '';
+          const windCls = windSpd !== null ? getWindColorStyle(windSpd).text : '';
+
           let bcExtraHtml = '';
           if (isBcSpot) {
             const bca = s.current && s.current.bcAlert;
@@ -3892,8 +3908,8 @@
               const bIcon = bca.level === 'HIGH' ? '🔴' : (bca.level === 'MEDIUM' ? '🟡' : '🟢');
               bcExtraHtml += `<span class="text-[10px] px-1.5 py-0.2 rounded font-black border ${bgCls}">${bIcon} ${tTag(bca.label)}</span>`;
             }
-            if (s.current && typeof s.current.windSpeed === 'number') {
-              bcExtraHtml += `<span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-50 text-sky-800 font-bold border border-sky-300">💨 ${t('ridgeWindShort')} ${Math.round(s.current.windSpeed)}m/s</span>`;
+            if (windSpd !== null) {
+              bcExtraHtml += `<span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-50 font-bold border border-sky-300 ${windCls}">💨 ${t('ridgeWindShort')} ${windDir ? windDir + ' ' : ''}${Math.round(windSpd)}m/s</span>`;
             }
           }
 
@@ -3904,11 +3920,14 @@
                   <span class="text-xs shrink-0">${weatherIcon}</span>
                   ${favStar}
                   <span class="text-sm font-black text-slate-900 truncate">${tName(s.name)}</span>
+                  ${topElev !== null ? `<span class="text-[10px] text-slate-500 font-bold shrink-0">${topElev}m</span>` : ''}
                 </div>
                 <div class="text-[11px] text-slate-600 mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5">
                   ${bcExtraHtml}
                   <span>${t('spotDepthPrefix')} <strong class="text-slate-900">${depth}cm</strong></span>
                   <span>${t('spotScorePrefix')} <strong class="${score !== null ? 'text-sky-800' : 'text-slate-500'}">${score !== null ? score + t('scorePtUnit') : '―'}</strong></span>
+                  ${topTemp !== null ? `<span class="${tempCls}">🌡️ ${topTemp.toFixed(1)}°</span>` : ''}
+                  ${!isBcSpot && windSpd !== null ? `<span class="${windCls}">💨 ${Math.round(windSpd)}m/s</span>` : ''}
                   ${tagStr ? `<span class="text-[10px] px-1.5 py-0.2 rounded bg-white text-slate-800 font-bold border border-slate-300">${tagStr}</span>` : ''}
                 </div>
               </div>
@@ -4038,11 +4057,111 @@
       renderRankingTab();
     }
 
+    function setRankingRegionFilter(regKey) {
+      rankingRegionFilter = regKey || 'all';
+      renderRankingTab();
+    }
+
+    function formatJstMmDdDowHm(epochMs) {
+      const jst = new Date(epochMs + 9 * 3600000);
+      const m = jst.getUTCMonth() + 1;
+      const d = jst.getUTCDate();
+      const hh = String(jst.getUTCHours()).padStart(2, '0');
+      const mm = String(jst.getUTCMinutes()).padStart(2, '0');
+      const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+      const dow = tTag(weekdays[jst.getUTCDay()] || '');
+      return {
+        mmdd: `${m}/${d}`,
+        mmddDow: `${m}/${d}(${dow})`,
+        full: `${m}/${d}(${dow}) ${hh}:${mm}`
+      };
+    }
+
+    function getLiveRefEpochMs() {
+      let maxTs = 0;
+      if (appData && Array.isArray(appData.spots)) {
+        for (const s of appData.spots) {
+          const live = s.current && s.current.liveAmedas;
+          if (!live) continue;
+          const tsStr = live.snowUpdatedAt || live.updatedAt;
+          if (tsStr) {
+            const parsed = Date.parse(tsStr);
+            if (!isNaN(parsed) && parsed > maxTs) maxTs = parsed;
+          }
+        }
+      }
+      if (!maxTs && appData && appData.updatedAt) {
+        const parsed = Date.parse(appData.updatedAt);
+        if (!isNaN(parsed)) maxTs = parsed;
+      }
+      return maxTs || Date.now();
+    }
+
+    function getLiveRankingPeriodMeta(period) {
+      const refMs = getLiveRefEpochMs();
+      const jstRef = new Date(refMs + 9 * 3600000);
+      const refH = jstRef.getUTCHours();
+      const jstMidnightUtc = Date.UTC(jstRef.getUTCFullYear(), jstRef.getUTCMonth(), jstRef.getUTCDate()) - 9 * 3600000;
+
+      if (period === 'night') {
+        let startTs, endTs, isConfirmed = false;
+        if (refH >= 6 && refH < 18) {
+          startTs = jstMidnightUtc - 6 * 3600000;
+          endTs = jstMidnightUtc + 6 * 3600000;
+          isConfirmed = true;
+        } else if (refH >= 18) {
+          startTs = jstMidnightUtc + 18 * 3600000;
+          endTs = refMs;
+        } else {
+          startTs = jstMidnightUtc - 6 * 3600000;
+          endTs = refMs;
+        }
+        const sFmt = formatJstMmDdDowHm(startTs);
+        const eFmt = formatJstMmDdDowHm(endTs);
+        return {
+          bannerText: `${sFmt.full} 〜 ${eFmt.full}`,
+          statusText: isConfirmed ? t('rankStatusConfirmed') : t('rankStatusLive'),
+          isConfirmed,
+          cardLabel: t('rankLiveNightDateLabel', { date: eFmt.mmdd })
+        };
+      }
+
+      const hours = period === '6h' ? 6 : (period === '12h' ? 12 : 24);
+      const startTs = refMs - hours * 3600000;
+      const sFmt = formatJstMmDdDowHm(startTs);
+      const eFmt = formatJstMmDdDowHm(refMs);
+      return {
+        bannerText: t('rankBannerHours', { start: sFmt.full, end: eFmt.full, h: hours }),
+        statusText: '',
+        isConfirmed: false,
+        cardLabel: period === '6h' ? t('rankLive6hLabel') : (period === '12h' ? t('rankLive12hLabel') : t('rankLive24hLabel'))
+      };
+    }
+
+    function renderRankingRegionAndBanner(bannerHtml) {
+      const filterBar = document.getElementById('rankingRegionFilterBar');
+      if (filterBar) {
+        filterBar.innerHTML = AREAS_REGION_ORDER.map(r => {
+          const active = rankingRegionFilter === r.key;
+          return `<button type="button" onclick="setRankingRegionFilter('${r.key}')" class="px-2.5 py-1 rounded-full text-xs whitespace-nowrap border transition shrink-0 ${
+            active
+              ? 'bg-sky-700 text-white font-black border-sky-700 shadow-sm'
+              : 'bg-white text-slate-800 font-bold border-slate-300 hover:bg-slate-50'
+          }">${t(r.i18nKey)}</button>`;
+        }).join('');
+      }
+      const bannerEl = document.getElementById('rankingPeriodBanner');
+      if (bannerEl) {
+        bannerEl.innerHTML = bannerHtml || '';
+      }
+    }
+
     function renderRankingTab() {
       const container = document.getElementById('rankingListContainer');
       container.innerHTML = '';
 
       if (!appData || !appData.spots) {
+        renderRankingRegionAndBanner(`<span class="text-slate-500">${t('rankCalculating')}</span>`);
         container.innerHTML = `<div class="text-center py-8 text-slate-600 font-bold text-xs">${t('rankCalculating')}</div>`;
         return;
       }
@@ -4053,16 +4172,33 @@
       }
 
       let labelText = t('rankSnowfallLabel');
+      let bannerText = '';
+      const baseMs = appData.updatedAt ? (Date.parse(appData.updatedAt) || Date.now()) : Date.now();
       if (currentRankPeriod === 'night') {
-        labelText = getNightSnowTargetMeta('auto').badgeLabel;
+        const meta = getNightSnowTargetMeta('auto');
+        labelText = meta.badgeLabel;
+        bannerText = t('rankBannerForecastNight', { date: meta.dateWithDow });
       } else if (currentRankPeriod === '6h') {
         labelText = t('rank6hLabel');
+        const sFmt = formatJstMmDdDowHm(baseMs);
+        const eFmt = formatJstMmDdDowHm(baseMs + 6 * 3600000);
+        bannerText = t('rankBannerForecastHours', { start: sFmt.full, end: eFmt.full, h: 6 });
       } else {
         labelText = t('rank24hLabel');
+        const sFmt = formatJstMmDdDowHm(baseMs);
+        const eFmt = formatJstMmDdDowHm(baseMs + 24 * 3600000);
+        bannerText = t('rankBannerForecastHours', { start: sFmt.full, end: eFmt.full, h: 24 });
       }
 
+      renderRankingRegionAndBanner(`
+        <div class="flex items-center gap-1.5 min-w-0">
+          <span class="shrink-0">📅 ${t('rankPeriodPrefix')}</span>
+          <span class="text-slate-900 truncate">${bannerText}</span>
+        </div>
+      `);
+
       const list = appData.spots
-        .filter(s => s.category === areasCategoryFilter)
+        .filter(s => s.category === areasCategoryFilter && (rankingRegionFilter === 'all' || s.region === rankingRegionFilter))
         .map(s => {
           const cur = s.current || {};
           let snowVal = 0;
@@ -4079,7 +4215,12 @@
             snow: Math.round(snowVal * 10) / 10,
             depth: typeof cur.topSnowDepth === 'number' ? cur.topSnowDepth : '--',
             tag: cur.tag || '滑走不可',
-            isReset: Boolean(cur.isReset)
+            isReset: Boolean(cur.isReset),
+            topTemp: typeof cur.topTemp === 'number' ? cur.topTemp : null,
+            windSpeed: typeof cur.windSpeed === 'number' ? cur.windSpeed : null,
+            windDirText: cur.windDirText || '',
+            bcAlert: cur.bcAlert || null,
+            elevation: (s.top && typeof s.top.elevation === 'number') ? s.top.elevation : null
           };
         })
         .sort((a, b) => {
@@ -4109,6 +4250,18 @@
           ? `<span class="text-[11px] px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold shrink-0">${t('catBcBadge')}</span>`
           : `<span class="text-[11px] px-1.5 py-0.2 rounded bg-sky-50 text-sky-800 border border-sky-300 font-bold shrink-0">${t('catSkiBadge')}</span>`;
 
+        let bcAlertBadge = '';
+        if (item.category === 'bc' && item.bcAlert) {
+          const bca = item.bcAlert;
+          const bgCls = bca.level === 'HIGH' ? 'bg-rose-100 text-rose-800 border-rose-300' : (bca.level === 'MEDIUM' ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-100 text-emerald-800 border-emerald-300');
+          const bIcon = bca.level === 'HIGH' ? '🔴' : (bca.level === 'MEDIUM' ? '🟡' : '🟢');
+          bcAlertBadge = `<span class="text-[10px] px-1.5 py-0.2 rounded font-black border ${bgCls} shrink-0">${bIcon} ${tTag(bca.label)}</span>`;
+        }
+
+        const tempCls = item.topTemp !== null ? (item.topTemp >= 1 ? 'text-orange-700 font-bold' : 'text-sky-800 font-bold') : '';
+        const windCls = item.windSpeed !== null ? getWindColorStyle(item.windSpeed).text : '';
+        const windDirLabel = (item.category === 'bc' && item.windDirText) ? `${tTag(item.windDirText)} ` : '';
+
         card.innerHTML = `
           <div class="flex items-center gap-2.5 min-w-0 flex-1">
             <span class="font-teko text-2xl font-black w-6 text-center shrink-0 ${idx === 0 ? 'text-amber-600' : (idx === 1 ? 'text-slate-700' : (idx === 2 ? 'text-orange-700' : 'text-slate-500'))}">${idx + 1}</span>
@@ -4117,9 +4270,15 @@
                 <span class="truncate">${tName(item.areaName || item.regionName)}</span>
                 ${catBadge}
                 ${badgeHtml}
+                ${item.elevation !== null ? `<span class="text-[10px] text-slate-500 font-bold">${item.elevation}m</span>` : ''}
               </div>
               <div class="text-sm font-black text-slate-900 truncate">${tName(item.name)}</div>
-              <div class="text-[11px] text-sky-800 font-bold mt-0.5 truncate">${tTag(item.tag)}</div>
+              <div class="text-[11px] text-sky-800 font-bold mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5">
+                ${bcAlertBadge}
+                ${item.topTemp !== null ? `<span class="${tempCls}">🌡️ ${item.topTemp.toFixed(1)}°</span>` : ''}
+                ${item.windSpeed !== null ? `<span class="${windCls}">💨 ${windDirLabel}${Math.round(item.windSpeed)}m/s</span>` : ''}
+                <span class="truncate">${tTag(item.tag)}</span>
+              </div>
             </div>
           </div>
           <div class="text-right shrink-0">
@@ -4134,19 +4293,26 @@
 
     function renderLiveRankingTab(container) {
       const periodKeyMap = { night: 'night', '6h': 'h6', '12h': 'h12', '24h': 'h24' };
-      const periodLabelMap = {
-        night: t('rankLiveNightLabel'),
-        '6h': t('rankLive6hLabel'),
-        '12h': t('rankLive12hLabel'),
-        '24h': t('rankLive24hLabel')
-      };
       const statKey = periodKeyMap[currentLiveRankPeriod] || 'night';
-      const labelText = periodLabelMap[currentLiveRankPeriod] || t('rankLiveNightLabel');
+      const periodMeta = getLiveRankingPeriodMeta(currentLiveRankPeriod);
+      const labelText = periodMeta.cardLabel;
+
+      const statusBadge = periodMeta.statusText
+        ? `<span class="shrink-0 px-1.5 py-0.5 rounded text-[10px] font-black border ${periodMeta.isConfirmed ? 'bg-emerald-100 text-emerald-900 border-emerald-300' : 'bg-amber-100 text-amber-900 border-amber-300'}">${periodMeta.statusText}</span>`
+        : '';
+
+      renderRankingRegionAndBanner(`
+        <div class="flex items-center gap-1.5 min-w-0">
+          <span class="shrink-0">📅 ${t('rankPeriodPrefix')}</span>
+          <span class="text-slate-900 truncate">${periodMeta.bannerText}</span>
+        </div>
+        ${statusBadge}
+      `);
 
       // 1観測所＝1カードにグルーピング
       const groupMap = new Map();
       appData.spots
-        .filter(s => s.category === areasCategoryFilter)
+        .filter(s => s.category === areasCategoryFilter && (rankingRegionFilter === 'all' || s.region === rankingRegionFilter))
         .forEach(s => {
           const live = s.current && s.current.liveAmedas;
           if (!live || !live.stationId) return;
@@ -4236,6 +4402,11 @@
         const tempText = (item.tempMax !== null && item.tempMin !== null)
           ? `${item.tempMax.toFixed(1)}/${item.tempMin.toFixed(1)}°`
           : (item.tempMax !== null ? `${item.tempMax.toFixed(1)}°` : '--');
+        const tempColor = (item.tempMin !== null && item.tempMin >= 2.0) || (item.tempMax !== null && item.tempMax >= 4.0)
+          ? 'text-rose-700'
+          : (item.tempMax !== null && item.tempMax <= 0)
+            ? 'text-sky-800'
+            : 'text-slate-900';
 
         const isExpanded = expandedRankStationKeys.has(item.stationKey);
         const visibleSpots = isExpanded ? item.spots : item.spots.slice(0, 3);
@@ -4291,7 +4462,7 @@
             </div>
             <div class="min-w-0 border-l border-slate-200">
               <div class="text-[10px] text-slate-600 font-bold leading-tight">${t('rankLiveTempLabel')}</div>
-              <div class="text-[11px] font-black text-slate-900 leading-tight mt-0.5 whitespace-nowrap">${tempText}</div>
+              <div class="text-[11px] font-black ${tempColor} leading-tight mt-0.5 whitespace-nowrap">${tempText}</div>
             </div>
           </div>
           <div class="flex flex-wrap items-center gap-1.5 pt-2 mt-2 border-t border-slate-200">
