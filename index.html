@@ -2498,6 +2498,9 @@
           if (sf24 !== null && sf24 > 0) {
             liveDeltaEl.textContent = `+${sf24} cm`;
             liveDeltaEl.className = "font-teko text-base sm:text-lg font-black text-emerald-700 block mt-0.5 whitespace-nowrap";
+          } else if (sub24 !== null && sub24 < 0) {
+            liveDeltaEl.textContent = `${sub24} cm`;
+            liveDeltaEl.className = "font-teko text-base sm:text-lg font-bold text-rose-700 block mt-0.5 whitespace-nowrap";
           } else if (sub24 !== null && sub24 > 0) {
             liveDeltaEl.textContent = `-${sub24} cm`;
             liveDeltaEl.className = "font-teko text-base sm:text-lg font-bold text-rose-700 block mt-0.5 whitespace-nowrap";
@@ -2612,7 +2615,7 @@
           const statSub = document.getElementById('heroBcStatSub');
           const statTemp = document.getElementById('heroBcStatTemp');
 
-          if (badgeEl) badgeEl.textContent = isRoad ? t('rankLiveStationRoad') : t('rankLiveStationAmedas');
+          if (badgeEl) badgeEl.textContent = isRiver ? t('rankLiveStationRiver') : (isRoad ? t('rankLiveStationRoad') : t('rankLiveStationAmedas'));
           if (stEl) stEl.textContent = stationName ? tName(stationName) : '--';
           
           const depthVal = (live && typeof live.snowDepth === 'number') ? live.snowDepth : null;
@@ -3825,7 +3828,7 @@
         } else if (areasConditionFilter === 'open') {
           if (areasCategoryFilter === 'bc') {
             const lvl = s.current && s.current.bcAlert && s.current.bcAlert.level;
-            if (lvl !== 'LOW' && lvl !== 'MEDIUM') return;
+            if (lvl !== 'LOW' && lvl !== 'MEDIUM' && lvl !== 'MODERATE') return;
           } else {
             const depth = (s.current && typeof s.current.topSnowDepth === 'number') ? s.current.topSnowDepth : 0;
             if (depth < 30) return;
@@ -3965,8 +3968,9 @@
           if (isBcSpot) {
             const bca = s.current && s.current.bcAlert;
             if (bca) {
-              const bgCls = bca.level === 'HIGH' ? 'bg-rose-100 text-rose-800 border-rose-300' : (bca.level === 'MEDIUM' ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-100 text-emerald-800 border-emerald-300');
-              const bIcon = bca.level === 'HIGH' ? '🔴' : (bca.level === 'MEDIUM' ? '🟡' : '🟢');
+              const isMed = bca.level === 'MEDIUM' || bca.level === 'MODERATE';
+              const bgCls = bca.level === 'HIGH' ? 'bg-rose-100 text-rose-800 border-rose-300' : (isMed ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-100 text-emerald-800 border-emerald-300');
+              const bIcon = bca.level === 'HIGH' ? '🔴' : (isMed ? '🟡' : '🟢');
               bcExtraHtml += `<span class="text-[10px] px-1.5 py-0.2 rounded font-black border ${bgCls}">${bIcon} ${tTag(bca.label)}</span>`;
             }
             if (windSpd !== null) {
@@ -4222,6 +4226,30 @@
       renderRankingTab();
     }
 
+    function getSpotForecastSnow(spot, hours) {
+      if (!spot) return 0;
+      const cur = spot.current || {};
+      const th = spot.topHourly;
+      if (th && Array.isArray(th.time) && Array.isArray(th.snowfall)) {
+        const jstNow = new Date(Date.now() + 9 * 3600000);
+        const curHStr = jstNow.toISOString().slice(0, 13);
+        let idx = th.time.findIndex(t => t.startsWith(curHStr));
+        if (idx < 0 && appData && appData.updatedAt) {
+          const updJst = new Date(Date.parse(appData.updatedAt) + 9 * 3600000).toISOString().slice(0, 13);
+          idx = th.time.findIndex(t => t.startsWith(updJst));
+        }
+        if (idx >= 0) {
+          let sum = 0;
+          const end = Math.min(idx + hours, th.snowfall.length);
+          for (let k = idx; k < end; k++) {
+            sum += (Number(th.snowfall[k]) || 0);
+          }
+          return Math.round(sum * 10) / 10;
+        }
+      }
+      return hours <= 6 ? (typeof cur.snow6h === 'number' ? cur.snow6h : 0) : (typeof cur.snow24h === 'number' ? cur.snow24h : 0);
+    }
+
     function renderRankingTab() {
       const container = document.getElementById('rankingListContainer');
       container.innerHTML = '';
@@ -4240,7 +4268,8 @@
       let labelText = t('rankSnowfallLabel');
       let bannerText = '';
       let nightToggleHtml = '';
-      const baseMs = appData.updatedAt ? (Date.parse(appData.updatedAt) || Date.now()) : Date.now();
+      const nowMs = Date.now();
+      const baseHourMs = Math.floor(nowMs / 3600000) * 3600000;
       if (currentRankPeriod === 'night') {
         const meta = getNightSnowTargetMeta(currentRankNightMode);
         labelText = meta.badgeLabel;
@@ -4255,13 +4284,13 @@
         `;
       } else if (currentRankPeriod === '6h') {
         labelText = t('rank6hLabel');
-        const sFmt = formatJstMmDdDowHm(baseMs);
-        const eFmt = formatJstMmDdDowHm(baseMs + 6 * 3600000);
+        const sFmt = formatJstMmDdDowHm(baseHourMs);
+        const eFmt = formatJstMmDdDowHm(baseHourMs + 6 * 3600000);
         bannerText = t('rankBannerForecastHours', { start: sFmt.full, end: eFmt.full, h: 6 });
       } else {
         labelText = t('rank24hLabel');
-        const sFmt = formatJstMmDdDowHm(baseMs);
-        const eFmt = formatJstMmDdDowHm(baseMs + 24 * 3600000);
+        const sFmt = formatJstMmDdDowHm(baseHourMs);
+        const eFmt = formatJstMmDdDowHm(baseHourMs + 24 * 3600000);
         bannerText = t('rankBannerForecastHours', { start: sFmt.full, end: eFmt.full, h: 24 });
       }
 
@@ -4279,8 +4308,8 @@
           const cur = s.current || {};
           let snowVal = 0;
           if (currentRankPeriod === 'night') snowVal = getSpotNightSnow(s, currentRankNightMode) || 0;
-          else if (currentRankPeriod === '6h') snowVal = typeof cur.snow6h === 'number' ? cur.snow6h : 0;
-          else snowVal = typeof cur.snow24h === 'number' ? cur.snow24h : 0;
+          else if (currentRankPeriod === '6h') snowVal = getSpotForecastSnow(s, 6);
+          else snowVal = getSpotForecastSnow(s, 24);
 
           return {
             id: s.id,
@@ -4329,8 +4358,9 @@
         let bcAlertBadge = '';
         if (item.category === 'bc' && item.bcAlert) {
           const bca = item.bcAlert;
-          const bgCls = bca.level === 'HIGH' ? 'bg-rose-100 text-rose-800 border-rose-300' : (bca.level === 'MEDIUM' ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-100 text-emerald-800 border-emerald-300');
-          const bIcon = bca.level === 'HIGH' ? '🔴' : (bca.level === 'MEDIUM' ? '🟡' : '🟢');
+          const isMed = bca.level === 'MEDIUM' || bca.level === 'MODERATE';
+          const bgCls = bca.level === 'HIGH' ? 'bg-rose-100 text-rose-800 border-rose-300' : (isMed ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-100 text-emerald-800 border-emerald-300');
+          const bIcon = bca.level === 'HIGH' ? '🔴' : (isMed ? '🟡' : '🟢');
           bcAlertBadge = `<span class="text-[10px] px-1.5 py-0.2 rounded font-black border ${bgCls} shrink-0">${bIcon} ${tTag(bca.label)}</span>`;
         }
 
@@ -4964,7 +4994,8 @@
           if (isMorning) {
             if (isBC) {
               const alert = s.current && s.current.bcAlert;
-              const alertBadge = alert ? (alert.level === 'HIGH' ? '🔴' : (alert.level === 'MEDIUM' ? '🟡' : '🟢')) : '🟢';
+              const isMed = alert && (alert.level === 'MEDIUM' || alert.level === 'MODERATE');
+              const alertBadge = alert ? (alert.level === 'HIGH' ? '🔴' : (isMed ? '🟡' : '🟢')) : '🟢';
               const alertText = alert ? tTag(alert.label) : t('statusSafe');
               const stName = live ? tName(live.stationName) : '';
               const stDepth = (live && typeof live.snowDepth === 'number') ? `${live.snowDepth}cm` : '--';
@@ -5636,12 +5667,14 @@
         const live = s.current && s.current.liveAmedas;
         if (isBC) {
           const alert = s.current && s.current.bcAlert;
-          const alertBadge = alert ? (alert.level === 'HIGH' ? '🔴' : (alert.level === 'MEDIUM' ? '🟡' : '🟢')) : '🟢';
+          const isMed = alert && (alert.level === 'MEDIUM' || alert.level === 'MODERATE');
+          const alertBadge = alert ? (alert.level === 'HIGH' ? '🔴' : (isMed ? '🟡' : '🟢')) : '🟢';
           const alertText = alert ? tTag(alert.label) : t('statusSafe');
           const stName = live ? tName(live.stationName) : '';
           const stDepth = (live && typeof live.snowDepth === 'number') ? `${live.snowDepth}cm` : '--';
           const sub = (live && live.stats && live.stats.h24 && typeof live.stats.h24.subsidence === 'number') ? live.stats.h24.subsidence : null;
-          const subText = sub !== null ? (sub < 0 ? `${sub}cm` : `-${sub}cm`) : '--';
+          const subText = sub !== null ? (sub < 0 ? `${sub}cm` : (sub > 0 ? `-${sub}cm` : '0cm')) : '--';
+          const subColorCls = (sub !== null && sub !== 0) ? 'text-rose-700' : 'text-slate-600';
           liveLineHtml = `
             <div class="flex items-center justify-between gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50/70 border border-emerald-200/80 text-[10.5px]">
               <div class="flex items-center gap-1 font-bold text-slate-800 truncate">
@@ -5650,7 +5683,7 @@
               </div>
               <div class="text-slate-600 font-bold shrink-0 text-right">
                 <span>📡 ${stName} ${stDepth}</span>
-                <span class="text-rose-700 ml-1">(${t('rankLiveSubsidenceLabel')}${subText})</span>
+                <span class="${subColorCls} ml-1">(${t('rankLiveSubsidenceLabel')}${subText})</span>
               </div>
             </div>
           `;
